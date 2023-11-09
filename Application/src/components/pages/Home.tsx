@@ -1,18 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import CardService from '../../services/CardService';
+import { Button } from '@react-native-material/core'
+import { mainTheme } from '../../environment/themes';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Hello from component Home !</Text>
+    <View>
+      <CardService>
+      <Button
+          color= {mainTheme.colors.primary} 
+          title="Se connecter"
+          onPress= {() => navigation.navigate('Connexion')}
+        />
+        <Button
+          color= {mainTheme.colors.primary} 
+          variant="outlined"
+          title="S'inscrire"
+          onPress= {() => navigation.navigate('Inscription')}
+        />
+      </CardService>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ccc',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 });
