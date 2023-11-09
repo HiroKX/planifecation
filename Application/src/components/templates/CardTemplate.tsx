@@ -1,18 +1,12 @@
-import { StyleSheet } from 'react-native';
-import { Surface } from '@react-native-material/core'
+import { StyleSheet, View } from 'react-native';
 
 type ContainerProps = {
     children: React.ReactNode;
 }
 
-export default function CardService(props: ContainerProps) {
+export default function CardTemplate(props: ContainerProps) {
     return (
-        <Surface style={styles.card}
-            elevation={16}
-            category='medium'
-            >
-            {props.children}
-        </Surface>
+        <View></View>
     )
 
 }
