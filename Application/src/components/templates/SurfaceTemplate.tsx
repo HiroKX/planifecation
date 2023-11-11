@@ -6,7 +6,7 @@ type ContainerProps = {
   };
 
 
-export default function SurfaceTemplate(props: ContainerProps) {
+export default function SurfaceTemplate(props: Readonly<ContainerProps>) {
     return (
         <Surface 
             style={styles.surface}
@@ -21,9 +21,8 @@ export default function SurfaceTemplate(props: ContainerProps) {
 const styles = StyleSheet.create({
     surface: {
         padding: 10,
-        margin : 5,
-        height: 'auto',
-        width: 'auto',
+        marginLeft: 20, 
+        marginRight: 20,
         alignItems: 'center',
         justifyContent: 'center'
     }

@@ -4,7 +4,7 @@ import Home from './src/components/pages/Home';
 import Login from './src/components/pages/Login';
 import SignUp from './src/components/pages/SignUp';
 import LogoService from './src/services/LogoService';
-import {mainTheme, darkTheme} from './src/environment/themes';
+import { mainTheme } from './src/environment/themes';
 import { PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
