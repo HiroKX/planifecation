@@ -1,10 +1,25 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import SurfaceTemplate from '../templates/SurfaceTemplate';
+import TextInputTemplate from '../templates/TextInputTemplate';
 
 export default function Login({ navigation }) {
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
   return (
-    <View style={styles.container}>
-      <Text>Hello from component Login !</Text>
-    </View>
+    <SurfaceTemplate>
+      <TextInputTemplate 
+        label="Identifiant"
+        value={id}
+        handleChangeText={(text) => setId(text)}
+        />
+      <TextInputTemplate
+        label="Mot de passe"
+        mode='outlined'
+        value={password}
+        handleChangeText={(text) => setPassword(text)}
+        secureTextEntry={true}/>
+    </SurfaceTemplate>
   );
 }
 
