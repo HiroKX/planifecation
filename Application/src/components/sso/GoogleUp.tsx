@@ -13,6 +13,7 @@ function GoogleUp() {
     const [user, setUser] = useState({});
 
     const handlePress = async () => {
+
         const result = await WebBrowser.openAuthSessionAsync(
             `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${YOUR_CLIENT_ID}&redirect_uri=${YOUR_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile&access_type=offline&prompt=consent`,
             REDIRECT_URI
@@ -22,16 +23,18 @@ function GoogleUp() {
 
             // get back the params from the url
             const params = Linking.parse(result.url);
+
+
             const { email, name, picture } = params.queryParams;
+
             //pass in all the user data in an object...
-            const currentUser = {
+            const user = {
                 email,
                 name,
                 picture,
             };
-            setUser(currentUser)
 
-            navigation.navigate('Home');
+            navigation.navigate('Home', { user });
             // navigate to the HomeScreen and pass the user object
 
         }
