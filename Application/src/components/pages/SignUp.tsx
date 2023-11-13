@@ -1,10 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import SurfaceTemplate from '../templates/SurfaceTemplate';
+import TextInputTemplate from '../templates/TextInputTemplate';
+import ButtonTemplate from '../templates/ButtonTemplate';
 
 export default function SignUp({ navigation }) {
+    const [id, setId] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpass, setConfirmpass] = useState("");
   return (
-    <View style={styles.container}>
-      <Text>Hello from component SignUp !</Text>
-    </View>
+    <SurfaceTemplate>
+      <TextInputTemplate 
+        label="Adresse mail"
+        value={id}
+        handleChangeText={(text) => setId(text)}
+        />
+      <TextInputTemplate
+        label="Mot de passe"
+        mode='outlined'
+        value={password}
+        handleChangeText={(text) => setPassword(text)}
+        secureTextEntry={true}/>
+      <TextInputTemplate
+        label="Confirmer le mot de passe"
+        mode='outlined'
+        value={confirmpass}
+        handleChangeText={(text) => setConfirmpass(text)}
+        secureTextEntry={true}/>
+        <ButtonTemplate
+        handleClick={() => {
+          navigation.replace('Connexion');
+        }}>
+          M'inscrire</ButtonTemplate>
+    </SurfaceTemplate>
   );
 }
 

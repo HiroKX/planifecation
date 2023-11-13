@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import SurfaceTemplate from '../templates/SurfaceTemplate';
 import TextInputTemplate from '../templates/TextInputTemplate';
+import ButtonTemplate from '../templates/ButtonTemplate';
 
 export default function Login({ navigation }) {
     const [id, setId] = useState("");
@@ -19,6 +20,10 @@ export default function Login({ navigation }) {
         value={password}
         handleChangeText={(text) => setPassword(text)}
         secureTextEntry={true}/>
+        <ButtonTemplate
+          handleClick={() => {
+            navigation.navigate('Dashboard');
+          }}>Se connecter</ButtonTemplate>
     </SurfaceTemplate>
   );
 }
