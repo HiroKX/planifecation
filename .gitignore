@@ -156,3 +156,5 @@ vendor/
 
 # CircleCI
 .circleci/generated_config.yml
+Application/.yarn/install-state.gz
+Application/yarn.lock
