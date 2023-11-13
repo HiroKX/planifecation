@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Xcode
 !**/*.xcodeproj
 !**/*.pbxproj
@@ -164,3 +165,10 @@ Application/yarn.lock
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+=======
+./.idea/
+.DS_STORE
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+>>>>>>> ca7827f (Base with Google-SSO.)
