@@ -1,35 +1,33 @@
-import * as React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from "./src/components/HomeScreen";
+import Home from './src/components/pages/Home';
+import Login from './src/components/pages/Login';
+import SignUp from './src/components/pages/SignUp';
+import LogoService from './src/services/LogoService';
+import { mainTheme } from './src/environment/themes';
+import { PaperProvider } from 'react-native-paper';
 
 const Stack = createNativeStackNavigator();
 
-function DetailsScreen({navigation}) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Details Screen</Text>
-            <Button
-                title="Go to Home"
-                onPress={() => {
-                    navigation.navigate('Home', { user: 'yourUserObject' });
-                }}/>
-        </View>
-    );
-}
-
 export default function App() {
-
   return (
-        <NavigationContainer >
-            <Stack.Navigator initialRouteName="Details">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Details" component={DetailsScreen} />
-            </Stack.Navigator>
-        </NavigationContainer>
+    <PaperProvider theme={mainTheme}>
+      <NavigationContainer theme={mainTheme}>
+      <Stack.Navigator 
+          initialRouteName='Home'
+          screenOptions={{
+             headerStyle: {
+               backgroundColor: mainTheme.colors.primary,
+             },
+             headerTintColor: '#fff',
+             headerRight: () => ( <LogoService></LogoService>),
+           }}
+           >
+         <Stack.Screen name="Accueil" component={Home}/>
+         <Stack.Screen name="Connexion" component={Login}/>
+         <Stack.Screen name="Inscription" component={SignUp}/>
+       </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-});

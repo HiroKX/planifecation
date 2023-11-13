@@ -2,11 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as React from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
-import { useNavigation } from '@react-navigation/native';
 import {useState} from "react";
 
-function GoogleUp() {
-    const navigation = useNavigation();
+function GoogleUp({navigation}) {
     const YOUR_CLIENT_ID = "273744401902-ukvoh9f1m229ok383rcvrclnlnatno9d.apps.googleusercontent.com"
     const YOUR_REDIRECT_URI = "http://localhost:3001/google"
     const REDIRECT_URI = "exp://192.168.1.59:8081"
@@ -69,4 +67,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 20,
     },
+    container: {
+
+    }
 });

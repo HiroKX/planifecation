@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import SurfaceTemplate from '../templates/SurfaceTemplate';
 import ButtonTemplate from '../templates/ButtonTemplate';
-import SnackBarService from '../../services/SnackBarService';
+import GoogleUp from '../sso/GoogleUp';
 
 export default function Home({ navigation }) {
   return (
@@ -19,6 +19,7 @@ export default function Home({ navigation }) {
           handleClick={() => navigation.navigate('Inscription')} 
           mode='outlined'>Inscription
           </ButtonTemplate>
+          <GoogleUp />
       </SurfaceTemplate>
     </View>
   );
