@@ -158,8 +158,3 @@ vendor/
 .circleci/generated_config.yml
 Application/.yarn/install-state.gz
 Application/yarn.lock
-
-.DS_Store
-._.DS_Store
-
-.env.local

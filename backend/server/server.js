@@ -3,13 +3,13 @@ const router = express.Router();
 const fetch = require("node-fetch");
 const app = express();
 
-const YOUR_CLIENT_ID = "";
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
-const YOUR_CLIENT_SECRET = "";
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 async function signUp(code, res) {
 
-    const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${YOUR_CLIENT_ID}&client_secret=${YOUR_CLIENT_SECRET}&redirect_uri=http://localhost:3001/google&grant_type=authorization_code`;
+    const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${GOOGLE_CLIENT_ID}&client_secret=${GOOGLE_CLIENT_SECRET}&redirect_uri=http://localhost:3001/google&grant_type=authorization_code`;
     console.log('fetch');
     const response = await fetch(url, {
         method: "POST",
