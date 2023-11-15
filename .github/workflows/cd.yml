@@ -23,5 +23,5 @@ jobs:
               cd /var/www/html/planifecation
               git pull
               npx prisma migrate dev --name "migrationA"
-              pm2 start
+              pm2 start index
             
