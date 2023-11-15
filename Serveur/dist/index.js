@@ -1,37 +1,50 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-  # This "User" type defines the queryable fields for every user in our data source.
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+const typeDefs = `
   type User {
-    id: String
+    id: Int
     login: String
     password: String
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "users" query returns an array of zero or more Users (defined above).
   type Query {
+    user: User
     users: [User]
   }
+
+  type Mutation {
+    createUser(id: Int, login: String, password: String): User
+ }
 `;
-// Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves users from the "users" array above.
 const resolvers = {
     Query: {
-        users: () => [{ id: '1', login: 'test', password: 'test' }],
+        user: () => {
+            return prisma.user.findFirstOrThrow();
+        },
+        users: () => {
+            return prisma.user.findMany();
+        }
     },
+    Mutation: {
+        createUser: (parent, args) => {
+            return prisma.user.create({
+                data: {
+                    id: args.id,
+                    login: args.login,
+                    password: args.password,
+                },
+            });
+        },
+    }
 };
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    csrfPrevention: false
 });
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
