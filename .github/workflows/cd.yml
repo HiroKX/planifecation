@@ -22,6 +22,7 @@ jobs:
               pm2 stop index
               cd /var/www/html/planifecation
               git pull
+              cd Serveur
               npx prisma migrate dev --name "migrationA"
               pm2 start index
             
