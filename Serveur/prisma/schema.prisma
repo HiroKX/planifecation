@@ -12,8 +12,8 @@ datasource db {
 
 model User {
   id        Int        @id @default(autoincrement())
-  login     String     @unique @db.VarChar(255)
-  password  String     @unique @db.VarChar(255)
+  login     String     @db.VarChar(255)
+  password  String     @db.VarChar(255)
   
   @@map(name: "user")
 }
