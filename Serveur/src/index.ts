@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const SECRET_KEY = 'votre_secret_très_sécurisé'; // Remplacez ceci par votre clé secrète
+const SECRET_KEY = 'votre_secret_très_sécurisé'; // Replace with your secret key
 
 const typeDefs = `
   type User {
@@ -26,40 +26,36 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    user: (parent,args,context) => {
-      console.log(context)
+    user: (parent,args,context) => { // Query that return the first user.
       if (!context.userInfo) {
-        throw new Error("Non autorisé");
+        throw new Error("UNAUTHENTICATED"  + context.msg);
       }
       return prisma.user.findFirstOrThrow();
     },
-    users: (parent,args,context) => {
-      console.log(context)
+    users: (parent,args,context) => { // Query that return all the users.
       if (!context.userInfo) {
-        throw new Error("Non autorisé");
+        throw new Error("UNAUTHENTICATED : " + context.msg);
       }
         return prisma.user.findMany();
       }
   },
   Mutation: {
-    createUser: (parent, args) => {
+    createUser: (parent, args) => { // Create a user in the db
         return prisma.user.create({
           data: {
             id: args.id,
             login: args.login,
             password: args.password,
-          },
+
         });
       },
-      login: async (_, { username, password }) => {
-        // Ici, vous devriez vérifier les informations d'identification.
-        // Par exemple, vérifier dans une base de données.
-        // Pour cet exemple, nous allons simuler une vérification réussie.
+      login: async (_, { username, password }) => { // Login the user and return a JWT which will be used to authenticate later.
+
         const user = await prisma.user.findUnique({where: {login: username, password: password}});
         
-        // Générer un JWT
+        // Generate JWT
         const token = jwt.sign(user, SECRET_KEY, { expiresIn: '1h' });
-        return token; // Retourner le token JWT
+        return token; // Return the token
       },
   }
 
@@ -80,13 +76,13 @@ const { url } = await startStandaloneServer(server, {
   listen: { port: 4000},
   context: async({ req }) => {
     const token = req.headers.authorization || '';
-    // Vérifier le token et extraire les informations de l'utilisateur
+    // Verify the token and then return the user associated.
     let userInfo;
     if (token) {
       try {
         userInfo = jwt.verify(token, SECRET_KEY);
       } catch (err) {
-        // Gérer l'erreur de vérification du token
+          return {msg: "Verification failed."};
       }
     }
     return { userInfo };

@@ -163,3 +163,4 @@ Application/yarn.lock
 ._.DS_Store
 docker-compose.yml
 .env.local
+yarn.lock
