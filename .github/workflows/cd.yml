@@ -1,6 +1,9 @@
 name: CD GraphQL
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
