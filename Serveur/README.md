@@ -1,4 +1,11 @@
 Installation : 
-```npm install``
+```bash
+npm install
+```
+```bash
+docker-compose up -d
+```
 Puis :
-```npm start```
+```bash
+npm start
+```
