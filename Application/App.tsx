@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer, StackActions } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './src/components/pages/Home';
+import Login from './src/components/pages/Login';
+import SignUp from './src/components/pages/SignUp';
+import Dashboard from './src/components/pages/Dashboard';
+import LogoService from './src/services/LogoService';
+import { mainTheme } from './src/environment/themes';
+import { PaperProvider } from 'react-native-paper';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider theme={mainTheme}>
+      <NavigationContainer theme={mainTheme}>
+      <Stack.Navigator 
+          initialRouteName='Accueil'
+          screenOptions={{
+             headerStyle: {
+               backgroundColor: mainTheme.colors.primary,
+             },
+             headerTintColor: '#fff',
+             headerRight: () => ( <LogoService></LogoService>),
+           }}
+           >
+         <Stack.Screen name="Accueil" component={Home}/>
+         <Stack.Screen name="Connexion" component={Login}/>
+         <Stack.Screen name="Inscription" component={SignUp}/>
+         <Stack.Screen name="Dashboard" component={Dashboard}/>
+       </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
