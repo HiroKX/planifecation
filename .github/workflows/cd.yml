@@ -18,5 +18,9 @@ jobs:
             username: ${{ secrets.USERNAME }}
             key: ${{ secrets.KEY }}
             port: ${{ secrets.PORT }}
-            script: whoami
+            script: pm2 stop index
+              cd /var/www/html/planifecation
+              git pull
+              npx prisma migrate dev --name "migrationA"
+              pm2 start
             
