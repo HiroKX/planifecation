@@ -1,38 +1,37 @@
 import { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import SurfaceTemplate from '../templates/SurfaceTemplate';
 import TextInputTemplate from '../templates/TextInputTemplate';
 import ButtonTemplate from '../templates/ButtonTemplate';
+import {ApolloConsumer} from "@apollo/client";
+import {LogUser} from "../../services/AuthenticationService";
 
-export default function Login({ navigation }) {
-    const [id, setId] = useState("");
+export default function Login({ navigation }: any) {
+    const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-  return (
-    <SurfaceTemplate>
-      <TextInputTemplate 
-        label="Identifiant"
-        value={id}
-        handleChangeText={(text) => setId(text)}
-        />
-      <TextInputTemplate
-        label="Mot de passe"
-        mode='outlined'
-        value={password}
-        handleChangeText={(text) => setPassword(text)}
-        secureTextEntry={true}/>
-        <ButtonTemplate
-          handleClick={() => {
-            navigation.navigate('Dashboard');
-          }}>Se connecter</ButtonTemplate>
-    </SurfaceTemplate>
-  );
+    return (
+        <ApolloConsumer>
+            { client =>
+                <SurfaceTemplate>
+                    <TextInputTemplate
+                    label="Identifiant"
+                    value={login}
+                    handleChangeText={(text) => setLogin(text)}
+                    />
+                    <TextInputTemplate
+                    label="Mot de passe"
+                    mode='outlined'
+                    value={password}
+                    handleChangeText={(text) => setPassword(text)}
+                    secureTextEntry={true}/>
+                    <ButtonTemplate
+                      handleClick={() => {
+                          LogUser({client, login, password});
+                          navigation.navigate('Dashboard');
+                      }}>
+                        Se connecter
+                    </ButtonTemplate>
+                </SurfaceTemplate>
+            }
+        </ApolloConsumer>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ccc',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -3,7 +3,7 @@ import SurfaceTemplate from '../templates/SurfaceTemplate';
 import TextInputTemplate from '../templates/TextInputTemplate';
 import ButtonTemplate from '../templates/ButtonTemplate';
 import {ApolloConsumer} from "@apollo/client";
-import SignUpService from "../../services/SignUpService";
+import {CreateUser, LogUser} from "../../services/AuthenticationService";
 
 export default function SignUp({ navigation }: any) {
     const [login, setLogin] = useState("");
@@ -35,8 +35,9 @@ export default function SignUp({ navigation }: any) {
                     />
                     <ButtonTemplate
                       handleClick={() => {
-                        SignUpService({client, login, password});
-                        navigation.replace('Connexion');
+                        CreateUser({client, login, password});
+                        LogUser({client, login, password});
+                        navigation.replace('Dashboard');
                       }}>
                       M'inscrire
                     </ButtonTemplate>
