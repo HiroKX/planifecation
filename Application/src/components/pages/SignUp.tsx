@@ -3,7 +3,16 @@ import SurfaceTemplate from '../templates/SurfaceTemplate';
 import TextInputTemplate from '../templates/TextInputTemplate';
 import ButtonTemplate from '../templates/ButtonTemplate';
 import {ApolloConsumer} from "@apollo/client";
-import SignUpService from "../../services/SignUpService";
+import {CreateUser, LogUser} from "../../services/AuthenticationService";
+
+async function handleClick(client: any, login: string, password: string, navigation: any) {
+    await CreateUser({client, login, password}).then(async userId => {
+        if (userId != 0) await LogUser({client, login, password}).then(token => {
+            if (token != "") navigation.replace('Dashboard');
+            else navigation.replace('Connexion');
+        });
+    })
+}
 
 export default function SignUp({ navigation }: any) {
     const [login, setLogin] = useState("");
@@ -34,9 +43,8 @@ export default function SignUp({ navigation }: any) {
                       secureTextEntry={true}
                     />
                     <ButtonTemplate
-                      handleClick={() => {
-                        SignUpService({client, login, password});
-                        navigation.replace('Connexion');
+                      handleClick={async () => {
+                          await handleClick(client, login, password, navigation);
                       }}>
                       M'inscrire
                     </ButtonTemplate>
