@@ -26,6 +26,7 @@ jobs:
               cd /var/www/html/planifecation
               git pull
               cd Serveur
+              yarn install
               npx prisma migrate dev --name "migrationA"
               pm2 start index
             
