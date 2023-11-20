@@ -1,10 +1,10 @@
 import {gql} from "@apollo/client";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CREATE_USER = gql`
     mutation createUser($login: String!, $password: String!) {
         createUser(login: $login, password: $password) {
-            id,
-            login
+            id
         }
     }
 `;
@@ -15,8 +15,54 @@ const LOG_USER = gql`
     }
 `;
 
-export const CreateUser = (props: any) => {
-    props.client
+export async function CreateUser (props: any): Promise<Number> {
+    let userId = await CreateFromClient(props);
+    return new Promise<Number>((resolve, reject) => {
+        if (userId != 0) {
+            console.debug("User ", userId, " created with login ", props.login);
+            resolve(userId);
+        }
+        else reject("Token is empty");
+    });
+}
+
+export async function LogUser(props: any): Promise<string> {
+    let token = await GetLoggedUserFromClient(props);
+    if (token != "") {
+        console.debug("User ", props.login, " logged in")
+        try {
+            const jsonValue = JSON.stringify({
+                login: props.login,
+                token: token
+            });
+            await AsyncStorage.setItem('loggedUser', jsonValue);
+        } catch (e) {
+            console.error("LogUser AsyncStorage error : ", e);
+        }
+    }
+    return new Promise<string>((resolve, reject) => {
+        if (token != "") resolve(token);
+        else reject("Token is empty");
+    });
+}
+
+export async function GetLoggedUser  () {
+    try {
+        const jsonValue = await AsyncStorage.getItem('loggedUser');
+
+        return new Promise<any>((resolve, reject) => {
+            if (jsonValue != null) resolve(JSON.parse(jsonValue));
+            else reject("No logged user");
+        });
+    } catch (e) {
+        console.error("GetLoggedUser error : ", e);
+    }
+}
+
+// ---------------- Calls to the ApolloClient ----------------
+
+const CreateFromClient = async (props: any): Promise<Number> => {
+    return props.client
         .mutate({
             mutation: CREATE_USER,
             variables: {
@@ -25,16 +71,16 @@ export const CreateUser = (props: any) => {
             }
         })
         .then((response: any) => {
-            // Handle the response if needed
+            return response.data.createUser.id;
         })
         .catch((error: any) => {
-            // Handle errors if the inscription fails
-            console.error("SignUp Error:", error);
+            console.error("SignUp error:", error);
+            return 0;
         });
 }
 
-export const LogUser = (props: any) => {
-    props.client
+const GetLoggedUserFromClient = async (props: any): Promise<string> => {
+    return props.client
         .mutate({
             mutation: LOG_USER,
             variables: {
@@ -42,12 +88,11 @@ export const LogUser = (props: any) => {
                 password: props.password,
             }
         })
-        .then((response: any) => {
-            // Handle the response if needed
-            console.log("Login success, response : ", response.data.login);
+        .then((response: any): string => {
+            return response.data.login;
         })
         .catch((error: any) => {
-            // Handle errors if the logging fails
-            console.error("Login Error:", error);
+            console.error("Login error:", error);
+            return "";
         });
 }
