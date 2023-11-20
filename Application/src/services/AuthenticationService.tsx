@@ -27,7 +27,7 @@ export async function CreateUser (props: any): Promise<Number> {
 }
 
 export async function LogUser(props: any): Promise<string> {
-    let token = await GetLoggedUserFromClient(props);
+    let token = await LogUserFromClient(props);
     if (token != "") {
         console.debug("User ", props.login, " logged in")
         try {
@@ -59,6 +59,14 @@ export async function GetLoggedUser  () {
     }
 }
 
+export async function DisconnectUser() {
+    try {
+        await AsyncStorage.removeItem('loggedUser');
+    } catch (e) {
+        console.error("Disconnect error : ", e);
+    }
+}
+
 // ---------------- Calls to the ApolloClient ----------------
 
 const CreateFromClient = async (props: any): Promise<Number> => {
@@ -79,7 +87,7 @@ const CreateFromClient = async (props: any): Promise<Number> => {
         });
 }
 
-const GetLoggedUserFromClient = async (props: any): Promise<string> => {
+const LogUserFromClient = async (props: any): Promise<string> => {
     return props.client
         .mutate({
             mutation: LOG_USER,
