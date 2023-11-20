@@ -5,7 +5,11 @@ import {GetLoggedUser, DisconnectUser} from "../../services/AuthenticationServic
 async function Disconnect(navigation : any) {
     console.log("Disconnecting...");
     await DisconnectUser().then(() => {
-        navigation.replace('Accueil');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Accueil' }],
+        });
+        //navigation.replace('Accueil');
     });
 }
 

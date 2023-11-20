@@ -8,7 +8,12 @@ import {CreateUser, LogUser} from "../../services/AuthenticationService";
 async function handleClick(client: any, login: string, password: string, navigation: any) {
     await CreateUser({client, login, password}).then(async userId => {
         if (userId != 0) await LogUser({client, login, password}).then(token => {
-            if (token != "") navigation.replace('Dashboard');
+            if (token != "") {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Dashboard' }],
+                });
+            }
             else navigation.replace('Connexion');
         });
     })

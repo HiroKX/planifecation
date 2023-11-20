@@ -9,9 +9,12 @@ export default function Home({ navigation }: any) {
         .then((user: { login: any; token: any; }) => {
         if (user.login != "") {
             console.log("Welcome back ", user.login, ". Redirection to dashboard...");
-            navigation.replace('Dashboard');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Dashboard' }],
+            });
         }})
-        .catch((error: any) => {  });
+        .catch((error: any) => { console.log("No logged user.") });
   return (
     <View>
       <SurfaceTemplate>
