@@ -3,8 +3,12 @@ import SurfaceTemplate from '../templates/SurfaceTemplate';
 import ButtonTemplate from '../templates/ButtonTemplate';
 import GoogleUp from '../sso/GoogleUp';
 import {GetLoggedUser} from "../../services/AuthenticationService";
+import { StackParamList } from '../../navigation/RootStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function Home({ navigation }: any) {
+type Props = NativeStackScreenProps<StackParamList>;
+
+export default function Home({ navigation }: Props) {
     GetLoggedUser()
         .then((user: { login: any; token: any; }) => {
         if (user.login != "") {
