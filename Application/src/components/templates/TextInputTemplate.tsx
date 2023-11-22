@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextInput } from 'react-native-paper';
+import { TextInput as PaperTextInput } from 'react-native-paper';
 
 type ContainerProps = {
   label?: string;
@@ -10,13 +10,13 @@ type ContainerProps = {
   multiline?: boolean;
   maxLength?: number;
   secureTextEntry?: boolean;
-  handleChangeText: (e : GestureResponderEvent) => void;
+  onChangeText: (e : GestureResponderEvent) => void;
 };
 
 const TextInputTemplate = (props: Readonly<ContainerProps>) => {
 
   return (
-    <TextInput
+    <PaperTextInput
       label={props.label ?? undefined}
       placeholder={props.placeholder ?? undefined}
       value={props.value}
@@ -25,7 +25,7 @@ const TextInputTemplate = (props: Readonly<ContainerProps>) => {
       multiline={props.multiline ?? false}
       maxLength={props.maxLength ?? undefined}
       secureTextEntry={props.secureTextEntry ?? false}
-      onChangeText={props.handleChangeText}
+      onChangeText={props.onChangeText}
     />
   );
 };

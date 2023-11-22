@@ -8,7 +8,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Home({ navigation }: Props) {
+export default function Home({ navigation }: ReadOnly<Props>) {
     GetLoggedUser()
         .then((user: { login: any; token: any; }) => {
         if (user.login != "") {
@@ -23,7 +23,7 @@ export default function Home({ navigation }: Props) {
     <View>
       <SurfaceTemplate>
         <ButtonTemplate 
-          handleClick={() =>  {
+          onPress={() =>  {
             navigation.navigate('Connexion');
             
           }}
@@ -31,7 +31,7 @@ export default function Home({ navigation }: Props) {
             Connexion
         </ButtonTemplate>
         <ButtonTemplate 
-          handleClick={() => navigation.navigate('Inscription')} 
+          onPress={() => navigation.navigate('Inscription')} 
           mode='outlined'>Inscription
           </ButtonTemplate>
           <GoogleUp/>

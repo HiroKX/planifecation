@@ -26,16 +26,16 @@ export default function Login({ navigation }: any) {
                     <TextInputTemplate
                     label="Identifiant"
                     value={login}
-                    handleChangeText={(text) => setLogin(text)}
+                    onChangeText={(text) => setLogin(text)}
                     />
                     <TextInputTemplate
                     label="Mot de passe"
                     mode='outlined'
                     value={password}
-                    handleChangeText={(text) => setPassword(text)}
+                    onChangeText={(text) => setPassword(text)}
                     secureTextEntry={true}/>
                     <ButtonTemplate
-                      handleClick={async () => {
+                      onPress={async () => {
                           await handleClick(client, login, password, navigation);
                       }}>
                         Se connecter

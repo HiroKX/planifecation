@@ -1,23 +1,23 @@
-import { Button } from 'react-native-paper';
+import { Button as PaperButton } from 'react-native-paper';
 import { GestureResponderEvent, StyleSheet } from 'react-native';
 
-type ContainerProps = {
-    children:React.ReactNode;
-    mode?: 'contained' | 'outlined' | 'text' | 'elevated' | 'contained-tonal';
-    textColor?: string;
-    handleClick?: (e : GestureResponderEvent) => void;
-  };
+interface ButtonOptions {
+  children: React.ReactNode;
+  mode?: 'contained' | 'outlined' | 'text' | 'elevated' | 'contained-tonal';
+  textColor?: string;
+  onPress?: (e : GestureResponderEvent) => void;
+}
 
-export default function ButtonTemplate(props: Readonly<ContainerProps>) {
+export default function ButtonTemplate(props: Readonly<ButtonOptions>) {
     return (
-        <Button
+        <PaperButton
         style={styles.button}
         mode={props.mode ?? 'contained'}
-        textColor={props.textColor }
-        onPress={props.handleClick}
+        textColor={props.textColor}
+        onPress={props.onPress}
         >
           {props.children}
-      </Button>
+      </PaperButton>
     );
 } 
 
