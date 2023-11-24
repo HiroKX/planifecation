@@ -1,5 +1,5 @@
-import SurfaceTemplate from '../templates/SurfaceTemplate';
-import AppTemplate from '../templates/AppTemplate';
+import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import AppTemplate from '../AppTemplate';
 import {GetLoggedUser, DisconnectUser} from "../../services/AuthenticationService";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';

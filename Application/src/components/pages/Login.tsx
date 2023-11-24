@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import SurfaceTemplate from '../templates/SurfaceTemplate';
-import TextInputTemplate from '../templates/TextInputTemplate';
-import ButtonTemplate from '../templates/ButtonTemplate';
+import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import TextInputTemplate from '../atoms/TextInputTemplate';
+import ButtonTemplate from '../atoms/ButtonTemplate';
 import {ApolloConsumer} from "@apollo/client";
 import {LogUser} from "../../services/AuthenticationService";
 

@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
-import SurfaceTemplate from '../templates/SurfaceTemplate';
-import ButtonTemplate from '../templates/ButtonTemplate';
-import GoogleUp from '../sso/GoogleUp';
+import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import ButtonTemplate from '../atoms/ButtonTemplate';
+import GoogleButton from './sso/GoogleButton';
 import {GetLoggedUser} from "../../services/AuthenticationService";
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -34,7 +34,7 @@ export default function Home({ navigation }: Props) {
           handleClick={() => navigation.navigate('Inscription')} 
           mode='outlined'>Inscription
           </ButtonTemplate>
-          <GoogleUp/>
+          <GoogleButton/>
       </SurfaceTemplate>
     </View>
   );
