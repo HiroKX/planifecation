@@ -1,18 +1,13 @@
 import { Surface as PaperCard } from 'react-native-paper';
+import { Props as PaperCardProps } from 'react-native-paper/src/components/Surface'
 import { StyleSheet } from 'react-native';
 
-interface SurfaceOptions {
-    children:React.ReactNode;
-  };
-
-
-export default function SurfaceTemplate(props: Readonly<SurfaceOptions>) {
+export default function SurfaceTemplate(props: Readonly<PaperCardProps>) {
     return (
         <PaperCard 
             style={styles.surface}
-            mode='elevated'
-            elevation={4}>
-                {props.children}
+            mode={ props.mode ?? 'elevated'}
+            elevation={props.elevation ?? 4}>
         </PaperCard>
     );
 } 

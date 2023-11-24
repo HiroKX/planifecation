@@ -6,7 +6,7 @@ import GoogleAuth  from '../../../controllers/sso/GoogleAuth'
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-function GoogleUp({navigation}: Props) {
+function GoogleUp({navigation}: Readonly<Props>) {
     function handlePress(){
         GoogleAuth();
         navigation.navigate('Dashboard');
