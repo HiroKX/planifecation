@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import ButtonTemplate from '../atoms/ButtonTemplate';
-import GoogleButton from './sso/GoogleButton';
+import GoogleButton from '../atoms/sso/GoogleButton';
 import {GetLoggedUser} from "../../services/AuthenticationService";
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

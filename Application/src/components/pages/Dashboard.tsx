@@ -13,18 +13,17 @@ async function Disconnect({navigation}:Props) {
             index: 0,
             routes: [{ name: 'Accueil' }],
         });
-        //navigation.replace('Accueil');
     });
 }
 
-export default function Dashboard({ navigation }: Props) {
+export default function Dashboard({ navigation }: Readonly<Props>) {
     GetLoggedUser().then((user: { login: any; token: any; }) => {
         console.log("Everybody says 'welcome on the dashboard' to ", user.login);
         console.log("Look at his beautiful token : ", user.token);
     });
   return (
       <SurfaceTemplate>
-          <AppTemplate icon="door-sliding" handleClick={async () => await Disconnect(navigation) } />
+          <AppTemplate icon="door-sliding" onPress={async () => await Disconnect } />
       </SurfaceTemplate>
   );
 }
