@@ -5,9 +5,7 @@ import { Props as PaperTextInputProps } from 'react-native-paper/src/components/
 const TextInputTemplate = (props: Readonly<PaperTextInputProps>) => {
 
   return (
-    <PaperTextInput>
-      {props.children}
-    </PaperTextInput>
+    <PaperTextInput {...props}/>
   );
 };
 

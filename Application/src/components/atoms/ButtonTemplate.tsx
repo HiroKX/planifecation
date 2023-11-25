@@ -3,11 +3,7 @@ import { Props as PaperButtonProps } from 'react-native-paper/src/components/But
 import {StyleSheet} from 'react-native';
 
 export default function ButtonTemplate(props: Readonly<PaperButtonProps>) {
-    return (
-      <PaperButton>
-        {props.children}
-      </PaperButton>
-    );
+    return <PaperButton style={styles.button} {...props}/>
 } 
 
 const styles = StyleSheet.create({

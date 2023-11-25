@@ -25,7 +25,6 @@ export default function Home({ navigation }: Readonly<Props>) {
         <ButtonTemplate 
           onPress={() =>  {
             navigation.navigate('Connexion');
-            
           }}
         >
             Connexion
