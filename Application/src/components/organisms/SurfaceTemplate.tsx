@@ -7,9 +7,8 @@ export default function SurfaceTemplate(props: Readonly<PaperCardProps>) {
         <PaperCard 
             style={styles.surface}
             mode={ props.mode ?? 'elevated'}
-            elevation={props.elevation ?? 4}>
-            {props.children}
-        </PaperCard>
+            elevation={props.elevation ?? 4}             
+            {...props}/>
     );
 } 
 
