@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 export default function ButtonTemplate(props: Readonly<PaperButtonProps>) {
     return (
       <PaperButton>
+        {props.children}
       </PaperButton>
     );
 } 
