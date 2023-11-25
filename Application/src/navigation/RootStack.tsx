@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator<StackParamList>();
 function RootStack(): ReactNode {
   return (
     <Stack.Navigator
-      initialRouteName='Accueil'
+      initialRouteName="Accueil"
       screenOptions={{
         headerStyle: {
           backgroundColor: mainTheme.colors.primary,
