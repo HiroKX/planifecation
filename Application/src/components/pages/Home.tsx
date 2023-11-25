@@ -1,10 +1,14 @@
 import { StyleSheet, View } from 'react-native';
-import SurfaceTemplate from '../templates/SurfaceTemplate';
-import ButtonTemplate from '../templates/ButtonTemplate';
-import GoogleUp from '../sso/GoogleUp';
+import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import ButtonTemplate from '../atoms/ButtonTemplate';
+import GoogleButton from '../atoms/sso/GoogleButton';
 import {GetLoggedUser} from "../../services/AuthenticationService";
+import { StackParamList } from '../../navigation/RootStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export default function Home({ navigation }: any) {
+type Props = NativeStackScreenProps<StackParamList>;
+
+export default function Home({ navigation }: Readonly<Props>) {
     GetLoggedUser()
         .then((user: { login: any; token: any; }) => {
         if (user.login != "") {
@@ -19,7 +23,7 @@ export default function Home({ navigation }: any) {
     <View>
       <SurfaceTemplate>
         <ButtonTemplate 
-          handleClick={() =>  {
+          onPress={() =>  {
             navigation.navigate('Connexion');
             
           }}
@@ -27,10 +31,10 @@ export default function Home({ navigation }: any) {
             Connexion
         </ButtonTemplate>
         <ButtonTemplate 
-          handleClick={() => navigation.navigate('Inscription')} 
+          onPress={() => navigation.navigate('Inscription')} 
           mode='outlined'>Inscription
           </ButtonTemplate>
-          <GoogleUp/>
+          <GoogleButton/>
       </SurfaceTemplate>
     </View>
   );
