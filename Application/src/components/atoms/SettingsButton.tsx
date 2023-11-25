@@ -2,7 +2,6 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { StackParamList } from '../../navigation/RootStack';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { isLoggedUser } from '../../services/AuthenticationService';
 
 
 type Props = StackNavigationProp<StackParamList>;

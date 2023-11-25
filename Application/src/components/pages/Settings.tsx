@@ -1,4 +1,4 @@
-import { Divider, Switch, Text} from 'react-native-paper';
+import { Divider, Switch } from 'react-native-paper';
 import { DisconnectUser } from '../../services/AuthenticationService';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
