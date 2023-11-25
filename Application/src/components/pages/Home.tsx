@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
-import ButtonTemplate from '../atoms/ButtonTemplate';
+import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import GoogleButton from '../atoms/sso/GoogleButton';
 import {GetLoggedUser} from "../../services/AuthenticationService";
 import { StackParamList } from '../../navigation/RootStack';
@@ -21,7 +21,7 @@ export default function Home({ navigation }: Readonly<Props>) {
         .catch((error: any) => { console.log("No logged user.") });
   return (
     <View>
-      <SurfaceTemplate>
+      <SurfaceTemplate style={styles.container}>
         <ButtonTemplate 
           onPress={() =>  {
             navigation.navigate('Connexion');
@@ -42,5 +42,8 @@ export default function Home({ navigation }: Readonly<Props>) {
 const styles = StyleSheet.create({
   button : {
     margin: 5,
+  },
+  container: {
+    alignItems: 'center',
   }
 });

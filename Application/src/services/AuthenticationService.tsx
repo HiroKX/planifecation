@@ -59,6 +59,17 @@ export async function GetLoggedUser  () {
     }
 }
 
+export async function isLoggedUser(): Promise<boolean> {
+    try {
+        const jsonValue = await AsyncStorage.getItem('loggedUser');
+        if (jsonValue != null) return true;
+        else return false;
+    } catch (e) {
+        console.error("GetLoggedUser error : ", e);
+        return false;
+    }
+}
+
 export async function DisconnectUser() {
     try {
         await AsyncStorage.removeItem('loggedUser');

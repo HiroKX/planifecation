@@ -9,6 +9,6 @@ export default function ButtonTemplate(props: Readonly<PaperButtonProps>) {
 const styles = StyleSheet.create({
     button : {
       margin: 5,
-    }});
+  }});
 
     
