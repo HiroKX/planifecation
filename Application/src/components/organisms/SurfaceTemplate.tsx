@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 export default function SurfaceTemplate(props: Readonly<PaperCardProps>) {
   return (
     <PaperCard
-      style={styles.surface}
+      style={props.style ?? styles.surface}
       mode={props.mode ?? 'elevated'}
       elevation={props.elevation ?? 4}
       {...props}
