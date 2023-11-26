@@ -19,7 +19,11 @@ jobs:
         node-version: '14' # Ou la version de Node.js que vous utilisez
 
     - name: Install Dependencies
-      run: yarn install
+      run: |
+        cd Application
+        yarn install
 
     - name: Run Tests
-      run: yarn test
+      run: |
+        cd Application
+        yarn test
