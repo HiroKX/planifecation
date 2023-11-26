@@ -18,4 +18,5 @@
           "plugins": [["module:react-native-dotenv", { "path": "./.env.test" }]],
       }
   }
-  }
+}
+
