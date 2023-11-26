@@ -13,6 +13,7 @@
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
+    "@react-navigation/stack": "^6.3.20",
     "dotenv": "^16.3.1",
     "expo": "~49.0.15",
     "expo-constants": "^14.4.2",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.14",
+    "prettier": "^3.1.0",
     "react-native-dotenv": "^3.4.9",
     "typescript": "^5.1.3"
   },
