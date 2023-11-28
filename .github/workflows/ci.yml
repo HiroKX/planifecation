@@ -2,9 +2,9 @@ name: Run Tests
 
 on:
   push:
-    branches: [ ajout-de-ci-cd]
+    branches: [ dev ]
   pull_request:
-    branches: [ ajout-de-ci-cd ]
+    branches: [ dev ]
 
 jobs:
   build-and-test:
