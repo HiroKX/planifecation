@@ -11,12 +11,12 @@
         "safe": false,
         "allowUndefined": true,
         "verbose": false
-      }]
-    ],
-    "env": {
-      "test": {
-          "plugins": [["module:react-native-dotenv", { "path": "./.env.test" }]],
       }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [["module:react-native-dotenv", { "path": "./.env.test" }]]
+    }
   }
 }
-
