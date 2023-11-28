@@ -3,22 +3,7 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
-import { CreateUser, LogUser } from '../../services/AuthenticationService';
-
-async function onPress(client: any, login: string, password: string, navigation: any) {
-    console.debug("SignUp.OnPress");
-    await CreateUser({client, login, password}).then(async userId => {
-        if (userId != 0) await LogUser({client, login, password}).then(token => {
-            if (token != "") {
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: 'Dashboard', username: login, token: token }],
-                });
-            }
-            else navigation.replace('Connexion');
-        });
-    })
-}
+import { SignUpUser } from '../../controllers/AuthenticationController';
 
 export default function SignUp({ navigation }: any) {
   const [login, setLogin] = useState('');
@@ -50,7 +35,7 @@ export default function SignUp({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await onPress(client, login, password, navigation);
+              await SignUpUser(client, login, password, navigation);
             }}
           >
             M'inscrire

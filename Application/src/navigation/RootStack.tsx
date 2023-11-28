@@ -9,11 +9,11 @@ import SettingsButton from '../components/atoms/SettingsButton';
 import { mainTheme } from '../environment/themes';
 
 export type StackParamList = {
-  Accueil: {firstLoading: boolean, fromDashboard: boolean};
+  Accueil: undefined;
   Connexion: undefined;
   Inscription: undefined;
   Paramètres: undefined;
-  Dashboard: {username:string, token:string};
+  Dashboard: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

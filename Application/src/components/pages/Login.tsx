@@ -3,19 +3,7 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
-import { LogUser } from '../../services/AuthenticationService';
-
-async function onPress(client: any, login: string, password: string, navigation: any) {
-    console.debug("Login.OnPress");
-    await LogUser({client, login, password}).then(token => {
-        if (token != "") {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Dashboard', params: {username: login, token: token} }],
-            });
-        }
-    })
-}
+import { SignInUser} from "../../controllers/AuthenticationController";
 
 export default function Login({ navigation }: any) {
   const [login, setLogin] = useState('');
@@ -38,7 +26,7 @@ export default function Login({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await onPress(client, login, password, navigation);
+              await SignInUser(client, login, password, navigation);
             }}
           >
             Se connecter
