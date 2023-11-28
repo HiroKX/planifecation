@@ -13,7 +13,7 @@ export default function SurfaceTemplate(props: Readonly<PaperCardProps>) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles  = StyleSheet.create({
   surface: {
     padding: 10,
     marginLeft: 20,

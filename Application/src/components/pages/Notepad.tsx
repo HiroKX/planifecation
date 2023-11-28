@@ -1,52 +1,39 @@
 import { TextInput } from "react-native-paper";
 import SurfaceTemplate from "../organisms/SurfaceTemplate";
 import TextInputTemplate from "../atoms/styles/TextInputTemplate";
-import { ScrollView } from "react-native";
+import { View } from "react-native";
+import { StyleSheet } from 'react-native';
+import { useState } from "react";
+
+
 
 export default function Notepad(){
+    const [text, setText] = useState('');
 
-    return(
-        <SurfaceTemplate 
-        style={styles.surface}>
-            <TextInputTemplate 
-            placeholder="Titre" 
-            style={styles.title}/>
+    return (
+      <View style={styles.container}>
+        <TextInput
+      style={styles.textInput}
+      onChangeText={(newText) => setText(newText)}
+      value={text}
+      multiline
+      placeholder="Tapez votre texte ici"
+    />
+  </View>
+);
+};
 
-            <ScrollView 
-            style={styles.scroll}>
-                <TextInput
-                    multiline
-                    spellCheck={false}
-                    style={styles.content}
-                />
-            </ScrollView>
-        </SurfaceTemplate>
-    )
-}
-
-const styles = ({
-    surface:{
-        //height: '100%',
-    },
-    title: {
-      fontSize: 25,
-    },
-    content: {
-        borderBottomWidth: 0,
-        lineHeight: 20,
-        fontSize: 15,
-        padding: 0,
-        paddingHorizontal: 12,
-        paddingBottom: 150,
-        //height: '100%',
-
-    },
-    scroll: {
-        //height: '100%',
-    },
-    /*
-    pad:{
-        height:1500,
-
-    },*/
+const styles = StyleSheet.create({
+container: {
+  flex: 1,
+  padding: 10,
+},
+textInput: {
+  flex: 1,
+  borderColor: 'gray',
+  borderWidth: 1,
+  padding: 10,
+  textAlignVertical:'top',
+},
 });
+
