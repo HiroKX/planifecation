@@ -3,12 +3,12 @@ import {
   Switch as PaperSwitch,
   Text as PaperText,
 } from 'react-native-paper';
-import { DisconnectUser } from '../../services/AuthenticationService';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import { useState } from 'react';
+import { LogoutUser } from '../../controllers/AuthenticationController';
 
-function Settings() {
+function Settings({navigation}: any) {
   const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
   const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
 
@@ -24,18 +24,20 @@ function Settings() {
         ></PaperSwitch>
       </SurfaceTemplate>
       <Divider style={{ height: 1 }} />
-      <ButtonTemplate onPress={DisconnectUser}>
+      <ButtonTemplate onPress={() => {}}>
         Modifier mon profil
       </ButtonTemplate>
-      <ButtonTemplate onPress={DisconnectUser}>
+      <ButtonTemplate onPress={() => {}}>
         Télécharger mes données
       </ButtonTemplate>
-      <ButtonTemplate onPress={DisconnectUser}>
+      <ButtonTemplate onPress={() => {}}>
         Supprimer mon compte
       </ButtonTemplate>
-      <ButtonTemplate onPress={DisconnectUser}>Se déconnecter</ButtonTemplate>
+      <ButtonTemplate onPress={async () => {
+          await LogoutUser(navigation);
+      }}>Se déconnecter</ButtonTemplate>
       <Divider style={{ height: 1 }} />
-      <ButtonTemplate onPress={DisconnectUser}>
+      <ButtonTemplate onPress={() => {}}>
         Accéder aux conditions générales
       </ButtonTemplate>
     </SurfaceTemplate>
