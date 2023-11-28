@@ -1,31 +1,24 @@
 import { StyleSheet, View } from 'react-native';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
-import GoogleButton from '../atoms/sso/GoogleButton';
-import { GetLoggedUser } from '../../services/AuthenticationService';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { GetLoggedUser } from '../../controllers/AuthenticationController';
+import { ReactNode } from 'react';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Home({ navigation }: Readonly<Props>) {
-  GetLoggedUser()
-    .then((user: { login: any; token: any }) => {
-      if (user.login != '') {
-        console.log(
-          'Welcome back ',
-          user.login,
-          '. Redirection to dashboard...'
-        );
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Dashboard' }],
-        });
-      }
-    })
-    .catch((error: any) => {
-      console.log('No logged user.');
-    });
+export default function Home({ navigation }: Readonly<Props>): ReactNode {
+  GetLoggedUser().then(user => {
+    if (user.username != null && user.token != null) {
+      console.log('Welcome back ', user.username);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Dashboard' }],
+      });
+    }
+  });
+
   return (
     <View>
       <SurfaceTemplate style={styles.container}>
@@ -42,7 +35,6 @@ export default function Home({ navigation }: Readonly<Props>) {
         >
           Inscription
         </ButtonTemplate>
-        <GoogleButton />
       </SurfaceTemplate>
     </View>
   );

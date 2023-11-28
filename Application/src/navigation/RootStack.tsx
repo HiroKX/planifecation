@@ -12,8 +12,8 @@ export type StackParamList = {
   Accueil: undefined;
   Connexion: undefined;
   Inscription: undefined;
-  Dashboard: undefined;
   Paramètres: undefined;
+  Dashboard: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

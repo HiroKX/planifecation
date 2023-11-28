@@ -3,28 +3,13 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
-import { CreateUser, LogUser } from '../../services/AuthenticationService';
+import { SignUpUser } from '../../controllers/AuthenticationController';
+import { StackParamList } from '../../navigation/RootStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-async function handleClick(
-  client: any,
-  login: string,
-  password: string,
-  navigation: any
-) {
-  await CreateUser({ client, login, password }).then(async userId => {
-    if (userId != 0)
-      await LogUser({ client, login, password }).then(token => {
-        if (token != '') {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Dashboard' }],
-          });
-        } else navigation.replace('Connexion');
-      });
-  });
-}
+type Props = NativeStackScreenProps<StackParamList>;
 
-export default function SignUp({ navigation }: any) {
+export default function SignUp(props: Readonly<Props>) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -54,7 +39,7 @@ export default function SignUp({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await handleClick(client, login, password, navigation);
+              await SignUpUser(client, login, password, props);
             }}
           >
             M'inscrire

@@ -3,27 +3,16 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
-import { LogUser } from '../../services/AuthenticationService';
+import { SignInUser } from '../../controllers/AuthenticationController';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackParamList } from '../../navigation/RootStack';
 
-async function handleClick(
-  client: any,
-  login: string,
-  password: string,
-  navigation: any
-) {
-  await LogUser({ client, login, password }).then(token => {
-    if (token != '') {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Dashboard' }],
-      });
-    }
-  });
-}
+type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Login({ navigation }: any) {
+export default function Login(props: Readonly<Props>) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+
   return (
     <ApolloConsumer>
       {client => (
@@ -42,7 +31,7 @@ export default function Login({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await handleClick(client, login, password, navigation);
+              await SignInUser(client, login, password, props);
             }}
           >
             Se connecter
