@@ -5,20 +5,16 @@ import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
 import { LogUser } from '../../services/AuthenticationService';
 
-async function handleClick(
-  client: any,
-  login: string,
-  password: string,
-  navigation: any
-) {
-  await LogUser({ client, login, password }).then(token => {
-    if (token != '') {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Dashboard' }],
-      });
-    }
-  });
+async function onPress(client: any, login: string, password: string, navigation: any) {
+    console.debug("Login.OnPress");
+    await LogUser({client, login, password}).then(token => {
+        if (token != "") {
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Dashboard', params: {username: login, token: token} }],
+            });
+        }
+    })
 }
 
 export default function Login({ navigation }: any) {
@@ -42,7 +38,7 @@ export default function Login({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await handleClick(client, login, password, navigation);
+              await onPress(client, login, password, navigation);
             }}
           >
             Se connecter

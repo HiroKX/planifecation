@@ -10,6 +10,8 @@ import {
 } from '@apollo/client';
 import { URI_API } from '@env';
 import RootStack from './src/navigation/RootStack';
+import {store} from './src/utils/redux/Store';
+import {Provider} from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,12 +23,14 @@ export default function App() {
   });
 
   return (
-    <ApolloProvider client={client}>
-      <PaperProvider theme={mainTheme}>
-        <NavigationContainer theme={mainTheme}>
-          <RootStack />
-        </NavigationContainer>
-      </PaperProvider>
-    </ApolloProvider>
+    <Provider store={store}>
+        <ApolloProvider client={client}>
+          <PaperProvider theme={mainTheme}>
+            <NavigationContainer theme={mainTheme}>
+              <RootStack />
+            </NavigationContainer>
+          </PaperProvider>
+        </ApolloProvider>
+    </Provider>
   );
 }

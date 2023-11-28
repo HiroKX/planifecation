@@ -1,35 +1,34 @@
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import AppTemplate from '../AppTemplate';
-import {
-  GetLoggedUser,
-  DisconnectUser,
-} from '../../services/AuthenticationService';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
+import {useAppDispatch} from "../../utils/redux/Store";
+import {updateLoggedUser} from "../../utils/redux/slices/LoggedUserSlice";
 
-type Props = NativeStackScreenProps<StackParamList>;
+type Props = NativeStackScreenProps<StackParamList, 'Dashboard'>;
 
-export default function Dashboard({ navigation }: Readonly<Props>) {
-  GetLoggedUser().then((user: { login: any; token: any }) => {
-    console.log("Everybody says 'welcome on the dashboard' to ", user.login);
-    console.log('Look at his beautiful token : ', user.token);
-  });
-
-  async function Disconnect() {
-    console.log('Disconnecting...');
-    await DisconnectUser().then(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Accueil' }],
-      });
-    });
-  }
+export default function Dashboard({ navigation, route }: Readonly<Props>) {
+    const dispatch = useAppDispatch();
+    console.debug("Welcome to the Dashboard,");
+    console.debug("Params = ", route.params);
+    if (route.params != undefined && route.params.username != "") {
+        console.debug("Getting useAppDispatch");
+        console.debug("Dispatching updateLoggedUser");
+        dispatch(updateLoggedUser({id: 0, username: route.params.username, password: "", token: route.params.token}));
+        console.debug("Dispatched");
+    }
 
   return (
     <SurfaceTemplate>
       <AppTemplate
         icon="door-sliding"
-        onPress={async () => await Disconnect()}
+        onPress={async () => {
+            console.log("Disconnecting...");
+            navigation.reset({
+                index: 0,
+                routes: [{name: 'Accueil'}],
+            });
+        }}
       />
     </SurfaceTemplate>
   );

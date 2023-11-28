@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CREATE_USER = gql`
   mutation createUser($login: String!, $password: String!) {
@@ -15,66 +14,28 @@ const LOG_USER = gql`
   }
 `;
 
-export async function CreateUser(props: any): Promise<Number> {
-  let userId = await CreateFromClient(props);
-  return new Promise<Number>((resolve, reject) => {
-    if (userId != 0) {
-      console.debug('User ', userId, ' created with login ', props.login);
-      resolve(userId);
-    } else reject('Token is empty');
-  });
+export async function CreateUser (props: any): Promise<Number> {
+    console.debug("AuthenticationService.CreateUser");
+    let userId = await CreateFromClient(props);
+    return new Promise<Number>((resolve, reject) => {
+        if (userId != 0) {
+            console.log("User ", userId, " created with login ", props.login);
+            resolve(userId);
+        }
+        else reject("Token is empty");
+    });
 }
 
 export async function LogUser(props: any): Promise<string> {
-  let token = await LogUserFromClient(props);
-  if (token != '') {
-    console.debug('User ', props.login, ' logged in');
-    try {
-      const jsonValue = JSON.stringify({
-        login: props.login,
-        token: token,
-      });
-      await AsyncStorage.setItem('loggedUser', jsonValue);
-    } catch (e) {
-      console.error('LogUser AsyncStorage error : ', e);
-    }
-  }
-  return new Promise<string>((resolve, reject) => {
-    if (token != '') resolve(token);
-    else reject('Token is empty');
-  });
-}
-
-export async function GetLoggedUser() {
-  try {
-    const jsonValue = await AsyncStorage.getItem('loggedUser');
-
-    return new Promise<any>((resolve, reject) => {
-      if (jsonValue != null) resolve(JSON.parse(jsonValue));
-      else reject('No logged user');
+    console.debug("AuthenticationService.LogUser");
+    let token = await LogUserFromClient(props);
+    return new Promise<string>((resolve, reject) => {
+        if (token != "") {
+            console.log("User ", props.login, " logged in")
+            resolve(token);
+        }
+        else reject("Token is empty");
     });
-  } catch (e) {
-    console.error('GetLoggedUser error : ', e);
-  }
-}
-
-export async function isLoggedUser(): Promise<boolean> {
-  try {
-    const jsonValue = await AsyncStorage.getItem('loggedUser');
-    if (jsonValue != null) return true;
-    else return false;
-  } catch (e) {
-    console.error('GetLoggedUser error : ', e);
-    return false;
-  }
-}
-
-export async function DisconnectUser() {
-  try {
-    await AsyncStorage.removeItem('loggedUser');
-  } catch (e) {
-    console.error('Disconnect error : ', e);
-  }
 }
 
 // ---------------- Calls to the ApolloClient ----------------

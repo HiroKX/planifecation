@@ -5,23 +5,19 @@ import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
 import { CreateUser, LogUser } from '../../services/AuthenticationService';
 
-async function handleClick(
-  client: any,
-  login: string,
-  password: string,
-  navigation: any
-) {
-  await CreateUser({ client, login, password }).then(async userId => {
-    if (userId != 0)
-      await LogUser({ client, login, password }).then(token => {
-        if (token != '') {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'Dashboard' }],
-          });
-        } else navigation.replace('Connexion');
-      });
-  });
+async function onPress(client: any, login: string, password: string, navigation: any) {
+    console.debug("SignUp.OnPress");
+    await CreateUser({client, login, password}).then(async userId => {
+        if (userId != 0) await LogUser({client, login, password}).then(token => {
+            if (token != "") {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Dashboard', username: login, token: token }],
+                });
+            }
+            else navigation.replace('Connexion');
+        });
+    })
 }
 
 export default function SignUp({ navigation }: any) {
@@ -54,7 +50,7 @@ export default function SignUp({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await handleClick(client, login, password, navigation);
+              await onPress(client, login, password, navigation);
             }}
           >
             M'inscrire

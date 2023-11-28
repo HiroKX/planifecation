@@ -2,30 +2,25 @@ import { StyleSheet, View } from 'react-native';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import GoogleButton from '../atoms/sso/GoogleButton';
-import { GetLoggedUser } from '../../services/AuthenticationService';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useAppSelector } from "../../utils/redux/Store";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Home({ navigation }: Readonly<Props>) {
-  GetLoggedUser()
-    .then((user: { login: any; token: any }) => {
-      if (user.login != '') {
-        console.log(
-          'Welcome back ',
-          user.login,
-          '. Redirection to dashboard...'
-        );
+    const loggedUserState = useAppSelector(state => state.loggedUser);
+    const loggedUser = loggedUserState.loggedUser;
+
+    console.debug("Called useAppSelector to get loggedUser: ", loggedUser);
+    if (loggedUser != undefined && loggedUser.username != "") {
+        console.log("Welcome back ", loggedUser.username, ". Redirection to dashboard...");
         navigation.reset({
-          index: 0,
-          routes: [{ name: 'Dashboard' }],
+            index: 0,
+            routes: [{name: 'Dashboard'}],
         });
-      }
-    })
-    .catch((error: any) => {
-      console.log('No logged user.');
-    });
+    }
+
   return (
     <View>
       <SurfaceTemplate style={styles.container}>
@@ -42,7 +37,7 @@ export default function Home({ navigation }: Readonly<Props>) {
         >
           Inscription
         </ButtonTemplate>
-        <GoogleButton />
+
       </SurfaceTemplate>
     </View>
   );
