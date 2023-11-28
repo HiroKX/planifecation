@@ -3,16 +3,11 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import * as SecureStore from 'expo-secure-store';
-import {useEffect, useState} from "react";
-import User from "../../models/User";
-import GetLoggedUser, {GetLoggedUserToken, GetLoggedUserUsername} from "../../controllers/AuthenticationController";
+import { GetLoggedUser } from "../../controllers/AuthenticationController";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Home({navigation}: Readonly<Props>) {
-    console.debug("We are in the Home view");
-
     GetLoggedUser().then((user => {
         if (user.username != null && user.token != null) {
             console.log("Welcome back ", user.username);
