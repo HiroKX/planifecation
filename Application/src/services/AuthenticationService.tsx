@@ -1,28 +1,5 @@
 import { gql } from '@apollo/client';
 
-// ---------------- METIER ----------------
-
-export async function CreateUser(props: any): Promise<Number> {
-  console.debug('AuthenticationService.CreateUser');
-  let userId = await CreateFromClient(props);
-  return new Promise<Number>((resolve, reject) => {
-    if (userId != 0) {
-      resolve(userId);
-    } else reject('Error while creating user');
-  });
-}
-
-export async function LogUser(props: any): Promise<string> {
-  console.debug('AuthenticationService.LogUser');
-  let token = await LogUserFromClient(props);
-  return new Promise<string>((resolve, reject) => {
-    if (token != '') resolve(token);
-    else reject('Error while logging user');
-  });
-}
-
-// ---------------- ApolloClient ----------------
-
 const CREATE_USER = gql`
   mutation createUser($login: String!, $password: String!) {
     createUser(login: $login, password: $password) {
@@ -37,8 +14,9 @@ const LOG_USER = gql`
   }
 `;
 
-const CreateFromClient = async (props: any): Promise<Number> => {
-  console.debug('AuthenticationService.CreateFromClient');
+export async function CreateUser(props: any): Promise<Number> {
+  console.debug('AuthenticationService.CreateUser');
+
   return props.client
     .mutate({
       mutation: CREATE_USER,
@@ -54,10 +32,11 @@ const CreateFromClient = async (props: any): Promise<Number> => {
       console.error('SignUp error:', error);
       return 0;
     });
-};
+}
 
-const LogUserFromClient = async (props: any): Promise<string> => {
-  console.debug('AuthenticationService.LogUserFromClient');
+export async function LogUser(props: any): Promise<string> {
+  console.debug('AuthenticationService.LogUser');
+
   return props.client
     .mutate({
       mutation: LOG_USER,
@@ -66,11 +45,11 @@ const LogUserFromClient = async (props: any): Promise<string> => {
         password: props.password,
       },
     })
-    .then((response: any): string => {
+    .then((response: any) => {
       return response.data.login;
     })
     .catch((error: any) => {
       console.error('Login error:', error);
       return '';
     });
-};
+}
