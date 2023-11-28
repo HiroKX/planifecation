@@ -1,5 +1,5 @@
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
-import AppTemplate from '../AppTemplate';
+import AppTemplate from '../atoms/AppTemplate';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
 import {
