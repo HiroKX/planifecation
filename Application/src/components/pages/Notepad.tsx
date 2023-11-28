@@ -8,10 +8,17 @@ import { useState } from "react";
 
 
 export default function Notepad(){
+    const [title, setTitle] = useState('');
     const [text, setText] = useState('');
 
     return (
-      <View style={styles.container}>
+      <SurfaceTemplate style={styles.container}>
+        <TextInput
+      style={styles.title}
+      onChangeText={(newTitle) => setTitle(newTitle)}
+      value={title}
+      placeholder="Titre"
+    />
         <TextInput
       style={styles.textInput}
       onChangeText={(newText) => setText(newText)}
@@ -19,7 +26,7 @@ export default function Notepad(){
       multiline
       placeholder="Tapez votre texte ici"
     />
-  </View>
+  </SurfaceTemplate>
 );
 };
 
@@ -27,6 +34,12 @@ const styles = StyleSheet.create({
 container: {
   flex: 1,
   padding: 10,
+},
+title: {
+    fontSize: 25,
+    padding: 10,
+    borderColor: 'gray',
+    borderWidth: 1,
 },
 textInput: {
   flex: 1,
