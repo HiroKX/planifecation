@@ -1,14 +1,18 @@
 import { CreateUser, LogUser } from '../services/AuthenticationService';
 import * as SecureStore from 'expo-secure-store';
+import { StackParamList } from '../navigation/RootStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { ApolloClient } from '@apollo/client';
 
+type Props = NativeStackScreenProps<StackParamList>;
 // ---------------- METIER ----------------
 
 export async function SignUpUser(
-  client: any,
-  login: string,
-  password: string,
-  navigation: any
-) {
+  client: Readonly<ApolloClient<Object>>,
+  login: Readonly<string>,
+  password: Readonly<string>,
+  navigation: Readonly<Props>
+): Promise<void> {
   console.debug('AuthenticationController.SignUpUser');
   await CreateUser({ client, login, password })
     .then(async userId => {
@@ -23,11 +27,11 @@ export async function SignUpUser(
 }
 
 export async function SignInUser(
-  client: any,
-  login: string,
-  password: string,
-  navigation: any
-) {
+  client: Readonly<ApolloClient<Object>>,
+  login: Readonly<string>,
+  password: Readonly<string>,
+  { navigation }: Readonly<Props>
+): Promise<void> {
   console.debug('AuthenticationController.SignInUser');
   await LogUser({ client, login, password })
     .then(async token => {
@@ -47,7 +51,9 @@ export async function SignInUser(
     });
 }
 
-export async function LogoutUser(navigation: any) {
+export async function LogoutUser({
+  navigation,
+}: Readonly<Props>): Promise<void> {
   console.debug('AuthenticationController.LogoutUser');
   await SecureStore.deleteItemAsync('loggedUser');
   await SecureStore.deleteItemAsync('loggedUserToken');
@@ -60,7 +66,10 @@ export async function LogoutUser(navigation: any) {
 
 // ---------------- GETTERS / SETTER ----------------
 
-export async function GetLoggedUser() {
+export async function GetLoggedUser(): Promise<{
+  username: string | null;
+  token: string | null;
+}> {
   console.debug('AuthenticationController.GetLoggedUser');
   const username = await SecureStore.getItemAsync('loggedUser');
   const token = await SecureStore.getItemAsync('loggedUserToken');
@@ -68,17 +77,20 @@ export async function GetLoggedUser() {
   return { username, token };
 }
 
-export async function GetLoggedUserUsername() {
+export async function GetLoggedUserUsername(): Promise<string | null> {
   console.debug('AuthenticationController.GetLoggedUserUsername');
   return await SecureStore.getItemAsync('loggedUser');
 }
 
-export async function GetLoggedUserToken() {
+export async function GetLoggedUserToken(): Promise<string | null> {
   console.debug('AuthenticationController.GetLoggedUserToken');
   return await SecureStore.getItemAsync('loggedUserToken');
 }
 
-async function SetLoggedUser(username: string, token: string) {
+async function SetLoggedUser(
+  username: Readonly<string>,
+  token: Readonly<string>
+): Promise<void> {
   console.debug('AuthenticationController.SetLoggedUser');
   await SecureStore.setItemAsync('loggedUser', username);
   await SecureStore.setItemAsync('loggedUserToken', token);

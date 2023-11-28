@@ -7,8 +7,12 @@ import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import { useState } from 'react';
 import { LogoutUser } from '../../controllers/AuthenticationController';
+import { StackParamList } from '../../navigation/RootStack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-function Settings({ navigation }: any) {
+type Props = NativeStackScreenProps<StackParamList>;
+
+function Settings(props: Readonly<Props>) {
   const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
   const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
 
@@ -31,7 +35,7 @@ function Settings({ navigation }: any) {
       <ButtonTemplate onPress={() => {}}>Supprimer mon compte</ButtonTemplate>
       <ButtonTemplate
         onPress={async () => {
-          await LogoutUser(navigation);
+          await LogoutUser(props);
         }}
       >
         Se déconnecter
