@@ -3,7 +3,7 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
-import { SignInUser } from "../../controllers/AuthenticationController";
+import { SignInUser } from '../../controllers/AuthenticationController';
 
 export default function Login({ navigation }: any) {
   const [login, setLogin] = useState('');

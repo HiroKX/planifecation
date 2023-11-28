@@ -14,6 +14,6 @@ export default {
     REACT_APP_GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
     URI_API: process.env.URI_API,
     SECRET_KEY: process.env.SECRET_KEY,
-    ENVIRONMENT: process.env.ENVIRONMENT
+    ENVIRONMENT: process.env.ENVIRONMENT,
   },
 };

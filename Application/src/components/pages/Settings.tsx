@@ -8,7 +8,7 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import { useState } from 'react';
 import { LogoutUser } from '../../controllers/AuthenticationController';
 
-function Settings({navigation}: any) {
+function Settings({ navigation }: any) {
   const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
   const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
 
@@ -24,18 +24,18 @@ function Settings({navigation}: any) {
         ></PaperSwitch>
       </SurfaceTemplate>
       <Divider style={{ height: 1 }} />
-      <ButtonTemplate onPress={() => {}}>
-        Modifier mon profil
-      </ButtonTemplate>
+      <ButtonTemplate onPress={() => {}}>Modifier mon profil</ButtonTemplate>
       <ButtonTemplate onPress={() => {}}>
         Télécharger mes données
       </ButtonTemplate>
-      <ButtonTemplate onPress={() => {}}>
-        Supprimer mon compte
-      </ButtonTemplate>
-      <ButtonTemplate onPress={async () => {
+      <ButtonTemplate onPress={() => {}}>Supprimer mon compte</ButtonTemplate>
+      <ButtonTemplate
+        onPress={async () => {
           await LogoutUser(navigation);
-      }}>Se déconnecter</ButtonTemplate>
+        }}
+      >
+        Se déconnecter
+      </ButtonTemplate>
       <Divider style={{ height: 1 }} />
       <ButtonTemplate onPress={() => {}}>
         Accéder aux conditions générales
