@@ -8,7 +8,7 @@ export interface AppConfig {
 }
 
 export default {
-  name: '@env',
+  name: 'Planifécation',
   version: '1.0.0',
   extra: {
     REACT_APP_GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,

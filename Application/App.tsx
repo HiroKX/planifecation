@@ -17,7 +17,6 @@ export default function App() {
   if (ENVIRONMENT != 'dev') console.debug = () => {};
 
   const client = new ApolloClient({
-    uri: URI_API,
     link: new HttpLink({ uri: URI_API }),
     cache: new InMemoryCache(),
   });
