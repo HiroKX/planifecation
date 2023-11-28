@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloClient, gql } from '@apollo/client';
 
 const CREATE_USER = gql`
   mutation createUser($login: String!, $password: String!) {
@@ -14,15 +14,19 @@ const LOG_USER = gql`
   }
 `;
 
-export async function CreateUser(props: any): Promise<Number> {
+export async function CreateUser(
+  client: Readonly<ApolloClient<Object>>,
+  login: Readonly<string>,
+  password: Readonly<string>
+): Promise<number> {
   console.debug('AuthenticationService.CreateUser');
 
-  return props.client
+  return client
     .mutate({
       mutation: CREATE_USER,
       variables: {
-        login: props.login,
-        password: props.password,
+        login: login,
+        password: password,
       },
     })
     .then((response: any) => {
@@ -34,15 +38,19 @@ export async function CreateUser(props: any): Promise<Number> {
     });
 }
 
-export async function LogUser(props: any): Promise<string> {
+export async function LogUser(
+  client: Readonly<ApolloClient<Object>>,
+  login: Readonly<string>,
+  password: Readonly<string>
+): Promise<string> {
   console.debug('AuthenticationService.LogUser');
 
-  return props.client
+  return client
     .mutate({
       mutation: LOG_USER,
       variables: {
-        username: props.login,
-        password: props.password,
+        username: login,
+        password: password,
       },
     })
     .then((response: any) => {

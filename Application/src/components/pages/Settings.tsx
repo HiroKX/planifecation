@@ -5,14 +5,14 @@ import {
 } from 'react-native-paper';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { LogoutUser } from '../../controllers/AuthenticationController';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-function Settings(props: Readonly<Props>) {
+function Settings(props: Readonly<Props>): ReactNode {
   const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
   const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
 

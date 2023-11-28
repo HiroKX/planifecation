@@ -14,7 +14,7 @@ export async function SignUpUser(
   navigation: Readonly<Props>
 ): Promise<void> {
   console.debug('AuthenticationController.SignUpUser');
-  await CreateUser({ client, login, password })
+  await CreateUser(client, login, password)
     .then(async userId => {
       if (userId != 0) {
         console.log('User', userId, 'created with login ', login);
@@ -33,7 +33,7 @@ export async function SignInUser(
   { navigation }: Readonly<Props>
 ): Promise<void> {
   console.debug('AuthenticationController.SignInUser');
-  await LogUser({ client, login, password })
+  await LogUser(client, login, password)
     .then(async token => {
       if (token != '') {
         await SetLoggedUser(login, token);

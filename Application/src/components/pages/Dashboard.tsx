@@ -6,14 +6,15 @@ import {
   GetLoggedUser,
   LogoutUser,
 } from '../../controllers/AuthenticationController';
+import { ReactNode } from 'react';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Dashboard({ navigation }: Readonly<Props>) {
+export default function Dashboard(props: Readonly<Props>): ReactNode {
   GetLoggedUser().then(user => {
     if (user.username == null || user.token == null) {
       console.error('No user logged in.');
-      navigation.reset({
+      props.navigation.reset({
         index: 0,
         routes: [{ name: 'Accueil' }],
       });
@@ -25,7 +26,7 @@ export default function Dashboard({ navigation }: Readonly<Props>) {
       <AppTemplate
         icon="door-sliding"
         onPress={async () => {
-          await LogoutUser(navigation);
+          await LogoutUser(props);
         }}
       />
     </SurfaceTemplate>

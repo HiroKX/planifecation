@@ -4,8 +4,12 @@ import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
 import { SignInUser } from '../../controllers/AuthenticationController';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackParamList } from '../../navigation/RootStack';
 
-export default function Login({ navigation }: any) {
+type Props = NativeStackScreenProps<StackParamList>;
+
+export default function Login(props: Readonly<Props>) {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
@@ -27,7 +31,7 @@ export default function Login({ navigation }: any) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await SignInUser(client, login, password, navigation);
+              await SignInUser(client, login, password, props);
             }}
           >
             Se connecter

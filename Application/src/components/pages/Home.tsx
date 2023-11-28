@@ -4,10 +4,11 @@ import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GetLoggedUser } from '../../controllers/AuthenticationController';
+import { ReactNode } from 'react';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Home({ navigation }: Readonly<Props>) {
+export default function Home({ navigation }: Readonly<Props>): ReactNode {
   GetLoggedUser().then(user => {
     if (user.username != null && user.token != null) {
       console.log('Welcome back ', user.username);

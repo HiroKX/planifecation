@@ -1,9 +1,9 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import { REACT_APP_GOOGLE_CLIENT_ID } from '@env';
-import { User } from '../../models/User';
+//import { User } from '../../models/User';
 
-export default async function GoogleAuth(): User {
+export default async function GoogleAuth() {
   const YOUR_CLIENT_ID = REACT_APP_GOOGLE_CLIENT_ID;
   const YOUR_REDIRECT_URI = 'http://localhost:3001/google';
   const REDIRECT_URI = 'exp://192.168.1.59:8081';
