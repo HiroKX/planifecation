@@ -11,9 +11,22 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  login     String     @unique @db.VarChar(255)
+  id        Int        @id @unique @default(autoincrement())
+  username  String     @unique @db.VarChar(255)
   password  String     @db.VarChar(255)
+  notes     Note[]
   
   @@map(name: "user")
+}
+
+model Note {
+  id        Int        @id @unique @default(autoincrement())
+  title     String     @db.VarChar(255)
+  content   String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  user      User       @relation(fields: [userId], references: [id])
+  userId    Int
+
+  @@map(name: "note")
 }
