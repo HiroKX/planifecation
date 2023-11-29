@@ -6,6 +6,11 @@ on:
       - dev
     path:
       - 'Serveur/**'
+  pull_request:
+    branches:
+      - dev
+    path:
+      - 'Serveur/**'
 
 jobs:
   deploy:
