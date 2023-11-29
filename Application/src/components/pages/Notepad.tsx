@@ -1,52 +1,41 @@
-import { TextInput } from "react-native-paper";
-import SurfaceTemplate from "../organisms/SurfaceTemplate";
-import TextInputTemplate from "../atoms/styles/TextInputTemplate";
-import { View } from "react-native";
-import { StyleSheet } from 'react-native';
-import { useState } from "react";
+import { StyleSheet, View } from 'react-native';
+import { ReactNode, useState } from 'react';
+import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 
+export default function Notepad(): ReactNode {
+  const [title, setTitle] = useState('');
+  const [text, setText] = useState('');
 
-
-export default function Notepad(){
-    const [title, setTitle] = useState('');
-    const [text, setText] = useState('');
-
-    return (
-      <SurfaceTemplate style={styles.container}>
-        <TextInput
-      style={styles.title}
-      onChangeText={(newTitle) => setTitle(newTitle)}
-      value={title}
-      placeholder="Titre"
-    />
-        <TextInput
-      style={styles.textInput}
-      onChangeText={(newText) => setText(newText)}
-      value={text}
-      multiline
-      placeholder="Tapez votre texte ici"
-    />
-  </SurfaceTemplate>
-);
-};
+  return (
+    <View style={styles.container}>
+      <TextInputTemplate
+        style={styles.title}
+        onChangeText={newTitle => setTitle(newTitle)}
+        value={title}
+        placeholder="Titre"
+      />
+      <TextInputTemplate
+        style={styles.textInput}
+        onChangeText={newText => setText(newText)}
+        value={text}
+        multiline
+        placeholder="Tapez votre texte ici"
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
-container: {
-  flex: 1,
-  padding: 10,
-},
-title: {
+  container: {
+    flex: 1,
+  },
+  title: {
     fontSize: 25,
-    padding: 10,
+    marginBottom: 3,
     borderColor: 'gray',
-    borderWidth: 1,
-},
-textInput: {
-  flex: 1,
-  borderColor: 'gray',
-  borderWidth: 1,
-  padding: 10,
-  textAlignVertical:'top',
-},
+  },
+  textInput: {
+    flex: 1,
+    borderColor: 'gray',
+  },
 });
-
