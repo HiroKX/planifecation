@@ -72,7 +72,7 @@ const resolvers = {
   DateScalar: DateScalar,
 
   Query: {
-    getUserByUsername: (parent,args,context) => {
+    getUserByUsername: (parent,args ,context) => {
       // Query that return the first user.
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED"  + context.msg);
@@ -174,7 +174,7 @@ const resolvers = {
         data: {
           title: args.title,
           content: args.content,
-          updatedAt: new Date().toISOString(),
+          updatedAt: new Date(),
         },
       });
     },
