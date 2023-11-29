@@ -6,7 +6,7 @@ import SignUp from '../components/pages/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/Settings';
 import SettingsButton from '../components/atoms/SettingsButton';
-import { mainTheme } from '../environment/themes';
+import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -24,9 +24,9 @@ function RootStack(): ReactNode {
       initialRouteName="Accueil"
       screenOptions={{
         headerStyle: {
-          backgroundColor: mainTheme.colors.primary,
+          backgroundColor: navigationTheme.colors.primary,
         },
-        headerTintColor: '#fff',
+        headerTintColor: navigationTheme.colors.text,
         headerRight: SettingsButton,
       }}
     >
