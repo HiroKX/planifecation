@@ -6,6 +6,7 @@ import SignUp from '../components/pages/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/Settings';
 import SettingsButton from '../components/atoms/SettingsButton';
+import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 
 export type StackParamList = {
@@ -14,6 +15,7 @@ export type StackParamList = {
   Inscription: undefined;
   Paramètres: undefined;
   Dashboard: undefined;
+  Sandbox: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -35,6 +37,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Inscription" component={SignUp} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
       <Stack.Screen name="Paramètres" component={Settings} />
+      <Stack.Screen name="Sandbox" component={ThemeSandbox} />
     </Stack.Navigator>
   );
 }
