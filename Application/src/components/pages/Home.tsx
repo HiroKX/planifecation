@@ -5,6 +5,7 @@ import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GetLoggedUser } from '../../controllers/AuthenticationController';
 import { ReactNode } from 'react';
+import { ENVIRONMENT } from '@env';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -35,6 +36,11 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
         >
           Inscription
         </ButtonTemplate>
+        {ENVIRONMENT == 'dev' ? (
+          <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
+            Theme Sandbox
+          </ButtonTemplate>
+        ) : null}
       </SurfaceTemplate>
     </View>
   );

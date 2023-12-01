@@ -1,5 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
-import OwnPaperProvider, { navigationTheme } from './src/components/organisms/OwnPaperProvider';
+import OwnPaperProvider, {
+  navigationTheme,
+} from './src/components/organisms/OwnPaperProvider';
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,7 +11,6 @@ import {
 import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
-
 
 export default function App() {
   if (ENVIRONMENT != 'dev') console.debug = () => {};
@@ -26,7 +27,7 @@ export default function App() {
           <RootStack />
         </NavigationContainer>
       </OwnPaperProvider>
-      <StatusBar style='light'/>
+      <StatusBar style="light" />
     </ApolloProvider>
   );
 }
