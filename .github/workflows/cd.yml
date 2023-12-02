@@ -29,20 +29,9 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            # Arrêter le processus PM2
             pm2 stop index
-
-            # Naviguer au répertoire du projet
             cd /var/www/html/planifecation/Serveur
-
-            # Mettre à jour le code source
             git pull origin dev
-
-            # Installer les dépendances
             yarn install --production=false
-
-            # Appliquer les migrations de base de données
             npx prisma migrate reset --force
-
-            # Redémarrer l'application via PM2
             pm2 start index
