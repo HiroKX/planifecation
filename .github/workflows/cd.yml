@@ -34,7 +34,7 @@ jobs:
               git pull
               cd Serveur
               yarn install
-              npx prisma deploy
+              npx prisma migrate deploy
               pm2 start index
  
             
