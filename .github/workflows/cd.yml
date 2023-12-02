@@ -27,11 +27,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile  # Assurez-vous que yarn.lock est commité
-
       - name: Changement de répertoire
         run: cd /var/www/html/planifecation/Serveur
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile  # Assurez-vous que yarn.lock est commité
 
       - name: Apply Database Migrations
         run: npx prisma reset --force
