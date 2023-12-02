@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - dev
-    path:
+    paths:
       - 'Serveur/**'
   pull_request:
     branches:
       - dev
-    path:
+    paths:
       - 'Serveur/**'
 
 jobs:
