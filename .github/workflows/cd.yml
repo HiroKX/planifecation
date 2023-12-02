@@ -6,11 +6,6 @@ on:
       - dev
     paths:
       - 'Serveur/**'
-  pull_request:
-    branches:
-      - dev
-    paths:
-      - 'Serveur/**'
 
 jobs:
   deploy:
@@ -33,5 +28,6 @@ jobs:
             cd /var/www/html/planifecation/Serveur
             git pull origin dev
             yarn install --production=false
+            npx prisma migrate dev --name "${{github.run_id}}"
             npx prisma migrate reset --force
             pm2 start index

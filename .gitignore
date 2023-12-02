@@ -164,3 +164,4 @@ Application/yarn.lock
 /Serveur/docker-compose.yml
 .env.local
 yarn.lock
+/Serveur/prisma/migrations/*
