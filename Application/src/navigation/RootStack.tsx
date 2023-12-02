@@ -17,7 +17,7 @@ export type StackParamList = {
   Inscription: undefined;
   Paramètres: undefined;
   Dashboard: undefined;
-  "Bloc-notes": undefined;
+  'Bloc-notes': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

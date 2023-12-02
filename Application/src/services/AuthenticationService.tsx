@@ -1,12 +1,11 @@
 import { ApolloClient, gql } from '@apollo/client';
 
 const CREATE_USER = gql`
-mutation createUser($username: String!, $password: String!){
-  createUser( username: $username, password: $password) {
-    id
+  mutation createUser($username: String!, $password: String!) {
+    createUser(username: $username, password: $password) {
+      id
+    }
   }
-}
-
 `;
 
 const LOG_USER = gql`
@@ -31,7 +30,7 @@ export async function CreateUser(
       },
     })
     .then((response: any) => {
-        console.debug('id:', response.data.createUser.id);
+      console.debug('id:', response.data.createUser.id);
       return response.data.createUser.id;
     })
     .catch((error: any) => {
@@ -56,8 +55,8 @@ export async function LogUser(
       },
     })
     .then((response: any) => {
-        console.debug('response.data.logUser:', response.data.logUser);
-        return response.data.logUser;
+      console.debug('response.data.logUser:', response.data.logUser);
+      return response.data.logUser;
     })
     .catch((error: any) => {
       console.error('LogUser error:', error);
