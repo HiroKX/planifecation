@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - dev
-      - 52-je-veux-que-ma-cd-de-serveur-ne-se-déclenche-que-lorsquil-y-a-des-modifications-dans-ce-dossier
     paths:
-#      - 'Serveur/**'
+      - 'Serveur/**'
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - 'Serveur/**'
 
 jobs:
   deploy:
@@ -17,25 +21,6 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Récupère l'historique complet pour les migrations
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Changement de répertoire
-        run: cd /var/www/html/planifecation/Serveur
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile  # Assurez-vous que yarn.lock est commité
-
-      - name: Apply Database Migrations
-        run: npx prisma reset --force
-
       - name: Deploy GraphQL to server
         uses: appleboy/ssh-action@master
         with:
@@ -44,8 +29,20 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            # Arrêter le processus PM2
             pm2 stop index
-            git pull origin dev
-            yarn install --production=false
-            pm2 start index
 
+            # Naviguer au répertoire du projet
+            cd /var/www/html/planifecation/Serveur
+
+            # Mettre à jour le code source
+            git pull origin dev
+
+            # Installer les dépendances
+            yarn install --production=false
+
+            # Appliquer les migrations de base de données
+            npx prisma migrate reset --force
+
+            # Redémarrer l'application via PM2
+            pm2 start index
