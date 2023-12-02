@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { mainTheme } from './src/environment/themes';
-import { PaperProvider } from 'react-native-paper';
+import OwnPaperProvider, {
+  navigationTheme,
+} from './src/components/organisms/OwnPaperProvider';
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,8 +10,7 @@ import {
 } from '@apollo/client';
 import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
-
-const Stack = createNativeStackNavigator();
+import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   if (ENVIRONMENT != 'dev') console.debug = () => {};
@@ -23,11 +22,12 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <PaperProvider theme={mainTheme}>
-        <NavigationContainer theme={mainTheme}>
+      <OwnPaperProvider>
+        <NavigationContainer theme={navigationTheme}>
           <RootStack />
         </NavigationContainer>
-      </PaperProvider>
+      </OwnPaperProvider>
+      <StatusBar style="light" />
     </ApolloProvider>
   );
 }

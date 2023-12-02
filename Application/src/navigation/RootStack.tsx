@@ -8,8 +8,8 @@ import Settings from '../components/pages/Settings';
 import Notepad from '../components/pages/Notepad';
 
 import SettingsButton from '../components/atoms/SettingsButton';
-
-import { mainTheme } from '../environment/themes';
+import ThemeSandbox from '../components/pages/ThemeSandbox';
+import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -18,6 +18,7 @@ export type StackParamList = {
   Paramètres: undefined;
   Dashboard: undefined;
   'Bloc-notes': undefined;
+  Sandbox: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -28,9 +29,9 @@ function RootStack(): ReactNode {
       initialRouteName="Accueil"
       screenOptions={{
         headerStyle: {
-          backgroundColor: mainTheme.colors.primary,
+          backgroundColor: navigationTheme.colors.primary,
         },
-        headerTintColor: '#fff',
+        headerTintColor: navigationTheme.colors.text,
         headerRight: SettingsButton,
       }}
     >
@@ -40,6 +41,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Dashboard" component={Dashboard} />
       <Stack.Screen name="Paramètres" component={Settings} />
       <Stack.Screen name="Bloc-notes" component={Notepad} />
+      <Stack.Screen name="Sandbox" component={ThemeSandbox} />
     </Stack.Navigator>
   );
 }
