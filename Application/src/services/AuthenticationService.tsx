@@ -1,22 +1,23 @@
 import { ApolloClient, gql } from '@apollo/client';
 
 const CREATE_USER = gql`
-  mutation createUser($login: String!, $password: String!) {
-    createUser(login: $login, password: $password) {
-      id
-    }
+mutation createUser($username: String!, $password: String!){
+  createUser( username: $username, password: $password) {
+    id
   }
+}
+
 `;
 
 const LOG_USER = gql`
-  mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password)
+  mutation logUser($username: String!, $password: String!) {
+    logUser(username: $username, password: $password)
   }
 `;
 
 export async function CreateUser(
   client: Readonly<ApolloClient<Object>>,
-  login: Readonly<string>,
+  username: Readonly<string>,
   password: Readonly<string>
 ): Promise<number> {
   console.debug('AuthenticationService.CreateUser');
@@ -25,7 +26,7 @@ export async function CreateUser(
     .mutate({
       mutation: CREATE_USER,
       variables: {
-        login: login,
+        username: username,
         password: password,
       },
     })
@@ -40,7 +41,7 @@ export async function CreateUser(
 
 export async function LogUser(
   client: Readonly<ApolloClient<Object>>,
-  login: Readonly<string>,
+  username: Readonly<string>,
   password: Readonly<string>
 ): Promise<string> {
   console.debug('AuthenticationService.LogUser');
@@ -49,15 +50,15 @@ export async function LogUser(
     .mutate({
       mutation: LOG_USER,
       variables: {
-        username: login,
+        username: username,
         password: password,
       },
     })
     .then((response: any) => {
-      return response.data.login;
+      return response.data.username;
     })
     .catch((error: any) => {
-      console.error('Login error:', error);
+      console.error('username error:', error);
       return '';
     });
 }

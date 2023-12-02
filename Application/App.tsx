@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   if (ENVIRONMENT != 'dev') console.debug = () => {};
-
+  console.debug(URI_API)
   const client = new ApolloClient({
     link: new HttpLink({ uri: URI_API }),
     cache: new InMemoryCache(),
