@@ -47,7 +47,7 @@ function Settings(props: Readonly<Props>): ReactNode {
           </ButtonTemplate>
           <ButtonTemplate
             onPress={async () => {
-              await LogoutUser(props);
+              await LogoutUser(client, props);
             }}
           >
             Se déconnecter

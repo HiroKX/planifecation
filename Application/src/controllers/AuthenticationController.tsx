@@ -2,7 +2,9 @@ import { CreateUser, LogUser } from '../services/AuthenticationService';
 import * as SecureStore from 'expo-secure-store';
 import { StackParamList } from '../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ApolloClient } from '@apollo/client';
+import { ApolloClient, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { URI_API } from '@env';
 
 type Props = NativeStackScreenProps<StackParamList>;
 // ---------------- METIER ----------------
@@ -37,6 +39,8 @@ export async function SignInUser(
     .then(async token => {
       if (token != '') {
         await SetLoggedUser(username, token);
+        await updateClientToken(client, token);
+        await client.resetStore();
         console.log('User', username, 'successfully logged in');
         navigation.reset({
           index: 0,
@@ -51,17 +55,44 @@ export async function SignInUser(
     });
 }
 
-export async function LogoutUser({
-  navigation,
-}: Readonly<Props>): Promise<void> {
+export async function LogoutUser(
+  client: Readonly<ApolloClient<Object>>,
+  { navigation }: Readonly<Props>
+): Promise<void> {
   console.debug('AuthenticationController.LogoutUser');
   await SecureStore.deleteItemAsync('loggedUser');
   await SecureStore.deleteItemAsync('loggedUserToken');
+  updateClientToken(client, '');
+  await client.resetStore();
   console.log('User successfully logged out');
   navigation.reset({
     index: 0,
     routes: [{ name: 'Accueil' }],
   });
+}
+
+export function updateClientToken(
+  client: Readonly<ApolloClient<Object>>,
+  token: Readonly<string>
+): void {
+  console.debug('AuthenticationController.updateClientToken');
+  console.debug('token:', token);
+  const httpLink = createHttpLink({
+    uri: URI_API,
+  });
+  if (token != null && token != '') {
+    const authLink = setContext((_, { headers }) => {
+      return {
+        headers: {
+          ...headers,
+          authorization: token,
+        },
+      };
+    });
+    client.setLink(authLink.concat(httpLink));
+  } else {
+    client.setLink(httpLink);
+  }
 }
 
 // ---------------- GETTERS / SETTER ----------------

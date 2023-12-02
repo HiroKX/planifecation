@@ -17,11 +17,11 @@ export async function DeleteAndLogoutUser(
       .then(async res => {
         if (res) {
           console.log('User', username, 'successfully deleted');
-          await LogoutUser(props);
-        }
+          await LogoutUser(client, props);
+        } else throw new Error();
       })
       .catch(error => {
-        console.error('Error while deleting user: ', error);
+        console.error('Error while deleting user');
       });
   } else {
     console.error('No user logged in.');
