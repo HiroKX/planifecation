@@ -29,5 +29,4 @@ jobs:
             git pull origin dev
             yarn install --production=false
             npx prisma migrate dev --name "${{github.run_id}}"
-            npx prisma migrate reset --force
             pm2 start index
