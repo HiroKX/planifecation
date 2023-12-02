@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { GraphQLScalarType } from "graphql/type/index.js";
 import { Kind } from "graphql/language/index.js";
 
+//Création du prisma client
 const prisma = new PrismaClient();
 const SECRET_KEY = 'votre_secret_très_sécurisé'; // Replace with your secret key
 const DateScalar = new GraphQLScalarType({
