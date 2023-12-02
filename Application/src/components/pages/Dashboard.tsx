@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Dashboard(props: Readonly<Props>): ReactNode {
   GetLoggedUser().then(user => {
-    if (user.username == null || user.token == null) {
+    if (user.username == '' || user.token == '') {
       console.error('No user logged in.');
       props.navigation.reset({
         index: 0,

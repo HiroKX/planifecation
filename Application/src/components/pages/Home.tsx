@@ -11,7 +11,7 @@ type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Home({ navigation }: Readonly<Props>): ReactNode {
   GetLoggedUser().then(user => {
-    if (user.username != null && user.token != null) {
+    if (user.username != '' && user.token != '') {
       console.log('Welcome back ', user.username);
       navigation.reset({
         index: 0,
