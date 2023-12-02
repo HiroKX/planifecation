@@ -11,14 +11,14 @@ export async function SignUpUser(
   client: Readonly<ApolloClient<Object>>,
   username: Readonly<string>,
   password: Readonly<string>,
-  navigation: Readonly<Props>
+  props: Readonly<Props>
 ): Promise<void> {
   console.debug('AuthenticationController.SignUpUser');
   await CreateUser(client, username, password)
     .then(async userId => {
       if (userId != 0) {
         console.log('User', userId, 'created with username ', username);
-        await SignInUser(client, username, password, navigation);
+        await SignInUser(client, username, password, props);
       }
     })
     .catch(error => {
@@ -67,24 +67,24 @@ export async function LogoutUser({
 // ---------------- GETTERS / SETTER ----------------
 
 export async function GetLoggedUser(): Promise<{
-  username: string | null;
-  token: string | null;
+  username: string;
+  token: string;
 }> {
   console.debug('AuthenticationController.GetLoggedUser');
-  const username = await SecureStore.getItemAsync('loggedUser');
-  const token = await SecureStore.getItemAsync('loggedUserToken');
+  const username = (await SecureStore.getItemAsync('loggedUser')) ?? '';
+  const token = (await SecureStore.getItemAsync('loggedUserToken')) ?? '';
 
   return { username, token };
 }
 
-export async function GetLoggedUserUsername(): Promise<string | null> {
+export async function GetLoggedUserUsername(): Promise<string> {
   console.debug('AuthenticationController.GetLoggedUserUsername');
-  return await SecureStore.getItemAsync('loggedUser');
+  return (await SecureStore.getItemAsync('loggedUser')) ?? '';
 }
 
-export async function GetLoggedUserToken(): Promise<string | null> {
+export async function GetLoggedUserToken(): Promise<string> {
   console.debug('AuthenticationController.GetLoggedUserToken');
-  return await SecureStore.getItemAsync('loggedUserToken');
+  return (await SecureStore.getItemAsync('loggedUserToken')) ?? '';
 }
 
 async function SetLoggedUser(

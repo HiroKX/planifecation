@@ -148,10 +148,10 @@ const resolvers = {
 
     deleteUser: (parent, args, context) => {
       // Delete a user in the db
-      if (!context.userInfo) {
+      if (!context.userInfo || args.username !== context.userInfos.username) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-      return prisma.user.delete({
+      prisma.user.delete({
         where: {
           username: args.username,
         },
