@@ -36,7 +36,6 @@ export async function SignInUser(
   await LogUser(client, username, password)
     .then(async token => {
       if (token != '') {
-        console.log(username, token)
         await SetLoggedUser(username, token);
         console.log('User', username, 'successfully logged in');
         navigation.reset({

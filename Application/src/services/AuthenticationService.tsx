@@ -31,6 +31,7 @@ export async function CreateUser(
       },
     })
     .then((response: any) => {
+        console.debug('id:', response.data.createUser.id);
       return response.data.createUser.id;
     })
     .catch((error: any) => {
@@ -55,7 +56,8 @@ export async function LogUser(
       },
     })
     .then((response: any) => {
-      return response.data.username;
+        console.debug('response.data.logUser:', response.data.logUser);
+        return response.data.logUser;
     })
     .catch((error: any) => {
       console.error('username error:', error);
