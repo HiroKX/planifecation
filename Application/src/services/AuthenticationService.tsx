@@ -35,7 +35,7 @@ export async function CreateUser(
       return response.data.createUser.id;
     })
     .catch((error: any) => {
-      console.error('SignUp error:', error);
+      console.error('CreateUser error:', error);
       return 0;
     });
 }
@@ -60,7 +60,7 @@ export async function LogUser(
         return response.data.logUser;
     })
     .catch((error: any) => {
-      console.error('username error:', error);
+      console.error('LogUser error:', error);
       return '';
     });
 }
