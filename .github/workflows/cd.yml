@@ -5,7 +5,7 @@ on:
     branches:
       - dev
       - 52-je-veux-que-ma-cd-de-serveur-ne-se-déclenche-que-lorsquil-y-a-des-modifications-dans-ce-dossier
-#    paths:
+    paths:
 #      - 'Serveur/**'
 
 jobs:
@@ -30,6 +30,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile  # Assurez-vous que yarn.lock est commité
 
+      - name: Changement de répertoire
+        run: cd /var/www/html/planifecation/Serveur
+
       - name: Apply Database Migrations
         run: npx prisma reset --force
 
@@ -42,7 +45,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             pm2 stop index
-            cd /var/www/html/planifecation/Serveur
             git pull origin dev
             yarn install --production=false
             pm2 start index
