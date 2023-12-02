@@ -3,16 +3,22 @@ import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { GetLoggedUser } from '../../controllers/AuthenticationController';
+import {
+  GetLoggedUser,
+  updateClientToken,
+} from '../../controllers/AuthenticationController';
 import { ReactNode } from 'react';
 import { ENVIRONMENT } from '@env';
+import { useApolloClient } from '@apollo/client';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Home({ navigation }: Readonly<Props>): ReactNode {
+  const client = useApolloClient();
   GetLoggedUser().then(user => {
-    if (user.username != null && user.token != null) {
+    if (user.username != '' && user.token != '') {
       console.log('Welcome back ', user.username);
+      updateClientToken(client, user.token);
       navigation.reset({
         index: 0,
         routes: [{ name: 'Dashboard' }],

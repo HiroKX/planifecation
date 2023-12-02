@@ -61,11 +61,11 @@ const typeDefs = `
   type Mutation {
     createUser(username: String!, password: String!): User
     updateUser(username: String!, password: String!): User
-    deleteUser(username: String!): Boolean
+    deleteUser(username: String!): User
     logUser(username: String!, password: String!): String
     createNote(title: String!, content: String!): Note
     updateNoteById(id: Int!, title: String!, content: String!): Note
-    deleteNoteById(id: Int!): Boolean
+    deleteNoteById(id: Int!): Note
  }
 `;
 
@@ -148,10 +148,10 @@ const resolvers = {
 
     deleteUser: (parent, args, context) => {
       // Delete a user in the db
-      if (!context.userInfo) {
+      if (!context.userInfo || args.username !== context.userInfos.username) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-      return prisma.user.delete({
+      prisma.user.delete({
         where: {
           username: args.username,
         },
