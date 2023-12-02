@@ -61,11 +61,11 @@ const typeDefs = `
   type Mutation {
     createUser(username: String!, password: String!): User
     updateUser(username: String!, password: String!): User
-    deleteUser(username: String!): Boolean
+    deleteUser(username: String!): User
     logUser(username: String!, password: String!): String
     createNote(title: String!, content: String!): Note
     updateNoteById(id: Int!, title: String!, content: String!): Note
-    deleteNoteById(id: Int!): Boolean
+    deleteNoteById(id: Int!): Note
  }
 `;
 
