@@ -9,16 +9,16 @@ type Props = NativeStackScreenProps<StackParamList>;
 
 export async function SignUpUser(
   client: Readonly<ApolloClient<Object>>,
-  login: Readonly<string>,
+  username: Readonly<string>,
   password: Readonly<string>,
   navigation: Readonly<Props>
 ): Promise<void> {
   console.debug('AuthenticationController.SignUpUser');
-  await CreateUser(client, login, password)
+  await CreateUser(client, username, password)
     .then(async userId => {
       if (userId != 0) {
-        console.log('User', userId, 'created with login ', login);
-        await SignInUser(client, login, password, navigation);
+        console.log('User', userId, 'created with username ', username);
+        await SignInUser(client, username, password, navigation);
       }
     })
     .catch(error => {
@@ -28,20 +28,20 @@ export async function SignUpUser(
 
 export async function SignInUser(
   client: Readonly<ApolloClient<Object>>,
-  login: Readonly<string>,
+  username: Readonly<string>,
   password: Readonly<string>,
   { navigation }: Readonly<Props>
 ): Promise<void> {
   console.debug('AuthenticationController.SignInUser');
-  await LogUser(client, login, password)
+  await LogUser(client, username, password)
     .then(async token => {
       if (token != '') {
-        await SetLoggedUser(login, token);
-        console.log('User', login, 'successfully logged in');
+        await SetLoggedUser(username, token);
+        console.log('User', username, 'successfully logged in');
         navigation.reset({
           index: 0,
           routes: [
-            { name: 'Dashboard', params: { username: login, token: token } },
+            { name: 'Dashboard', params: { username: username, token: token } },
           ],
         });
       }

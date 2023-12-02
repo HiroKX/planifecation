@@ -159,9 +159,9 @@ const resolvers = {
         },
         createNote: (parent, args, context) => {
             // Create a note in the db
-            //if (!context.userInfo) {
-            //  throw new Error("UNAUTHENTICATED" + context.msg);
-            //}
+            if (!context.userInfo) {
+                throw new Error("UNAUTHENTICATED" + context.msg);
+            }
             return prisma.note.create({
                 data: {
                     title: args.title,
