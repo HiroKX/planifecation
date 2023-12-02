@@ -1,6 +1,6 @@
 import { PaperProvider, useTheme } from 'react-native-paper';
 import { Props as PaperProviderProps } from 'react-native-paper/src/core/PaperProvider';
-import { darkTheme, lightTheme } from '../../environment/themes';
+import { lightTheme } from '../../environment/lightTheme';
 import { Theme } from '@react-navigation/native';
 
 // POUR LE MOMENT, CHANGER LE THEME ICI
