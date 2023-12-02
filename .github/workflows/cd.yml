@@ -5,8 +5,8 @@ on:
     branches:
       - dev
       - 52-je-veux-que-ma-cd-de-serveur-ne-se-déclenche-que-lorsquil-y-a-des-modifications-dans-ce-dossier
-    paths:
-      - 'Serveur/**'
+#    paths:
+#      - 'Serveur/**'
 
 jobs:
   deploy:
