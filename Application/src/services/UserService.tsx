@@ -2,7 +2,9 @@ import { ApolloClient, gql } from '@apollo/client';
 
 const DELETE_USER = gql`
   mutation DeleteUser($username: String!) {
-    deleteUser(username: $username)
+    deleteUser(username: $username) {
+      id
+    }
   }
 `;
 
@@ -19,7 +21,7 @@ export async function DeleteUser(
         username: username,
       },
     })
-    .then((response: any) => {
+    .then(() => {
       console.debug('Deleted user', username);
       return true;
     })
