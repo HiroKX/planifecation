@@ -5,7 +5,8 @@ import { StyleSheet } from 'react-native';
 export default function ButtonTemplate(props: Readonly<PaperButtonProps>) {
   return (
     <PaperButton
-      style={styles.button}
+      theme={props.theme ?? undefined}
+      style={props.style ?? styles.button}
       mode={props.mode ?? 'contained'}
       {...props}
     />

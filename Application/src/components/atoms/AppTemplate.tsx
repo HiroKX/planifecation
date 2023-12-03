@@ -1,19 +1,15 @@
-import { GestureResponderEvent, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { FAB as PaperFab } from 'react-native-paper';
+import { Props as PaperFabProps } from 'react-native-paper/src/components/FAB/FAB';
 
-interface FabOptions {
-  icon?: string;
-  label?: string;
-  onPress?: (e: GestureResponderEvent) => void;
-}
-
-export default function AppTemplate(props: Readonly<FabOptions>) {
+export default function AppTemplate(props: Readonly<PaperFabProps>) {
   return (
     <PaperFab
+      variant={props.variant ?? 'primary'}
       icon={props.icon ?? 'plus'}
-      label={props.label ?? undefined}
       style={styles.fab}
       onPress={props.onPress}
+      {...props}
     />
   );
 }
