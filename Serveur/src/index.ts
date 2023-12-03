@@ -148,7 +148,7 @@ const resolvers = {
 
     deleteUser: (parent, args, context) => {
       // Delete a user in the db
-      if (!context.userInfo || args.username !== context.userInfos.username) {
+      if (!context.userInfo || args.username !== context.userInfo.username) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
       prisma.user.delete({
