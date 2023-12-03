@@ -151,7 +151,7 @@ const resolvers = {
       if (!context.userInfo || args.username !== context.userInfo.username) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-      prisma.user.delete({
+      return prisma.user.delete({
         where: {
           username: args.username,
         },
