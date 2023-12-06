@@ -10,7 +10,7 @@ import { StackParamList } from '../../navigation/RootStack';
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Login(props: Readonly<Props>) {
-  const [login, setLogin] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   return (
@@ -19,8 +19,8 @@ export default function Login(props: Readonly<Props>) {
         <SurfaceTemplate>
           <TextInputTemplate
             label="Identifiant"
-            value={login}
-            onChangeText={text => setLogin(text)}
+            value={username}
+            onChangeText={text => setUsername(text)}
           />
           <TextInputTemplate
             label="Mot de passe"
@@ -31,7 +31,7 @@ export default function Login(props: Readonly<Props>) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await SignInUser(client, login, password, props);
+              await SignInUser(client, username, password, props);
             }}
           >
             Se connecter

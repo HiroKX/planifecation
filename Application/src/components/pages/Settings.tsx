@@ -11,13 +11,13 @@ import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DeleteAndLogoutUser } from '../../controllers/UserController';
 import { ApolloConsumer } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 function Settings(props: Readonly<Props>): ReactNode {
   const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
   const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
-
   return (
     <ApolloConsumer>
       {client => (
@@ -32,7 +32,11 @@ function Settings(props: Readonly<Props>): ReactNode {
             ></PaperSwitch>
           </SurfaceTemplate>
           <Divider style={{ height: 1 }} />
-          <ButtonTemplate onPress={() => {}}>
+          <ButtonTemplate
+            onPress={() => {
+              props.navigation.navigate('Profil');
+            }}
+          >
             Modifier mon profil
           </ButtonTemplate>
           <ButtonTemplate onPress={() => {}}>

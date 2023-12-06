@@ -1,28 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SurfaceTemplate from '../organisms/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
-import { SignUpUser } from '../../controllers/AuthenticationController';
+import { GetLoggedUser } from '../../controllers/AuthenticationController';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import TextTemplate from '../atoms/styles/TextTemplate';
+import { UpdateUserAndLogout } from '../../controllers/UserController';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function SignUp(props: Readonly<Props>) {
+export default function Profile(props: Readonly<Props>) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  useEffect(() => {
+    async function getLoggedUser() {
+      await GetLoggedUser().then(user => {
+        setUsername(user.username);
+      });
+    }
+    getLoggedUser();
+  }, []);
 
   return (
     <ApolloConsumer>
       {client => (
         <SurfaceTemplate>
-          <TextInputTemplate
-            label="Adresse mail"
-            value={username}
-            onChangeText={text => setUsername(text)}
-          />
+          <TextTemplate>Votre nom d'utilisateur : {username}</TextTemplate>
           <TextInputTemplate
             label="Mot de passe"
             mode="outlined"
@@ -39,10 +46,12 @@ export default function SignUp(props: Readonly<Props>) {
           />
           <ButtonTemplate
             onPress={async () => {
-              await SignUpUser(client, username, password, props);
+              if (password == confirmPassword)
+                //TODO : demander une confirmation
+                await UpdateUserAndLogout(client, username, password, props); // TODO : Traitement avec form
             }}
           >
-            M'inscrire
+            Changer le mot de passe
           </ButtonTemplate>
         </SurfaceTemplate>
       )}
