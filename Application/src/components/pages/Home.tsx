@@ -5,26 +5,36 @@ import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   GetLoggedUser,
+  IsLoggedUser,
   updateClientToken,
 } from '../../controllers/AuthenticationController';
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import { ENVIRONMENT } from '@env';
 import { useApolloClient } from '@apollo/client';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Home({ navigation }: Readonly<Props>): ReactNode {
+export default function Home({ navigation }: Readonly<Props>): ReactNode { 
   const client = useApolloClient();
-  GetLoggedUser().then(user => {
-    if (user.username != '' && user.token != '') {
-      console.log('Welcome back ', user.username);
-      updateClientToken(client, user.token);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Dashboard' }],
-      });
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(()=>{
+    async function checkLogged(){
+       setIsLogged(await IsLoggedUser());
     }
-  });
+    checkLogged();
+  
+  },[]);
+  if(isLogged){
+    GetLoggedUser().then(user => {
+        console.log('Welcome back ', user.username);
+        updateClientToken(client, user.token);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Dashboard' }],
+        });
+      }
+    );
+  }
 
   return (
     <View>
