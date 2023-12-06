@@ -32,7 +32,6 @@ export async function DeleteAndLogoutUser(
   }
 }
 
-
 export async function UpdateUserAndLogout(
   client: Readonly<ApolloClient<Object>>,
   username: Readonly<string>,
@@ -59,4 +58,3 @@ export async function UpdateUserAndLogout(
     });
   }
 }
-

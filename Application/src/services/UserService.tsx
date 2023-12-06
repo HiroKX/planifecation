@@ -31,11 +31,11 @@ export async function DeleteUser(
     });
 }
 const UPDATE_USER = gql`
-mutation UpdateUser($username: String!, $password: String!) {
-  updateUser(username: $username, password: $password) {
-    username
+  mutation UpdateUser($username: String!, $password: String!) {
+    updateUser(username: $username, password: $password) {
+      username
+    }
   }
-}
 `;
 
 export async function UpdateUser(
@@ -50,7 +50,7 @@ export async function UpdateUser(
       mutation: UPDATE_USER,
       variables: {
         username: username,
-        password: password
+        password: password,
       },
     })
     .then(() => {

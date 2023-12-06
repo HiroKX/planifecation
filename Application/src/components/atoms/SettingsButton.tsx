@@ -10,13 +10,12 @@ type Props = StackNavigationProp<StackParamList>;
 export default function Settings(): ReactNode {
   const navigation = useNavigation<Props>();
   const [isLogged, setIsLogged] = useState(false);
-  useEffect(()=>{
-    async function checkLogged(){
-       setIsLogged(await IsLoggedUser());
+  useEffect(() => {
+    async function checkLogged() {
+      setIsLogged(await IsLoggedUser());
     }
     checkLogged();
-  
-  },[]);
+  }, []);
 
   let disabledItem = false; //TODO : Changer lorsqu'un utiliser est connecté (vérifier avec des méthodes comme useEffect, etc...)
   return (

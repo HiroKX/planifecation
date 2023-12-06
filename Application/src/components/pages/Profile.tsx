@@ -16,24 +16,20 @@ export default function Profile(props: Readonly<Props>) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  useEffect(()=>{
-    async function getLoggedUser(){
-       await GetLoggedUser().then((user)=>{
-            setUsername(user.username)
-       }
-       );
+  useEffect(() => {
+    async function getLoggedUser() {
+      await GetLoggedUser().then(user => {
+        setUsername(user.username);
+      });
     }
     getLoggedUser();
-  
-  },[]);
+  }, []);
 
   return (
     <ApolloConsumer>
       {client => (
         <SurfaceTemplate>
-            <TextTemplate>
-                Votre nom d'utilisateur : {username}
-            </TextTemplate>
+          <TextTemplate>Votre nom d'utilisateur : {username}</TextTemplate>
           <TextInputTemplate
             label="Mot de passe"
             mode="outlined"
@@ -41,7 +37,7 @@ export default function Profile(props: Readonly<Props>) {
             onChangeText={text => setPassword(text)}
             secureTextEntry={true}
           />
-            <TextInputTemplate
+          <TextInputTemplate
             label="Confirmer le mot de passe"
             mode="outlined"
             value={confirmPassword}
@@ -50,8 +46,9 @@ export default function Profile(props: Readonly<Props>) {
           />
           <ButtonTemplate
             onPress={async () => {
-                if(password == confirmPassword) //TODO : demander une confirmation
-                    await UpdateUserAndLogout(client, username, password, props); // TODO : Traitement avec form
+              if (password == confirmPassword)
+                //TODO : demander une confirmation
+                await UpdateUserAndLogout(client, username, password, props); // TODO : Traitement avec form
             }}
           >
             Changer le mot de passe

@@ -32,9 +32,11 @@ function Settings(props: Readonly<Props>): ReactNode {
             ></PaperSwitch>
           </SurfaceTemplate>
           <Divider style={{ height: 1 }} />
-          <ButtonTemplate onPress={() => {
-            props.navigation.navigate('Profil');
-          }}>
+          <ButtonTemplate
+            onPress={() => {
+              props.navigation.navigate('Profil');
+            }}
+          >
             Modifier mon profil
           </ButtonTemplate>
           <ButtonTemplate onPress={() => {}}>

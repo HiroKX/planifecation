@@ -14,26 +14,24 @@ import { useApolloClient } from '@apollo/client';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Home({ navigation }: Readonly<Props>): ReactNode { 
+export default function Home({ navigation }: Readonly<Props>): ReactNode {
   const client = useApolloClient();
   const [isLogged, setIsLogged] = useState(false);
-  useEffect(()=>{
-    async function checkLogged(){
-       setIsLogged(await IsLoggedUser());
+  useEffect(() => {
+    async function checkLogged() {
+      setIsLogged(await IsLoggedUser());
     }
     checkLogged();
-  
-  },[]);
-  if(isLogged){
+  }, []);
+  if (isLogged) {
     GetLoggedUser().then(user => {
-        console.log('Welcome back ', user.username);
-        updateClientToken(client, user.token);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Dashboard' }],
-        });
-      }
-    );
+      console.log('Welcome back ', user.username);
+      updateClientToken(client, user.token);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Dashboard' }],
+      });
+    });
   }
 
   return (

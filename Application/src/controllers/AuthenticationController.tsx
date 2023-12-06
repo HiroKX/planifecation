@@ -55,7 +55,6 @@ export async function SignInUser(
     });
 }
 
-
 export async function LogoutUser(
   client: Readonly<ApolloClient<Object>>,
   { navigation }: Readonly<Props>
