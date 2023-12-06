@@ -64,11 +64,11 @@ export async function LogoutUser(
   await SecureStore.deleteItemAsync('loggedUserToken');
   updateClientToken(client, '');
   await client.resetStore();
-  console.log('User successfully logged out');
   navigation.reset({
     index: 0,
     routes: [{ name: 'Accueil' }],
   });
+  console.log('User successfully logged out');
 }
 
 export function updateClientToken(
@@ -106,6 +106,14 @@ export async function GetLoggedUser(): Promise<{
   const token = (await SecureStore.getItemAsync('loggedUserToken')) ?? '';
 
   return { username, token };
+}
+
+export async function IsLoggedUser(): Promise<boolean> {
+  console.debug('AuthenticationController.IsLoggedUser');
+  const username = (await SecureStore.getItemAsync('loggedUser')) ?? '';
+  const token = (await SecureStore.getItemAsync('loggedUserToken')) ?? '';
+  if (token != '' && username != '') return true;
+  return false;
 }
 
 export async function GetLoggedUserUsername(): Promise<string> {
