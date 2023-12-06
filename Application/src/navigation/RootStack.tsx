@@ -10,6 +10,7 @@ import Notepad from '../components/pages/Notepad';
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
+import Profile from '../components/pages/Profile';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -19,6 +20,7 @@ export type StackParamList = {
   Dashboard: undefined;
   'Bloc-notes': undefined;
   Sandbox: undefined;
+  Profil: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -37,6 +39,7 @@ function RootStack(): ReactNode {
     >
       <Stack.Screen name="Accueil" component={Home} />
       <Stack.Screen name="Connexion" component={Login} />
+      <Stack.Screen name="Profil" component={Profile} />
       <Stack.Screen name="Inscription" component={SignUp} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
       <Stack.Screen name="Paramètres" component={Settings} />
