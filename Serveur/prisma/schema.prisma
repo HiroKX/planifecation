@@ -19,7 +19,7 @@ model User {
   @@map(name: "user")
 }
 
-model Note {≥
+model Note {
   id        Int        @id @unique @default(autoincrement())
   title     String     @db.VarChar(255)
   content   String
