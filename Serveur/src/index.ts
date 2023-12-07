@@ -46,7 +46,6 @@ const typeDefs = `
     id: Int
     title: String!
     content: String!
-    userId: Int
     user: User
     createdAt: DateScalar
     updatedAt: DateScalar
