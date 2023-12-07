@@ -12,14 +12,14 @@ datasource db {
 
 model User {
   id        Int        @id @unique @default(autoincrement())
-  username  String     @unique @db.VarChar(255)
+  username  String     @unique @db.VarChar(255) 
   password  String     @db.VarChar(255)
   notes     Note[]
   
   @@map(name: "user")
 }
 
-model Note {
+model Note {≥
   id        Int        @id @unique @default(autoincrement())
   title     String     @db.VarChar(255)
   content   String

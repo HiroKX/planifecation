@@ -39,7 +39,7 @@ const typeDefs = `
   type User {
     id: Int
     username: String!
-    password: String!
+    password: String
   }
   
   type Note {
@@ -69,32 +69,42 @@ const typeDefs = `
  }
 `;
 
+function exclude(user, keys) {
+  return Object.fromEntries(
+    Object.entries(user).filter(([key]) => !keys.includes(key))
+  );
+}
 
 
 const resolvers = {
   DateScalar: DateScalar,
 
   Query: {
-    getUserByUsername: (parent, args, context) => {
+    getUserByUsername:async (parent, args, context) => {
       // Query that return the first user.
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-      return prisma.user.findFirstOrThrow({
+      const user = await prisma.user.findFirstOrThrow({
         where: {
           username: args.username
         }
       });
+
+      return exclude(user, ['password'])
+
     },
 
-    getAllUsers: (parent, args, context) => {
+    getAllUsers: async (parent, args, context) => {
       // Query that return all the users.
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED : " + context.msg);
       }
-      return prisma.user.findMany();
+      const users = await prisma.user.findMany();
+      return users.map(user => exclude(user, ['password']))
     },
-    getNoteById: (parent, args, context) => {
+
+    getNoteById: async (parent, args, context) => {
       // Query that returns the first note.
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED" + context.msg);
@@ -121,22 +131,23 @@ const resolvers = {
   },
 
   Mutation: {
-    createUser: (parent, args) => {
+    createUser:async (parent, args) => {
       // Create a user in the db
-      return prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           username: args.username,
           password: args.password,
         }
       });
+      return exclude(user, ['password'])
     },
 
-    updateUser: (parent, args, context) => {
+    updateUser:async  (parent, args, context) => {
       // Update a user in the db
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-      return prisma.user.update({
+      const user = await prisma.user.update({
         where: {
           username: args.username,
         },
@@ -144,18 +155,20 @@ const resolvers = {
           password: args.password,
         },
       });
+      return exclude(user, ['password'])
     },
 
-    deleteUser: (parent, args, context) => {
+    deleteUser: async (parent, args, context) => {
       // Delete a user in the db
       if (!context.userInfo || args.username !== context.userInfo.username) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-      return prisma.user.delete({
+      const user = await prisma.user.delete({
         where: {
           username: args.username,
         },
       });
+      return exclude(user, ['password'])
     },
 
     logUser: async (_, { username, password }) => {
