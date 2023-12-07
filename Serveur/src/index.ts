@@ -46,14 +46,14 @@ const typeDefs = `
     id: Int
     title: String!
     content: String!
-    user: User!
+    userId: Int
+    user: User
     createdAt: DateScalar
     updatedAt: DateScalar
   }
 
   type Query {
     getUserByUsername(username: String!): User
-    getAllUsers: [User]
     getNoteById(id: Int): Note
     getAllNotesByUsername(username: String!): [Note]
   }
@@ -75,16 +75,21 @@ function exclude(user, keys) {
   );
 }
 
+function protectFromUsername(context,username){
+  if (!context.userInfo) {
+    throw new Error("UNAUTHENTICATED : " + context.msg);
+  }else if (context.userInfo.username != username){
+    throw new Error("UNAUTHORIZED !");
+  }
+}
+
 
 const resolvers = {
   DateScalar: DateScalar,
 
   Query: {
     getUserByUsername:async (parent, args, context) => {
-      // Query that return the first user.
-      if (!context.userInfo) {
-        throw new Error("UNAUTHENTICATED" + context.msg);
-      }
+      protectFromUsername(context,args.username)
       const user = await prisma.user.findFirstOrThrow({
         where: {
           username: args.username
@@ -94,39 +99,36 @@ const resolvers = {
       return exclude(user, ['password'])
 
     },
-
-    getAllUsers: async (parent, args, context) => {
-      // Query that return all the users.
-      if (!context.userInfo) {
-        throw new Error("UNAUTHENTICATED : " + context.msg);
-      }
-      const users = await prisma.user.findMany();
-      return users.map(user => exclude(user, ['password']))
-    },
-
     getNoteById: async (parent, args, context) => {
-      // Query that returns the first note.
-      if (!context.userInfo) {
-        throw new Error("UNAUTHENTICATED" + context.msg);
-      }
-      return prisma.note.findFirstOrThrow({
+      const note = await prisma.note.findFirstOrThrow({
         where: {
           id: args.id
+        },
+        include:{
+          user: true,
         }
       });
+      protectFromUsername(context,note.user.username)
+      const userWithoutPassword = exclude(note.user, ['password']);
+      return { ...note, user: userWithoutPassword };
     },
-    getAllNotesByUsername: (parent, args, context) => {
-      // Query that returns all the notes of a user.
-      if (!context.userInfo) {
-        throw new Error("UNAUTHENTICATED" + context.msg);
-      }
-      return prisma.note.findMany({
+    getAllNotesByUsername:async  (parent, args, context) => {
+      protectFromUsername(context,args.username)
+      const notes = await prisma.note.findMany({
         where: {
           user: {
             username: args.username
           }
-        }
+        },
+        include:{
+          user: true,
+        },
       });
+      
+      return notes.map(note=>{
+        const userWithoutPassword = exclude(note.user, ['password']);
+        return { ...note, user: userWithoutPassword };
+      })
     },
   },
 
@@ -160,9 +162,7 @@ const resolvers = {
 
     deleteUser: async (parent, args, context) => {
       // Delete a user in the db
-      if (!context.userInfo || args.username !== context.userInfo.username) {
-        throw new Error("UNAUTHENTICATED" + context.msg);
-      }
+      protectFromUsername(context,args.use)
       const user = await prisma.user.delete({
         where: {
           username: args.username,
@@ -189,6 +189,7 @@ const resolvers = {
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
+
       return prisma.note.create({
         data: {
           title: args.title,
@@ -202,12 +203,18 @@ const resolvers = {
       });
     },
 
-    updateNoteById: (parent, args, context) => {
-      // Update a note in the db
-      if (!context.userInfo) {
-        throw new Error("UNAUTHENTICATED" + context.msg);
-      }
-      return prisma.note.update({
+    updateNoteById:async (parent, args, context) => {
+
+      const noteTest = await prisma.note.findFirstOrThrow({
+        where: {
+          id: args.id,
+        },
+        include:{
+          user: true
+        }
+      });
+      protectFromUsername(context,noteTest.user.username)
+      const note = await prisma.note.update({
         where: {
           id: args.id,
         },
@@ -216,19 +223,34 @@ const resolvers = {
           content: args.content,
           updatedAt: new Date(),
         },
+        include:{
+          user: true
+        }
       });
+      const userWithoutPassword = exclude(note.user, ['password']);
+      return { ...note, user: userWithoutPassword };
     },
 
-    deleteNoteById: (parent, args, context) => {
-      // Delete a note in the db
-      if (!context.userInfo) {
-        throw new Error("UNAUTHENTICATED" + context.msg);
-      }
-      return prisma.note.delete({
+    deleteNoteById:async (parent, args, context) => {
+      const noteTest = await prisma.note.findFirstOrThrow({
         where: {
           id: args.id,
         },
+        include:{
+          user: true
+        }
       });
+      protectFromUsername(context,noteTest.user.username)
+      const note = await prisma.note.delete({
+        where: {
+          id: args.id,
+        },
+        include:{
+          user: true
+        }
+      });
+      const userWithoutPassword = exclude(note.user, ['password']);
+      return { ...note, user: userWithoutPassword };
     },
   }
 };
