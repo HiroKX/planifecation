@@ -6,6 +6,7 @@ import SignUp from '../components/pages/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/Settings';
 import Notepad from '../components/pages/Notepad';
+import Agenda from '../components/pages/Agenda'
 
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
@@ -45,6 +46,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Paramètres" component={Settings} />
       <Stack.Screen name="Bloc-notes" component={Notepad} />
       <Stack.Screen name="Sandbox" component={ThemeSandbox} />
+      <Stack.Screen name="Agenda" component={Agenda} /> 
     </Stack.Navigator>
   );
 }
