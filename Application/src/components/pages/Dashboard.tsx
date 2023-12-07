@@ -38,6 +38,12 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
             label="Bloc-notes"
             onPress={() => props.navigation.navigate('Bloc-notes')}
           />
+          <AppTemplate
+            icon="calendar-cursor"
+            label="Agenda"
+            onPress={() => props.navigation.navigate('Agenda')}
+            />
+
         </SurfaceTemplate>
       )}
     </ApolloConsumer>
