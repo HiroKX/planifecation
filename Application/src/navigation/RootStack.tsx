@@ -22,6 +22,7 @@ export type StackParamList = {
   'Bloc-notes': undefined;
   Sandbox: undefined;
   Profil: undefined;
+  Agenda: undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
