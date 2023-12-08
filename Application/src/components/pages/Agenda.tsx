@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import TabScreenTemplate from '../molecules/TabScreenTemplate';
 import TabsTemplate from '../organisms/TabsTemplate';
-import CalendarTemplate from '../molecules/CalendarTemplate';
 import { useState } from 'react';
+import CalendarTemplate from '../organisms/CalendarTemplate';
 
 export default function Agenda() {
 
@@ -12,13 +12,7 @@ export default function Agenda() {
         <TabsTemplate>
             <TabScreenTemplate label='Mois' icon='calendar'>
                 <View>
-                <CalendarTemplate
-                onDayPress={day => {
-                    setSelected(day.dateString);
-                  }}
-                markedDates={{
-                    [selected]: {selected: true, disableTouchEvent: true, selectedColor: 'orange'}
-                  }}/>
+                    <CalendarTemplate/>
                 </View>
             </TabScreenTemplate>
             <TabScreenTemplate label='Jour' icon='view-day'>
