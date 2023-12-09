@@ -8,8 +8,10 @@ import {groupBy} from 'lodash';
 import {
     TimelineEventProps,
     CalendarUtils,
-    CalendarProvider
+    CalendarProvider,
+    DateData
   } from 'react-native-calendars';
+import TextTemplate from '../atoms/styles/TextTemplate';
 
 export default function Agenda() {
 
@@ -30,11 +32,17 @@ export default function Agenda() {
             summary : 'Test d\'un évènement'
         }
     ];
-
     const eventsByDate = groupBy(events, e => CalendarUtils.getCalendarDateString(e.start)) as { [key: string]: TimelineEventProps[];}
 
     const [selectDay, setSelectDay] = useState(true); // will be used for disabling the day view if no day is selected
     const [selectEvent, setSelectEvent] = useState(true); // will be used for disabling the details view if no appointment is selected
+    let selectDate = null;
+
+    const onDateChange = (date: DateData) => {
+        selectDate = date;
+        console.log("select Day : " + selectDay);
+        setSelectDay(true);
+    }
     
     return (
         <CalendarProvider
@@ -43,14 +51,18 @@ export default function Agenda() {
         <TabsTemplate>
             <TabScreenTemplate label='Mois' icon='calendar'>
                 <View>
-                    <CalendarTemplate/>
+                    <CalendarTemplate
+                    onDayPress={(date) => console.log("test")}/>
                 </View>
             </TabScreenTemplate>
-            <TabScreenTemplate label='Jour' icon='view-day' disabled={false}>
+            <TabScreenTemplate label='Jour' icon='view-day' disabled={selectDay}>
+            <View>
+                <TextTemplate>Jour sélectionné : {selectDate} </TextTemplate>
                 <TimelineTemplate
                     events={eventsByDate}
                     initialTime={INITIAL_TIME}
                     />
+            </View>
             </TabScreenTemplate>
             <TabScreenTemplate label='Details' icon='account-details' disabled={selectEvent}>
             <View></View>
