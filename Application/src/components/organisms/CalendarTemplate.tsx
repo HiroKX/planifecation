@@ -1,8 +1,12 @@
-import { Calendar, CalendarProps as Props } from "react-native-calendars";
+import { Calendar, CalendarProps } from "react-native-calendars";
 
-export default function CalendarTemplate(props : Readonly<Props>) {
+export default function CalendarTemplate(props : Readonly<CalendarProps>) {
     return (
         <Calendar
-        {...props}/>
+        firstDay={1}
+        markedDates={{
+            '2023-12-31': {selected: true, marked: true, selectedColor: 'red'},
+        }}
+        />
     );
 }

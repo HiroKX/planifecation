@@ -11,6 +11,9 @@ import {
 import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
+import LocaleConfig from './src/environment/locale'
+
+LocaleConfig.defaultLocale= 'fr';
 
 export default function App() {
   if (ENVIRONMENT != 'dev') console.debug = () => {};
