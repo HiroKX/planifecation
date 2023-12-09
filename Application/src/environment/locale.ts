@@ -21,4 +21,6 @@ LocaleConfig.locales['fr'] = {
     today: "Aujourd'hui"
   };
 
+  export const DATEFORMAT = 'DD-MM-YYYY';
+
   export default LocaleConfig;

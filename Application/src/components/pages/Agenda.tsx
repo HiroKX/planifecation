@@ -3,45 +3,25 @@ import TabScreenTemplate from '../molecules/TabScreenTemplate';
 import TabsTemplate from '../organisms/TabsTemplate';
 import { useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
-import TimelineTemplate from '../organisms/TimelineTemplate';
-import {groupBy} from 'lodash';
+import TimelineTemplate, { exampleEvent, getDate, today } from '../organisms/TimelineTemplate';
 import {
-    TimelineEventProps,
-    CalendarUtils,
     CalendarProvider,
     DateData
   } from 'react-native-calendars';
+  import moment from 'moment';
+  import { DATEFORMAT } from '../../environment/locale';
 import TextTemplate from '../atoms/styles/TextTemplate';
 
 export default function Agenda() {
 
-    const today =  new Date();
-    const getDate = CalendarUtils.getCalendarDateString(new Date().setDate(today.getDate()));
-    const INITIAL_TIME = {hour : today.getHours(), minutes : today.getMinutes()};
-
-    const events: TimelineEventProps[] = [
-        {
-            start : `${getDate} 01:15:00`,
-            end : `${getDate} 12:00:00`,
-            title : 'Test',
-            summary : 'Test d\'un évènement'
-        }, {
-            start : `${getDate} 01:15:00`,
-            end : `${getDate} 12:00:00`,
-            title : 'Test',
-            summary : 'Test d\'un évènement'
-        }
-    ];
-    const eventsByDate = groupBy(events, e => CalendarUtils.getCalendarDateString(e.start)) as { [key: string]: TimelineEventProps[];}
-
     const [selectDay, setSelectDay] = useState(true); // will be used for disabling the day view if no day is selected
     const [selectEvent, setSelectEvent] = useState(true); // will be used for disabling the details view if no appointment is selected
-    let selectDate = null;
+    let [selectDate, setSelectDate] = useState<DateData>();
 
     const onDateChange = (date: DateData) => {
-        selectDate = date;
-        console.log("select Day : " + selectDay);
-        setSelectDay(true);
+        setSelectDate(date);
+        setSelectDay(false);
+        console.log(getDate);
     }
     
     return (
@@ -52,19 +32,20 @@ export default function Agenda() {
             <TabScreenTemplate label='Mois' icon='calendar'>
                 <View>
                     <CalendarTemplate
-                    onDayPress={(date) => console.log("test")}/>
+                    markedDates={{'2023-12-31' : {marked:true, selected:true, selectedColor: 'orange'}}}
+                    onDayPress={onDateChange}/>
                 </View>
             </TabScreenTemplate>
             <TabScreenTemplate label='Jour' icon='view-day' disabled={selectDay}>
             <View>
-                <TextTemplate>Jour sélectionné : {selectDate} </TextTemplate>
+                <TextTemplate>Jour sélectionné : {selectDate ? moment(selectDate.timestamp).format(DATEFORMAT) : null} </TextTemplate>
                 <TimelineTemplate
-                    events={eventsByDate}
-                    initialTime={INITIAL_TIME}
+                    date={selectDate?.dateString ?? 'now'}
+                    events={exampleEvent}
                     />
             </View>
             </TabScreenTemplate>
-            <TabScreenTemplate label='Details' icon='account-details' disabled={selectEvent}>
+            <TabScreenTemplate label='Détails' icon='account-details' disabled={selectEvent}>
             <View></View>
                 </TabScreenTemplate>
             </TabsTemplate>
