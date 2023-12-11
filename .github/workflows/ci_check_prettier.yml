@@ -19,10 +19,12 @@ jobs:
         with:
           node-version: '16' # Ou la version de Node.js que vous utilisez
 
-      - name: Install Dependencies
-        run: npm install
+    - name: Install Dependencies
+      run: |
+        cd Application
+        yarn install
 
       - name: Prettier Check
         run: |
           cd Application
-          npm run prettier-check
+          yarn prettier-check

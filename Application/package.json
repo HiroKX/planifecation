@@ -9,7 +9,6 @@
     "web": "expo start --web",
     "test": "jest",
     "prettier-check": "prettier --check ."
-
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
