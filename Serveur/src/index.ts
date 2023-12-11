@@ -264,11 +264,11 @@ const server = new ApolloServer({
   csrfPrevention: false
 });
 
-
+let port: number = +process.env.PORT
 const { url } = await startStandaloneServer(server, {
   // Your async context function should async and
   // return an object
-  listen: { port: 4000 },
+  listen: { port: port },
   context: async ({ req }) => {
     const token = req.headers.authorization || '';
     // Verify the token and then return the user associated.
