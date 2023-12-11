@@ -1,5 +1,10 @@
 name: Prettier Check 
 
+on:
+  push:
+    branches:
+      - dev
+
 jobs:
   prettier-check:
     runs-on: ubuntu-latest
