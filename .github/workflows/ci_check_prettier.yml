@@ -1,13 +1,15 @@
-name: Prettier Check 
+name: Prettier Check
 
 on:
   push:
-    branches: [ dev ]
+    branches:
+      - dev
   pull_request:
-    branches: [ dev ]
+    branches:
+      - dev
 
 jobs:
-  check-prettier:
+  prettier-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +21,10 @@ jobs:
         with:
           node-version: '16' # Ou la version de Node.js que vous utilisez
 
-    - name: Install Dependencies
-      run: |
-        cd Application
-        yarn install
+      - name: Install Dependencies
+        run: |
+          cd Application
+          yarn install
 
       - name: Prettier Check
         run: |
