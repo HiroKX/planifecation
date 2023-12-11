@@ -1,4 +1,4 @@
-name: Prettier Check
+name: Prettier Check 
 
 jobs:
   prettier-check:
