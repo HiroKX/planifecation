@@ -1,10 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import OwnPaperProvider, {
   navigationTheme,
-  theme,
-  toggleTheme,
 } from './src/components/organisms/OwnPaperProvider';
-import { useState } from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -15,6 +12,7 @@ import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import LocaleConfig from './src/environment/locale';
+import { Portal } from 'react-native-paper';
 
 LocaleConfig.defaultLocale = 'fr';
 
@@ -29,9 +27,11 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <OwnPaperProvider>
+        <Portal>
         <NavigationContainer theme={navigationTheme}>
           <RootStack />
         </NavigationContainer>
+        </Portal>
       </OwnPaperProvider>
       <StatusBar style="light" />
     </ApolloProvider>
