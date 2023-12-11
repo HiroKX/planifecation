@@ -54,7 +54,7 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
           <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
             Theme Sandbox
           </ButtonTemplate>
-        ) : (null) }
+        ) : null}
       </SurfaceTemplate>
     </View>
   );

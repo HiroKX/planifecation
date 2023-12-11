@@ -42,8 +42,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
             icon="calendar-cursor"
             label="Agenda"
             onPress={() => props.navigation.navigate('Agenda')}
-            />
-
+          />
         </SurfaceTemplate>
       )}
     </ApolloConsumer>
