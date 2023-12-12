@@ -1,4 +1,7 @@
 import { LocaleConfig } from 'react-native-calendars';
+import { DateTime } from 'luxon';
+
+export const luxon = DateTime;
 
 LocaleConfig.locales['fr'] = {
   monthNames: [

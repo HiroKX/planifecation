@@ -12,11 +12,14 @@ import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import LocaleConfig from './src/environment/locale';
-import { Portal } from 'react-native-paper';
+import { useState } from 'react';
 
 LocaleConfig.defaultLocale = 'fr';
 
 export default function App() {
+
+  const [isLoading, setLoading] = useState(false);
+
   if (ENVIRONMENT != 'dev') console.debug = () => {};
 
   const client = new ApolloClient({
@@ -27,11 +30,9 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <OwnPaperProvider>
-        <Portal>
         <NavigationContainer theme={navigationTheme}>
           <RootStack />
         </NavigationContainer>
-        </Portal>
       </OwnPaperProvider>
       <StatusBar style="light" />
     </ApolloProvider>
