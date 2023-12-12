@@ -4,10 +4,12 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { GraphQLScalarType } from "graphql/type/index.js";
 import { Kind } from "graphql/language/index.js";
+import dotenv from 'dotenv'; 
+dotenv.config();
 
 //Création du prisma client
 const prisma = new PrismaClient();
-const SECRET_KEY = 'votre_secret_très_sécurisé'; // Replace with your secret key
+const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
 const DateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -262,11 +264,11 @@ const server = new ApolloServer({
   csrfPrevention: false
 });
 
-
+let port: number = +process.env.PORT
 const { url } = await startStandaloneServer(server, {
   // Your async context function should async and
   // return an object
-  listen: { port: 4000 },
+  listen: { port: port },
   context: async ({ req }) => {
     const token = req.headers.authorization || '';
     // Verify the token and then return the user associated.

@@ -11,11 +11,15 @@ import {
 import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
-import LocaleConfig from './src/environment/locale'
+import LocaleConfig from './src/environment/locale';
+import { useState } from 'react';
 
-LocaleConfig.defaultLocale= 'fr';
+LocaleConfig.defaultLocale = 'fr';
 
 export default function App() {
+
+  const [isLoading, setLoading] = useState(false);
+
   if (ENVIRONMENT != 'dev') console.debug = () => {};
 
   const client = new ApolloClient({
