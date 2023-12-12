@@ -5,13 +5,12 @@ import { ReactElement, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
 import TimelineTemplate, { exampleEvent } from '../organisms/TimelineTemplate';
 import { CalendarProvider, DateData } from 'react-native-calendars';
-import moment from 'moment';
-import { DATEFORMAT } from '../../environment/locale';
 import TextTemplate from '../atoms/styles/TextTemplate';
 import EventDetails from '../organisms/EventDetails';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { useTabNavigation } from 'react-native-paper-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { luxon } from '../../environment/locale';
 
 
 
@@ -60,9 +59,10 @@ export default function Agenda() {
             <TextTemplate>
               Jour sélectionné :{' '}
               {selectDate
-                ? moment(selectDate.timestamp).format(DATEFORMAT)
+                ? luxon.fromFormat(selectDate.dateString, "yyyy-MM-dd").setLocale('fr').toFormat("dd MMMM yyyy")
                 : null}{' '}
             </TextTemplate>
+            <Explore index={2} placeholder='Créer un évènement'/>
             <TimelineTemplate
               date={selectDate?.dateString ?? 'now'}
               events={exampleEvent}
@@ -73,12 +73,10 @@ export default function Agenda() {
         <TabScreenTemplate
           label="Détails"
           icon="account-details"
-          disabled={selectEvent}
-        >
+          disabled={selectEvent}>
           <EventDetails/>
         </TabScreenTemplate>
       </TabsTemplate>
-      <Explore index={2} placeholder='Créer un évènement'/>
     </CalendarProvider>
   );
 }
