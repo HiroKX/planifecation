@@ -13,11 +13,12 @@ import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import LocaleConfig from './src/environment/locale';
 import { useState } from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './src/store/EventsSlice';
 
 LocaleConfig.defaultLocale = 'fr';
 
 export default function App() {
-
   const [isLoading, setLoading] = useState(false);
 
   if (ENVIRONMENT != 'dev') console.debug = () => {};
@@ -29,12 +30,14 @@ export default function App() {
 
   return (
     <ApolloProvider client={client}>
-      <OwnPaperProvider>
-        <NavigationContainer theme={navigationTheme}>
-          <RootStack />
-        </NavigationContainer>
-      </OwnPaperProvider>
-      <StatusBar style="light" />
+      <ReduxProvider store={store}>
+        <OwnPaperProvider>
+          <NavigationContainer theme={navigationTheme}>
+            <RootStack />
+          </NavigationContainer>
+        </OwnPaperProvider>
+        <StatusBar style="light" />
+      </ReduxProvider>
     </ApolloProvider>
   );
 }

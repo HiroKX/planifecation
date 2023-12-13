@@ -12,14 +12,18 @@ import { useTabNavigation } from 'react-native-paper-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { luxon } from '../../environment/locale';
 
-
-
-const Explore = (props : {index : number, placeholder: string}) : ReactElement<typeof SafeAreaView> => {
-    const goTo = useTabNavigation();
-    return (
-        <ButtonTemplate onPress={() => goTo(props.index)}>{props.placeholder}</ButtonTemplate>
-    )
-}
+// required to go from tab to tab
+const Explore = (props: {
+  index: number;
+  placeholder: string;
+}): ReactElement<typeof SafeAreaView> => {
+  const goTo = useTabNavigation();
+  return (
+    <ButtonTemplate onPress={() => goTo(props.index)}>
+      {props.placeholder}
+    </ButtonTemplate>
+  );
+};
 
 export default function Agenda() {
   const [selectDay, setSelectDay] = useState(true); // will be used for disabling the day view if no day is selected
@@ -51,30 +55,34 @@ export default function Agenda() {
               }}
               onDayPress={onDateChange}
             />
-                  <Explore index={2} placeholder='Créer un évènement'/>
+            <Explore index={2} placeholder="Créer un évènement" />
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate label="Jour" icon="view-day" disabled={selectDay}>
           <View>
             <TextTemplate>
-              Jour sélectionné :{' '}
+              Jour sélectionné :
               {selectDate
-                ? luxon.fromFormat(selectDate.dateString, "yyyy-MM-dd").setLocale('fr').toFormat("dd MMMM yyyy")
+                ? luxon
+                    .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
+                    .setLocale('fr')
+                    .toFormat('dd MMMM yyyy')
                 : null}{' '}
             </TextTemplate>
-            <Explore index={2} placeholder='Créer un évènement'/>
+            <Explore index={2} placeholder="Créer un évènement" />
             <TimelineTemplate
               date={selectDate?.dateString ?? 'now'}
-              events={exampleEvent}
               onEventPress={onEventChange}
-            />
+              events={exampleEvent}
+            ></TimelineTemplate>
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
           label="Détails"
           icon="account-details"
-          disabled={selectEvent}>
-          <EventDetails/>
+          disabled={selectEvent}
+        >
+          <EventDetails />
         </TabScreenTemplate>
       </TabsTemplate>
     </CalendarProvider>

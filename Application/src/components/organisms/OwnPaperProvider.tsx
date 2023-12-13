@@ -5,7 +5,6 @@ import { Theme } from '@react-navigation/native';
 import { useState } from 'react';
 import { darkTheme } from '../../environment/darktheme';
 
-
 // POUR LE MOMENT, CHANGER LE THEME ICI
 export const theme = lightTheme;
 

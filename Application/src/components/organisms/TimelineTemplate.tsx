@@ -17,17 +17,17 @@ export const INITIAL_TIME = {
 export const exampleEvent: TimelineEventProps[] = [
   {
     start: '2023-12-31 01:00:00',
-    end: '2023-12-31 23:59:00',
+    end: '2024-12-31 22:00:00',
     title: 'ANNIVERSAIRE TIM',
     summary: 'IMPORTANT',
     color: 'orange',
   },
   {
-    start: '2023-12-31 08:00:00',
-    end: '2023-12-31 10:00:00',
-    title: 'RDV coiffeur',
+    start: '2023-12-31 10:00:00',
+    end: '2024-12-31 12:00:00',
+    title: 'RDV Coiffeur',
     summary: 'IMPORTANT',
-    color: 'green',
+    color: 'gray',
   },
 ];
 
