@@ -3,14 +3,17 @@ import TabScreenTemplate from '../molecules/TabScreenTemplate';
 import TabsTemplate from '../organisms/TabsTemplate';
 import { ReactElement, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
-import TimelineTemplate, { exampleEvent } from '../organisms/TimelineTemplate';
-import { CalendarProvider, DateData } from 'react-native-calendars';
+import TimelineTemplate from '../organisms/TimelineTemplate';
+import { CalendarProvider, CalendarUtils, DateData } from 'react-native-calendars';
 import TextTemplate from '../atoms/styles/TextTemplate';
 import EventDetails from '../organisms/EventDetails';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { useTabNavigation } from 'react-native-paper-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { luxon } from '../../environment/locale';
+import { store } from '../../store/EventsSlice';
+import { MarkedDates } from 'react-native-calendars/src/types';
+import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 
 // required to go from tab to tab
 const Explore = (props: {
@@ -26,9 +29,23 @@ const Explore = (props: {
 };
 
 export default function Agenda() {
+
+  const events = store.getState().events;
+
   const [selectDay, setSelectDay] = useState(true); // will be used for disabling the day view if no day is selected
   const [selectEvent, setSelectEvent] = useState(true); // will be used for disabling the details view if no appointment is selected
-  let [selectDate, setSelectDate] = useState<DateData>();
+  const [selectDate, setSelectDate] = useState<DateData>();
+  const [marked, setMarked] = useState<MarkedDates>(getMarkedDates());
+  const [timelineEvents, setTimelineEvents] = useState<Event[]>(events);
+
+
+   function getMarkedDates() {
+    let response : MarkedDates = {};
+    events?.forEach((element) =>  {
+      response[element.start.substring(0,10)] = {marked: true, selected: true, selectedColor: element.color}
+      });
+      return response; 
+  }
 
   const onDateChange = (date: DateData) => {
     setSelectDate(date);
@@ -46,13 +63,7 @@ export default function Agenda() {
         <TabScreenTemplate label="Mois" icon="calendar">
           <View>
             <CalendarTemplate
-              markedDates={{
-                '2023-12-31': {
-                  marked: true,
-                  selected: true,
-                  selectedColor: 'orange',
-                },
-              }}
+              markedDates={marked}
               onDayPress={onDateChange}
             />
             <Explore index={2} placeholder="Créer un évènement" />
@@ -73,7 +84,7 @@ export default function Agenda() {
             <TimelineTemplate
               date={selectDate?.dateString ?? 'now'}
               onEventPress={onEventChange}
-              events={exampleEvent}
+              events={timelineEvents}
             ></TimelineTemplate>
           </View>
         </TabScreenTemplate>

@@ -11,9 +11,12 @@ import { getColorForBackground } from './../../services/utils/utils';
 import { luxon } from '../../environment/locale';
 import { Portal } from 'react-native-paper';
 import { addEvent } from '../../store/EventsSlice';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const sample = luxon.fromFormat('2023-12-31', 'yyyy-MM-dd');
+
+
+
 
 export default function EventDetails(props?: Readonly<Event>) {
   const [visibleModal, setVisibleModal] = useState(false);
@@ -24,13 +27,6 @@ export default function EventDetails(props?: Readonly<Event>) {
   const [summary, setSummary] = useState('');
   const [color, setColor] = useState(theme.colors.primary);
   const [textColor, setTextColor] = useState(theme.colors.onPrimary);
-  const [event, setEvent] = useState<Event>({
-    start: '',
-    end: '',
-    title: '',
-    summary: '',
-    color: '',
-  });
 
   const dispatch = useDispatch();
 
