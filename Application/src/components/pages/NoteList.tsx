@@ -7,5 +7,7 @@ import { StackParamList } from '../../navigation/RootStack';
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function NoteList(props : Props): ReactNode{
+
+    
     return (true);
 }
