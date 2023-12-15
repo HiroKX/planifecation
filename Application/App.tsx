@@ -18,7 +18,6 @@ import { store } from './src/store/EventsSlice';
 LocaleConfig.defaultLocale = 'fr';
 
 export default function App() {
-
   if (ENVIRONMENT != 'dev') console.debug = () => {};
 
   const client = new ApolloClient({
