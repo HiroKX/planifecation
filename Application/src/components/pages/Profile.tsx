@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';

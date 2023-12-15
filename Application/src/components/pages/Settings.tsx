@@ -4,14 +4,13 @@ import {
   Text as PaperText,
 } from 'react-native-paper';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
-import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import { ReactNode, useState } from 'react';
 import { LogoutUser } from '../../controllers/AuthenticationController';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DeleteAndLogoutUser } from '../../controllers/UserController';
 import { ApolloConsumer } from '@apollo/client';
-import { useNavigation } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<StackParamList>;
 

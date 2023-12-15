@@ -1,4 +1,4 @@
-import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import AppTemplate from '../atoms/AppTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';

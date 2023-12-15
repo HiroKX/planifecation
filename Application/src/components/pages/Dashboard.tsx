@@ -1,4 +1,4 @@
-import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import AppTemplate from '../atoms/AppTemplate';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
@@ -28,13 +28,6 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
         <SurfaceTemplate>
           <AppTemplate
             icon="door-sliding"
-            label="Déconnexion"
-            onPress={async () => {
-              await LogoutUser(client, props);
-            }}
-          />
-          <AppTemplate
-            icon="door-sliding"
             label="Bloc-notes"
             onPress={() => props.navigation.navigate('Bloc-notes')}
           />
@@ -42,6 +35,13 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
             icon="calendar-cursor"
             label="Agenda"
             onPress={() => props.navigation.navigate('Agenda')}
+          />
+          <AppTemplate
+            icon="door-sliding"
+            label="Déconnexion"
+            onPress={async () => {
+              await LogoutUser(client, props);
+            }}
           />
         </SurfaceTemplate>
       )}

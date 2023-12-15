@@ -1,32 +1,35 @@
-import ColorPicker from 'react-native-wheel-color-picker';
-import SurfaceTemplate from './SurfaceTemplate';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
-import { useState } from 'react';
 import { theme } from './OwnPaperProvider';
 import { ModalTemplate } from './ModalTemplate';
 import { Alert, View } from 'react-native';
 import { getColorForBackground } from './../../services/utils/utils';
-import { luxon } from '../../environment/locale';
 import { Portal } from 'react-native-paper';
 import { addEvent } from '../../store/EventsSlice';
 import { useDispatch } from 'react-redux';
+import ColorPickerTemplate from '../molecules/ColorPickerTemplate';
+import { useState } from 'react';
 
-const sample = luxon.fromFormat('2023-12-31', 'yyyy-MM-dd');
+interface Props {
+  updateFunction: (event: Event) => void;
+  event?: Event;
+}
 
-
-
-
-export default function EventDetails(props?: Readonly<Event>) {
+export default function EventDetails(props: Readonly<Props>) {
   const [visibleModal, setVisibleModal] = useState(false);
-  const [date, setDate] = useState('');
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
-  const [title, setTitle] = useState('');
-  const [summary, setSummary] = useState('');
-  const [color, setColor] = useState(theme.colors.primary);
-  const [textColor, setTextColor] = useState(theme.colors.onPrimary);
+  const [date, setDate] = useState(props?.event?.start.substring(0, 10) ?? '');
+  const [start, setStart] = useState(props?.event?.start.substring(11) ?? '');
+  const [end, setEnd] = useState(props?.event?.end.substring(11) ?? '');
+  const [title, setTitle] = useState(props?.event?.title ?? '');
+  const [summary, setSummary] = useState(props?.event?.summary ?? '');
+  const [color, setColor] = useState(
+    props?.event?.color ?? theme.colors.primary
+  );
+  const [textColor, setTextColor] = useState(
+    getColorForBackground(props?.event?.color ?? theme.colors.primary)
+  );
 
   const dispatch = useDispatch();
 
@@ -75,6 +78,7 @@ export default function EventDetails(props?: Readonly<Event>) {
         color: color,
       })
     );
+    props?.updateFunction({ start, end, title, summary, color });
   }
 
   const changeColor = (color: string) => {
@@ -84,27 +88,6 @@ export default function EventDetails(props?: Readonly<Event>) {
 
   function openColorModal() {
     setVisibleModal(true);
-  }
-
-  function ColorModal() {
-    return (
-      <Portal>
-        <ModalTemplate
-          visible={visibleModal}
-          onDismiss={() => setVisibleModal(false)}
-        >
-          <SurfaceTemplate style={{ backgroundColor: theme.colors.onPrimary }}>
-            <TextInputTemplate> Couleur choisie : {color}</TextInputTemplate>
-            <ColorPicker
-              color={color}
-              onColorChangeComplete={color => {
-                changeColor(color);
-              }}
-            ></ColorPicker>
-          </SurfaceTemplate>
-        </ModalTemplate>
-      </Portal>
-    );
   }
 
   return (
@@ -147,7 +130,17 @@ export default function EventDetails(props?: Readonly<Event>) {
           Enregistrer la notification
         </ButtonTemplate>
       </SurfaceTemplate>
-      <ColorModal />
+      <Portal>
+        <ModalTemplate
+          visible={visibleModal}
+          onDismiss={() => setVisibleModal(false)}
+        >
+          <ColorPickerTemplate
+            color={color}
+            onColorChangeComplete={color => changeColor(color)}
+          />
+        </ModalTemplate>
+      </Portal>
     </View>
   );
 }

@@ -11,15 +11,15 @@ const eventsSlice = createSlice({
     // Ajoute ou update un évènement
     addEvent(state, action: PayloadAction<CalendarEvent>) {
       const index: number = state.findIndex(
-        (elem) =>
+        elem =>
           action.payload.title === elem.title &&
           action.payload.start === elem.start
       );
-      console.log("index : " + index);
+      console.log('index : ' + index);
       index == -1
         ? state.push(action.payload)
         : state.splice(index, 1, action.payload);
-      console.log(state.length);  
+      console.log(state.length);
       console.log(state.at(0)?.title);
       console.log(state.at(0)?.summary);
     },

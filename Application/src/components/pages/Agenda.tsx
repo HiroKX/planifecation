@@ -4,7 +4,7 @@ import TabsTemplate from '../organisms/TabsTemplate';
 import { ReactElement, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
 import TimelineTemplate from '../organisms/TimelineTemplate';
-import { CalendarProvider, CalendarUtils, DateData } from 'react-native-calendars';
+import { CalendarProvider, DateData } from 'react-native-calendars';
 import TextTemplate from '../atoms/styles/TextTemplate';
 import EventDetails from '../organisms/EventDetails';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
@@ -29,32 +29,37 @@ const Explore = (props: {
 };
 
 export default function Agenda() {
-
-  const events = store.getState().events;
-
-  const [selectDay, setSelectDay] = useState(true); // will be used for disabling the day view if no day is selected
-  const [selectEvent, setSelectEvent] = useState(true); // will be used for disabling the details view if no appointment is selected
-  const [selectDate, setSelectDate] = useState<DateData>();
+  const [events, setEvents] = useState(store.getState().events);
+  const [selectEvent, setSelectEvent] = useState<Event>(); // will be used for disabling the details view if no appointment is selected
+  const [selectDate, setSelectDate] = useState<DateData>(); // will be used for disabling the day view if no day is selected
   const [marked, setMarked] = useState<MarkedDates>(getMarkedDates());
   const [timelineEvents, setTimelineEvents] = useState<Event[]>(events);
 
+  const updateList = (event: Event) => {
+    setEvents(store.getState().events);
+    setMarked(getMarkedDates());
+    setTimelineEvents([...timelineEvents, event]);
+  };
 
-   function getMarkedDates() {
-    let response : MarkedDates = {};
-    events?.forEach((element) =>  {
-      response[element.start.substring(0,10)] = {marked: true, selected: true, selectedColor: element.color}
-      });
-      return response; 
+  function getMarkedDates() {
+    let response: MarkedDates = {};
+    events?.forEach(element => {
+      response[element.start.substring(0, 10)] = {
+        marked: true,
+        selected: true,
+        selectedColor: element.color,
+      };
+    });
+    return response;
   }
 
   const onDateChange = (date: DateData) => {
     setSelectDate(date);
-    setSelectDay(false);
-    setSelectEvent(true);
+    setSelectEvent(undefined);
   };
 
-  const onEventChange = () => {
-    setSelectEvent(false);
+  const onEventChange = (event: Event) => {
+    setSelectEvent(event);
   };
 
   return (
@@ -62,14 +67,15 @@ export default function Agenda() {
       <TabsTemplate defaultIndex={0}>
         <TabScreenTemplate label="Mois" icon="calendar">
           <View>
-            <CalendarTemplate
-              markedDates={marked}
-              onDayPress={onDateChange}
-            />
+            <CalendarTemplate markedDates={marked} onDayPress={onDateChange} />
             <Explore index={2} placeholder="Créer un évènement" />
           </View>
         </TabScreenTemplate>
-        <TabScreenTemplate label="Jour" icon="view-day" disabled={selectDay}>
+        <TabScreenTemplate
+          label="Jour"
+          icon="view-day"
+          disabled={selectDate == undefined}
+        >
           <View>
             <TextTemplate>
               Jour sélectionné :
@@ -83,7 +89,7 @@ export default function Agenda() {
             <Explore index={2} placeholder="Créer un évènement" />
             <TimelineTemplate
               date={selectDate?.dateString ?? 'now'}
-              onEventPress={onEventChange}
+              onEventPress={event => onEventChange(event)}
               events={timelineEvents}
             ></TimelineTemplate>
           </View>
@@ -91,9 +97,9 @@ export default function Agenda() {
         <TabScreenTemplate
           label="Détails"
           icon="account-details"
-          disabled={selectEvent}
+          disabled={selectEvent == undefined}
         >
-          <EventDetails />
+          <EventDetails updateFunction={updateList} event={selectEvent} />
         </TabScreenTemplate>
       </TabsTemplate>
     </CalendarProvider>
