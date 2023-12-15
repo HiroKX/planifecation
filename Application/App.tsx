@@ -12,7 +12,6 @@ import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import LocaleConfig from './src/environment/locale';
-import { useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './src/store/EventsSlice';
 
