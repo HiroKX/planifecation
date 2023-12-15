@@ -2,8 +2,6 @@ import { MD3LightTheme, MD3Theme, PaperProvider } from 'react-native-paper';
 import { Props as PaperProviderProps } from 'react-native-paper/src/core/PaperProvider';
 import { lightTheme } from '../../environment/lightTheme';
 import { Theme } from '@react-navigation/native';
-import { useState } from 'react';
-import { darkTheme } from '../../environment/darktheme';
 
 // POUR LE MOMENT, CHANGER LE THEME ICI
 export const theme = lightTheme;

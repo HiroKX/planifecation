@@ -19,7 +19,6 @@ import { store } from './src/store/EventsSlice';
 LocaleConfig.defaultLocale = 'fr';
 
 export default function App() {
-  const [isLoading, setLoading] = useState(false);
 
   if (ENVIRONMENT != 'dev') console.debug = () => {};
 
