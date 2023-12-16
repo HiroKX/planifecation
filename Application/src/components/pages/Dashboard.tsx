@@ -8,6 +8,7 @@ import {
 } from '../../controllers/AuthenticationController';
 import { ReactNode } from 'react';
 import { ApolloConsumer } from '@apollo/client';
+import { DeviceEventEmitter } from 'react-native';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -21,6 +22,14 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
       });
     }
   });
+
+  function loading() {
+    DeviceEventEmitter.emit("load", true)
+    setTimeout(() => {
+      DeviceEventEmitter.emit("load", false);
+    }, 2000);
+    
+  }
 
   return (
     <ApolloConsumer>
@@ -43,6 +52,10 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               await LogoutUser(client, props);
             }}
           />
+          <AppTemplate
+            icon="pin"
+            label="Loader"
+            onPress={() => loading()}/>
         </SurfaceTemplate>
       )}
     </ApolloConsumer>

@@ -39,11 +39,11 @@ function RootStack(): ReactNode {
         headerRight: SettingsButton,
       }}
     >
-      <Stack.Screen name="Accueil" component={Home} />
+      <Stack.Screen name="Accueil" component={Home}  />
       <Stack.Screen name="Connexion" component={Login} />
       <Stack.Screen name="Profil" component={Profile} />
       <Stack.Screen name="Inscription" component={SignUp} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen name="Dashboard" component={Dashboard}/>
       <Stack.Screen name="Paramètres" component={Settings} />
       <Stack.Screen name="Bloc-notes" component={Notepad} />
       <Stack.Screen name="Sandbox" component={ThemeSandbox} />
