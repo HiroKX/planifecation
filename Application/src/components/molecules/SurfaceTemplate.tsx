@@ -1,8 +1,11 @@
 import { Surface as PaperCard } from 'react-native-paper';
 import { Props as PaperCardProps } from 'react-native-paper/src/components/Surface';
 import { StyleSheet } from 'react-native';
+import { ReactNode } from 'react';
 
-export default function SurfaceTemplate(props: Readonly<PaperCardProps>) {
+export default function SurfaceTemplate(
+  props: Readonly<PaperCardProps>
+): ReactNode {
   return (
     <PaperCard
       style={props.style ?? styles.surface}

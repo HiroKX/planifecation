@@ -4,6 +4,7 @@ import {
   CalendarUtils,
   TimelineEventProps,
 } from 'react-native-calendars';
+import { ReactNode } from 'react';
 
 export const today = new Date();
 export const getDate = CalendarUtils.getCalendarDateString(
@@ -31,6 +32,8 @@ export const exampleEvent: TimelineEventProps[] = [
   },
 ];
 
-export default function TimelineTemplate(props: Readonly<TimelineProps>) {
+export default function TimelineTemplate(
+  props: Readonly<TimelineProps>
+): ReactNode {
   return <Timeline start={0} end={24} initialTime={INITIAL_TIME} {...props} />;
 }

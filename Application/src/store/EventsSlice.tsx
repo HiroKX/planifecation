@@ -15,13 +15,9 @@ const eventsSlice = createSlice({
           action.payload.title === elem.title &&
           action.payload.start === elem.start
       );
-      console.log('index : ' + index);
       index == -1
         ? state.push(action.payload)
         : state.splice(index, 1, action.payload);
-      console.log(state.length);
-      console.log(state.at(0)?.title);
-      console.log(state.at(0)?.summary);
     },
     removeEvent(state, action: PayloadAction<CalendarEvent>) {
       const index = state.findIndex(

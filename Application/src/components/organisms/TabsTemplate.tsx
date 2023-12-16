@@ -1,8 +1,11 @@
 import { TabsProvider, Tabs } from 'react-native-paper-tabs';
 import { TabsProviderProps } from 'react-native-paper-tabs/src/utils';
 import { theme } from './OwnPaperProvider';
+import { ReactNode } from 'react';
 
-export default function TabsTemplate(props: Readonly<TabsProviderProps>) {
+export default function TabsTemplate(
+  props: Readonly<TabsProviderProps>
+): ReactNode {
   return (
     <TabsProvider {...props} defaultIndex={0}>
       <Tabs

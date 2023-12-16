@@ -14,10 +14,11 @@ import { StatusBar } from 'expo-status-bar';
 import LocaleConfig from './src/environment/locale';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './src/store/EventsSlice';
+import { ReactNode } from 'react';
 
-LocaleConfig.defaultLocale = 'fr';
+LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calendar and timeline
 
-export default function App() {
+export default function App(): ReactNode {
   if (ENVIRONMENT != 'dev') console.debug = () => {};
 
   const client = new ApolloClient({

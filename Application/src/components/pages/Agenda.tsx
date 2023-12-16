@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import TabScreenTemplate from '../molecules/TabScreenTemplate';
 import TabsTemplate from '../organisms/TabsTemplate';
-import { ReactElement, useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
 import TimelineTemplate from '../organisms/TimelineTemplate';
 import { CalendarProvider, DateData } from 'react-native-calendars';
@@ -28,7 +28,7 @@ const Explore = (props: {
   );
 };
 
-export default function Agenda() {
+export default function Agenda(): ReactNode {
   const [events, setEvents] = useState(store.getState().events);
   const [selectEvent, setSelectEvent] = useState<Event>(); // will be used for disabling the details view if no appointment is selected
   const [selectDate, setSelectDate] = useState<DateData>(); // will be used for disabling the day view if no day is selected

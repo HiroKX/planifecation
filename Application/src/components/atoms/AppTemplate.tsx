@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import { FAB as PaperFab } from 'react-native-paper';
 import { Props as PaperFabProps } from 'react-native-paper/src/components/FAB/FAB';
 
-export default function AppTemplate(props: Readonly<PaperFabProps>) {
+export default function AppTemplate(props: Readonly<PaperFabProps>): ReactNode {
   return (
     <PaperFab
       variant={props.variant ?? 'primary'}

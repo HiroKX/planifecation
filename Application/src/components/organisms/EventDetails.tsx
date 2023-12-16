@@ -3,24 +3,24 @@ import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { theme } from './OwnPaperProvider';
-import { ModalTemplate } from './ModalTemplate';
+import ModalTemplate from './ModalTemplate';
 import { Alert, View } from 'react-native';
 import { getColorForBackground } from './../../services/utils/utils';
 import { Portal } from 'react-native-paper';
 import { addEvent } from '../../store/EventsSlice';
 import { useDispatch } from 'react-redux';
 import ColorPickerTemplate from '../molecules/ColorPickerTemplate';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 interface Props {
   updateFunction: (event: Event) => void;
   event?: Event;
 }
 
-export default function EventDetails(props: Readonly<Props>) {
+export default function EventDetails(props: Readonly<Props>): ReactNode {
   const [visibleModal, setVisibleModal] = useState(false);
-  const [date, setDate] = useState(props?.event?.start.substring(0, 10) ?? '');
-  const [start, setStart] = useState(props?.event?.start.substring(11) ?? '');
+  const [date, setDate] = useState(props?.event?.start.substring(0, 10) ?? ''); // get YYYY-MM-DD from YYYY-MM-DD HH:MM
+  const [start, setStart] = useState(props?.event?.start.substring(11) ?? ''); // get HH:mm from YYYY-MM-DD HH:mm
   const [end, setEnd] = useState(props?.event?.end.substring(11) ?? '');
   const [title, setTitle] = useState(props?.event?.title ?? '');
   const [summary, setSummary] = useState(props?.event?.summary ?? '');
