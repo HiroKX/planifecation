@@ -2,6 +2,7 @@ import { MD3LightTheme, MD3Theme, PaperProvider } from 'react-native-paper';
 import { Props as PaperProviderProps } from 'react-native-paper/src/core/PaperProvider';
 import { lightTheme } from '../../environment/lightTheme';
 import { Theme } from '@react-navigation/native';
+import { ReactNode } from 'react';
 
 // POUR LE MOMENT, CHANGER LE THEME ICI
 export const theme = lightTheme;
@@ -67,6 +68,8 @@ function updateNavigationTheme(theme: MD3Theme) {
   };
 }
 
-export default function OwnPaperProvider(props: Readonly<PaperProviderProps>) {
+export default function OwnPaperProvider(
+  props: Readonly<PaperProviderProps>
+): ReactNode {
   return <PaperProvider theme={theme} {...props} />;
 }

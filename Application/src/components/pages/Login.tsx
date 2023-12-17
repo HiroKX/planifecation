@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import { ReactNode, useState } from 'react';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { ApolloConsumer } from '@apollo/client';
@@ -9,7 +9,7 @@ import { StackParamList } from '../../navigation/RootStack';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Login(props: Readonly<Props>) {
+export default function Login(props: Readonly<Props>): ReactNode {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 

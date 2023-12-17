@@ -1,9 +1,10 @@
-import SurfaceTemplate from '../organisms/SurfaceTemplate';
+import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import AppTemplate from '../atoms/AppTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import { View, StyleSheet } from 'react-native';
 import TextTemplate from '../atoms/styles/TextTemplate';
+import { ReactNode } from 'react';
 
 // Pour le moment pour tester les composants du thème : import { secondary, tertiary, error } from '../organisms/OwnPaperProvider';
 
@@ -11,7 +12,7 @@ import TextTemplate from '../atoms/styles/TextTemplate';
 // undefined pour primary
 const switchVariant = undefined;
 
-export default function ThemeSandbox() {
+export default function ThemeSandbox(): ReactNode {
   return (
     <View>
       <TextTemplate style={styles.title} variant="titleLarge">
