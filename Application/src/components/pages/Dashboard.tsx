@@ -37,6 +37,11 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
             onPress={() => props.navigation.navigate('Agenda')}
           />
           <AppTemplate
+              icon="format-list-checkbox"
+              label="To-Do Liste"
+              onPress={() => props.navigation.navigate('To-Do liste')}
+          />
+          <AppTemplate
             icon="door-sliding"
             label="Déconnexion"
             onPress={async () => {

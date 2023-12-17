@@ -12,6 +12,7 @@ import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
+import Todo from "../components/pages/Todo";
 
 export type StackParamList = {
   Accueil: undefined;
@@ -23,6 +24,7 @@ export type StackParamList = {
   Sandbox: undefined;
   Profil: undefined;
   Agenda: undefined;
+  'To-Do liste': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -48,6 +50,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Bloc-notes" component={Notepad} />
       <Stack.Screen name="Sandbox" component={ThemeSandbox} />
       <Stack.Screen name="Agenda" component={Agenda} />
+      <Stack.Screen name="To-Do liste" component={Todo} />
     </Stack.Navigator>
   );
 }
