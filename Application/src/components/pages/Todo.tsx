@@ -1,24 +1,22 @@
 import SurfaceTemplate from '../molecules/SurfaceTemplate';
-import AppTemplate from '../atoms/AppTemplate';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
-import {
-    GetLoggedUser,
-    LogoutUser,
-} from '../../controllers/AuthenticationController';
 import React, {ReactNode, useState} from 'react';
-import { ApolloConsumer } from '@apollo/client';
-import {FlatList, ListRenderItem, StyleSheet, View} from "react-native";
+import {FlatList, View} from "react-native";
 import ButtonTemplate from "../atoms/styles/ButtonTemplate";
-import {ENVIRONMENT} from "@env";
 import TextInputTemplate from "../atoms/styles/TextInputTemplate";
-import {IconButton, TextInput} from "react-native-paper";
+import {Checkbox, TextInput} from "react-native-paper";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 type Todo = {
     id: string;
     content: string;
+    isDone?: boolean;
+}
+
+type RenderTodoProps = {
+    item: Todo;
 }
 
 export default function Todo(props: Readonly<Props>): ReactNode {
@@ -26,8 +24,11 @@ export default function Todo(props: Readonly<Props>): ReactNode {
     const [todoList, setTodoList] = useState<Todo[]>([]);
 
     const handleAddTodo = () => {
-        setTodoList([...todoList, {id: Date.now().toString(), content:todo}]);
-        setTodo('');
+        if (todo.trim() !== '') {
+            let id = Date.now().toString();
+            setTodoList([...todoList, {id: id, content: todo, isDone: false}]);
+            setTodo('');
+        }
     }
 
     const handleDeleteTodo = (item: Todo) => {
@@ -35,11 +36,25 @@ export default function Todo(props: Readonly<Props>): ReactNode {
         setTodoList(updatedTodoList);
     }
 
-    const renderTodos =  ({ item, index }) => {
+    const renderTodos =  ({ item } : RenderTodoProps) => {
         return (
             <View>
-                <SurfaceTemplate>
-                    <TextInputTemplate right={<TextInput.Icon icon={"trash-can"} onPress={() => handleDeleteTodo(item)} />}>
+                <SurfaceTemplate style={{ flexDirection: 'row', alignItems: 'center', flex:1 }}>
+                    <Checkbox
+                        status={item.isDone ? "checked" : "unchecked"}
+                        onPress={() => {
+                            setTodoList((prevTodos) =>
+                                prevTodos.map((todo) =>
+                                    todo.id === item.id ? { ...todo, isDone: !todo.isDone } : todo
+                                )
+                            );
+                        }}
+                    />
+                    <TextInputTemplate
+                        right={<TextInput.Icon icon={"trash-can"} onPress={() => handleDeleteTodo(item)} />}
+                        style={{ flex: 1 }}
+                        editable={false}
+                    >
                         {item.content}
                     </TextInputTemplate>
                 </SurfaceTemplate>
@@ -65,12 +80,3 @@ export default function Todo(props: Readonly<Props>): ReactNode {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    button: {
-        margin: 5,
-    },
-    container: {
-        alignItems: 'center',
-    },
-});
