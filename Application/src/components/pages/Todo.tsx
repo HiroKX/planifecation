@@ -1,82 +1,87 @@
 import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
-import React, {ReactNode, useState} from 'react';
-import {FlatList, View} from "react-native";
-import ButtonTemplate from "../atoms/styles/ButtonTemplate";
-import TextInputTemplate from "../atoms/styles/TextInputTemplate";
-import {Checkbox, TextInput} from "react-native-paper";
+import React, { ReactNode, useState } from 'react';
+import { FlatList, View } from 'react-native';
+import ButtonTemplate from '../atoms/styles/ButtonTemplate';
+import TextInputTemplate from '../atoms/styles/TextInputTemplate';
+import { Checkbox, TextInput } from 'react-native-paper';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 type Todo = {
-    id: string;
-    content: string;
-    isDone?: boolean;
-}
+  id: string;
+  content: string;
+  isDone?: boolean;
+};
 
 type RenderTodoProps = {
-    item: Todo;
-}
+  item: Todo;
+};
 
 export default function Todo(props: Readonly<Props>): ReactNode {
-    const [todo, setTodo] = useState('');
-    const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [todo, setTodo] = useState('');
+  const [todoList, setTodoList] = useState<Todo[]>([]);
 
-    const handleAddTodo = () => {
-        if (todo.trim() !== '') {
-            let id = Date.now().toString();
-            setTodoList([...todoList, {id: id, content: todo, isDone: false}]);
-            setTodo('');
-        }
+  const handleAddTodo = () => {
+    if (todo.trim() !== '') {
+      let id = Date.now().toString();
+      setTodoList([...todoList, { id: id, content: todo, isDone: false }]);
+      setTodo('');
     }
+  };
 
-    const handleDeleteTodo = (item: Todo) => {
-        const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
-        setTodoList(updatedTodoList);
-    }
+  const handleDeleteTodo = (item: Todo) => {
+    const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
+    setTodoList(updatedTodoList);
+  };
 
-    const renderTodos =  ({ item } : RenderTodoProps) => {
-        return (
-            <View>
-                <SurfaceTemplate style={{ flexDirection: 'row', alignItems: 'center', flex:1 }}>
-                    <Checkbox
-                        status={item.isDone ? "checked" : "unchecked"}
-                        onPress={() => {
-                            setTodoList((prevTodos) =>
-                                prevTodos.map((todo) =>
-                                    todo.id === item.id ? { ...todo, isDone: !todo.isDone } : todo
-                                )
-                            );
-                        }}
-                    />
-                    <TextInputTemplate
-                        right={<TextInput.Icon icon={"trash-can"} onPress={() => handleDeleteTodo(item)} />}
-                        style={{ flex: 1 }}
-                        editable={false}
-                    >
-                        {item.content}
-                    </TextInputTemplate>
-                </SurfaceTemplate>
-            </View>
-        )
-    }
-
+  const renderTodos = ({ item }: RenderTodoProps) => {
     return (
-        <View>
-            <SurfaceTemplate>
-                <TextInputTemplate
-                    mode="outlined"
-                    value={todo}
-                    onChangeText={text => setTodo(text)}
-                />
-                <ButtonTemplate onPress={handleAddTodo}>
-                    Add
-                </ButtonTemplate>
-            </SurfaceTemplate>
-            <SurfaceTemplate>
-                <FlatList data={todoList} renderItem={renderTodos}/>
-            </SurfaceTemplate>
-        </View>
+      <View>
+        <SurfaceTemplate
+          style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
+        >
+          <Checkbox
+            status={item.isDone ? 'checked' : 'unchecked'}
+            onPress={() => {
+              setTodoList(prevTodos =>
+                prevTodos.map(todo =>
+                  todo.id === item.id ? { ...todo, isDone: !todo.isDone } : todo
+                )
+              );
+            }}
+          />
+          <TextInputTemplate
+            right={
+              <TextInput.Icon
+                icon={'trash-can'}
+                onPress={() => handleDeleteTodo(item)}
+              />
+            }
+            style={{ flex: 1 }}
+            editable={false}
+          >
+            {item.content}
+          </TextInputTemplate>
+        </SurfaceTemplate>
+      </View>
     );
+  };
+
+  return (
+    <View>
+      <SurfaceTemplate>
+        <TextInputTemplate
+          mode="outlined"
+          value={todo}
+          onChangeText={text => setTodo(text)}
+        />
+        <ButtonTemplate onPress={handleAddTodo}>Add</ButtonTemplate>
+      </SurfaceTemplate>
+      <SurfaceTemplate>
+        <FlatList data={todoList} renderItem={renderTodos} />
+      </SurfaceTemplate>
+    </View>
+  );
 }

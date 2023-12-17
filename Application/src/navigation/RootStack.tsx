@@ -12,7 +12,7 @@ import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
-import Todo from "../components/pages/Todo";
+import Todo from '../components/pages/Todo';
 
 export type StackParamList = {
   Accueil: undefined;
