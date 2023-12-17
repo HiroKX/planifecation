@@ -12,6 +12,7 @@ import {FlatList, ListRenderItem, StyleSheet, View} from "react-native";
 import ButtonTemplate from "../atoms/styles/ButtonTemplate";
 import {ENVIRONMENT} from "@env";
 import TextInputTemplate from "../atoms/styles/TextInputTemplate";
+import {IconButton, TextInput} from "react-native-paper";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -29,11 +30,18 @@ export default function Todo(props: Readonly<Props>): ReactNode {
         setTodo('');
     }
 
+    const handleDeleteTodo = (item: Todo) => {
+        const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
+        setTodoList(updatedTodoList);
+    }
+
     const renderTodos =  ({ item, index }) => {
         return (
             <View>
                 <SurfaceTemplate>
-                    <TextInputTemplate>{item.content}</TextInputTemplate>
+                    <TextInputTemplate right={<TextInput.Icon icon={"trash-can"} onPress={() => handleDeleteTodo(item)} />}>
+                        {item.content}
+                    </TextInputTemplate>
                 </SurfaceTemplate>
             </View>
         )
