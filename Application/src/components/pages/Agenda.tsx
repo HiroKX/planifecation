@@ -67,14 +67,23 @@ export default function Agenda(): ReactNode {
   return (
     <CalendarProvider date={'now'}>
       <TabsTemplate defaultIndex={0}>
-        <TabScreenTemplate label={luxon.fromFormat(selectDate.dateString, 'yyyy-MM-dd').setLocale('fr').toFormat('MMMM yyyy')} icon="calendar">
+        <TabScreenTemplate
+          label={luxon
+            .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
+            .setLocale('fr')
+            .toFormat('MMMM yyyy')}
+          icon="calendar"
+        >
           <View>
             <CalendarTemplate markedDates={marked} onDayPress={onDateChange} />
             <Explore index={2} placeholder="Créer un évènement" />
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
-          label={luxon.fromFormat(selectDate.dateString, 'yyyy-MM-dd').setLocale('fr').toFormat("'Jour:' dd")}
+          label={luxon
+            .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
+            .setLocale('fr')
+            .toFormat("'Jour:' dd")}
           icon="view-day"
           disabled={selectDate == undefined}
         >
@@ -88,7 +97,7 @@ export default function Agenda(): ReactNode {
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
-          label={selectEvent == undefined ? "Ajouter" : "Détails"}
+          label={selectEvent == undefined ? 'Ajouter' : 'Détails'}
           icon="account-details"
         >
           <EventDetails updateFunction={updateList} event={selectEvent} />

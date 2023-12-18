@@ -63,13 +63,13 @@ export default function Todo(props: Readonly<Props>): ReactNode {
               />
             }
             mode="outlined"
-            style={{ flex: 1, paddingBottom:0, paddingTop:0}}
+            style={{ flex: 1, paddingBottom: 0, paddingTop: 0 }}
             multiline={true}
             editable={false}
-            onChangeText={(edit) => item.content = edit}
+            onChangeText={edit => (item.content = edit)}
             value={item.content}
             outlineStyle={{
-              display:'none'
+              display: 'none',
             }}
           ></TextInputTemplate>
         </SurfaceTemplate>
@@ -81,13 +81,15 @@ export default function Todo(props: Readonly<Props>): ReactNode {
     <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <TextInputTemplate
-          label={"Nouvelle tâche"}
+          label={'Nouvelle tâche'}
           mode="outlined"
           value={todo}
           onChangeText={text => setTodo(text)}
           maxLength={100}
         />
-        <ButtonTemplate onPress={handleAddTodo}>Ajouter une tâche</ButtonTemplate>
+        <ButtonTemplate onPress={handleAddTodo}>
+          Ajouter une tâche
+        </ButtonTemplate>
       </SurfaceTemplate>
       <SurfaceTemplate style={{ flex: 5 }}>
         <FlatList data={todoList} renderItem={renderTodos} />
