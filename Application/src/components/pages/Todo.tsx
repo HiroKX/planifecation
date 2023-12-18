@@ -60,13 +60,16 @@ export default function Todo(props: Readonly<Props>): ReactNode {
                 icon={'trash-can'}
                 color={theme.colors.primary}
                 onPress={() => handleDeleteTodo(item)}
+                
               />
             }
             mode='outlined'
             style={{ flex: 1 }}
+            multiline={true}
             editable={false}
             onChangeText={text => item.content = text}
             value={item.content}
+            outlineStyle={{display:'none', backgroundColor:theme.colors.primaryContainer}}
           >
           </TextInputTemplate>
         </SurfaceTemplate>
