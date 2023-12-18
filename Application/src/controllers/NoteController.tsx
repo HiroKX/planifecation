@@ -27,7 +27,7 @@ export async function UpdateNote(
   client: Readonly<ApolloClient<Object>>,
   props: Readonly<Props>
 ): Promise<void> {
-  console.debug('NoteController.DeleteAndLogoutUser');
+  console.debug('NoteController.UpdateNote');
 
 }
 

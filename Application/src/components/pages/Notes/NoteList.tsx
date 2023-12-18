@@ -19,9 +19,9 @@ export default function NoteList(props : Props): ReactNode{
         getNotes();
     }, [])
     if(notes.length<0){
-        //Cas ou il y a des notes
+        //Case : we have notes
 
-    } //Autre cas
+    } 
 
     return (true);
 }
