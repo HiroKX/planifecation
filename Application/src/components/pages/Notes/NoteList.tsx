@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import { GetAllNotes } from '../../../controllers/NoteController';
 import { useApolloClient } from '@apollo/client';
@@ -28,18 +28,18 @@ export default function NoteList(): ReactNode {
   }, []);
   console.log(notes); // Add button to redirect to notepad
   return (
-    <View>
+    <View style={{flex:1, padding:10}}>
       <SurfaceTemplate>
         <ButtonTemplate>Ajouter</ButtonTemplate>
       </SurfaceTemplate>
-      <SurfaceTemplate>
-        <FlatList data={notes} renderItem={renderTodos} />
+      <SurfaceTemplate style={{flex: 5}}>
+        <FlatList data={notes} renderItem={renderNotes} />
       </SurfaceTemplate>
     </View>
   );
 }
 
-const renderTodos = ({ item }: RenderNoteProps) => {
+const renderNotes = ({ item }: RenderNoteProps) => {
   return (
     <View>
       <SurfaceTemplate

@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { ReactNode, useState } from 'react';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
+import { theme } from '../../organisms/OwnPaperProvider';
 
 export default function Notepad(): ReactNode {
   const [title, setTitle] = useState('');
@@ -13,6 +14,7 @@ export default function Notepad(): ReactNode {
         onChangeText={newTitle => setTitle(newTitle)}
         value={title}
         placeholder="Titre"
+        maxLength={40}
       />
       <TextInputTemplate
         style={styles.textInput}
@@ -32,10 +34,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     marginBottom: 3,
-    borderColor: 'gray',
+    borderColor: theme.colors.primary,
   },
   textInput: {
     flex: 1,
-    borderColor: 'gray',
+    borderColor: theme.colors.primary,
   },
 });
