@@ -7,6 +7,7 @@ import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
 import CheckboxTemplate from '../molecules/CheckboxTemplate';
+import { theme } from '../organisms/OwnPaperProvider';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -57,6 +58,7 @@ export default function Todo(props: Readonly<Props>): ReactNode {
             right={
               <TextInput.Icon
                 icon={'trash-can'}
+                color={theme.colors.primary}
                 onPress={() => handleDeleteTodo(item)}
               />
             }
