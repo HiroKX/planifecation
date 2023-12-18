@@ -1,13 +1,14 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import { GetAllNotes } from '../../../controllers/NoteController';
+import { DeleteNote, GetAllNotes } from '../../../controllers/NoteController';
 import { useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import { FlatList, View } from 'react-native';
+import { Alert, FlatList, Pressable, View } from 'react-native';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import { GetLoggedUserToken, GetLoggedUserUsername } from '../../../controllers/AuthenticationController';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type RenderNoteProps = {
@@ -26,6 +27,12 @@ export default function NoteList(): ReactNode {
     }
     getNotes();
   }, []);
+
+  async function  ConfirmedDeleteNote ( item : Readonly<Props> ) {
+    return ( DeleteNote(client,  await GetLoggedUserUsername(), await GetLoggedUserToken(), item) )
+  }
+
+
   console.log(notes); // Add button to redirect to notepad
   return (
     <View style={{ flex: 1, padding: 10 }}>
@@ -39,14 +46,30 @@ export default function NoteList(): ReactNode {
   );
 }
 
+
 const renderNotes = ({ item }: RenderNoteProps) => {
+
   return (
     <View>
       <SurfaceTemplate
         style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
       >
         <TextInputTemplate
-          right={<TextInput.Icon icon={'trash-can'} />}
+          right={<Pressable on-press={() => 
+            Alert.alert(
+              "Suppression de {item.title}",
+              'Confirmez-vous la suppression de cette note ?',
+              [
+                { text: 'Non' },
+                {
+                  text: 'Oui',
+                  onPress: {
+                    ConfirmedDeleteNote(item);
+                  },
+                },
+              ]
+            )
+          }><TextInput.Icon icon={'trash-can'} /></Pressable>}
           mode="outlined"
           style={{ flex: 1 }}
           multiline={false}
