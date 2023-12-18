@@ -38,8 +38,8 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
           />
           <AppTemplate
             icon="format-list-checkbox"
-            label="To-Do Liste"
-            onPress={() => props.navigation.navigate('To-Do liste')}
+            label="Liste toute douce"
+            onPress={() => props.navigation.navigate('Liste toute douce')}
           />
           <AppTemplate
             icon="door-sliding"

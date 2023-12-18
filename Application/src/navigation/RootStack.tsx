@@ -50,7 +50,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Bloc-notes" component={Notepad} />
       <Stack.Screen name="Sandbox" component={ThemeSandbox} />
       <Stack.Screen name="Agenda" component={Agenda} />
-      <Stack.Screen name="To-Do liste" component={Todo} />
+      <Stack.Screen name="Liste toute douce" component={Todo} />
     </Stack.Navigator>
   );
 }

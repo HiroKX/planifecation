@@ -1,11 +1,12 @@
 import SurfaceTemplate from '../molecules/SurfaceTemplate';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
-import { Checkbox, TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
+import CheckboxTemplate from '../molecules/CheckboxTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -42,7 +43,7 @@ export default function Todo(props: Readonly<Props>): ReactNode {
         <SurfaceTemplate
           style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
         >
-          <Checkbox
+          <CheckboxTemplate
             status={item.isDone ? 'checked' : 'unchecked'}
             onPress={() => {
               setTodoList(prevTodos =>
@@ -59,10 +60,12 @@ export default function Todo(props: Readonly<Props>): ReactNode {
                 onPress={() => handleDeleteTodo(item)}
               />
             }
+            mode='outlined'
             style={{ flex: 1 }}
             editable={false}
+            onChangeText={text => item.content = text}
+            value={item.content}
           >
-            {item.content}
           </TextInputTemplate>
         </SurfaceTemplate>
       </View>
