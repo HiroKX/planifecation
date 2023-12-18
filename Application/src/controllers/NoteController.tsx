@@ -4,23 +4,21 @@ import { ApolloClient } from '@apollo/client';
 import { GetAllNotesFromUser } from '../services/NoteService';
 import { GetLoggedUserUsername } from './AuthenticationController';
 
-
 type Props = NativeStackScreenProps<StackParamList>;
 
 export async function GetAllNotes(
-    client: Readonly<ApolloClient<Object>>,
-  ): Promise<Note[]> {
-    console.debug('NoteController.GetAllNotes');
-    const username = await GetLoggedUserUsername();
-    return await GetAllNotesFromUser(client,username);
+  client: Readonly<ApolloClient<Object>>
+): Promise<Note[]> {
+  console.debug('NoteController.GetAllNotes');
+  const username = await GetLoggedUserUsername();
+  return await GetAllNotesFromUser(client, username);
 }
 
 export async function AddNote(
-    client: Readonly<ApolloClient<Object>>,
-    props: Readonly<Props>
-  ): Promise<void> {
-    console.debug('NoteController.AddNote');
-
+  client: Readonly<ApolloClient<Object>>,
+  props: Readonly<Props>
+): Promise<void> {
+  console.debug('NoteController.AddNote');
 }
 
 export async function UpdateNote(
@@ -28,7 +26,6 @@ export async function UpdateNote(
   props: Readonly<Props>
 ): Promise<void> {
   console.debug('NoteController.UpdateNote');
-
 }
 
 export async function DeleteNote(
@@ -38,5 +35,4 @@ export async function DeleteNote(
   props: Readonly<Props>
 ): Promise<void> {
   console.debug('NoteController.DeleteNote');
-
 }
