@@ -82,11 +82,13 @@ export default function Todo(props: Readonly<Props>): ReactNode {
     <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <TextInputTemplate
+          label={"Nouvelle tâche"}
           mode="outlined"
           value={todo}
           onChangeText={text => setTodo(text)}
+          maxLength={100}
         />
-        <ButtonTemplate onPress={handleAddTodo}>Add</ButtonTemplate>
+        <ButtonTemplate onPress={handleAddTodo}>Ajouter une tâche</ButtonTemplate>
       </SurfaceTemplate>
       <SurfaceTemplate style={{ flex: 5 }}>
         <FlatList data={todoList} renderItem={renderTodos} />
