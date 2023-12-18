@@ -63,14 +63,13 @@ export default function Todo(props: Readonly<Props>): ReactNode {
               />
             }
             mode="outlined"
-            style={{ flex: 1 }}
+            style={{ flex: 1, paddingBottom:0, paddingTop:0}}
             multiline={true}
             editable={false}
-            onChangeText={text => (item.content = text)}
+            onChangeText={(edit) => item.content = edit}
             value={item.content}
             outlineStyle={{
-              display: 'none',
-              backgroundColor: theme.colors.primaryContainer,
+              display:'none'
             }}
           ></TextInputTemplate>
         </SurfaceTemplate>

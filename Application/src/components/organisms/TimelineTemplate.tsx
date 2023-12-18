@@ -3,10 +3,18 @@ import {
   TimelineProps,
   CalendarUtils,
   TimelineEventProps,
+  DateData
 } from 'react-native-calendars';
 import { ReactNode } from 'react';
 
 export const today = new Date();
+export const todayData : DateData = {
+  year: today.getFullYear(),
+  month: today.getMonth()+1,
+  day: today.getDate(),
+  timestamp: today.getTime(),
+  dateString: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
+}
 export const getDate = CalendarUtils.getCalendarDateString(
   new Date().setDate(today.getDate())
 );
