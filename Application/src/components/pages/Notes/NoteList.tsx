@@ -28,11 +28,11 @@ export default function NoteList(): ReactNode {
   }, []);
   console.log(notes); // Add button to redirect to notepad
   return (
-    <View style={{flex:1, padding:10}}>
+    <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <ButtonTemplate>Ajouter</ButtonTemplate>
       </SurfaceTemplate>
-      <SurfaceTemplate style={{flex: 5}}>
+      <SurfaceTemplate style={{ flex: 5 }}>
         <FlatList data={notes} renderItem={renderNotes} />
       </SurfaceTemplate>
     </View>
