@@ -30,7 +30,7 @@ export default function NoteList(): ReactNode {
   return (
     <View>
       <SurfaceTemplate>
-        <ButtonTemplate>Ajouter</ButtonTemplate> 
+        <ButtonTemplate>Ajouter</ButtonTemplate>
       </SurfaceTemplate>
       <SurfaceTemplate>
         <FlatList data={notes} renderItem={renderTodos} />
