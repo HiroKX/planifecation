@@ -3,9 +3,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import { GetAllNotes } from '../../../controllers/NoteController';
 import { useApolloClient } from '@apollo/client';
-import { GetLoggedUserUsername } from '../../../controllers/AuthenticationController';
-import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function NoteList(props : Props): ReactNode{
@@ -21,7 +19,9 @@ export default function NoteList(props : Props): ReactNode{
         getNotes();
     }, [])
     if(notes.length<0){
-        return 
-    }
+        //Cas ou il y a des notes
+
+    } //Autre cas
+
     return (true);
 }
