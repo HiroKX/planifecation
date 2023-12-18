@@ -2,7 +2,7 @@ import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
 import { ReactNode, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, ScrollView, View } from 'react-native';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
@@ -60,25 +60,26 @@ export default function Todo(props: Readonly<Props>): ReactNode {
                 icon={'trash-can'}
                 color={theme.colors.primary}
                 onPress={() => handleDeleteTodo(item)}
-                
               />
             }
-            mode='outlined'
+            mode="outlined"
             style={{ flex: 1 }}
             multiline={true}
             editable={false}
-            onChangeText={text => item.content = text}
+            onChangeText={text => (item.content = text)}
             value={item.content}
-            outlineStyle={{display:'none', backgroundColor:theme.colors.primaryContainer}}
-          >
-          </TextInputTemplate>
+            outlineStyle={{
+              display: 'none',
+              backgroundColor: theme.colors.primaryContainer,
+            }}
+          ></TextInputTemplate>
         </SurfaceTemplate>
       </View>
     );
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <TextInputTemplate
           mode="outlined"
@@ -87,7 +88,7 @@ export default function Todo(props: Readonly<Props>): ReactNode {
         />
         <ButtonTemplate onPress={handleAddTodo}>Add</ButtonTemplate>
       </SurfaceTemplate>
-      <SurfaceTemplate>
+      <SurfaceTemplate style={{ flex: 5 }}>
         <FlatList data={todoList} renderItem={renderTodos} />
       </SurfaceTemplate>
     </View>
