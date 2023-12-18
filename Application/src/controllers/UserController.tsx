@@ -43,7 +43,6 @@ export async function UpdateUserAndLogout(
     await UpdateUser(client, username, password)
       .then(async res => {
         if (res) {
-          console.log('User', username, 'successfully updated');
           await LogoutUser(client, props);
         } else throw new Error();
       })

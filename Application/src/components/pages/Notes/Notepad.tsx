@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { ReactNode, useState } from 'react';
-import TextInputTemplate from '../atoms/styles/TextInputTemplate';
+import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 
 export default function Notepad(): ReactNode {
   const [title, setTitle] = useState('');
