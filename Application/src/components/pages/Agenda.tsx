@@ -1,7 +1,7 @@
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import TabScreenTemplate from '../molecules/TabScreenTemplate';
 import TabsTemplate from '../organisms/TabsTemplate';
-import { ReactElement, ReactNode, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
 import TimelineTemplate from '../organisms/TimelineTemplate';
 import { CalendarProvider, DateData } from 'react-native-calendars';
@@ -28,13 +28,28 @@ const Explore = (props: {
   );
 };
 
-export default function Agenda(): ReactNode {
+export default function Agenda() {
+  console.log("Rendering Agenda");
   const [events, setEvents] = useState(store.getState().events);
   const [selectEvent, setSelectEvent] = useState<Event>(); // will be used for disabling the details view if no appointment is selected
   const [selectDate, setSelectDate] = useState<DateData>(); // will be used for disabling the day view if no day is selected
   const [marked, setMarked] = useState<MarkedDates>(getMarkedDates());
   const [timelineEvents, setTimelineEvents] = useState<Event[]>(events);
+  const [isLoading, setIsLoading] = useState(true);
 
+
+  useEffect(() => {
+    // Simuler un appel de chargement de données
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Remplacer par votre logique de chargement de données
+  }, []);
+
+  const load = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 2000);
+  }
+  
   const updateList = (event: Event) => {
     setEvents(store.getState().events);
     setMarked(getMarkedDates());
@@ -64,6 +79,9 @@ export default function Agenda(): ReactNode {
 
   return (
     <CalendarProvider date={'now'}>
+        {isLoading ? (
+      <ActivityIndicator size="large" color="#0000ff" />
+    ) : (
       <TabsTemplate defaultIndex={0}>
         <TabScreenTemplate label="Mois" icon="calendar">
           <View>
@@ -102,6 +120,8 @@ export default function Agenda(): ReactNode {
           <EventDetails updateFunction={updateList} event={selectEvent} />
         </TabScreenTemplate>
       </TabsTemplate>
+          )}
+      <ButtonTemplate onPress={load}>Test rendering</ButtonTemplate>
     </CalendarProvider>
   );
 }

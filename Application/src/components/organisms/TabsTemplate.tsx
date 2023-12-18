@@ -6,6 +6,7 @@ import { ReactNode } from 'react';
 export default function TabsTemplate(
   props: Readonly<TabsProviderProps>
 ): ReactNode {
+  console.log("Rendering TabsTemplate");
   return (
     <TabsProvider {...props} defaultIndex={0}>
       <Tabs

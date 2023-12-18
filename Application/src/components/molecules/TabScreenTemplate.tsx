@@ -5,5 +5,6 @@ import { TabScreenProps } from 'react-native-paper-tabs/src/TabScreen';
 export default function TabScreenTemplate(
   props: Readonly<TabScreenProps>
 ): ReactNode {
+  console.log("rendering TabScreenTemplate")
   return <TabScreen {...props}></TabScreen>;
 }

@@ -39,6 +39,7 @@ export default function App(): ReactNode {
 
   return (
     <ApolloProvider client={client}>
+      <ReduxProvider store={store}>
         <OwnPaperProvider>
           <NavigationContainer theme={navigationTheme}>
             <RootStack/>
@@ -46,6 +47,7 @@ export default function App(): ReactNode {
           <LoadingTemplate visible={isLoading}></LoadingTemplate>
         </OwnPaperProvider>
         <StatusBar style="light" />
+      </ReduxProvider>
     </ApolloProvider>
   );
 }
