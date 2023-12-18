@@ -51,8 +51,7 @@ const renderTodos = ({ item }: RenderNoteProps) => {
           style={{ flex: 1 }}
           multiline={false}
           editable={false}
-          onChangeText={text => (item.content = text)}
-          value={item.content}
+          value={item.title}
           outlineStyle={{
             display: 'none',
           }}
