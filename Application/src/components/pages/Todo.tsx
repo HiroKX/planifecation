@@ -2,7 +2,7 @@ import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../navigation/RootStack';
 import { ReactNode, useState } from 'react';
-import { FlatList, ScrollView, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
