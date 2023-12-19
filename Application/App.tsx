@@ -29,20 +29,18 @@ export default function App(): ReactNode {
 
   const [splash, setSplash] = useState(true);
 
-  return (
-
-    splash ? (
-      <Splashscreen func={() => setSplash(false)}></Splashscreen>
-    ) : 
-    (  <ApolloProvider client={client}>
-        <ReduxProvider store={store}>
-          <OwnPaperProvider>
-            <NavigationContainer theme={navigationTheme}>
-              <RootStack />
-            </NavigationContainer>
-          </OwnPaperProvider>
-          <StatusBar style="light" />
-        </ReduxProvider>
-      </ApolloProvider>
-    ))
+  return splash ? (
+    <Splashscreen func={() => setSplash(false)}></Splashscreen>
+  ) : (
+    <ApolloProvider client={client}>
+      <ReduxProvider store={store}>
+        <OwnPaperProvider>
+          <NavigationContainer theme={navigationTheme}>
+            <RootStack />
+          </NavigationContainer>
+        </OwnPaperProvider>
+        <StatusBar style="light" />
+      </ReduxProvider>
+    </ApolloProvider>
+  );
 }
