@@ -27,7 +27,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
       {client => (
         <SurfaceTemplate>
           <AppTemplate
-            icon="door-sliding"
+            icon="note-outline"
             label="Bloc-notes"
             onPress={() => props.navigation.navigate('Bloc-notes')}
           />

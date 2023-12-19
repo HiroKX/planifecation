@@ -30,6 +30,7 @@ export async function DeleteUser(
       return false;
     });
 }
+
 const UPDATE_USER = gql`
   mutation UpdateUser($username: String!, $password: String!) {
     updateUser(username: $username, password: $password) {
