@@ -4,10 +4,11 @@ import { StackParamList } from '../../../navigation/RootStack';
 import { DeleteNote, GetAllNotes } from '../../../controllers/NoteController';
 import { useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import { Alert, FlatList, Pressable, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import { theme } from '../../organisms/OwnPaperProvider';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type RenderNoteProps = {
@@ -21,6 +22,8 @@ export default function NoteList(): ReactNode {
 
   const confirmDelete = (id: number) => {
     DeleteNote(client, id);
+    const updatedNoteList = notes.filter(note => note.id !== id);
+    setNotes(updatedNoteList);
   };
 
   useEffect(() => {
@@ -40,25 +43,26 @@ export default function NoteList(): ReactNode {
         >
           <TextInputTemplate
             right={
-              <Pressable
-                on-press={() =>
+              <TextInput.Icon
+              icon={'trash-can'}
+              color={theme.colors.primary}
+              onPress={() => {
                   Alert.alert(
-                    `Suppression de ${item.title}`,
-                    'Confirmez-vous la suppression de cette note ?',
-                    [
-                      { text: 'Non' },
-                      {
-                        text: 'Oui',
-                        onPress: () => {
-                          confirmDelete(item.id);
-                        },
+                  `Suppression de ${item.title}`,
+                  'Confirmez-vous la suppression de cette note ?',
+                  [
+                    { text: 'Non' },
+                    {
+                      text: 'Oui',
+                      onPress: () => {
+                        confirmDelete(item.id);
                       },
-                    ]
-                  )
-                }
-              >
-                <TextInput.Icon icon={'trash-can'} />
-              </Pressable>
+                    },
+                  ]
+                )
+              }
+            }
+              />
             }
             mode="outlined"
             style={{ flex: 1 }}
@@ -73,8 +77,6 @@ export default function NoteList(): ReactNode {
       </View>
     );
   };
-
-  console.log(notes); // Add button to redirect to notepad
   return (
     <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
