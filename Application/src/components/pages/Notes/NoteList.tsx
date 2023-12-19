@@ -8,7 +8,6 @@ import { Alert, FlatList, Pressable, View } from 'react-native';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
-import { GetLoggedUserToken, GetLoggedUserUsername } from '../../../controllers/AuthenticationController';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type RenderNoteProps = {
@@ -17,7 +16,12 @@ type RenderNoteProps = {
 
 export default function NoteList(): ReactNode {
   const [notes, setNotes] = useState<Note[]>([]);
+
   const client = useApolloClient();
+
+  const confirmDelete = (id:number) {
+    DeleteNote(client, id);
+  }
 
   useEffect(() => {
     async function getNotes() {
@@ -28,10 +32,43 @@ export default function NoteList(): ReactNode {
     getNotes();
   }, []);
 
-  async function  ConfirmedDeleteNote ( item : Readonly<Props> ) {
-    return ( DeleteNote(client,  await GetLoggedUserUsername(), await GetLoggedUserToken(), item) )
-  }
+  const renderNotes = ({ item }: RenderNoteProps) => {
 
+    return (
+      <View>
+        <SurfaceTemplate
+          style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
+        >
+          <TextInputTemplate
+            right={<Pressable on-press={() => 
+              Alert.alert(
+                `Suppression de ${item.title}`,
+                'Confirmez-vous la suppression de cette note ?',
+                [
+                  { text: 'Non' },
+                  {
+                    text: 'Oui',
+                    onPress: () => {
+                      confirmDelete(item.id);
+                    },
+                  },
+                ]
+              )
+            }><TextInput.Icon icon={'trash-can'} /></Pressable>}
+            mode="outlined"
+            style={{ flex: 1 }}
+            multiline={false}
+            editable={false}
+            value={item.title}
+            outlineStyle={{
+              display: 'none',
+            }}
+          >
+          </TextInputTemplate>
+        </SurfaceTemplate>
+      </View>
+    );
+  };
 
   console.log(notes); // Add button to redirect to notepad
   return (
@@ -44,42 +81,8 @@ export default function NoteList(): ReactNode {
       </SurfaceTemplate>
     </View>
   );
+  
 }
 
 
-const renderNotes = ({ item }: RenderNoteProps) => {
 
-  return (
-    <View>
-      <SurfaceTemplate
-        style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
-      >
-        <TextInputTemplate
-          right={<Pressable on-press={() => 
-            Alert.alert(
-              "Suppression de {item.title}",
-              'Confirmez-vous la suppression de cette note ?',
-              [
-                { text: 'Non' },
-                {
-                  text: 'Oui',
-                  onPress: {
-                    ConfirmedDeleteNote(item);
-                  },
-                },
-              ]
-            )
-          }><TextInput.Icon icon={'trash-can'} /></Pressable>}
-          mode="outlined"
-          style={{ flex: 1 }}
-          multiline={false}
-          editable={false}
-          value={item.title}
-          outlineStyle={{
-            display: 'none',
-          }}
-        ></TextInputTemplate>
-      </SurfaceTemplate>
-    </View>
-  );
-};

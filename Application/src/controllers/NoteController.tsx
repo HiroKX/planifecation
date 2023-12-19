@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../navigation/RootStack';
 import { ApolloClient } from '@apollo/client';
-import { GetAllNotesFromUser } from '../services/NoteService';
+import { GetAllNotesFromUser, DeleteNoteById } from '../services/NoteService';
 import { GetLoggedUserUsername } from './AuthenticationController';
 
 type Props = NativeStackScreenProps<StackParamList>;
@@ -30,9 +30,14 @@ export async function UpdateNote(
 
 export async function DeleteNote(
   client: Readonly<ApolloClient<Object>>,
-  username: Readonly<string>,
-  password: Readonly<string>,
-  props: Readonly<Props>
+  id: Readonly<number>
 ): Promise<void> {
   console.debug('NoteController.DeleteNote');
+  await DeleteNoteById(client, id)
+    .then(async res => {
+      console.debug(`Note ${res} successfuly deleted`);
+    })
+    .catch(error =>
+      console.debug(`Error while deleting note with id ${id}`, error)
+    );
 }

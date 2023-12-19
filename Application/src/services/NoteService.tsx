@@ -1,5 +1,4 @@
 import { ApolloClient, gql } from '@apollo/client';
-import { GetLoggedUserUsername } from '../controllers/AuthenticationController';
 
 const GET_ALL_NOTES = gql`
   query Query($username: String!) {
@@ -71,5 +70,36 @@ export async function CreateNote(
     .catch((error: any) => {
       console.error('CreateNote error:', error);
       return 0;
+    });
+}
+
+const DELETE_NOTE_BY_ID = gql`
+  mutation DeleteNoteById($id: Int!) {
+    deleteNoteById(id: $id) {
+      id
+    }
+  }
+`;
+
+export async function DeleteNoteById(
+  client: Readonly<ApolloClient<Object>>,
+  id: Readonly<number>
+): Promise<boolean> {
+  console.debug('NoteService.DeleteNoteById');
+
+  return client
+    .mutate({
+      mutation: DELETE_NOTE_BY_ID,
+      variables: {
+        id: id,
+      },
+    })
+    .then(() => {
+      console.debug('Deleted note', id);
+      return true;
+    })
+    .catch((error: any) => {
+      console.error('DeleteNoteById error', error);
+      return false;
     });
 }
