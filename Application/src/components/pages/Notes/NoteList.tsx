@@ -22,8 +22,8 @@ export default function NoteList(): ReactNode {
 
   const confirmDelete = (id: number) => {
     DeleteNote(client, id);
-    const updatedNoteList = notes.filter(note => note.id !== id);
-    setNotes(updatedNoteList);
+    setNotes(notes.filter(note => note.id !== id));
+    client.resetStore();
   };
 
   useEffect(() => {
@@ -44,24 +44,23 @@ export default function NoteList(): ReactNode {
           <TextInputTemplate
             right={
               <TextInput.Icon
-              icon={'trash-can'}
-              color={theme.colors.primary}
-              onPress={() => {
+                icon={'trash-can'}
+                color={theme.colors.primary}
+                onPress={() => {
                   Alert.alert(
-                  `Suppression de ${item.title}`,
-                  'Confirmez-vous la suppression de cette note ?',
-                  [
-                    { text: 'Non' },
-                    {
-                      text: 'Oui',
-                      onPress: () => {
-                        confirmDelete(item.id);
+                    `Suppression de ${item.title}`,
+                    'Confirmez-vous la suppression de cette note ?',
+                    [
+                      { text: 'Non' },
+                      {
+                        text: 'Oui',
+                        onPress: () => {
+                          confirmDelete(item.id);
+                        },
                       },
-                    },
-                  ]
-                )
-              }
-            }
+                    ]
+                  );
+                }}
               />
             }
             mode="outlined"
