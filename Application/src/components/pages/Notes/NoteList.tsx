@@ -19,9 +19,9 @@ export default function NoteList(): ReactNode {
 
   const client = useApolloClient();
 
-  const confirmDelete = (id:number) {
+  const confirmDelete = (id: number) => {
     DeleteNote(client, id);
-  }
+  };
 
   useEffect(() => {
     async function getNotes() {
@@ -33,28 +33,33 @@ export default function NoteList(): ReactNode {
   }, []);
 
   const renderNotes = ({ item }: RenderNoteProps) => {
-
     return (
       <View>
         <SurfaceTemplate
           style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
         >
           <TextInputTemplate
-            right={<Pressable on-press={() => 
-              Alert.alert(
-                `Suppression de ${item.title}`,
-                'Confirmez-vous la suppression de cette note ?',
-                [
-                  { text: 'Non' },
-                  {
-                    text: 'Oui',
-                    onPress: () => {
-                      confirmDelete(item.id);
-                    },
-                  },
-                ]
-              )
-            }><TextInput.Icon icon={'trash-can'} /></Pressable>}
+            right={
+              <Pressable
+                on-press={() =>
+                  Alert.alert(
+                    `Suppression de ${item.title}`,
+                    'Confirmez-vous la suppression de cette note ?',
+                    [
+                      { text: 'Non' },
+                      {
+                        text: 'Oui',
+                        onPress: () => {
+                          confirmDelete(item.id);
+                        },
+                      },
+                    ]
+                  )
+                }
+              >
+                <TextInput.Icon icon={'trash-can'} />
+              </Pressable>
+            }
             mode="outlined"
             style={{ flex: 1 }}
             multiline={false}
@@ -63,8 +68,7 @@ export default function NoteList(): ReactNode {
             outlineStyle={{
               display: 'none',
             }}
-          >
-          </TextInputTemplate>
+          ></TextInputTemplate>
         </SurfaceTemplate>
       </View>
     );
@@ -81,8 +85,4 @@ export default function NoteList(): ReactNode {
       </SurfaceTemplate>
     </View>
   );
-  
 }
-
-
-
