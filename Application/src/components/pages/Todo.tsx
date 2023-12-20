@@ -8,14 +8,9 @@ import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
 import CheckboxTemplate from '../molecules/CheckboxTemplate';
 import { theme } from '../organisms/OwnPaperProvider';
+import { Todo } from '../../models/Todo';
 
 type Props = NativeStackScreenProps<StackParamList>;
-
-type Todo = {
-  id: string;
-  content: string;
-  isDone?: boolean;
-};
 
 type RenderTodoProps = {
   item: Todo;
@@ -38,7 +33,7 @@ export default function Todo(props: Readonly<Props>): ReactNode {
     setTodoList(updatedTodoList);
   };
 
-  const renderTodos = ({ item }: RenderTodoProps) => {
+  const renderTodos = ({ item }: RenderTodoProps): React.JSX.Element => {
     return (
       <View>
         <SurfaceTemplate

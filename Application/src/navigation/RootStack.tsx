@@ -24,7 +24,7 @@ export type StackParamList = {
   Sandbox: undefined;
   Profil: undefined;
   Agenda: undefined;
-  'To-Do liste': undefined;
+  'Liste toute douce': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();

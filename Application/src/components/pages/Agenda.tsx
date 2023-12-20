@@ -5,7 +5,6 @@ import { ReactElement, ReactNode, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
 import TimelineTemplate, { todayData } from '../organisms/TimelineTemplate';
 import { CalendarProvider, DateData } from 'react-native-calendars';
-import TextTemplate from '../atoms/styles/TextTemplate';
 import EventDetails from '../organisms/EventDetails';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { useTabNavigation } from 'react-native-paper-tabs';
@@ -54,8 +53,6 @@ export default function Agenda(): ReactNode {
   }
 
   const onDateChange = (date: DateData) => {
-    console.log(date);
-    console.log(todayData);
     setSelectDate(date);
     setSelectEvent(undefined);
   };
