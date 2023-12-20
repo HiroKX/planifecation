@@ -3,8 +3,9 @@ import TabScreenTemplate from '../molecules/TabScreenTemplate';
 import TabsTemplate from '../organisms/TabsTemplate';
 import { ReactElement, ReactNode, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
-import TimelineTemplate, { todayData } from '../organisms/TimelineTemplate';
+import TimelineTemplate from '../organisms/TimelineTemplate';
 import { CalendarProvider, DateData } from 'react-native-calendars';
+import TextTemplate from '../atoms/styles/TextTemplate';
 import EventDetails from '../organisms/EventDetails';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { useTabNavigation } from 'react-native-paper-tabs';
@@ -30,7 +31,7 @@ const Explore = (props: {
 export default function Agenda(): ReactNode {
   const [events, setEvents] = useState(store.getState().events);
   const [selectEvent, setSelectEvent] = useState<Event>(); // will be used for disabling the details view if no appointment is selected
-  const [selectDate, setSelectDate] = useState<DateData>(todayData); // will be used for disabling the day view if no day is selected
+  const [selectDate, setSelectDate] = useState<DateData>(); // will be used for disabling the day view if no day is selected
   const [marked, setMarked] = useState<MarkedDates>(getMarkedDates());
   const [timelineEvents, setTimelineEvents] = useState<Event[]>(events);
 
@@ -64,27 +65,27 @@ export default function Agenda(): ReactNode {
   return (
     <CalendarProvider date={'now'}>
       <TabsTemplate defaultIndex={0}>
-        <TabScreenTemplate
-          label={luxon
-            .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
-            .setLocale('fr')
-            .toFormat('MMMM yyyy')}
-          icon="calendar"
-        >
+        <TabScreenTemplate label="Mois" icon="calendar">
           <View>
             <CalendarTemplate markedDates={marked} onDayPress={onDateChange} />
             <Explore index={2} placeholder="Créer un évènement" />
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
-          label={luxon
-            .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
-            .setLocale('fr')
-            .toFormat("'Jour:' dd")}
+          label="Jour"
           icon="view-day"
           disabled={selectDate == undefined}
         >
           <View>
+            <TextTemplate>
+              Jour sélectionné :
+              {selectDate
+                ? luxon
+                    .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
+                    .setLocale('fr')
+                    .toFormat('dd MMMM yyyy')
+                : null}{' '}
+            </TextTemplate>
             <Explore index={2} placeholder="Créer un évènement" />
             <TimelineTemplate
               date={selectDate?.dateString ?? 'now'}
@@ -94,8 +95,9 @@ export default function Agenda(): ReactNode {
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
-          label={selectEvent == undefined ? 'Ajouter' : 'Détails'}
+          label="Détails"
           icon="account-details"
+          disabled={selectEvent == undefined}
         >
           <EventDetails updateFunction={updateList} event={selectEvent} />
         </TabScreenTemplate>
