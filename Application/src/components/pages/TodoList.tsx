@@ -16,7 +16,7 @@ type RenderTodoProps = {
   item: Todo;
 };
 
-export default function Todo(props: Readonly<Props>): ReactNode {
+export default function TodoList(props: Readonly<Props>): ReactNode {
   const [todo, setTodo] = useState('');
   const [todoList, setTodoList] = useState<Todo[]>([]);
 
