@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { locale } from '../../environment/locale';
-import { DateData, LocaleConfig } from 'react-native-calendars';
+import { DateData } from 'react-native-calendars';
+import { todayString } from 'react-native-calendars/src/expandableCalendar/commons';
 
 // Return the perfect matching color for text based on hexcolor background
 // It uses the YIQ model to calculate the best match
@@ -52,4 +53,3 @@ export class LuxonDate {
       .toFormat('MMMM yyyy');
   }
 }
-LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calendar and timeline
