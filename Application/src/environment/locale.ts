@@ -2,6 +2,7 @@ import { LocaleConfig } from 'react-native-calendars';
 import { DateTime } from 'luxon';
 
 export const luxon = DateTime;
+export const locale = 'fr';
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -44,7 +45,5 @@ LocaleConfig.locales['fr'] = {
   dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
   today: "Aujourd'hui",
 };
-
-export const DATEFORMAT = 'DD-MM-YYYY';
-
+LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calendar and timeline
 export default LocaleConfig;
