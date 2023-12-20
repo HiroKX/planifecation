@@ -11,13 +11,10 @@ import {
 import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
-import LocaleConfig from './src/environment/locale';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './src/store/EventsSlice';
 import { ReactNode, useState } from 'react';
 import Splashscreen from './src/components/pages/Splashscreen';
-
-LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calendar and timeline
 
 export default function App(): ReactNode {
   if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
