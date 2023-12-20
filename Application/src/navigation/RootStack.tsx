@@ -5,7 +5,6 @@ import Login from '../components/pages/Login';
 import SignUp from '../components/pages/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/Settings';
-import Notepad from '../components/pages/Notepad';
 import Agenda from '../components/pages/Agenda';
 
 import SettingsButton from '../components/atoms/SettingsButton';
@@ -13,6 +12,7 @@ import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
 import Todo from '../components/pages/Todo';
+import NoteList from '../components/pages/Notes/NoteList';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -47,7 +47,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Inscription" component={SignUp} />
       <Stack.Screen name="Dashboard" component={Dashboard} />
       <Stack.Screen name="Paramètres" component={Settings} />
-      <Stack.Screen name="Bloc-notes" component={Notepad} />
+      <Stack.Screen name="Bloc-notes" component={NoteList} />
       <Stack.Screen name="Sandbox" component={ThemeSandbox} />
       <Stack.Screen name="Agenda" component={Agenda} />
       <Stack.Screen name="Liste toute douce" component={Todo} />
