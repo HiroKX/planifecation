@@ -5,8 +5,7 @@ import Login from '../components/pages/Security/Login';
 import SignUp from '../components/pages/Security/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/User/Settings';
-import Agenda from '../components/pages/Agenda';
-
+import Appointments from '../components/pages/Agenda/Appointments';
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
@@ -56,7 +55,7 @@ function RootStack(): ReactNode {
         <Stack.Screen name="Liste des notes" component={NoteList} />
         <Stack.Screen name="Bloc-Notes" component={NotePad} />
         <Stack.Screen name="Sandbox" component={ThemeSandbox} />
-        <Stack.Screen name="Agenda" component={Agenda} />
+        <Stack.Screen name="Agenda" component={Appointments} />
         <Stack.Screen name="Liste toute douce" component={TodoList} />
         <Stack.Screen name="Test SKIA" component={TestSKIA} />
       </Stack.Navigator>
