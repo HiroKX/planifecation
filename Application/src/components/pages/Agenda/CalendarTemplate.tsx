@@ -1,15 +1,19 @@
-import { Calendar } from "react-native-calendars";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, setSelectDate } from "../../../store/store";
+import { Calendar } from "react-native-calendars";  
+import { selectDate } from "./Appointments";
+import { computed } from "@preact/signals-react";
+import TextTemplate from "../../atoms/styles/TextTemplate";
+import {View} from 'react-native'
+
 
 
 export default function CalendarTemplate() {
-    const selectDate = useSelector((state : RootState) => state.selectDate);
-    const dispatch = useDispatch();
-    return(
-        <Calendar
-            onDayPress={(date) => dispatch(setSelectDate(date))}
-            />
-    )
 
+    return(
+        <View>
+        <Calendar
+           onDayPress={(date) => {selectDate.value = date.dateString}}
+            />
+            <TextTemplate> {selectDate.value} </TextTemplate>
+            </View>
+    )
 }
