@@ -20,7 +20,6 @@
     "@babel/preset-typescript": "^7.23.3",
     "@babel/runtime": "^7.23.7",
     "@react-navigation/bottom-tabs": "^6.5.11",
-    "@react-navigation/material-bottom-tabs": "^6.2.19",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",

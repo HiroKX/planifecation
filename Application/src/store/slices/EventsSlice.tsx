@@ -1,19 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DateData } from 'react-native-calendars';
-
 import { Event as CalendarEvent } from 'react-native-calendars/src/timeline/EventBlock';
 
-const initialState: Array<CalendarEvent> = [];
 
-const selectDateSlice = createSlice({
-  name : 'selectDate',
-  
-  reducers: {
-    setSelectDate(state, action : PayloadAction<DateData>) {
-      
-    }
-  }
-})
+const initialState : Array<CalendarEvent> = []
 
 const eventsSlice = createSlice({
   name: 'Events',
@@ -22,7 +11,7 @@ const eventsSlice = createSlice({
     // Ajoute ou update un évènement
     addEvent(state, action: PayloadAction<CalendarEvent>) {
       const index: number = state.findIndex(
-        elem =>
+        (elem : CalendarEvent) =>
           action.payload.title === elem.title &&
           action.payload.start === elem.start
       );
@@ -32,7 +21,7 @@ const eventsSlice = createSlice({
     },
     removeEvent(state, action: PayloadAction<CalendarEvent>) {
       const index = state.findIndex(
-        elem =>
+        (elem : CalendarEvent) =>
           action.payload.title === elem.title &&
           action.payload.start === elem.start
       );
@@ -40,3 +29,5 @@ const eventsSlice = createSlice({
     },
   },
 });
+
+export default eventsSlice;
