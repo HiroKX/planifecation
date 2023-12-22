@@ -1,24 +1,47 @@
-import { View } from "react-native";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { Calendar } from "react-native-calendars";
+import { View, Text } from "react-native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { Calendar, DateData } from "react-native-calendars";
 import { theme } from "../../organisms/OwnPaperProvider";
+import { LuxonDate, todayData } from "../../../services/utils/utils";
+import { createContext, useState } from "react";
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
+
+export const DateContext = createContext({
+    date : todayData
+})
+
+type RenderCalendarProps = {
+    date : DateData;
+    setDate : (newDate :DateData) => void;
+}
+
+const firstTabLabel = () => {
+    return (<Text> {selectDate.dateString}</Text>);
+}
+
+function RenderCalendar() {
+    return (
+                <Calendar
+                current={selectDate.dateString}
+                onDayPress={(date) => setSelectDate(date)}/>
+    );
+}
 
 export default function Appointments() {
 
+
     return (
-        <Tab.Navigator
-            initialRouteName="Calendrier"
-            activeColor={theme.colors.onPrimary}
-            inactiveColor={theme.colors.outlineVariant}
-            barStyle={{backgroundColor : theme.colors.primary}}>
-                <Tab.Screen name="Calendrier" component={Calendar}
-                    options={{ tabBarLabel: 'Calendrier',
-                                tabBarIcon: 'calendar'}}/>
-                <Tab.Screen name="Agendeux" component={View}
-                    options={{ tabBarLabel: 'Agenda',
-                                tabBarIcon: 'view-day'}}/>
-        </Tab.Navigator>        
+        <DateContext.Consumer>
+            {({})}
+            <Tab.Navigator
+                initialRouteName="Calendrier">
+                    <Tab.Screen name="Calendrier" component={RenderCalendar}
+                        options={{tabBarLabel : firstTabLabel}}/>
+                    
+                    <Tab.Screen name="Agendeux" component={View}/>
+            </Tab.Navigator>        
+        </DateContext.Consumer>
     );
+
 }

@@ -7,7 +7,7 @@ import ModalTemplate from './ModalTemplate';
 import { Alert, View } from 'react-native';
 import { getColorForBackground } from './../../services/utils/utils';
 import { Portal } from 'react-native-paper';
-import { addEvent } from '../../store/EventsSlice';
+import { addEvent } from '../../store/slices/EventsSlice';
 import { useDispatch } from 'react-redux';
 import ColorPickerTemplate from '../molecules/ColorPickerTemplate';
 import { ReactNode, useState } from 'react';
