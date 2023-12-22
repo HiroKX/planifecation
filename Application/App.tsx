@@ -12,7 +12,7 @@ import { URI_API, ENVIRONMENT } from '@env';
 import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from './src/store/EventsSlice';
+import { store } from './src/store/slices/EventsSlice';
 import { ReactNode, useState } from 'react';
 import Splashscreen from './src/components/pages/Splashscreen';
 
