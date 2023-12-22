@@ -5,15 +5,15 @@ import { ReactElement, ReactNode, useState } from 'react';
 import CalendarTemplate from '../organisms/CalendarTemplate';
 import TimelineTemplate from '../organisms/TimelineTemplate';
 import { CalendarProvider, DateData } from 'react-native-calendars';
-import TextTemplate from '../atoms/styles/TextTemplate';
 import EventDetails from '../organisms/EventDetails';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { useTabNavigation } from 'react-native-paper-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { luxon } from '../../environment/locale';
-import { store } from '../../store/EventsSlice';
+import { store } from '../../store/slices/EventsSlice';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
+import { todayData } from '../../services/utils/utils';
 
 // required to go from tab to tab
 const Explore = (props: {
@@ -31,7 +31,7 @@ const Explore = (props: {
 export default function Agenda(): ReactNode {
   const [events, setEvents] = useState(store.getState().events);
   const [selectEvent, setSelectEvent] = useState<Event>(); // will be used for disabling the details view if no appointment is selected
-  const [selectDate, setSelectDate] = useState<DateData>(); // will be used for disabling the day view if no day is selected
+  const [selectDate, setSelectDate] = useState<DateData>(todayData); // will be used for disabling the day view if no day is selected
   const [marked, setMarked] = useState<MarkedDates>(getMarkedDates());
   const [timelineEvents, setTimelineEvents] = useState<Event[]>(events);
 
@@ -65,27 +65,27 @@ export default function Agenda(): ReactNode {
   return (
     <CalendarProvider date={'now'}>
       <TabsTemplate defaultIndex={0}>
-        <TabScreenTemplate label="Mois" icon="calendar">
+        <TabScreenTemplate
+          label={luxon
+            .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
+            .setLocale('fr')
+            .toFormat('MMMM yyyy')}
+          icon="calendar"
+        >
           <View>
-            <CalendarTemplate markedDates={marked} onDayPress={onDateChange} />
+            <CalendarTemplate markedDates={marked} onDayPress={onDateChange} current={selectDate.dateString}/>
             <Explore index={2} placeholder="Créer un évènement" />
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
-          label="Jour"
+          label={luxon
+            .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
+            .setLocale('fr')
+            .toFormat("'Jour:' dd")}
           icon="view-day"
           disabled={selectDate == undefined}
         >
           <View>
-            <TextTemplate>
-              Jour sélectionné :
-              {selectDate
-                ? luxon
-                    .fromFormat(selectDate.dateString, 'yyyy-MM-dd')
-                    .setLocale('fr')
-                    .toFormat('dd MMMM yyyy')
-                : null}{' '}
-            </TextTemplate>
             <Explore index={2} placeholder="Créer un évènement" />
             <TimelineTemplate
               date={selectDate?.dateString ?? 'now'}
@@ -95,9 +95,8 @@ export default function Agenda(): ReactNode {
           </View>
         </TabScreenTemplate>
         <TabScreenTemplate
-          label="Détails"
+          label={selectEvent == undefined ? 'Ajouter' : 'Détails'}
           icon="account-details"
-          disabled={selectEvent == undefined}
         >
           <EventDetails updateFunction={updateList} event={selectEvent} />
         </TabScreenTemplate>

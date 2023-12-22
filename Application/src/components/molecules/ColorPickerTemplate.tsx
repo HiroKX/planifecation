@@ -1,19 +1,19 @@
 import ColorPicker, { ColorPickerProps } from 'react-native-wheel-color-picker';
 import { theme } from '../organisms/OwnPaperProvider';
 import SurfaceTemplate from './SurfaceTemplate';
-import TextInputTemplate from '../atoms/styles/TextInputTemplate';
 import { ReactNode } from 'react';
+import { View } from 'react-native';
 
 export default function ColorPickerTemplate(
   props: Readonly<ColorPickerProps>
 ): ReactNode {
   return (
     <SurfaceTemplate style={{ backgroundColor: theme.colors.onPrimary }}>
-      <TextInputTemplate> Couleur choisie : {props.color}</TextInputTemplate>
       <ColorPicker
         color={props.color}
         onColorChangeComplete={props.onColorChangeComplete}
-      ></ColorPicker>
+      />
+      <View style={{ flex:1, height:200, width:200, alignContent: 'center', backgroundColor: props.color}}/>
     </SurfaceTemplate>
   );
 }
