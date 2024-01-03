@@ -53,9 +53,10 @@ const typeDefs = `
     updatedAt: DateScalar
   }
   
-  type Todo {
+  type TodoItem {
     id: Int
     content: String!
+    isDone: Boolean
     user: User
     createdAt: DateScalar
     updatedAt: DateScalar
@@ -65,8 +66,8 @@ const typeDefs = `
     getUserByUsername(username: String!): User
     getNoteById(id: Int): Note
     getAllNotesByUsername(username: String!): [Note]
-    getTodoById(id: Int): Todo
-    getAllTodosByUsername(username: String!): [Todo]
+    getTodoItemById(id: Int): Todo
+    getAllTodoItemsByUsername(username: String!): [Todo]
   }
 
   type Mutation {
@@ -77,9 +78,9 @@ const typeDefs = `
     createNote(title: String!, content: String!): Note
     updateNoteById(id: Int!, title: String!, content: String!): Note
     deleteNoteById(id: Int!): Note
-    createTodoById(content: String!): Todo
-    updateTodoById(id: Int!, content: String!): Todo
-    deleteTodoById(id: Int!): Todo
+    createTodoItem(content: String!, isDone: boolean): Todo
+    updateTodoItemById(id: Int!, content: String!, isDone: boolean): Todo
+    deleteTodoItemById(id: Int!): Todo
  }
 `;
 
@@ -147,8 +148,8 @@ const resolvers = {
       })
     },
 
-    getTodoById: async (parent, args, context) => {
-      const todo = await prisma.todo.findFirstOrThrow({
+    getTodoItemById: async (parent, args, context) => {
+      const todoItem = await prisma.todoitem.findFirstOrThrow({
         where: {
           id: args.id
         },
@@ -156,14 +157,14 @@ const resolvers = {
           user: true,
         }
       });
-      protectFromUsername(context,todo.user.username)
-      const userWithoutPassword = exclude(todo.user, ['password']);
-      return { ...todo, user: userWithoutPassword };
+      protectFromUsername(context,todoItem.user.username)
+      const userWithoutPassword = exclude(todoItem.user, ['password']);
+      return { ...todoItem, user: userWithoutPassword };
     },
 
-    getAllTodosByUsername:async  (parent, args, context) => {
+    getAllTodoItemsByUsername:async  (parent, args, context) => {
       protectFromUsername(context,args.username)
-      const todos = await prisma.todo.findMany({
+      const todoItems = await prisma.todoitem.findMany({
         where: {
           user: {
             username: args.username
@@ -174,9 +175,9 @@ const resolvers = {
         },
       });
 
-      return todos.map(todo=>{
-        const userWithoutPassword = exclude(todo.user, ['password']);
-        return { ...todo, user: userWithoutPassword };
+      return todoItems.map(todoItem =>{
+        const userWithoutPassword = exclude(todoItem.user, ['password']);
+        return { ...todoItem, user: userWithoutPassword };
       })
     },
   },
@@ -302,15 +303,16 @@ const resolvers = {
       return { ...note, user: userWithoutPassword };
     },
 
-    createTodoById: (parent, args, context) => {
-      // Create a todo in the db
+    createTodoItem : (parent, args, context) => {
+      // Create a todoItem in the db
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
 
-      return prisma.todo.create({
+      return prisma.todoitem.create({
         data: {
           content: args.content,
+          isDone: args.isDone,
           user: {
             connect: {
               id: context.userInfo.id,
@@ -321,7 +323,7 @@ const resolvers = {
     },
 
     updateTodoById:async (parent, args, context) => {
-      const todoTest = await prisma.todo.findFirstOrThrow({
+      const todoTest = await prisma.todoitem.findFirstOrThrow({
         where: {
           id: args.id,
         },
@@ -330,24 +332,25 @@ const resolvers = {
         }
       });
       protectFromUsername(context,todoTest.user.username)
-      const todo = await prisma.todo.update({
+      const todoItem = await prisma.todoitem.update({
         where: {
           id: args.id,
         },
         data: {
           content: args.content,
+          isDone: args.isDone,
           updatedAt: new Date(),
         },
         include:{
           user: true
         }
       });
-      const userWithoutPassword = exclude(todo.user, ['password']);
-      return { ...todo, user: userWithoutPassword };
+      const userWithoutPassword = exclude(todoItem.user, ['password']);
+      return { ...todoItem, user: userWithoutPassword };
     },
 
     deleteTodoById:async (parent, args, context) => {
-      const todoTest = await prisma.todo.findFirstOrThrow({
+      const todoTest = await prisma.todoitem.findFirstOrThrow({
         where: {
           id: args.id,
         },
@@ -356,7 +359,7 @@ const resolvers = {
         }
       });
       protectFromUsername(context,todoTest.user.username)
-      const todo = await prisma.todo.delete({
+      const todoItem = await prisma.todoitem.delete({
         where: {
           id: args.id,
         },
@@ -364,8 +367,8 @@ const resolvers = {
           user: true
         }
       });
-      const userWithoutPassword = exclude(todo.user, ['password']);
-      return { ...todo, user: userWithoutPassword };
+      const userWithoutPassword = exclude(todoItem.user, ['password']);
+      return { ...todoItem, user: userWithoutPassword };
     },
   }
 };
