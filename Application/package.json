@@ -17,7 +17,7 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
     "@reduxjs/toolkit": "^2.0.1",
-    "@shopify/react-native-skia": "^0.1.231",
+    "@shopify/react-native-skia": "0.1.196",
     "@types/lodash": "^4.14.202",
     "@types/luxon": "^3.3.7",
     "dotenv": "^16.3.1",
