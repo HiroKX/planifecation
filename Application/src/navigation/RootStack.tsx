@@ -11,7 +11,7 @@ import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
-import Todo from '../components/pages/Todo';
+import TodoList from '../components/pages/Todo';
 import NoteList from '../components/pages/Notes/NoteList';
 
 export type StackParamList = {
@@ -50,7 +50,7 @@ function RootStack(): ReactNode {
       <Stack.Screen name="Bloc-notes" component={NoteList} />
       <Stack.Screen name="Sandbox" component={ThemeSandbox} />
       <Stack.Screen name="Agenda" component={Agenda} />
-      <Stack.Screen name="Liste toute douce" component={Todo} />
+      <Stack.Screen name="Liste toute douce" component={TodoList} />
     </Stack.Navigator>
   );
 }
