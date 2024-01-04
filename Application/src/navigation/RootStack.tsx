@@ -11,10 +11,10 @@ import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
-import TodoList from '../components/pages/TodoList';
+import TodoList from '../components/pages/Todo/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import TestGesture from '../components/pages/TestGesture';
+import TestSKIA from '../components/pages/TestSKIA';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -27,7 +27,7 @@ export type StackParamList = {
   Profil: undefined;
   Agenda: undefined;
   'Liste toute douce': undefined;
-  'Test Gesture' : undefined;
+  'Test SKIA' : undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -55,7 +55,7 @@ function RootStack(): ReactNode {
         <Stack.Screen name="Sandbox" component={ThemeSandbox} />
         <Stack.Screen name="Agenda" component={Agenda} />
         <Stack.Screen name="Liste toute douce" component={TodoList} />
-        <Stack.Screen name="Test Gesture" component={TestGesture} />
+        <Stack.Screen name="Test SKIA" component={TestSKIA} />
       </Stack.Navigator>
     </GestureHandlerRootView>
   );

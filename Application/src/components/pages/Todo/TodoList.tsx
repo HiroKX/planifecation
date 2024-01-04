@@ -1,14 +1,14 @@
-import SurfaceTemplate from '../molecules/SurfaceTemplate';
+import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackParamList } from '../../navigation/RootStack';
+import { StackParamList } from '../../../navigation/RootStack';
 import { ReactNode, useState } from 'react';
 import { FlatList, View } from 'react-native';
-import ButtonTemplate from '../atoms/styles/ButtonTemplate';
-import TextInputTemplate from '../atoms/styles/TextInputTemplate';
+import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
-import CheckboxTemplate from '../molecules/CheckboxTemplate';
-import { theme } from '../organisms/OwnPaperProvider';
-import { Todo } from '../../models/Todo';
+import CheckboxTemplate from '../../molecules/CheckboxTemplate';
+import { theme } from '../../organisms/OwnPaperProvider';
+import { Todo } from '../../../models/Todo';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
