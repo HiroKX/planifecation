@@ -13,6 +13,8 @@ import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
 import TodoList from '../components/pages/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import TestGesture from '../components/pages/TestGesture';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -25,33 +27,37 @@ export type StackParamList = {
   Profil: undefined;
   Agenda: undefined;
   'Liste toute douce': undefined;
+  'Test Gesture' : undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
 function RootStack(): ReactNode {
   return (
-    <Stack.Navigator
-      initialRouteName="Accueil"
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: navigationTheme.colors.primary,
-        },
-        headerTintColor: navigationTheme.colors.text,
-        headerRight: SettingsButton,
-      }}
-    >
-      <Stack.Screen name="Accueil" component={Home} />
-      <Stack.Screen name="Connexion" component={Login} />
-      <Stack.Screen name="Profil" component={Profile} />
-      <Stack.Screen name="Inscription" component={SignUp} />
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-      <Stack.Screen name="Paramètres" component={Settings} />
-      <Stack.Screen name="Bloc-notes" component={NoteList} />
-      <Stack.Screen name="Sandbox" component={ThemeSandbox} />
-      <Stack.Screen name="Agenda" component={Agenda} />
-      <Stack.Screen name="Liste toute douce" component={TodoList} />
-    </Stack.Navigator>
+    <GestureHandlerRootView style={{flex:1}}>
+      <Stack.Navigator
+        initialRouteName="Accueil"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: navigationTheme.colors.primary,
+          },
+          headerTintColor: navigationTheme.colors.text,
+          headerRight: SettingsButton,
+        }}
+      >
+        <Stack.Screen name="Accueil" component={Home} />
+        <Stack.Screen name="Connexion" component={Login} />
+        <Stack.Screen name="Profil" component={Profile} />
+        <Stack.Screen name="Inscription" component={SignUp} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="Paramètres" component={Settings} />
+        <Stack.Screen name="Bloc-notes" component={NoteList} />
+        <Stack.Screen name="Sandbox" component={ThemeSandbox} />
+        <Stack.Screen name="Agenda" component={Agenda} />
+        <Stack.Screen name="Liste toute douce" component={TodoList} />
+        <Stack.Screen name="Test Gesture" component={TestGesture} />
+      </Stack.Navigator>
+    </GestureHandlerRootView>
   );
 }
 

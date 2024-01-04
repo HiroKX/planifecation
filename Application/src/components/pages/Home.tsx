@@ -55,6 +55,9 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
             Theme Sandbox
           </ButtonTemplate>
         ) : null}
+        <ButtonTemplate onPress={() => navigation.navigate('Test Gesture')}>
+          Test Gestures
+        </ButtonTemplate>
       </SurfaceTemplate>
     </View>
   );
