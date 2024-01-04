@@ -60,6 +60,9 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
             </ButtonTemplate>
           </View>
         ) : null}
+        <ButtonTemplate onPress={() => navigation.navigate('Test Gesture')}>
+          Test Gestures
+        </ButtonTemplate>
       </SurfaceTemplate>
     </View>
   );
