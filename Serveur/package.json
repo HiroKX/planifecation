@@ -9,7 +9,7 @@
     "start": "npm run compile && node ./dist/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Robin Lagler/HiroKX",
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.9.5",
