@@ -50,14 +50,17 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
         >
           Inscription
         </ButtonTemplate>
-        {ENVIRONMENT == 'dev' ? (
+        {ENVIRONMENT === 'dev' ? (
+          <View>
           <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
             Theme Sandbox
           </ButtonTemplate>
+          <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
+            Test SKIA
+          </ButtonTemplate>
+        </View>
         ) : null}
-        <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
-          Test SKIA
-        </ButtonTemplate>
+
       </SurfaceTemplate>
     </View>
   );

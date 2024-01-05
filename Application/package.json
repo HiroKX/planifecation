@@ -44,7 +44,8 @@
     "react-native-wheel-color-picker": "^1.2.0",
     "react-navigation": "^5.0.0",
     "react-redux": "^9.0.4",
-    "redux": "^5.0.0"
+    "redux": "^5.0.0",
+    "svg-path-properties": "^1.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
