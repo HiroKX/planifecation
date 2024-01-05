@@ -70,9 +70,9 @@ export default function TestSkia() {
         setStrokeWidth={setStrokeWidth}
       />
       <Canvas style={style.container} onTouch={touchHandler}>
-        {paths.map((path, index) => (
+        {paths.map((path) => (
           <Path
-            key={index}
+            key={path.path.toSVGString()}
             path={path.path}
             color={path.color}
             style={"stroke"}
