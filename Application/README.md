@@ -60,10 +60,10 @@ Expliquez comment exécuter les tests automatisés pour ce système :
 yarn test
 ```
 
-
 # Troubleshooting
 
-Si votre configuration de .env.local n'est pas prise en compte, veuillez lancer la commande : 
+Si votre configuration de .env.local n'est pas prise en compte, veuillez lancer la commande :
+
 ```bash
 yarn start --reset-cache
 ```
