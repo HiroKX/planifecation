@@ -11,7 +11,7 @@ import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/Profile';
-import TodoList from '../components/pages/Todo';
+import TodoList from '../components/pages/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
 
 export type StackParamList = {

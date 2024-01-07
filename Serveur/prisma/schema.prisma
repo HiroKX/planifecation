@@ -15,6 +15,7 @@ model User {
   username  String     @unique @db.VarChar(255) 
   password  String     @db.VarChar(255)
   notes     Note[]
+  todos     ToDoItem[]
   
   @@map(name: "user")
 }
@@ -29,4 +30,16 @@ model Note {
   userId    Int
 
   @@map(name: "note")
+}
+
+model ToDoItem {
+  id        Int        @id @unique @default(autoincrement())
+  content   String
+  isDone    Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  user      User       @relation(fields: [userId], references: [id])
+  userId    Int
+
+  @@map(name: "todoitem")
 }
