@@ -5,5 +5,5 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   preset: 'react-native',
   verbose: true,
-  setupFilesAfterEnv: ["<rootDir>/__tests__/setup.js"],
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.js'],
 };
