@@ -29,8 +29,15 @@ Un guide étape par étape qui vous dira comment obtenir un environnement de dé
    ```bash
    yarn install
    ```
+   
+3. **Fichier de configuration**
+   Il faut créer un fichier ".env.local" et insérer ces paramètres :
+   ```
+   URI_API="" //Point d'accès de l'API (URL)
+   ENVIRONMENT="dev" //Ou "prod"
+   ```
 
-3. **Lancer le projet**
+4. **Lancer le projet**
 
    ```bash
    yarn start
