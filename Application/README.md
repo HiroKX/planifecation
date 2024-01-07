@@ -17,33 +17,27 @@ Listez tout ce dont vous avez besoin pour installer le logiciel et comment les i
 
 Un guide étape par étape qui vous dira comment obtenir un environnement de développement en cours d'exécution.
 
-1. **Cloner le dépôt**
 
-   ```bash
-   git clone [https://github.com/HiroKX/planifecation.git]
-   cd [planifecation]
-   ```
-
-2. **Installer les dépendances**
+1. **Installer les dépendances**
 
    ```bash
    yarn install
    ```
-   
-3. **Fichier de configuration**
-   Il faut créer un fichier ".env.local" et insérer ces paramètres :
+
+2. **Fichier de configuration**
+   Il faut créer un fichier ".env.local" à la racine du dossier "Application" et insérer ces paramètres :
    ```
    URI_API="" //Point d'accès de l'API (URL)
    ENVIRONMENT="dev" //Ou "prod"
    ```
 
-4. **Lancer le projet**
+3. **Lancer le projet**
 
    ```bash
    yarn start
    ```
 
-   Cela va démarrer le serveur de développement. Ouvrez `http://localhost:3000` pour voir votre application.
+   Cela va démarrer EXPO. Suivez les instructions dans le terminal afin de pouvoir ouvrir l'application sur votre téléphone.
 
 ## Utilisation de Prettier
 
