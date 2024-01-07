@@ -30,7 +30,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd Serveur
-          npm ci
+          npm install
           touch .env
           echo 'DATABASE_URL="postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}?schema=public"' >> .env
           echo 'SECRET_KEY="secret"' >> .env
