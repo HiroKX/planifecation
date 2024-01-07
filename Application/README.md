@@ -26,7 +26,7 @@ Une application react avec une UI/UX qui est tout l'inverse de ce à quoi l'on p
 
    Cela va démarrer EXPO. Suivez les instructions dans le terminal afin de pouvoir ouvrir l'application sur votre téléphone.
 
-## Utilisation de Prettier
+# Utilisation de Prettier
 
 Pour maintenir un style de code cohérent, nous utilisons Prettier. Voici comment vous pouvez l'utiliser :
 
@@ -52,14 +52,10 @@ Pour maintenir un style de code cohérent, nous utilisons Prettier. Voici commen
    yarn prettier --check .
    ```
 
-## Tests
+# Tests
 
 Expliquez comment exécuter les tests automatisés pour ce système :
 
 ```bash
 yarn test
 ```
-
-## Licence
-
-Pas encore de licence. :(

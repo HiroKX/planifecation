@@ -1,11 +1,11 @@
-### Prérequis
+# Prérequis
 
 Voici tout ce dont vous avez besoin pour installer le projet :
 
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
 
-### Installation
+# Installation
 
 1. **Cloner le dépôt**
 
