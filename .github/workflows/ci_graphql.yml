@@ -23,7 +23,7 @@ jobs:
           cd Serveur
           npm install
           touch .env
-          echo 'DATABASE_URL="postgresql://postgres:@localhost:5432/postgres?schema=public' >> .env
+          echo 'DATABASE_URL="postgresql://{POSTGRES_USER}:@localhost:5432/postgres?schema=public' >> .env
           echo 'SECRET_KEY="secret"' >> .env
           echo 'PORT=4000' >> .env
           cat .env
