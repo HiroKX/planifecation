@@ -1,6 +1,5 @@
 import { View } from 'react-native';
 import { Checkbox, CheckboxProps } from 'react-native-paper';
-import { theme } from '../organisms/OwnPaperProvider';
 
 export default function CheckboxTemplate(
   props: Readonly<CheckboxProps>
