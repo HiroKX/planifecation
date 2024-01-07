@@ -15,7 +15,7 @@ Un guide étape par étape qui vous dira comment obtenir un environnement de dé
    git clone [https://github.com/HiroKX/planifecation.git]
    ```
 
-2. **Visiter les README des dépîts**
+2. **Visiter les README des dépôts**
 
 Regarder les README.md qui se trouve dans les dossiers :
  - Application
