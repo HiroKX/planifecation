@@ -4,6 +4,14 @@ jobs:
   CI_GraphQL:
     name: Testing GraphQL Integration
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
     strategy:
       matrix:
         node-version: [14.x, 16.x]
@@ -17,7 +25,10 @@ jobs:
       run: |
         cd Serveur
         npm install
-        
+        touch .env
+        echo 'DATABASE_URL="postgresql://postgres:@localhost:5432/postgres?schema=public' >> .env
+    
+
     - name: Check Integration
       run: |
         cd Serveur
