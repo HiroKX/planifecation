@@ -30,7 +30,7 @@ jobs:
       - name: Install Dependencies
         run: |
           cd Serveur
-          npm install
+          npm ci
           touch .env
           echo 'DATABASE_URL="postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}?schema=public"' >> .env
           echo 'SECRET_KEY="secret"' >> .env
@@ -41,4 +41,4 @@ jobs:
           cd Serveur
           npx prisma generate --schema ./prisma/schema.prisma
           npx prisma migrate dev --name "migrationA"
-          npm start
+          npm run compile

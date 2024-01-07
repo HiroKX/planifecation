@@ -27,6 +27,6 @@ jobs:
             pm2 stop index
             cd /var/www/html/planifecation/Serveur
             git pull origin dev
-            yarn install --production=false
+            npm install
             npx prisma migrate dev --name "${{github.run_id}}"
             pm2 start index
