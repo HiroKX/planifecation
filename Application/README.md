@@ -10,7 +10,6 @@ Ce guide vous aidera à mettre en route le projet sur votre machine locale à de
 
 Un guide étape par étape qui vous dira comment obtenir un environnement de développement en cours d'exécution.
 
-
 1. **Installer les dépendances**
 
    ```bash
@@ -19,6 +18,7 @@ Un guide étape par étape qui vous dira comment obtenir un environnement de dé
 
 2. **Fichier de configuration**
    Il faut créer un fichier ".env.local" à la racine du dossier "Application" et insérer ces paramètres :
+
    ```
    URI_API="" //Point d'accès de l'API (URL)
    ENVIRONMENT="dev" //Ou "prod"
