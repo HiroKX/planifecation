@@ -2,32 +2,20 @@
 
 Une application react avec une UI/UX qui est tout l'inverse de ce à quoi l'on pourrait s'attendre.
 
-## Démarrage rapide
+# Installation
 
-Ce guide vous aidera à mettre en route le projet sur votre machine locale à des fins de développement et de test.
-
-### Prérequis
-
-Listez tout ce dont vous avez besoin pour installer le logiciel et comment les installer :
-
-- [Node.js](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/)
-
-### Installation
-
-Un guide étape par étape qui vous dira comment obtenir un environnement de développement en cours d'exécution.
-
-1. **Cloner le dépôt**
-
-   ```bash
-   git clone [https://github.com/HiroKX/planifecation.git]
-   cd [planifecation]
-   ```
-
-2. **Installer les dépendances**
+1. **Installer les dépendances**
 
    ```bash
    yarn install
+   ```
+
+2. **Fichier de configuration**
+   Il faut créer un fichier ".env.local" à la racine du dossier "Application" et insérer ces paramètres :
+
+   ```
+   URI_API="" //Point d'accès de l'API (URL)
+   ENVIRONMENT="dev" //Ou "prod"
    ```
 
 3. **Lancer le projet**
@@ -36,9 +24,9 @@ Un guide étape par étape qui vous dira comment obtenir un environnement de dé
    yarn start
    ```
 
-   Cela va démarrer le serveur de développement. Ouvrez `http://localhost:3000` pour voir votre application.
+   Cela va démarrer EXPO. Suivez les instructions dans le terminal afin de pouvoir ouvrir l'application sur votre téléphone.
 
-## Utilisation de Prettier
+# Utilisation de Prettier
 
 Pour maintenir un style de code cohérent, nous utilisons Prettier. Voici comment vous pouvez l'utiliser :
 
@@ -64,14 +52,10 @@ Pour maintenir un style de code cohérent, nous utilisons Prettier. Voici commen
    yarn prettier --check .
    ```
 
-## Tests
+# Tests
 
 Expliquez comment exécuter les tests automatisés pour ce système :
 
 ```bash
 yarn test
 ```
-
-## Licence
-
-Pas encore de licence. :(
