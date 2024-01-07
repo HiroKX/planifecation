@@ -4,8 +4,6 @@ Une application react avec une UI/UX qui est tout l'inverse de ce à quoi l'on p
 
 ### Installation
 
-Un guide étape par étape qui vous dira comment obtenir un environnement de développement en cours d'exécution.
-
 1. **Installer les dépendances**
 
    ```bash
