@@ -284,4 +284,5 @@ const { url } = await startStandaloneServer(server, {
   },
 });
 
+console.log(process.env.DATABASE_URL)
 console.log(`🚀  Server ready at: ${url}`);
