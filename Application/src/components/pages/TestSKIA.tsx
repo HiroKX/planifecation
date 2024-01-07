@@ -5,9 +5,9 @@ import {
   Skia,
   TouchInfo,
   useTouchHandler,
-} from "@shopify/react-native-skia";
-import React, { useCallback, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+} from '@shopify/react-native-skia';
+import React, { useCallback, useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type PathWithColorAndWidth = {
   path: SkPath;
@@ -23,7 +23,7 @@ export default function TestSkia() {
 
   const onDrawingStart = useCallback(
     (touchInfo: TouchInfo) => {
-      setPaths((currentPaths) => {
+      setPaths(currentPaths => {
         const { x, y } = touchInfo;
         const newPath = Skia.Path.Make();
         newPath.moveTo(x, y);
@@ -41,7 +41,7 @@ export default function TestSkia() {
   );
 
   const onDrawingActive = useCallback((touchInfo: TouchInfo) => {
-    setPaths((currentPaths) => {
+    setPaths(currentPaths => {
       const { x, y } = touchInfo;
       const currentPath = currentPaths[currentPaths.length - 1];
       const lastPoint = currentPath.path.getLastPt();
@@ -70,21 +70,21 @@ export default function TestSkia() {
         setStrokeWidth={setStrokeWidth}
       />
       <Canvas style={style.container} onTouch={touchHandler}>
-        {paths.map((path) => (
+        {paths.map(path => (
           <Path
             key={path.path.toSVGString()}
             path={path.path}
             color={path.color}
-            style={"stroke"}
+            style={'stroke'}
             strokeWidth={path.strokeWidth}
           />
         ))}
       </Canvas>
     </View>
   );
-};
+}
 
-const Colors = ["black", "red", "blue", "green", "yellow", "white"] as const;
+const Colors = ['black', 'red', 'blue', 'green', 'yellow', 'white'] as const;
 
 type Color = (typeof Colors)[number];
 
@@ -118,7 +118,7 @@ const Toolbar = ({
     <>
       {showStrokes && (
         <View style={[style.toolbar, style.strokeToolbar]}>
-          {strokes.map((stroke) => (
+          {strokes.map(stroke => (
             <Pressable
               onPress={() => handleStrokeWidthChange(stroke)}
               key={stroke}
@@ -136,7 +136,7 @@ const Toolbar = ({
           <Text>{strokeWidth}</Text>
         </Pressable>
         <View style={style.separator} />
-        {Colors.map((item) => (
+        {Colors.map(item => (
           <ColorButton
             isSelected={item === color}
             key={item}
@@ -164,7 +164,7 @@ const ColorButton = ({ color, onPress, isSelected }: ColorButtonProps) => {
         { backgroundColor: color },
         isSelected && {
           borderWidth: 2,
-          borderColor: "black",
+          borderColor: 'black',
         },
       ]}
     />
@@ -174,39 +174,39 @@ const ColorButton = ({ color, onPress, isSelected }: ColorButtonProps) => {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
+    width: '100%',
   },
   strokeOption: {
     fontSize: 18,
-    backgroundColor: "#f7f7f7",
+    backgroundColor: '#f7f7f7',
   },
   toolbar: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     height: 50,
     width: 300,
     borderRadius: 100,
-    borderColor: "#f0f0f0",
+    borderColor: '#f0f0f0',
     borderWidth: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     paddingHorizontal: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   separator: {
     height: 30,
     borderWidth: 1,
-    borderColor: "#f0f0f0",
+    borderColor: '#f0f0f0',
     marginHorizontal: 10,
   },
   currentStroke: {
-    backgroundColor: "#f7f7f7",
+    backgroundColor: '#f7f7f7',
     borderRadius: 5,
   },
   strokeToolbar: {
-    position: "absolute",
+    position: 'absolute',
     top: 70,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     zIndex: 100,
   },
   colorButton: {

@@ -38,7 +38,6 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   };
 
   const renderTodos = ({ item }: RenderTodoProps): React.JSX.Element => {
-
     const funcDrawing = () => {
       setVisibleModal(false);
       setTodoList(prevTodos =>
@@ -46,7 +45,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           todo.id === currentTodo ? { ...todo, isDone: !todo.isDone } : todo
         )
       );
-    }
+    };
 
     return (
       <View>
@@ -84,9 +83,9 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
             visible={visibleModal}
             onDismiss={() => setVisibleModal(false)}
           >
-              <CheckTodo returnFunc={funcDrawing} />
-        </ModalTemplate>
-       </Portal>
+            <CheckTodo returnFunc={funcDrawing} />
+          </ModalTemplate>
+        </Portal>
       </View>
     );
   };

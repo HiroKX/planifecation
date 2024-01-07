@@ -27,14 +27,14 @@ export type StackParamList = {
   Profil: undefined;
   Agenda: undefined;
   'Liste toute douce': undefined;
-  'Test SKIA' : undefined;
+  'Test SKIA': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
 function RootStack(): ReactNode {
   return (
-    <GestureHandlerRootView style={{flex:1}}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack.Navigator
         initialRouteName="Accueil"
         screenOptions={{
