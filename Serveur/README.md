@@ -2,16 +2,6 @@
 
 Une application react avec une UI/UX qui est tout l'inverse de ce à quoi l'on pourrait s'attendre.
 
-## Démarrage rapide
-
-Ce guide vous aidera à mettre en route le projet sur votre machine locale à des fins de développement et de test.
-
-### Prérequis
-
-Listez tout ce dont vous avez besoin pour installer le logiciel et comment les installer :
-
-- [Node.js](https://nodejs.org/)
-
 ### Installation
 
 Un guide étape par étape qui vous dira comment obtenir un environnement de développement en cours d'exécution.
