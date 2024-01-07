@@ -31,10 +31,10 @@ jobs:
           echo 'DATABASE_URL="postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}?schema=public"' >> .env
           echo 'SECRET_KEY="secret"' >> .env
           echo 'PORT=4000' >> .env
-          cat .env
 
       - name: Check Integration
         run: |
           cd Serveur
           npx prisma generate --schema ./prisma/schema.prisma
           npx prisma migrate dev --name "migrationA"
+          npm start

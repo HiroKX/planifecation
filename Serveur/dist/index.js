@@ -6,7 +6,6 @@ import { GraphQLScalarType } from "graphql/type/index.js";
 import { Kind } from "graphql/language/index.js";
 import dotenv from "dotenv";
 dotenv.config();
-
 //Création du prisma client
 const prisma = new PrismaClient();
 const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
@@ -34,7 +33,6 @@ const DateScalar = new GraphQLScalarType({
     return null;
   },
 });
-
 const typeDefs = `
   scalar DateScalar
   
@@ -69,13 +67,11 @@ const typeDefs = `
     deleteNoteById(id: Int!): Note
  }
 `;
-
 function exclude(user, keys) {
   return Object.fromEntries(
     Object.entries(user).filter(([key]) => !keys.includes(key)),
   );
 }
-
 function protectFromUsername(context, username) {
   if (!context.userInfo) {
     throw new Error("UNAUTHENTICATED : " + context.msg);
@@ -83,10 +79,8 @@ function protectFromUsername(context, username) {
     throw new Error("UNAUTHORIZED !");
   }
 }
-
 const resolvers = {
   DateScalar: DateScalar,
-
   Query: {
     getUserByUsername: async (parent, args, context) => {
       protectFromUsername(context, args.username);
@@ -95,7 +89,6 @@ const resolvers = {
           username: args.username,
         },
       });
-
       return exclude(user, ["password"]);
     },
     getNoteById: async (parent, args, context) => {
@@ -123,14 +116,12 @@ const resolvers = {
           user: true,
         },
       });
-
       return notes.map((note) => {
         const userWithoutPassword = exclude(note.user, ["password"]);
         return { ...note, user: userWithoutPassword };
       });
     },
   },
-
   Mutation: {
     createUser: async (parent, args) => {
       // Create a user in the db
@@ -142,7 +133,6 @@ const resolvers = {
       });
       return exclude(user, ["password"]);
     },
-
     updateUser: async (parent, args, context) => {
       // Update a user in the db
       if (!context.userInfo) {
@@ -158,7 +148,6 @@ const resolvers = {
       });
       return exclude(user, ["password"]);
     },
-
     deleteUser: async (parent, args, context) => {
       // Delete a user in the db
       protectFromUsername(context, args.username);
@@ -169,7 +158,6 @@ const resolvers = {
       });
       return exclude(user, ["password"]);
     },
-
     logUser: async (_, { username, password }) => {
       // Login the user and return a JWT which will be used to authenticate later.
       const user = await prisma.user.findUnique({
@@ -178,17 +166,14 @@ const resolvers = {
           password: password,
         },
       });
-
       // Generate and return JWT
       return jwt.sign(user, SECRET_KEY, { expiresIn: "1h" });
     },
-
     createNote: (parent, args, context) => {
       // Create a note in the db
       if (!context.userInfo) {
         throw new Error("UNAUTHENTICATED" + context.msg);
       }
-
       return prisma.note.create({
         data: {
           title: args.title,
@@ -201,7 +186,6 @@ const resolvers = {
         },
       });
     },
-
     updateNoteById: async (parent, args, context) => {
       const noteTest = await prisma.note.findFirstOrThrow({
         where: {
@@ -228,7 +212,6 @@ const resolvers = {
       const userWithoutPassword = exclude(note.user, ["password"]);
       return { ...note, user: userWithoutPassword };
     },
-
     deleteNoteById: async (parent, args, context) => {
       const noteTest = await prisma.note.findFirstOrThrow({
         where: {
@@ -252,7 +235,6 @@ const resolvers = {
     },
   },
 };
-
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
@@ -260,8 +242,7 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: false,
 });
-
-let port: number = +process.env.PORT;
+let port = +process.env.PORT;
 const { url } = await startStandaloneServer(server, {
   // Your async context function should async and
   // return an object
@@ -280,5 +261,4 @@ const { url } = await startStandaloneServer(server, {
     return { userInfo };
   },
 });
-
 console.log(`🚀  Server ready at: ${url}`);

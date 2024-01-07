@@ -30,3 +30,13 @@ jobs:
         run: |
           cd Application
           yarn prettier-check
+
+      - name: Install Dependencies Serveur
+        run: |
+          cd Serveur
+          yarn install
+
+      - name: Prettier Check Serveur
+        run: |
+          cd Serveur
+          yarn prettier-check
