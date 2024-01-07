@@ -163,7 +163,7 @@ const resolvers = {
 
     deleteUser: async (parent, args, context) => {
       // Delete a user in the db
-      protectFromUsername(context,args.use)
+      protectFromUsername(context,args.username)
       const user = await prisma.user.delete({
         where: {
           username: args.username,
