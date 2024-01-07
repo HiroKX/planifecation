@@ -4,7 +4,6 @@ about: Créer un rapport afin de nous améliorer
 title: "[Bug]"
 labels: bug
 assignees: HiroKX
-
 ---
 
 **Décrivez le bug**

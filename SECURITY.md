@@ -9,4 +9,3 @@
 | 0.2.x   | :white_check_mark: |
 
 ## Signalement d'une Vulnérabilité
-

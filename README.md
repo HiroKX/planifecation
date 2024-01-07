@@ -16,8 +16,9 @@ Voici tout ce dont vous avez besoin pour installer le projet :
 2. **Visiter les README des dépôts**
 
 Regarder les README.md qui se trouve dans les dossiers :
- - Application
- - Serveur
+
+- Application
+- Serveur
 
 3. **Profiter de l'application**
-Amusez-vous sur notre application !
+   Amusez-vous sur notre application !
