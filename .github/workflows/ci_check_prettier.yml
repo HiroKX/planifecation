@@ -39,4 +39,4 @@ jobs:
       - name: Prettier Check Serveur
         run: |
           cd Serveur
-          npm prettier-check
+          npm run prettier-check
