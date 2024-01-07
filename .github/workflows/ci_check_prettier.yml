@@ -34,7 +34,7 @@ jobs:
       - name: Install Dependencies Serveur
         run: |
           cd Serveur
-          npm ci
+          npm install
 
       - name: Prettier Check Serveur
         run: |
