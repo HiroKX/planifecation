@@ -68,8 +68,8 @@ export async function CreateTodo(
 }
 
 const UPDATE_TODO = gql`
-  mutation Mutation($id: Int!, $content: String!, $isDone: Boolean!) {
-    updateTodoById(id: $id, content: $content, isDone: $isDone) {
+  mutation UpdateTodoItemById($updateTodoItemByIdId: Int!, $content: String!, $isDone: Boolean) {
+    updateTodoItemById(id: $updateTodoItemByIdId, content: $content, isDone: $isDone) {
       id
     }
   }
@@ -77,7 +77,7 @@ const UPDATE_TODO = gql`
 
 export async function UpdateTodoById(
   client: Readonly<ApolloClient<Object>>,
-  id: Readonly<number>,
+  id: Readonly<string>,
   content: Readonly<string>,
   isDone: Readonly<boolean>
 ): Promise<number> {
@@ -87,7 +87,7 @@ export async function UpdateTodoById(
     .mutate({
       mutation: UPDATE_TODO,
       variables: {
-        id: id,
+        updateTodoItemByIdId: parseInt(id),
         content: content,
         isDone: isDone
       },

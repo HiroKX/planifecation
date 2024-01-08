@@ -28,11 +28,12 @@ export async function AddTodo(
 
 export async function UpdateTodo(
   client: Readonly<ApolloClient<Object>>,
-  id: Readonly<number>,
+  id: Readonly<string>,
   content: Readonly<string>,
   isDone: Readonly<boolean>
 ): Promise<void> {
   console.debug('TodoController.UpdateTodo');
+  console.debug('ToDo = {' + id + ', ' + content + ', ' + isDone + '}')
   await UpdateTodoById(client, id, content, isDone);
 }
 
