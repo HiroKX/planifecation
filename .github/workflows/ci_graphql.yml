@@ -1,0 +1,44 @@
+name: CI GraphQL
+
+on:
+  pull_request:
+    branches:
+      - dev
+jobs:
+  CI_GraphQL:
+    name: Testing GraphQL Integration
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install Dependencies
+        run: |
+          cd Serveur
+          npm install
+          touch .env
+          echo 'DATABASE_URL="postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}?schema=public"' >> .env
+          echo 'SECRET_KEY="secret"' >> .env
+          echo 'PORT=4000' >> .env
+
+      - name: Check Integration
+        run: |
+          cd Serveur
+          npx prisma generate --schema ./prisma/schema.prisma
+          npx prisma migrate dev --name "migrationA"
+          npm run compile

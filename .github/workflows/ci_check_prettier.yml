@@ -24,9 +24,19 @@ jobs:
       - name: Install Dependencies
         run: |
           cd Application
-          yarn install
+          yarn install --frozen-lockfile
 
       - name: Prettier Check
         run: |
           cd Application
           yarn prettier-check
+
+      - name: Install Dependencies Serveur
+        run: |
+          cd Serveur
+          npm install
+
+      - name: Prettier Check Serveur
+        run: |
+          cd Serveur
+          npm run prettier-check

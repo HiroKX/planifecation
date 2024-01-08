@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "start-in-test": "npm run compile && node ./dist/index.js &",
+    "start": "npm run compile && node ./dist/index.js",
+    "prettier-check": "prettier --check ."
   },
   "keywords": [],
   "author": "Robin Lagler/HiroKX",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
+    "prettier": "3.1.1",
     "prisma": "^5.6.0",
     "typescript": "^5.2.2"
   }

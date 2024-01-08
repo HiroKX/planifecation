@@ -4,4 +4,6 @@ module.exports = {
   testMatch: ['**/*.test.(ts|tsx)'],
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   preset: 'react-native',
+  verbose: true,
+  setupFilesAfterEnv: ['<rootDir>/__tests__/setup.js'],
 };

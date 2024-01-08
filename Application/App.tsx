@@ -20,7 +20,7 @@ import Splashscreen from './src/components/pages/Splashscreen';
 LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calendar and timeline
 
 export default function App(): ReactNode {
-  if (ENVIRONMENT != 'dev') console.debug = () => {};
+  if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
 
   const client = new ApolloClient({
     link: new HttpLink({ uri: URI_API }),

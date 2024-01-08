@@ -35,7 +35,7 @@ export async function CreateUser(
     })
     .catch((error: any) => {
       console.error('CreateUser error:', error);
-      return 0;
+      return -1;
     });
 }
 
@@ -60,6 +60,6 @@ export async function LogUser(
     })
     .catch((error: any) => {
       console.error('LogUser error:', error);
-      return '';
+      return 'Not Logged';
     });
 }

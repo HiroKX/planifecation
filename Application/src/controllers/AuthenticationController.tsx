@@ -1,7 +1,8 @@
 import { CreateUser, LogUser } from '../services/AuthenticationService';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import * as SecureStore from 'expo-secure-store';
 import { StackParamList } from '../navigation/RootStack';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ApolloClient, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { URI_API } from '@env';
