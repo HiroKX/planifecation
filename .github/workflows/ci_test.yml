@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Tests Application
 
 on:
   push:
@@ -41,10 +41,9 @@ jobs:
         echo 'PORT=4000' >> .env
         npx prisma generate --schema ./prisma/schema.prisma
         npx prisma migrate dev --name "migrationA"
-        npm start
+        npm run start-in-test
 
     - name: Run Tests
       run: |
         cd Application
         yarn test
-        kill $!
