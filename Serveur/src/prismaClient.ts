@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 
 let prisma: PrismaClient;
 
 if (!global.prisma) {
-    global.prisma = new PrismaClient();
+  global.prisma = new PrismaClient();
 }
 
 prisma = global.prisma;

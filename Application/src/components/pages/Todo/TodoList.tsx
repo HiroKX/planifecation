@@ -1,14 +1,16 @@
-import SurfaceTemplate from '../molecules/SurfaceTemplate';
+import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { StackParamList } from '../../navigation/RootStack';
+import { StackParamList } from '../../../navigation/RootStack';
 import { ReactNode, useState } from 'react';
 import { FlatList, View } from 'react-native';
-import ButtonTemplate from '../atoms/styles/ButtonTemplate';
-import TextInputTemplate from '../atoms/styles/TextInputTemplate';
-import { TextInput } from 'react-native-paper';
-import CheckboxTemplate from '../molecules/CheckboxTemplate';
-import { theme } from '../organisms/OwnPaperProvider';
-import { Todo } from '../../models/Todo';
+import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
+import { Portal, TextInput } from 'react-native-paper';
+import CheckboxTemplate from '../../molecules/CheckboxTemplate';
+import { theme } from '../../organisms/OwnPaperProvider';
+import { Todo } from '../../../models/Todo';
+import CheckTodo from './CheckTodo';
+import ModalTemplate from '../../organisms/ModalTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -19,6 +21,8 @@ type RenderTodoProps = {
 export default function TodoList(props: Readonly<Props>): ReactNode {
   const [todo, setTodo] = useState('');
   const [todoList, setTodoList] = useState<Todo[]>([]);
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [currentTodo, setCurrentTodo] = useState('');
 
   const handleAddTodo = () => {
     if (todo.trim() !== '') {
@@ -34,6 +38,15 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   };
 
   const renderTodos = ({ item }: RenderTodoProps): React.JSX.Element => {
+    const funcDrawing = () => {
+      setVisibleModal(false);
+      setTodoList(prevTodos =>
+        prevTodos.map(todo =>
+          todo.id === currentTodo ? { ...todo, isDone: !todo.isDone } : todo
+        )
+      );
+    };
+
     return (
       <View>
         <SurfaceTemplate
@@ -42,11 +55,8 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           <CheckboxTemplate
             status={item.isDone ? 'checked' : 'unchecked'}
             onPress={() => {
-              setTodoList(prevTodos =>
-                prevTodos.map(todo =>
-                  todo.id === item.id ? { ...todo, isDone: !todo.isDone } : todo
-                )
-              );
+              setCurrentTodo(item.id);
+              setVisibleModal(true);
             }}
           />
           <TextInputTemplate
@@ -68,6 +78,14 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
             }}
           ></TextInputTemplate>
         </SurfaceTemplate>
+        <Portal>
+          <ModalTemplate
+            visible={visibleModal}
+            onDismiss={() => setVisibleModal(false)}
+          >
+            <CheckTodo returnFunc={funcDrawing} />
+          </ModalTemplate>
+        </Portal>
       </View>
     );
   };
