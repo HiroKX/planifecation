@@ -24,9 +24,9 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            pm2 stop index
             cd /var/www/html/planifecation/Serveur
+            pm2 stop ecosystem.config.cjs
             git pull origin dev
             npm install
             npx prisma migrate dev --name "${{github.run_id}}"
-            pm2 start index
+            pm2 start ecosystem.config.cjs
