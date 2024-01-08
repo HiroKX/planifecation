@@ -38,7 +38,7 @@ export async function UpdateTodo(
 
 export async function DeleteTodo(
   client: Readonly<ApolloClient<Object>>,
-  id: Readonly<number>
+  id: Readonly<string>
 ): Promise<void> {
   console.debug('TodoController.DeleteTodo');
   await DeleteTodoById(client, id)

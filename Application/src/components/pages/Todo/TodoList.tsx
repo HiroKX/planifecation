@@ -12,7 +12,7 @@ import { Todo } from '../../../models/Todo';
 import CheckTodo from './CheckTodo';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import {useApolloClient} from "@apollo/client";
-import {AddTodo, GetAllTodos} from "../../../controllers/TodoController";
+import {AddTodo, DeleteTodo, GetAllTodos} from "../../../controllers/TodoController";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -46,9 +46,10 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
       }
   };
 
-  const handleDeleteTodo = (item: Todo) => {
-    const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
-    setTodoList(updatedTodoList);
+  const handleDeleteTodo = async (item: Todo) => {
+      await DeleteTodo(client, item.id);
+      const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
+      setTodoList(updatedTodoList);
   };
 
   const renderTodos = ({ item }: RenderTodoProps): React.JSX.Element => {

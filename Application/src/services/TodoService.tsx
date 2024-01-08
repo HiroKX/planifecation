@@ -102,8 +102,8 @@ export async function UpdateTodoById(
 }
 
 const DELETE_TODO_BY_ID = gql`
-  mutation DeleteTodoById($id: Int!) {
-    deleteTodoById(id: $id) {
+  mutation DeleteTodoItemById($deleteTodoItemByIdId: Int!) {
+    deleteTodoItemById(id: $deleteTodoItemByIdId) {
       id
     }
   }
@@ -111,19 +111,19 @@ const DELETE_TODO_BY_ID = gql`
 
 export async function DeleteTodoById(
   client: Readonly<ApolloClient<Object>>,
-  id: Readonly<number>
+  id: Readonly<string>
 ): Promise<boolean> {
   console.debug('TodoService.DeleteTodoById');
-
+  console.debug('id = ' + id);
   return client
     .mutate({
       mutation: DELETE_TODO_BY_ID,
       variables: {
-        id: id,
+        deleteTodoItemByIdId: parseInt(id),
       },
     })
     .then((response: any) => {
-      return response.data.id;
+      return response.data.deleteTodoItemById.id;
     })
     .catch((error: any) => {
       console.error('DeleteTodoById error:', error);
