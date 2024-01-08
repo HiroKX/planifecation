@@ -1,15 +1,15 @@
 import { ApolloClient, gql } from '@apollo/client';
-import {Todo} from "../models/Todo";
+import { Todo } from '../models/Todo';
 
 const GET_ALL_TODOS = gql`
   query Query($username: String!) {
-      getAllTodoItemsByUsername(username: $username) {
-        id
-        content
-        isDone
-        createdAt
-        updatedAt
-      }
+    getAllTodoItemsByUsername(username: $username) {
+      id
+      content
+      isDone
+      createdAt
+      updatedAt
+    }
   }
 `;
 
@@ -54,11 +54,14 @@ export async function CreateTodo(
       mutation: CREATE_TODO,
       variables: {
         content: content,
-        isDone: isDone
+        isDone: isDone,
       },
     })
     .then((response: any) => {
-      console.debug('TodoService: Todo successfully created with id ' + response.data.createTodoItem)
+      console.debug(
+        'TodoService: Todo successfully created with id ' +
+          response.data.createTodoItem
+      );
       return response.data.createTodoItem.id;
     })
     .catch((error: any) => {
@@ -68,8 +71,16 @@ export async function CreateTodo(
 }
 
 const UPDATE_TODO = gql`
-  mutation UpdateTodoItemById($updateTodoItemByIdId: Int!, $content: String!, $isDone: Boolean) {
-    updateTodoItemById(id: $updateTodoItemByIdId, content: $content, isDone: $isDone) {
+  mutation UpdateTodoItemById(
+    $updateTodoItemByIdId: Int!
+    $content: String!
+    $isDone: Boolean
+  ) {
+    updateTodoItemById(
+      id: $updateTodoItemByIdId
+      content: $content
+      isDone: $isDone
+    ) {
       id
     }
   }
@@ -89,7 +100,7 @@ export async function UpdateTodoById(
       variables: {
         updateTodoItemByIdId: parseInt(id),
         content: content,
-        isDone: isDone
+        isDone: isDone,
       },
     })
     .then((response: any) => {

@@ -1,7 +1,7 @@
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import {ReactNode, useEffect, useState} from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
@@ -11,8 +11,13 @@ import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
 import CheckTodo from './CheckTodo';
 import ModalTemplate from '../../organisms/ModalTemplate';
-import {useApolloClient} from "@apollo/client";
-import {AddTodo, DeleteTodo, GetAllTodos, UpdateTodo} from "../../../controllers/TodoController";
+import { useApolloClient } from '@apollo/client';
+import {
+  AddTodo,
+  DeleteTodo,
+  GetAllTodos,
+  UpdateTodo,
+} from '../../../controllers/TodoController';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -30,39 +35,44 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
 
   useEffect(() => {
     async function getTodos() {
-        await GetAllTodos(client).then(Todos => {
-            setTodoList(Todos);
-        });
+      await GetAllTodos(client).then(Todos => {
+        setTodoList(Todos);
+      });
     }
     getTodos();
   }, []);
 
   const handleAddTodo = async () => {
-      if (todo.trim() !== '') {
-          const id = await AddTodo(client, todo, false);
-          console.debug('TodoList: id = ' + id);
-          setTodoList([...todoList, {id: id, content: todo, isDone: false}]);
-          setTodo('');
-      }
+    if (todo.trim() !== '') {
+      const id = await AddTodo(client, todo, false);
+      console.debug('TodoList: id = ' + id);
+      setTodoList([...todoList, { id: id, content: todo, isDone: false }]);
+      setTodo('');
+    }
   };
 
   const handleDeleteTodo = async (item: Todo) => {
-      await DeleteTodo(client, item.id);
-      const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
-      setTodoList(updatedTodoList);
+    await DeleteTodo(client, item.id);
+    const updatedTodoList = todoList.filter(todo => todo.id !== item.id);
+    setTodoList(updatedTodoList);
   };
 
   const renderTodos = ({ item }: RenderTodoProps): React.JSX.Element => {
     const funcDrawing = async () => {
-        setVisibleModal(false);
-        const updatedTodos = todoList.map(todo =>
-            todo.id === currentTodo ? {...todo, isDone: !todo.isDone} : todo
+      setVisibleModal(false);
+      const updatedTodos = todoList.map(todo =>
+        todo.id === currentTodo ? { ...todo, isDone: !todo.isDone } : todo
+      );
+      setTodoList(updatedTodos);
+      const todoItem = updatedTodos.find(todo => todo.id === currentTodo);
+      if (todoItem !== undefined) {
+        await UpdateTodo(
+          client,
+          todoItem.id,
+          todoItem.content,
+          todoItem.isDone
         );
-        setTodoList(updatedTodos);
-        const todoItem = updatedTodos.find(todo => todo.id === currentTodo);
-        if (todoItem !== undefined) {
-            await UpdateTodo(client, todoItem.id, todoItem.content, todoItem.isDone);
-        }
+      }
     };
 
     return (

@@ -1,9 +1,14 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../navigation/RootStack';
 import { ApolloClient } from '@apollo/client';
-import { CreateTodo, GetAllTodosFromUser, UpdateTodoById, DeleteTodoById } from "../services/TodoService";
+import {
+  CreateTodo,
+  GetAllTodosFromUser,
+  UpdateTodoById,
+  DeleteTodoById,
+} from '../services/TodoService';
 import { GetLoggedUserUsername } from './AuthenticationController';
-import {Todo} from "../models/Todo";
+import { Todo } from '../models/Todo';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -33,7 +38,7 @@ export async function UpdateTodo(
   isDone: Readonly<boolean>
 ): Promise<void> {
   console.debug('TodoController.UpdateTodo');
-  console.debug('ToDo = {' + id + ', ' + content + ', ' + isDone + '}')
+  console.debug('ToDo = {' + id + ', ' + content + ', ' + isDone + '}');
   await UpdateTodoById(client, id, content, isDone);
 }
 
