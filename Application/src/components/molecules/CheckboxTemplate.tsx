@@ -1,12 +1,22 @@
-import { View } from 'react-native';
-import { Checkbox, CheckboxProps } from 'react-native-paper';
+import { IconButton, IconButtonProps } from 'react-native-paper';
+
+interface IconOverrideProps {
+  iconButton: IconButtonProps;
+  status: 'checked' | 'unchecked';
+  onPress: () => void;
+}
 
 export default function CheckboxTemplate(
-  props: Readonly<CheckboxProps>
+  props: Readonly<IconOverrideProps>
 ): React.ReactNode {
   return (
-    <View style={{ borderWidth: 1 }}>
-      <Checkbox onPress={props.onPress} {...props}></Checkbox>
-    </View>
+    <IconButton
+      {...props}
+      icon={
+        props.status === 'unchecked'
+          ? 'checkbox-blank-outline'
+          : 'checkbox-marked'
+      }
+    />
   );
 }
