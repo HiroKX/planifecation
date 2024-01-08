@@ -1,4 +1,4 @@
-import {ApolloClient, InMemoryCache, createHttpLink, HttpLink} from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { CreateUser, LogUser } from '../AuthenticationService';
 import { setContext } from '@apollo/client/link/context';
 import { DeleteUser, UpdateUser } from '../UserService';
@@ -11,7 +11,6 @@ describe('User Test', () => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
       uri: 'http://localhost:4000/',
-      link: new HttpLink({ uri: '/', fetch }),
       connectToDevTools: false, // Disable DevTools in test environment
     });
   });
