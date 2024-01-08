@@ -50,8 +50,8 @@ const CREATE_NOTE = gql`
 
 export async function CreateNote(
   client: Readonly<ApolloClient<Object>>,
-  content: Readonly<string>,
-  title: Readonly<string>
+  title: Readonly<string>,
+  content: Readonly<string>
 ): Promise<number> {
   console.debug('NoteService.CreateNote');
 

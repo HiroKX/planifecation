@@ -35,7 +35,7 @@ export default function Notepad(props:Readonly<Props>): ReactNode {
         icon="content-save-outline"
         onPress={() => {
           saveNote(title, text);
-          props.navigation.navigate('Liste des notes')
+          props.navigation.navigate('Liste des notes');
         }}
       />
       <TextInputTemplate
