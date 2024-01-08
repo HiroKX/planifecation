@@ -9,7 +9,19 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
     steps:
     - uses: actions/checkout@v2
 
@@ -22,8 +34,19 @@ jobs:
       run: |
         cd Application
         yarn install --frozen-lockfile
+        cd ../Serveur
+        npm install
+        npm install
+        touch .env
+        echo 'DATABASE_URL="postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}?schema=public"' >> .env
+        echo 'SECRET_KEY="secret"' >> .env
+        echo 'PORT=4000' >> .env
+        npx prisma generate --schema ./prisma/schema.prisma
+        npx prisma migrate dev --name "migrationA"
+        npm start
 
     - name: Run Tests
       run: |
         cd Application
         yarn test
+        kill $!
