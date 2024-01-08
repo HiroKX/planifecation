@@ -9,28 +9,23 @@ import { userQueries } from "./queries/UserQueries.js";
 import { noteQueries } from "./queries/NoteQueries.js";
 import { DateScalar } from "./types/DateScalar.js";
 import { typeDefs } from "./types/TypeDefs.js";
-
 //Création du prisma client
 const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
-
 const queryResolvers = {
   ...userQueries,
   ...noteQueries,
   ...toDoQueries,
 };
-
 const mutationResolvers = {
   ...userMutation,
   ...noteMutation,
   ...toDoMutation,
 };
-
 const resolvers = {
   DateScalar: DateScalar,
   Query: queryResolvers,
   Mutation: mutationResolvers,
 };
-
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
@@ -38,8 +33,7 @@ const server = new ApolloServer({
   resolvers,
   csrfPrevention: false,
 });
-
-let port: number = +process.env.PORT;
+let port = +process.env.PORT;
 const { url } = await startStandaloneServer(server, {
   // Your async context function should async and
   // return an object
@@ -58,5 +52,4 @@ const { url } = await startStandaloneServer(server, {
     return { userInfo };
   },
 });
-
 console.log(`🚀  Server ready at: ${url}`);
