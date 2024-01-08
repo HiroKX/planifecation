@@ -67,10 +67,11 @@ describe('User Test', () => {
   it('should successfully delete a user', async () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
-      uri: 'https://graphql.ronde-lingons.fr/',
+      uri: 'https://test.graphql.ronde-lingons.fr/',
       fetch
     });
     if (token != null && token != 'Not Logged') {
+      console.error(token)
       const authLink = setContext((_, {headers}) => {
         return {
           headers: {
@@ -81,13 +82,8 @@ describe('User Test', () => {
       });
       client.setLink(authLink.concat(httpLink));
     }
-    try{
-      const result = await DeleteUser(client, username);
-      console.log(result);
-      expect(result).toBeTruthy();
-    }catch(e){
-      console.log(e)
-    }
+    const result = await DeleteUser(client, username);
+    expect(result).toBeTruthy();
   });
 
   it('should fail to delete a user on error', async () => {
