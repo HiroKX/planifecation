@@ -10,11 +10,8 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: 'https://graphql.ronde-lingons.fr/',
-      link: new HttpLink({ uri: 'https://graphql.ronde-lingons.fr/', fetch ,
-        fetchOptions: {
-          mode: 'cors',
-        },}),
+      uri: 'https://test.graphql.ronde-lingons.fr/',
+      link: new HttpLink({ uri: 'https://test.graphql.ronde-lingons.fr/', fetch}),
       connectToDevTools: false, // Disable DevTools in test environment
     });
   });
@@ -44,7 +41,7 @@ describe('User Test', () => {
     // ...code pour configurer le mock d'erreur...
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
-      uri: 'https://graphql.ronde-lingons.fr/',
+      uri: 'https://test.graphql.ronde-lingons.fr/',
       fetch
     });
     if (token != null && token != 'Not Logged') {
