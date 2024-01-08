@@ -64,8 +64,8 @@ export async function CreateNote(
       },
     })
     .then((response: any) => {
-      console.debug('id:', response.data.createUser.id);
-      return response.data.createUser.id;
+      console.debug('create note : ok');
+      return 1;
     })
     .catch((error: any) => {
       console.error('CreateNote error:', error);

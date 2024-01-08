@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../navigation/RootStack';
 import { ApolloClient } from '@apollo/client';
-import { GetAllNotesFromUser, DeleteNoteById } from '../services/NoteService';
+import { GetAllNotesFromUser, DeleteNoteById, CreateNote } from '../services/NoteService';
 import { GetLoggedUserUsername } from './AuthenticationController';
 
 type Props = NativeStackScreenProps<StackParamList>;
@@ -16,9 +16,12 @@ export async function GetAllNotes(
 
 export async function AddNote(
   client: Readonly<ApolloClient<Object>>,
-  props: Readonly<Props>
-): Promise<void> {
+  title: Readonly<string>,
+  content: Readonly<string>
+): Promise<number> {
   console.debug('NoteController.AddNote');
+  const username = await GetLoggedUserUsername();
+  return await CreateNote(client, title, content);
 }
 
 export async function UpdateNote(
