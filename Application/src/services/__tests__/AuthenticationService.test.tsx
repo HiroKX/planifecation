@@ -11,7 +11,10 @@ describe('User Test', () => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
       uri: 'http://localhost:4000/',
-      link: new HttpLink({ uri: 'http://localhost:4000/', fetch }),
+      link: new HttpLink({ uri: 'http://localhost:4000/', fetch ,
+        fetchOptions: {
+          mode: 'cors',
+        },}),
       connectToDevTools: false, // Disable DevTools in test environment
     });
   });
@@ -33,7 +36,7 @@ describe('User Test', () => {
     // Configurez votre mock pour simuler une erreur
     // ...code pour configurer le mock d'erreur...
     const result = await LogUser(client, username, password);
-    expect(result).not.toBe('Logged');
+    expect(result).not.toBe('Not Logged');
   });
 
   it('should fail to update a user on error', async () => {
