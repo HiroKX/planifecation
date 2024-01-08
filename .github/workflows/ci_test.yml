@@ -45,5 +45,6 @@ jobs:
       run: |
         cd Serveur
         npm run start-in-test
+        ps aux|grep index.js
         cd ../Application
         yarn test
