@@ -33,15 +33,13 @@ jobs:
         cd Application
         yarn install --frozen-lockfile
         cd ../Serveur
-        npm install
-        npm install
+        npm install --frozen-lockfile
         touch .env
         echo 'DATABASE_URL="postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}?schema=public"' >> .env
         echo 'SECRET_KEY="secret"' >> .env
         echo 'PORT=4000' >> .env
         npx prisma generate --schema ./prisma/schema.prisma
         npx prisma migrate dev --name "migrationA"
-        npm run start-in-test
 
     - name: Run Tests
       run: |
