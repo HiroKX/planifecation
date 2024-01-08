@@ -42,6 +42,7 @@ describe('User Test', () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
       uri: 'http://localhost:4000/',
+      fetch
     });
     if (token != null && token != 'Not Logged') {
       const authLink = setContext((_, { headers }) => {
@@ -67,6 +68,7 @@ describe('User Test', () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
       uri: 'http://localhost:4000/',
+      fetch
     });
     if (token != null && token != 'Not Logged') {
       const authLink = setContext((_, { headers }) => {

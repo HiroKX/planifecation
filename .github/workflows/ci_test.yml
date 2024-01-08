@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: '16' # Ou la version de Node.js que vous utilisez
 
-    - name: Install Dependencies
+    - name: Install Dependencies and Server
       run: |
         cd Application
         yarn install --frozen-lockfile
