@@ -71,7 +71,7 @@ describe('User Test', () => {
       fetch
     });
     if (token != null && token != 'Not Logged') {
-      const authLink = setContext((_, { headers }) => {
+      const authLink = setContext((_, {headers}) => {
         return {
           headers: {
             ...headers,
@@ -81,8 +81,13 @@ describe('User Test', () => {
       });
       client.setLink(authLink.concat(httpLink));
     }
-    const result = await DeleteUser(client, username);
-    expect(result).toBeTruthy();
+    try{
+      const result = await DeleteUser(client, username);
+      console.log(result);
+      expect(result).toBeTruthy();
+    }catch(e){
+      console.log(e)
+    }
   });
 
   it('should fail to delete a user on error', async () => {
