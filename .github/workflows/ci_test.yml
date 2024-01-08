@@ -45,5 +45,6 @@ jobs:
       run: |
         cd Serveur
         npm run start-in-test
+        echo 'fin'
         cd ../Application
         yarn test
