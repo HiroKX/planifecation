@@ -10,8 +10,8 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: 'http://localhost:4000/',
-      link: new HttpLink({ uri: 'http://localhost:4000/', fetch ,
+      uri: 'https://graphql.ronde-lingons.fr/',
+      link: new HttpLink({ uri: 'https://graphql.ronde-lingons.fr/', fetch ,
         fetchOptions: {
           mode: 'cors',
         },}),
@@ -44,7 +44,7 @@ describe('User Test', () => {
     // ...code pour configurer le mock d'erreur...
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
-      uri: 'http://localhost:4000/',
+      uri: 'https://graphql.ronde-lingons.fr/',
       fetch
     });
     if (token != null && token != 'Not Logged') {
@@ -70,7 +70,7 @@ describe('User Test', () => {
   it('should successfully delete a user', async () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
-      uri: 'http://localhost:4000/',
+      uri: 'https://graphql.ronde-lingons.fr/',
       fetch
     });
     if (token != null && token != 'Not Logged') {
