@@ -1,7 +1,7 @@
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import { ReactNode, useState } from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import { FlatList, View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
@@ -11,6 +11,8 @@ import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
 import CheckTodo from './CheckTodo';
 import ModalTemplate from '../../organisms/ModalTemplate';
+import {useApolloClient} from "@apollo/client";
+import {AddTodo, GetAllTodos} from "../../../controllers/TodoController";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -24,12 +26,24 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   const [visibleModal, setVisibleModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState('');
 
-  const handleAddTodo = () => {
-    if (todo.trim() !== '') {
-      let id = Date.now().toString();
-      setTodoList([...todoList, { id: id, content: todo, isDone: false }]);
-      setTodo('');
+  const client = useApolloClient();
+
+  useEffect(() => {
+    async function getTodos() {
+        await GetAllTodos(client).then(Todos => {
+            setTodoList(Todos);
+        });
     }
+    getTodos();
+  }, []);
+
+  const handleAddTodo = async () => {
+      if (todo.trim() !== '') {
+          const id = await AddTodo(client, todo, false);
+          console.debug('TodoList: id = ' + id);
+          setTodoList([...todoList, {id: id, content: todo, isDone: false}]);
+          setTodo('');
+      }
   };
 
   const handleDeleteTodo = (item: Todo) => {
