@@ -1,4 +1,9 @@
-import {ApolloClient, InMemoryCache, createHttpLink, HttpLink} from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  HttpLink,
+} from '@apollo/client';
 import { CreateUser, LogUser } from '../AuthenticationService';
 import { setContext } from '@apollo/client/link/context';
 import { DeleteUser, UpdateUser } from '../UserService';
@@ -11,7 +16,10 @@ describe('User Test', () => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
       uri: 'https://test.graphql.ronde-lingons.fr/',
-      link: new HttpLink({ uri: 'https://test.graphql.ronde-lingons.fr/', fetch}),
+      link: new HttpLink({
+        uri: 'https://test.graphql.ronde-lingons.fr/',
+        fetch,
+      }),
       connectToDevTools: false, // Disable DevTools in test environment
     });
   });
@@ -42,7 +50,7 @@ describe('User Test', () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
       uri: 'https://test.graphql.ronde-lingons.fr/',
-      fetch
+      fetch,
     });
     if (token != null && token != 'Not Logged') {
       const authLink = setContext((_, { headers }) => {
@@ -68,11 +76,11 @@ describe('User Test', () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
       uri: 'https://test.graphql.ronde-lingons.fr/',
-      fetch
+      fetch,
     });
     if (token != null && token != 'Not Logged') {
-      console.error(token)
-      const authLink = setContext((_, {headers}) => {
+      console.error(token);
+      const authLink = setContext((_, { headers }) => {
         return {
           headers: {
             ...headers,

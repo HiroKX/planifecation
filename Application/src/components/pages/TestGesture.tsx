@@ -13,14 +13,14 @@ export default function TestGesture() {
   const position = useSharedValue(0);
 
   const panGesture = Gesture.Pan()
-    .onUpdate((e) => {
+    .onUpdate(e => {
       if (onLeft.value) {
         position.value = e.translationX;
       } else {
         position.value = END_POSITION + e.translationX;
       }
     })
-    .onEnd((e) => {
+    .onEnd(e => {
       if (position.value > END_POSITION / 2) {
         position.value = withTiming(END_POSITION, { duration: 100 });
         onLeft.value = false;
