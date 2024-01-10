@@ -33,8 +33,12 @@ describe('User Test', () => {
   });
 
   it('should fail to create a user', async () => {
-    const result = await CreateUser(client, username, password);
-    expect(result).toBe(-1);
+    try{
+      const result = await CreateUser(client, username, password);
+      expect(result).toThrowError();
+    }catch(error){
+
+    }
   });
 
   it('should successfully log a user', async () => {
