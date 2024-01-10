@@ -19,13 +19,21 @@ export async function SignUpUser(
   console.debug('AuthenticationController.SignUpUser');
   await CreateUser(client, username, password)
     .then(async userId => {
-      if (userId != 0) {
+      if (userId != -1) {
         console.log('User', userId, 'created with username ', username);
         await SignInUser(client, username, password, props);
       }
     })
     .catch(error => {
       console.error('Error while creating user: ', error);
+      if (
+        error.message.includes(
+          'Unique constraint failed on the fields: (`username`)'
+        )
+      ) {
+        throw new Error("Nom d'utilisateur déjà utilisé");
+      }
+      throw new Error("Erreur lors de la création de l'utilisateur");
     });
 }
 
@@ -38,7 +46,7 @@ export async function SignInUser(
   console.debug('AuthenticationController.SignInUser');
   await LogUser(client, username, password)
     .then(async token => {
-      if (token != '') {
+      if (token != 'Not Logged !') {
         await SetLoggedUser(username, token);
         await updateClientToken(client, token);
         await client.resetStore();
@@ -53,6 +61,10 @@ export async function SignInUser(
     })
     .catch(error => {
       console.error('Error while logging user: ', error);
+      if (error.message.includes('Expected "payload" to be a plain object')) {
+        throw new Error("Nom d'utilisateur ou mot de passe incorrect");
+      }
+      throw new Error("Erreur lors de la connexion de l'utilisateur");
     });
 }
 

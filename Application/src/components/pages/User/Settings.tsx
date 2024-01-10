@@ -3,13 +3,13 @@ import {
   Switch as PaperSwitch,
   Text as PaperText,
 } from 'react-native-paper';
-import ButtonTemplate from '../atoms/styles/ButtonTemplate';
-import SurfaceTemplate from '../molecules/SurfaceTemplate';
+import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { ReactNode, useState } from 'react';
-import { LogoutUser } from '../../controllers/AuthenticationController';
-import { StackParamList } from '../../navigation/RootStack';
+import { LogoutUser } from '../../../controllers/AuthenticationController';
+import { StackParamList } from '../../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { DeleteAndLogoutUser } from '../../controllers/UserController';
+import { DeleteAndLogoutUser } from '../../../controllers/UserController';
 import { ApolloConsumer } from '@apollo/client';
 
 type Props = NativeStackScreenProps<StackParamList>;
