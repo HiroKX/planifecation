@@ -7,7 +7,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import PasswordInput from '../../atoms/styles/PasswordInput';
 import UsernameInput from '../../atoms/styles/UsernameInput';
-import {useForm} from "react-hook-form";
+import { useForm } from 'react-hook-form';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {

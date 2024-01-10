@@ -1,15 +1,14 @@
-import { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { useApolloClient } from '@apollo/client';
 import { GetLoggedUser } from '../../../controllers/AuthenticationController';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import { UpdateUserAndLogout } from '../../../controllers/UserController';
-import { Controller, useForm } from 'react-hook-form';
-import { HelperText } from 'react-native-paper';
+import { useForm } from 'react-hook-form';
 import PasswordInput from '../../atoms/styles/PasswordInput';
+import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -53,34 +52,7 @@ export default function Profile(props: Readonly<Props>): ReactNode {
   return (
     <SurfaceTemplate>
       <PasswordInput control={control} errors={errors} />
-      <Controller
-        control={control}
-        rules={{
-          required: 'Ce champ est requis.',
-          validate: (val: string) => {
-            if (watch('password') != val) {
-              return 'Les mots de passe de ne correspondent pas.';
-            }
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
-            <TextInputTemplate
-              label="Confirmer le mot de passe"
-              value={value}
-              onChangeText={onChange}
-              secureTextEntry={true}
-              onBlur={onBlur}
-            />
-            {errors.confirmPassword && (
-              <HelperText type={'error'}>
-                {errors.confirmPassword?.message}
-              </HelperText>
-            )}
-          </>
-        )}
-        name="confirmPassword"
-      />
+      <PasswordConfirmInput control={control} errors={errors} watch={watch} />
       <ButtonTemplate onPress={onSubmit}>
         Changer mon mot de passe
       </ButtonTemplate>

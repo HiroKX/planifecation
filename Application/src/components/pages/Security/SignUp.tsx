@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
@@ -10,6 +10,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { HelperText } from 'react-native-paper';
 import PasswordInput from '../../atoms/styles/PasswordInput';
 import UsernameInput from '../../atoms/styles/UsernameInput';
+import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -49,34 +50,7 @@ export default function SignUp(props: Readonly<Props>): ReactNode {
     <SurfaceTemplate>
       <UsernameInput control={control} errors={errors} />
       <PasswordInput control={control} errors={errors} />
-      <Controller
-        control={control}
-        rules={{
-          required: 'Ce champ est requis.',
-          validate: (val: string) => {
-            if (watch('password') != val) {
-              return 'Les mots de passe de ne correspondent pas.';
-            }
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
-            <TextInputTemplate
-              label="Confirmer le mot de passe"
-              value={value}
-              onChangeText={onChange}
-              secureTextEntry={true}
-              onBlur={onBlur}
-            />
-            {errors.confirmPassword && (
-              <HelperText type={'error'}>
-                {errors.confirmPassword?.message}
-              </HelperText>
-            )}
-          </>
-        )}
-        name="confirmPassword"
-      />
+      <PasswordConfirmInput control={control} errors={errors} watch={watch} />
       <ButtonTemplate onPress={onSubmit}>M'inscrire</ButtonTemplate>
     </SurfaceTemplate>
   );
