@@ -1,13 +1,13 @@
 import { ReactNode } from 'react';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { useApolloClient } from '@apollo/client';
 import { SignInUser } from '../../../controllers/AuthenticationController';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import { Controller, useForm } from 'react-hook-form';
-import { HelperText } from 'react-native-paper';
+import PasswordInput from '../../atoms/styles/PasswordInput';
+import UsernameInput from '../../atoms/styles/UsernameInput';
+import {useForm} from "react-hook-form";
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -42,47 +42,8 @@ export default function Login(props: Readonly<Props>): ReactNode {
 
   return (
     <SurfaceTemplate>
-      <Controller
-        control={control}
-        rules={{
-          required: 'Ce champ est requis.',
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
-            <TextInputTemplate
-              label="Nom d'utilisateur"
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-            />
-            {errors.username && (
-              <HelperText type={'error'}>{errors.username?.message}</HelperText>
-            )}
-          </>
-        )}
-        name="username"
-      />
-      <Controller
-        control={control}
-        rules={{
-          required: 'Ce champ est requis.',
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
-            <TextInputTemplate
-              label="Mot de passe"
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              secureTextEntry={true}
-            />
-            {errors.password?.type === 'required' && (
-              <HelperText type={'error'}>Ce champ est requis.</HelperText>
-            )}
-          </>
-        )}
-        name="password"
-      />
+      <UsernameInput control={control} errors={errors} />
+      <PasswordInput control={control} errors={errors} />
       <ButtonTemplate onPress={onSubmit}>Me connecter</ButtonTemplate>
     </SurfaceTemplate>
   );

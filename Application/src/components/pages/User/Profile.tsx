@@ -9,6 +9,7 @@ import { StackParamList } from '../../../navigation/RootStack';
 import { UpdateUserAndLogout } from '../../../controllers/UserController';
 import { Controller, useForm } from 'react-hook-form';
 import { HelperText } from 'react-native-paper';
+import PasswordInput from '../../atoms/styles/PasswordInput';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -51,27 +52,7 @@ export default function Profile(props: Readonly<Props>): ReactNode {
   });
   return (
     <SurfaceTemplate>
-      <Controller
-        control={control}
-        rules={{
-          required: 'Ce champ est requis.',
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <>
-            <TextInputTemplate
-              label="Mot de passe"
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              secureTextEntry={true}
-            />
-            {errors.password?.type === 'required' && (
-              <HelperText type={'error'}>Ce champ est requis.</HelperText>
-            )}
-          </>
-        )}
-        name="password"
-      />
+      <PasswordInput control={control} errors={errors} />
       <Controller
         control={control}
         rules={{
