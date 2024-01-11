@@ -11,7 +11,8 @@ COPY package*.json ./
 RUN npm install
 
 # Copier les fichiers du projet dans le conteneur
-COPY . .
+COPY ./ .
+COPY ./.env .
 
 # Exposer le port sur lequel le serveur Apollo écoute
 EXPOSE 4000
