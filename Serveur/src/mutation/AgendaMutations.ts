@@ -8,7 +8,7 @@ export const agendaMutations = {
       throw new Error("UNAUTHENTICATED" + context.msg);
     }
 
-    return prisma.AgendaEvent.create({
+    return prisma.agendaEvent.create({
       data: {
         title: args.title,
         content: args.content,
@@ -26,7 +26,7 @@ export const agendaMutations = {
 
   updateAgendaEventById: async (parent, args, context) => {
     // Update an Agenda Event in the db
-    const agendaTest = await prisma.AgendaEvent.findFirstOrThrow({
+    const agendaTest = await prisma.agendaEvent.findFirstOrThrow({
       where: {
         id: args.id,
       },
@@ -35,7 +35,7 @@ export const agendaMutations = {
       },
     });
     protectFromUsername(context, agendaTest.user.username);
-    const agendaEvent = await prisma.AgendaEvent.update({
+    const agendaEvent = await prisma.agendaEvent.update({
       where: {
         id: args.id,
       },
@@ -56,7 +56,7 @@ export const agendaMutations = {
 
   deleteAgendaEventById: async (parent, args, context) => {
     // Delete an Agenda Event in the db
-    const agendaTest = await prisma.AgendaEvent.findFirstOrThrow({
+    const agendaTest = await prisma.agendaEvent.findFirstOrThrow({
       where: {
         id: args.id,
       },
@@ -65,7 +65,7 @@ export const agendaMutations = {
       },
     });
     protectFromUsername(context, agendaTest.user.username);
-    const agendaEvent = await prisma.AgendaEvent.delete({
+    const agendaEvent = await prisma.agendaEvent.delete({
       where: {
         id: args.id,
       },
