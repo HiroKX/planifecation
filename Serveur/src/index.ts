@@ -44,6 +44,8 @@ const server = new ApolloServer({
 });
 
 let port: number = +process.env.PORT;
+console.log(port);
+console.log(process.env.DATABASE_URL)
 const { url } = await startStandaloneServer(server, {
   // Your async context function should async and
   // return an object
