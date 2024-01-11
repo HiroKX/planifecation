@@ -6,12 +6,14 @@ import { Control, Controller, FieldErrors } from 'react-hook-form';
 type FormValues = {
   username: string;
 };
-type PasswordInputProps = {
+type UsernameInputProps = {
   control: Control<any>;
   errors: FieldErrors<FormValues>;
 };
 
-export default function UsernameInput(props: PasswordInputProps): any {
+export default function UsernameInput(
+  props: Readonly<UsernameInputProps>
+): any {
   return (
     <Controller
       control={props.control}

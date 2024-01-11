@@ -12,7 +12,9 @@ type PasswordInputProps = {
   watch: any;
 };
 
-export default function PasswordConfirmInput(props: PasswordInputProps): any {
+export default function PasswordConfirmInput(
+  props: Readonly<PasswordInputProps>
+): any {
   return (
     <Controller
       control={props.control}
