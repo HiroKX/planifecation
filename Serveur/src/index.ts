@@ -9,6 +9,8 @@ import { userQueries } from "./queries/UserQueries.js";
 import { noteQueries } from "./queries/NoteQueries.js";
 import { DateScalar } from "./types/DateScalar.js";
 import { typeDefs } from "./types/TypeDefs.js";
+import {agendaQueries} from "./queries/AgendaQueries";
+import {agendaMutations} from "./mutation/AgendaMutations";
 
 //Création du prisma client
 const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
@@ -17,12 +19,14 @@ const queryResolvers = {
   ...userQueries,
   ...noteQueries,
   ...toDoQueries,
+  ...agendaQueries,
 };
 
 const mutationResolvers = {
   ...userMutations,
   ...noteMutations,
   ...toDoMutations,
+  ...agendaMutations,
 };
 
 const resolvers = {
