@@ -8,11 +8,10 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installer les dépendances du projet
-RUN npm install
+RUN npm install --ignore-scripts
 
 # Copier les fichiers du projet dans le conteneur
-COPY ./ .
-COPY ./.env .
+COPY . .
 
 # Exposer le port sur lequel le serveur Apollo écoute
 EXPOSE 4000
