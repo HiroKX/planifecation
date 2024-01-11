@@ -45,7 +45,7 @@ model AgendaEvent {
   content   String
   startDate String
   endDate   String
-  Color     String
+  color     String
   user      User       @relation(fields: [userId], references: [id])
   userId    Int
 }
