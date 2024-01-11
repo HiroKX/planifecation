@@ -16,6 +16,7 @@ model User {
   password  String     @db.VarChar(255)
   notes     Note[]
   todos     ToDoItem[]
+  events    AgendaEvent[]
 }
 
 model Note {
