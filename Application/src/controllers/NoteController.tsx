@@ -1,7 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../navigation/RootStack';
 import { ApolloClient } from '@apollo/client';
-import { GetAllNotesFromUser, DeleteNoteById, CreateNote } from '../services/NoteService';
+import {
+  GetAllNotesFromUser,
+  DeleteNoteById,
+  CreateNote,
+} from '../services/NoteService';
 import { GetLoggedUserUsername } from './AuthenticationController';
 
 type Props = NativeStackScreenProps<StackParamList>;

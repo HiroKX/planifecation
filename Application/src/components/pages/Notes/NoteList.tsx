@@ -15,7 +15,7 @@ type RenderNoteProps = {
   item: Note;
 };
 
-export default function NoteList(props : Readonly<Props>): ReactNode {
+export default function NoteList(props: Readonly<Props>): ReactNode {
   const [notes, setNotes] = useState<Note[]>([]);
 
   const client = useApolloClient();
@@ -80,9 +80,12 @@ export default function NoteList(props : Readonly<Props>): ReactNode {
     <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <ButtonTemplate
-        onPress={()=> {
-          props.navigation.navigate('Bloc-Notes')
-          }}>Ajouter</ButtonTemplate>
+          onPress={() => {
+            props.navigation.navigate('Bloc-Notes');
+          }}
+        >
+          Ajouter
+        </ButtonTemplate>
       </SurfaceTemplate>
       <SurfaceTemplate style={{ flex: 5 }}>
         <FlatList data={notes} renderItem={renderNotes} />

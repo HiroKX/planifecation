@@ -14,23 +14,19 @@ import { StackParamList } from '../../../navigation/RootStack';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
-export default function Notepad(props:Readonly<Props>): ReactNode {
+export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
 
   const client = useApolloClient();
 
-  const saveNote = (
-    title : Readonly<string>,
-    content : Readonly<string>
-    ) => {
-    AddNote(client, title, content)
-  }
+  const saveNote = (title: Readonly<string>, content: Readonly<string>) => {
+    AddNote(client, title, content);
+  };
 
   return (
     <View style={styles.container}>
       <AppTemplate
-        
         style={styles.save}
         icon="content-save-outline"
         onPress={() => {

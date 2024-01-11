@@ -29,8 +29,7 @@ export type StackParamList = {
   Agenda: undefined;
   'Liste toute douce': undefined;
   'Test SKIA': undefined;
-  'Liste des notes':undefined;
-  
+  'Liste des notes': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
