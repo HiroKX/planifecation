@@ -2,7 +2,7 @@ import React from 'react';
 import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
-// Importez d'autres composants nécessaires ici
+
 type FormValues = {
   username: string;
 };

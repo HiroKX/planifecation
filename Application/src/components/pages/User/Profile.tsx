@@ -26,17 +26,15 @@ export default function Profile(props: Readonly<Props>): ReactNode {
 
     getLoggedUser();
   }, []);
-  const { control, handleSubmit, watch } = useForm<FormValues>({
+  const { control, handleSubmit, watch,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: {
       password: '',
       confirmPassword: '',
     },
   });
-
-  const {
-    setError,
-    formState: { errors },
-  } = useForm<FormValues>();
 
   const client = useApolloClient();
   const onSubmit = handleSubmit(async data => {

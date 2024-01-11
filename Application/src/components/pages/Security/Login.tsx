@@ -16,16 +16,17 @@ type FormValues = {
 };
 
 export default function Login(props: Readonly<Props>): ReactNode {
-  const { control, handleSubmit } = useForm<FormValues>({
+  const { control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<FormValues>({
     defaultValues: {
       username: '',
       password: '',
     },
   });
-  const {
-    setError,
-    formState: { errors },
-  } = useForm<FormValues>();
+
 
   const client = useApolloClient();
 
