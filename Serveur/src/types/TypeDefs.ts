@@ -26,6 +26,7 @@ type ToDoItem {
 }
 
 type AgendaEvent {
+  id: Int
   title : String!
   content : String
   startDate : String!
@@ -35,10 +36,12 @@ type AgendaEvent {
 
 type Query {
   getUserByUsername(username: String!): User
-  getNoteById(id: Int): Note
+  getNoteById(id: Int!): Note
   getAllNotesByUsername(username: String!): [Note]
-  getTodoItemById(id: Int): ToDoItem
+  getTodoItemById(id: Int!): ToDoItem
   getAllTodoItemsByUsername(username: String!): [ToDoItem]
+  getAgendaEventById(id: Int!): AgendaEvent
+  getAllAgendaEventsByUsername(username: String!): [AgendaEvent]
 }
 
 type Mutation {
@@ -52,5 +55,10 @@ type Mutation {
   createTodoItem(content: String!, isDone: Boolean): ToDoItem
   updateTodoItemById(id: Int!, content: String!, isDone: Boolean): ToDoItem
   deleteTodoItemById(id: Int!): ToDoItem
+  createAgendaEvent(title: String!, content: String, startDate: String!, 
+    endDate: String!, color: String!): AgendaEvent
+  updateAgendaEventById(id: Int!, title: String!, content: String, startDate: String!, 
+    endDate: String!, color: String!): AgendaEvent
+  deleteAgendaEventById(id: Int!): AgendaEvent
 }
 `;
