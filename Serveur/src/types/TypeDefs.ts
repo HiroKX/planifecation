@@ -25,6 +25,14 @@ type ToDoItem {
   updatedAt: DateScalar
 }
 
+type AgendaEvent {
+  title : String!
+  content : String
+  startDate : String!
+  endDate : String!
+  color : String!
+}
+
 type Query {
   getUserByUsername(username: String!): User
   getNoteById(id: Int): Note

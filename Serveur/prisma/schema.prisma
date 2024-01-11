@@ -16,8 +16,6 @@ model User {
   password  String     @db.VarChar(255)
   notes     Note[]
   todos     ToDoItem[]
-  
-  @@map(name: "user")
 }
 
 model Note {
@@ -28,8 +26,6 @@ model Note {
   updatedAt DateTime   @default(now())
   user      User       @relation(fields: [userId], references: [id])
   userId    Int
-
-  @@map(name: "note")
 }
 
 model ToDoItem {
@@ -40,6 +36,16 @@ model ToDoItem {
   updatedAt DateTime   @default(now())
   user      User       @relation(fields: [userId], references: [id])
   userId    Int
-
-  @@map(name: "todoitem")
 }
+
+model AgendaEvent {
+  id        Int        @id @unique @default(autoincrement())
+  title     String     @db.VarChar(255)
+  content   String
+  dateFin   String
+  dateDebut String
+  Color     String
+  user      User       @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
