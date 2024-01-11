@@ -1,5 +1,5 @@
 import { exclude, protectFromUsername } from "../tools/tools.js";
-import prisma from "../prismaClient";
+import prisma from "../prismaClient.js";
 
 export const agendaMutations = {
   createAgendaEvent: (parent, args, context) => {
