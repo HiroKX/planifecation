@@ -16,7 +16,7 @@ export default function UsernameInput(props: PasswordInputProps): any {
     <Controller
       control={props.control}
       rules={{
-        required: 'Ce champ est requis.',
+        required: 'Ce champ est requis',
       }}
       render={({
         field: { onChange, onBlur, value },

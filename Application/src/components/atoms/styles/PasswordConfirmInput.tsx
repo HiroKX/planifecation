@@ -17,10 +17,10 @@ export default function PasswordConfirmInput(props: PasswordInputProps): any {
     <Controller
       control={props.control}
       rules={{
-        required: 'Ce champ est requis.',
+        required: 'Ce champ est requis',
         validate: (val: string) => {
           if (props.watch('password') != val) {
-            return 'Les mots de passe de ne correspondent pas.';
+            return 'Les mots de passe ne correspondent pas.';
           }
         },
       }}
