@@ -1,7 +1,7 @@
 import prisma from "../prismaClient.js";
 import { exclude, protectFromUsername } from "../tools/tools.js";
 
-export const toDoMutation = {
+export const toDoMutations = {
   createTodoItem: (parent, args, context) => {
     // Create a todoItem in the db
     if (!context.userInfo) {

@@ -1,7 +1,7 @@
 import prisma from "../prismaClient.js";
 import { exclude, protectFromUsername } from "../tools/tools.js";
 
-export const noteMutation = {
+export const noteMutations = {
   createNote: (parent, args, context) => {
     // Create a note in the db
     if (!context.userInfo) {

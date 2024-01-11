@@ -1,9 +1,9 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import jwt from "jsonwebtoken";
-import { noteMutation } from "./mutation/NoteMutation.js";
-import { toDoMutation } from "./mutation/ToDoMutation.js";
-import { userMutation } from "./mutation/UserMutation.js";
+import { noteMutations } from "./mutation/NoteMutations";
+import { toDoMutations } from "./mutation/ToDoMutations";
+import { userMutations } from "./mutation/UserMutations";
 import { toDoQueries } from "./queries/ToDoQueries.js";
 import { userQueries } from "./queries/UserQueries.js";
 import { noteQueries } from "./queries/NoteQueries.js";
@@ -20,9 +20,9 @@ const queryResolvers = {
 };
 
 const mutationResolvers = {
-  ...userMutation,
-  ...noteMutation,
-  ...toDoMutation,
+  ...userMutations,
+  ...noteMutations,
+  ...toDoMutations,
 };
 
 const resolvers = {
