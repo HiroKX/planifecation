@@ -44,7 +44,8 @@ export async function UpdateUserAndLogout(
       .then(async res => {
         if (res) {
           await LogoutUser(client, props);
-        } else throw new Error();
+        } else
+          throw new Error("Erreur lors de la mise à jour de l'utilisateur");
       })
       .catch(error => {
         console.error('Error while updated user');

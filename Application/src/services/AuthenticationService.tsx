@@ -20,7 +20,6 @@ export async function CreateUser(
   password: Readonly<string>
 ): Promise<number> {
   console.debug('AuthenticationService.CreateUser');
-
   return client
     .mutate({
       mutation: CREATE_USER,
@@ -32,10 +31,6 @@ export async function CreateUser(
     .then((response: any) => {
       console.debug('id:', response.data.createUser.id);
       return response.data.createUser.id;
-    })
-    .catch((error: any) => {
-      console.error('CreateUser error:', error);
-      return -1;
     });
 }
 
@@ -57,9 +52,5 @@ export async function LogUser(
     .then((response: any) => {
       console.debug('response.data.logUser:', response.data.logUser);
       return response.data.logUser;
-    })
-    .catch((error: any) => {
-      console.error('LogUser error:', error);
-      return 'Not Logged';
     });
 }

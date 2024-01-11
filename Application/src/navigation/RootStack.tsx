@@ -1,16 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ReactNode } from 'react';
 import Home from '../components/pages/Home';
-import Login from '../components/pages/Login';
-import SignUp from '../components/pages/SignUp';
+import Login from '../components/pages/Security/Login';
+import SignUp from '../components/pages/Security/SignUp';
 import Dashboard from '../components/pages/Dashboard';
-import Settings from '../components/pages/Settings';
+import Settings from '../components/pages/User/Settings';
 import Agenda from '../components/pages/Agenda';
 
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import { navigationTheme } from '../components/organisms/OwnPaperProvider';
-import Profile from '../components/pages/Profile';
+import Profile from '../components/pages/User/Profile';
 import TodoList from '../components/pages/Todo/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
