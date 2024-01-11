@@ -26,7 +26,10 @@ export default function Profile(props: Readonly<Props>): ReactNode {
 
     getLoggedUser();
   }, []);
-  const { control, handleSubmit, watch,
+  const {
+    control,
+    handleSubmit,
+    watch,
     setError,
     formState: { errors },
   } = useForm<FormValues>({

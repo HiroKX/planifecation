@@ -16,7 +16,8 @@ type FormValues = {
 };
 
 export default function Login(props: Readonly<Props>): ReactNode {
-  const { control,
+  const {
+    control,
     handleSubmit,
     setError,
     formState: { errors },
@@ -26,7 +27,6 @@ export default function Login(props: Readonly<Props>): ReactNode {
       password: '',
     },
   });
-
 
   const client = useApolloClient();
 
