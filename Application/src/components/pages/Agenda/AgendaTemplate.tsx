@@ -1,12 +1,15 @@
 import { View } from 'react-native';
-import { selectDate } from './Appointments';
-import TextTemplate from '../../atoms/styles/TextTemplate';
-import { computed } from '@preact/signals-react';
+import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import { simple } from './Appointments';
+import { useSignal } from '@preact/signals-react';
 
 export default function AgendaTemplate() {
+    const displaySimple = useSignal(simple);
+
     return (
         <View>
-            <TextTemplate>{selectDate.value}</TextTemplate>
+            <ButtonTemplate onPress={() => { simple.value = Math.random().toString()}}  >test</ButtonTemplate>
+            <ButtonTemplate>{displaySimple.value}</ButtonTemplate>
         </View>
 
     );

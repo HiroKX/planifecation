@@ -1,19 +1,15 @@
 import { Calendar } from "react-native-calendars";  
-import { selectDate } from "./Appointments";
-import { computed } from "@preact/signals-react";
-import TextTemplate from "../../atoms/styles/TextTemplate";
 import {View} from 'react-native'
-
-
+import { simple } from "./Appointments";
+import { useSignal } from "@preact/signals-react";
+import TextTemplate from "../../atoms/styles/TextTemplate";
 
 export default function CalendarTemplate() {
+    const localSimple = useSignal(simple);
 
     return(
         <View>
-        <Calendar
-           onDayPress={(date) => {selectDate.value = date.dateString}}
-            />
-            <TextTemplate> {selectDate.value} </TextTemplate>
+        <TextTemplate>{localSimple}</TextTemplate>
             </View>
     )
 }
