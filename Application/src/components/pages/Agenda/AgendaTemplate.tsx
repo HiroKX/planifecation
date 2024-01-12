@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
-import { simple } from './Appointments';
+import { simple } from './CalendarTemplate';
 import { useSignal } from '@preact/signals-react';
 
 export default function AgendaTemplate() {

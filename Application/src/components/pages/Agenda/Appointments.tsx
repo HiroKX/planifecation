@@ -1,12 +1,10 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Text } from "react-native-paper";
 import AgendaTemplate from "./AgendaTemplate";
-import CalendarTemplate from "./CalendarTemplate";
-import { signal, useSignal } from "@preact/signals-react";
+import CalendarTemplate, {simple} from "./CalendarTemplate";
+import { useSignal } from "@preact/signals-react";
 
 const Tab = createMaterialTopTabNavigator();
-
-export const simple = signal("Test simple");
 
 export default function Appointments() {
 

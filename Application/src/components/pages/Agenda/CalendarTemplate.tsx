@@ -1,8 +1,9 @@
 import { Calendar } from "react-native-calendars";  
 import {View} from 'react-native'
-import { simple } from "./Appointments";
-import { useSignal } from "@preact/signals-react";
+import { signal, useSignal } from "@preact/signals-react";
 import TextTemplate from "../../atoms/styles/TextTemplate";
+
+export const simple = signal("Test simple");
 
 export default function CalendarTemplate() {
     const localSimple = useSignal(simple);
