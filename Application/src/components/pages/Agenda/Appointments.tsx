@@ -21,7 +21,7 @@ export default function Appointments() {
                         options={{tabBarLabel : firstTabLabel}}/>
                     
                     <Tab.Screen name="Agendeux" component={AgendaTemplate}
-                        options={{tabBarLabel : "Non"}}/>
+                        options={{tabBarLabel : firstTabLabel}}/>
             </Tab.Navigator>
     );
 
