@@ -61,4 +61,8 @@ LocaleConfig.locales['fr'] = {
   dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
   today: "Aujourd'hui",
 };
-LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calendar and timeline
+
+
+export function loadLocale(name : string) {
+  LocaleConfig.defaultLocale = name; // loads french equivalent of label in calendar and timeline
+} 

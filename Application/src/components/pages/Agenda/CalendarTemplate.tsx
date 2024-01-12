@@ -1,16 +1,17 @@
 import { Calendar } from "react-native-calendars";  
-import {View} from 'react-native'
-import { signal, useSignal } from "@preact/signals-react";
-import TextTemplate from "../../atoms/styles/TextTemplate";
+import { computed, signal } from "@preact/signals-react";
+import { todayData } from "../../../services/utils/utils";
 
-export const simple = signal("Test simple");
+export const currentDate = signal(todayData);
+export const currentDateDisplay = computed(() => { return currentDate.value.dateString});
 
 export default function CalendarTemplate() {
-    const localSimple = useSignal(simple);
 
     return(
-        <View>
-        <TextTemplate>{localSimple}</TextTemplate>
-            </View>
+        <Calendar
+        current={todayData.dateString}
+        firstDay={1}
+        onDayPress={(date) => currentDate.value = date}
+        />
     )
 }
