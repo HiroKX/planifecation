@@ -26,20 +26,18 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
 
   return (
     <View style={styles.container}>
-      <AppTemplate
-        style={styles.save}
-        icon="content-save-outline"
-        onPress={() => {
-          saveNote(title, text);
-          props.navigation.navigate('Liste des notes');
-        }}
-      />
+      
       <TextInputTemplate
         style={styles.title}
         onChangeText={newTitle => setTitle(newTitle)}
         value={title}
         placeholder="Titre"
         maxLength={40}
+        right={<TextInput.Icon icon="content-save" 
+        onPress={() => {
+        saveNote(title, text);
+        props.navigation.navigate('Liste des notes');
+      }}/>} 
       />
       <TextInputTemplate
         style={styles.textInput}
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   save: {
-    borderColor: theme.colors.primary,
+    margin: 10,
   },
   title: {
     fontSize: 25,
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
   },
   textInput: {
-    flex: 1,
+    flex: 10,
     borderColor: theme.colors.primary,
   },
 });
