@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "compile": "tsc",
-    "start-in-test": "npm run compile && node ./dist/index.js &",
+    "start:docker": "prisma db push --accept-data-loss && npm run start",
     "start": "npm run compile && node ./dist/index.js",
     "prettier-check": "prettier --check ."
   },
