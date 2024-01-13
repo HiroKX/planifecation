@@ -18,12 +18,12 @@ jobs:
         with:
           node-version: "18" # Ou la version de Node.js que vous utilisez
 
-      - name: Install Dependencies
+      - name: Install Dependencies Application
         run: |
           cd Application
           yarn install --frozen-lockfile
 
-      - name: Prettier Check
+      - name: Prettier Check Application
         run: |
           cd Application
           yarn prettier-check
