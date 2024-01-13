@@ -13,6 +13,7 @@ import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/User/Profile';
 import TodoList from '../components/pages/Todo/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
+import NotePad from '../components/pages/Notes/Notepad';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TestSKIA from '../components/pages/TestSKIA';
 
@@ -22,12 +23,13 @@ export type StackParamList = {
   Inscription: undefined;
   Paramètres: undefined;
   Dashboard: undefined;
-  'Bloc-notes': undefined;
+  'Bloc-Notes': undefined;
   Sandbox: undefined;
   Profil: undefined;
   Agenda: undefined;
   'Liste toute douce': undefined;
   'Test SKIA': undefined;
+  'Liste des notes': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -51,7 +53,8 @@ function RootStack(): ReactNode {
         <Stack.Screen name="Inscription" component={SignUp} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Paramètres" component={Settings} />
-        <Stack.Screen name="Bloc-notes" component={NoteList} />
+        <Stack.Screen name="Liste des notes" component={NoteList} />
+        <Stack.Screen name="Bloc-Notes" component={NotePad} />
         <Stack.Screen name="Sandbox" component={ThemeSandbox} />
         <Stack.Screen name="Agenda" component={Agenda} />
         <Stack.Screen name="Liste toute douce" component={TodoList} />

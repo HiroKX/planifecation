@@ -28,8 +28,8 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
         <SurfaceTemplate>
           <AppTemplate
             icon="note-outline"
-            label="Bloc-notes"
-            onPress={() => props.navigation.navigate('Bloc-notes')}
+            label="Liste des notes"
+            onPress={() => props.navigation.navigate('Liste des notes')}
           />
           <AppTemplate
             icon="calendar-cursor"
