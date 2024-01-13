@@ -14,7 +14,7 @@ Une application react avec une UI/UX qui est tout l'inverse de ce à quoi l'on p
    Il faut créer un fichier ".env.local" à la racine du dossier "Application" et insérer ces paramètres :
 
    ```
-   URI_API="" //Point d'accès de l'API (URL)
+   URI_API="" //Point d'accès de l'API, si vous utilisez Docker, il faut mettre l'adresse IP de votre machine (Ex: http://192.168.1.32:4000/)
    ENVIRONMENT="dev" //Ou "prod"
    ```
 
