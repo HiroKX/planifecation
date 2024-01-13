@@ -8,9 +8,12 @@ Une application react avec une UI/UX qui est tout l'inverse de ce à quoi l'on p
    Il faut créer un fichier ".env" à la racine du dossier "Serveur" et insérer ces paramètres :
 
    ```
-    DATABASE_URL="postgresql://postgres:@db:5432/postgres?schema=public" //URI de la Database
-    SECRET_KEY="test" //Votre secret key
-    PORT=4000 //Port d'écoute du serveur
+   DATABASE_URL="postgresql://postgres:@localhost:5432/postgres?schema=public" //URI de la Database
+   SECRET_KEY="test" //Votre secret key
+   PORT=4000 //Port d'écoute du serveur
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=admin
+   POSTGRES_DB=postgres
    ```
 
 2. **Installer les dépendances**
