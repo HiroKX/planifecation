@@ -21,7 +21,7 @@ LocaleConfig.defaultLocale = 'fr'; // loads french equivalent of label in calend
 
 export default function App(): ReactNode {
   if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
-  console.log(URI_API)
+  console.log(URI_API);
   const client = new ApolloClient({
     link: new HttpLink({ uri: URI_API }),
     cache: new InMemoryCache(),
