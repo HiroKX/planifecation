@@ -1,11 +1,10 @@
-import { View } from "react-native";
-import TextTemplate from "../../atoms/styles/TextTemplate";
-import { todayData } from "../../../services/utils/utils";
+import SurfaceTemplate from "../../molecules/SurfaceTemplate";
+import TextInputTemplate from "../../atoms/styles/TextInputTemplate";
 
 export default function AgendaEventDetails() {
     return (
-        <View>
-            <TextTemplate>{todayData.dateString}</TextTemplate>
-        </View>
+            <SurfaceTemplate>
+                <TextInputTemplate></TextInputTemplate>
+            </SurfaceTemplate>
     );
 }
