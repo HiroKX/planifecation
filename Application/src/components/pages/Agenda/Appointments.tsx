@@ -1,14 +1,16 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Icon, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import AgendaTemplate from "./AgendaTemplate";
-import CalendarTemplate, {currentDateDisplay} from "./CalendarTemplate";
+import CalendarTemplate from "./CalendarTemplate";
 import { LuxonDate, getColorForBackground, loadLocale } from "../../../services/utils/utils";
 import { Signal, useComputed } from "@preact/signals-react";
 import { theme } from "../../organisms/OwnPaperProvider";
 import AgendaEventDetails from "./AgendaEventDetails";
+import { currentDateDisplay } from "./handlingEvents";
 
 const Tab = createMaterialTopTabNavigator();
 loadLocale('fr');
+
 
 export default function Appointments() {
 
@@ -29,15 +31,12 @@ export default function Appointments() {
     const secondTabLabel = () => {
         return tabLabel(dayDisplay);
     }
-    
     const thirdTabLabel = () => {
         return tabLabel("Créer un évènement");
     }
-
     const RenderAgenda = () => {
         return <AgendaTemplate/>;
     }
-
     return (
             <Tab.Navigator
                 screenOptions={{

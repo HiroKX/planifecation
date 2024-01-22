@@ -1,20 +1,21 @@
 import { Calendar } from "react-native-calendars";  
-import { computed, signal } from "@preact/signals-react";
-import { todayData } from "../../../services/utils/utils";
 import { Icon } from "react-native-paper";
-import { upDate } from "./AgendaTemplate";
-
-export const currentDate = signal(todayData);
-export const currentDateDisplay = computed(() => { return currentDate.value.dateString});
+import { currentDate, currentDateDisplay, markedDates } from "./handlingEvents";
+import { View } from "react-native";
 
 export default function CalendarTemplate() {
 
+
     return(
-        <Calendar
+        <View style={{flex:1}}>
+            <Calendar
+                markingType="multi-dot"
                 current={currentDateDisplay.value}
+                markedDates={markedDates.value}
                 firstDay={1}
-                onDayPress={(date) => {currentDate.value = date; upDate();} }
+                onDayPress={(date) => {currentDate.value = date} }
                 renderArrow={direction => <Icon size={40} source={direction==="left" ? "arrow-left-circle" : "arrow-right-circle" }/>}
                 />
+        </View>
     )
 }

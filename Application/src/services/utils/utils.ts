@@ -17,6 +17,17 @@ export function getColorForBackground(hexcolor: string): string {
   return yiq >= 128 ? 'black' : 'white';
 }
 
+export function rgbColorToHex(rgbcolor: string) : string {
+  // for rgb(x,y,z)
+  const rgb = rgbcolor.split("(")[1].split(")")[0].split(',');    // separates to x,y,z
+  let reconstruct = rgb.map(function(component) {
+    component = parseInt(component).toString(16);
+    return (component.length==1) ? "0"+component : component;     // maps to XX,YY,ZZ (hex values)
+  });
+  return "#"+reconstruct.join("");   // removes the ,
+}
+
+
 export const today = DateTime.now();
 export const INITIAL_TIME = {
   hour: today.hour,
@@ -52,6 +63,16 @@ export class LuxonDate {
     return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
       .setLocale(locale)
       .toFormat('MMMM yyyy');
+  }
+  static to_ddMMyyyy(date: string, fromFormat?:string) : string {
+    return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
+          .setLocale('fr')
+          .toFormat('dd-MM-yyyy');
+  }
+  static to_hhmm(date: string, fromFormat?: string): string {
+    return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
+    .setLocale('fr')
+    .toFormat("HH:mm");
   }
 }
 
