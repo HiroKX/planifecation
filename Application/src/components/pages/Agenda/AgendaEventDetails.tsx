@@ -3,7 +3,7 @@ import TextInputTemplate from "../../atoms/styles/TextInputTemplate";
 import SurfaceTemplate from "../../molecules/SurfaceTemplate";
 import { theme } from "../../organisms/OwnPaperProvider";
 import { getColorForBackground, rgbColorToHex } from '../../../services/utils/utils';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import ModalTemplate from "../../organisms/ModalTemplate";
 import ColorPicker, {HueCircular, Panel1, Preview, returnedResults} from "reanimated-color-picker";
@@ -29,8 +29,8 @@ export default function AgendaEventDetails() {
         setColor(hex)
     }
 
-    const localEvent = useSignal(selectedEvent.value)
-    effect(() => {
+    const localEvent = useSignal(selectedEvent.value);
+        effect(() => {
         setTitle(localEvent.value.title);
         setSummary(localEvent.value.summary ?? "");
         setDate(localEvent.value.start.substring(0,10))

@@ -17,12 +17,17 @@ export const selectedEvent = signal<Event>({
     color: theme.colors.primary
 });
 
+function selectEvent(event : Event) {
+    selectedEvent.value = {
+        title : event.title,
+        summary: event.summary,
+        end: event.end,
+        color: event.color,
+        start: event.start
+    }
+}
 
 export default function AgendaTemplate() {
-
-   function selectEvent(event : Event) {
-        selectedEvent.value = event;
-    }
 
     const renderEvents = (event: TimelineEventProps) => {
         return (
@@ -58,7 +63,7 @@ export default function AgendaTemplate() {
             date={currentDateDisplay.value}
             events={events.value}
             renderEvent={renderEvents}
-            onEventPress={(event) => selectEvent}
+            onEventPress={(event) => {selectEvent(event); console.log(selectedEvent.value)}}
             />
         </View>
     );
