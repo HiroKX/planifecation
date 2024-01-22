@@ -3,6 +3,7 @@ import {
   GetAllEventsFromUser,
   GetEventById,
   DeleteEventById,
+  UpdateEventById,
 } from '../services/AgendaService';
 import { ApolloClient } from '@apollo/client';
 import { AgendaEvent } from '../models/AgendaEvent';
@@ -57,9 +58,19 @@ export async function UpdateAgendaEvent(
   startDate: Readonly<Date>,
   endDate: Readonly<Date>,
   color: Readonly<string>
-): Promise<void> {
+): Promise<AgendaEvent> {
   console.debug('AgendaController.UpdateAgendaEvent');
-  // TODO
+  const event = await UpdateEventById(
+    client,
+    id,
+    title,
+    content,
+    startDate,
+    endDate,
+    color
+  );
+  console.debug('AgendaController: Returning event ' + event);
+  return event;
 }
 
 export async function DeleteAgendaEvent(

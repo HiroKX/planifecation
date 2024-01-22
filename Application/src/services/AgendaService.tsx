@@ -138,10 +138,9 @@ export async function GetEventById(
 }
 
 const UPDATE_EVENT_BY_ID = gql`
-  mutation Mutation(
+  mutation UpdateAgendaEventById(
     $updateAgendaEventByIdId: Int!
     $title: String!
-    $content: String
     $startDate: String!
     $endDate: String!
     $color: String!
@@ -149,12 +148,16 @@ const UPDATE_EVENT_BY_ID = gql`
     updateAgendaEventById(
       id: $updateAgendaEventByIdId
       title: $title
-      content: $content
       startDate: $startDate
       endDate: $endDate
       color: $color
     ) {
       id
+      title
+      content
+      startDate
+      endDate
+      color
     }
   }
 `;
@@ -167,7 +170,7 @@ export async function UpdateEventById(
   startDate: Readonly<Date>,
   endDate: Readonly<Date>,
   color: Readonly<string>
-): Promise<void> {
+): Promise<AgendaEvent> {
   console.debug('AgendaService.UpdateEventById');
   return client
     .mutate({
@@ -186,6 +189,7 @@ export async function UpdateEventById(
       console.debug(
         'AgendaService: Event ' + event.id + ' successfully updated'
       );
+      return event;
     })
     .catch((error: any) => {
       console.error('UpdateEventById error:', error);
