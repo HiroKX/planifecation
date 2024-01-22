@@ -32,6 +32,7 @@ type AgendaEvent {
   startDate : String!
   endDate : String!
   color : String!
+  user: User
 }
 
 type Query {
