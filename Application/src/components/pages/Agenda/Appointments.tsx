@@ -34,6 +34,10 @@ export default function Appointments() {
         return tabLabel("Créer un évènement");
     }
 
+    const RenderAgenda = () => {
+        return <AgendaTemplate/>;
+    }
+
     return (
             <Tab.Navigator
                 screenOptions={{
@@ -47,7 +51,7 @@ export default function Appointments() {
                         options={{tabBarLabel : firstTabLabel,
                     }}
                         />
-                    <Tab.Screen name="Agendeux" component={AgendaTemplate}
+                    <Tab.Screen name="Agendeux" component={RenderAgenda}
                         options={{
                             tabBarLabel : secondTabLabel,
                             }}/>
