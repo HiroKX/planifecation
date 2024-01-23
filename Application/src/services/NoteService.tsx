@@ -40,6 +40,46 @@ export async function GetAllNotesFromUser(
     });
 }
 
+const GET_NOTE_BY_ID = gql`
+  query Query($id: Int!) {
+    getNoteById(id: $id) {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export async function GetNoteById(
+    client: Readonly<ApolloClient<Object>>,
+    id: Readonly<number>
+): Promise<Note[]> {
+  console.debug('NoteService.GetNoteById');
+  console.log(id);
+  return client
+      .query({
+        query: GET_NOTE_BY_ID,
+        variables: {
+          id: id,
+        },
+      })
+      .then((response: any) => {
+        return response.data.getNoteById((note: Note) => ({
+          id: note.id,
+          title: note.title,
+          content: note.content,
+          createdAt: new Date(note.createdAt),
+          updatedAt: new Date(note.updatedAt),
+        }));
+      })
+      .catch((error: any) => {
+        console.error('GetNoteById error:', error);
+        return null;
+      });
+}
+
 const CREATE_NOTE = gql`
   mutation Mutation($title: String!, $content: String!) {
     createNote(title: $title, content: $content) {

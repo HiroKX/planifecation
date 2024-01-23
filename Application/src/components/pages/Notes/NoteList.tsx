@@ -9,11 +9,15 @@ import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
+import {GetNoteById} from "../../../services/NoteService";
+import Notepad from "./Notepad";
+import TextProps from "react-native-paper/src/components/Typography/Text";
 
 type Props = NativeStackScreenProps<StackParamList>;
 type RenderNoteProps = {
   item: Note;
 };
+
 
 export default function NoteList(props: Readonly<Props>): ReactNode {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -35,43 +39,46 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     getNotes();
   }, []);
 
+
+
   const renderNotes = ({ item }: RenderNoteProps) => {
     return (
       <View>
         <SurfaceTemplate
-          style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
+          style={{ flexDirection: 'row', flex: 1, borderWidth:1}}
         >
-          <TextInputTemplate
-            right={
-              <TextInput.Icon
-                icon={'trash-can'}
-                color={theme.colors.primary}
-                onPress={() => {
-                  Alert.alert(
-                    `Suppression de ${item.title}`,
-                    'Confirmez-vous la suppression de cette note ?',
-                    [
-                      { text: 'Non' },
-                      {
-                        text: 'Oui',
-                        onPress: () => {
-                          confirmDelete(item.id);
-                        },
-                      },
-                    ]
-                  );
-                }}
-              />
-            }
-            mode="outlined"
-            style={{ flex: 1 }}
-            multiline={false}
-            editable={false}
-            value={item.title}
-            outlineStyle={{
-              display: 'none',
-            }}
-          ></TextInputTemplate>
+            <View style={{ alignContent:"center", flexDirection: 'row', alignSelf:"stretch", flex:1 , display:"flex"}}>
+                <ButtonTemplate
+                    style={{ flex: 1, alignSelf:"flex-start", position:"relative" }}
+                    onPress={() => {
+                        GetNoteById(client, item.id).then(Note => {
+                            Notepad(props);
+                            props.navigation.navigate('Bloc-Notes');
+                        });
+                    }}
+                    mode="text"
+                >{item.title}</ButtonTemplate>
+                <TextInput.Icon
+                    icon={'trash-can'}
+                    color={theme.colors.primary}
+                    style={{ alignSelf:"flex-start", position:"relative"}}
+                    onPress={() => {
+                        Alert.alert(
+                            `Suppression de ${item.title}`,
+                            'Confirmez-vous la suppression de cette note ?',
+                            [
+                                { text: 'Non' },
+                                {
+                                    text: 'Oui',
+                                    onPress: () => {
+                                        confirmDelete(item.id);
+                                    },
+                                },
+                            ]
+                        );
+                    }}
+                />
+            </View>
         </SurfaceTemplate>
       </View>
     );

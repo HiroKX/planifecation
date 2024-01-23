@@ -18,6 +18,14 @@ export async function GetAllNotes(
   return await GetAllNotesFromUser(client, username);
 }
 
+export async function GetNoteById(
+    client: Readonly<ApolloClient<Object>>,
+    id: Readonly<Number>
+): Promise<Note> {
+  console.debug('NoteController.GetAllNotes');
+  return await GetNoteById(client, id);
+}
+
 export async function AddNote(
   client: Readonly<ApolloClient<Object>>,
   title: Readonly<string>,
