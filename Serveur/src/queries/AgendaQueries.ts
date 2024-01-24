@@ -19,20 +19,14 @@ export const agendaQueries = {
 
   getAllTodoItemsByUsername: async (parent, args, context) => {
     // Get all the Agenda Events by the username of the User who owns the events
-    protectFromUsername(context, args.username);
-    const agendaEvents = await prisma.agendaEvent.findMany({
-      where: {
-        user: {
-          username: args.username,
-        },
-      },
-      include: {
-        user: true,
-      },
-    });
+    // protectFromUsername(context, args.username);
+    const agendaEvents = await prisma.agendaEvent.findMany();
+    return agendaEvents;
+    /*
     return agendaEvents.map((event) => {
       const userWithoutPassword = exclude(event.user, ["password"]);
       return { ...event, user: userWithoutPassword };
     });
+    */
   },
 };
