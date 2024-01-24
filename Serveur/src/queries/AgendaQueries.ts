@@ -28,11 +28,11 @@ export const agendaQueries = {
       },
       include: {
         user: true,
-      }
+      },
     });
     return agendaEvents.map((event) => {
       const userWithoutPassword = exclude(event.user, ["password"]);
       return { ...event, user: userWithoutPassword };
     });
-  }
+  },
 };
