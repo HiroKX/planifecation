@@ -118,7 +118,7 @@ export async function GetEventById(
     .query({
       query: GET_EVENT_BY_ID,
       variables: {
-        id: id,
+        getAgendaEventByIdId: id,
       },
     })
     .then((response: any) => {
@@ -176,7 +176,7 @@ export async function UpdateEventById(
     .mutate({
       mutation: UPDATE_EVENT_BY_ID,
       variables: {
-        id: id,
+        updateAgendaEventByIdId: id,
         title: title,
         content: content,
         startDate: startDate,
@@ -214,7 +214,7 @@ export async function DeleteEventById(
     .mutate({
       mutation: DELETE_EVENT_BY_ID,
       variables: {
-        id: id,
+        deleteAgendaEventByIdId: id,
       },
     })
     .then((response: any) => {
