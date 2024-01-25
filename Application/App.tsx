@@ -28,12 +28,12 @@ export default function App(): ReactNode {
     <Splashscreen func={() => setSplash(false)}></Splashscreen>
   ) : (
     <ApolloProvider client={client}>
-        <OwnPaperProvider>
-          <NavigationContainer theme={navigationTheme}>
-            <RootStack />
-          </NavigationContainer>
-        </OwnPaperProvider>
-        <StatusBar style="light" />
+      <OwnPaperProvider>
+        <NavigationContainer theme={navigationTheme}>
+          <RootStack />
+        </NavigationContainer>
+      </OwnPaperProvider>
+      <StatusBar style="light" />
     </ApolloProvider>
   );
 }

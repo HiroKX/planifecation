@@ -1,8 +1,8 @@
 import { from } from '@apollo/client';
 import { DateTime } from 'luxon';
-import { DateData, LocaleConfig, } from 'react-native-calendars';
+import { DateData, LocaleConfig } from 'react-native-calendars';
 
-const locale = 'fr'
+const locale = 'fr';
 
 // Return the perfect matching color for text based on hexcolor background
 // It uses the YIQ model to calculate the best match
@@ -17,28 +17,27 @@ export function getColorForBackground(hexcolor: string): string {
   return yiq >= 128 ? 'black' : 'white';
 }
 
-export function rgbColorToHex(rgbcolor: string) : string {
+export function rgbColorToHex(rgbcolor: string): string {
   // for rgb(x,y,z)
-  const rgb = rgbcolor.split("(")[1].split(")")[0].split(',');    // separates to x,y,z
-  let reconstruct = rgb.map(function(component) {
+  const rgb = rgbcolor.split('(')[1].split(')')[0].split(','); // separates to x,y,z
+  let reconstruct = rgb.map(function (component) {
     component = parseInt(component).toString(16);
-    return (component.length==1) ? "0"+component : component;     // maps to XX,YY,ZZ (hex values)
+    return component.length == 1 ? '0' + component : component; // maps to XX,YY,ZZ (hex values)
   });
-  return "#"+reconstruct.join("");   // removes the ,
+  return '#' + reconstruct.join(''); // removes the ,
 }
-
 
 export const today = DateTime.now();
 export const INITIAL_TIME = {
   hour: today.hour,
-  minutes : today.minute
-}
-export const todayData : DateData = {
-  year : today.year,
-  month : today.month,
-  day : today.day,
+  minutes: today.minute,
+};
+export const todayData: DateData = {
+  year: today.year,
+  month: today.month,
+  day: today.day,
   timestamp: today.toMillis(),
-  dateString: today.toFormat("yyyy-MM-dd")
+  dateString: today.toFormat('yyyy-MM-dd'),
 };
 
 // Allows to handle dates easily in JS
@@ -64,27 +63,60 @@ export class LuxonDate {
       .setLocale(locale)
       .toFormat('MMMM yyyy');
   }
-  static to_ddMMyyyy(date: string, fromFormat?:string) : string {
+  static to_ddMMyyyy(date: string, fromFormat?: string): string {
     return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
-          .setLocale('fr')
-          .toFormat('dd-MM-yyyy');
+      .setLocale('fr')
+      .toFormat('dd-MM-yyyy');
   }
   static to_hhmm(date: string, fromFormat?: string): string {
     return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
-    .setLocale('fr')
-    .toFormat("HH:mm");
+      .setLocale('fr')
+      .toFormat('HH:mm');
   }
 }
 
 LocaleConfig.locales['fr'] = {
-  monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-  monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-  dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+  monthNames: [
+    'Janvier',
+    'Février',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juillet',
+    'Août',
+    'Septembre',
+    'Octobre',
+    'Novembre',
+    'Décembre',
+  ],
+  monthNamesShort: [
+    'Janv.',
+    'Févr.',
+    'Mars',
+    'Avril',
+    'Mai',
+    'Juin',
+    'Juil.',
+    'Août',
+    'Sept.',
+    'Oct.',
+    'Nov.',
+    'Déc.',
+  ],
+  dayNames: [
+    'Dimanche',
+    'Lundi',
+    'Mardi',
+    'Mercredi',
+    'Jeudi',
+    'Vendredi',
+    'Samedi',
+  ],
   dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
   today: "Aujourd'hui",
 };
 
-
-export function loadLocale(name : string) {
+export function loadLocale(name: string) {
   LocaleConfig.defaultLocale = name; // loads french equivalent of label in calendar and timeline
-} 
+}

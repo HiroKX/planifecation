@@ -1,70 +1,92 @@
-import { LuxonDate, getColorForBackground } from '../../../services/utils/utils';
+import {
+  LuxonDate,
+  getColorForBackground,
+} from '../../../services/utils/utils';
 import { Timeline, TimelineEventProps } from 'react-native-calendars';
-import { theme, } from '../../organisms/OwnPaperProvider';
+import { theme } from '../../organisms/OwnPaperProvider';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Divider } from 'react-native-paper';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { currentDateDisplay, events } from './handlingEvents';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
-import { signal } from '@preact/signals-react';
+import { effect, signal } from '@preact/signals-react';
 
 export const selectedEvent = signal<Event>({
-    title: "",
-    summary: "",
-    end: "",
-    start: "",
-    color: theme.colors.primary
+  title: '',
+  summary: '',
+  end: '',
+  start: '',
+  color: theme.colors.primary,
 });
 
-function selectEvent(event : Event) {
-    selectedEvent.value = {
-        title : event.title,
-        summary: event.summary,
-        end: event.end,
-        color: event.color,
-        start: event.start
-    }
+function selectEvent(event: Event) {
+  selectedEvent.value = {
+    title: event.title,
+    summary: event.summary,
+    end: event.end,
+    color: event.color,
+    start: event.start,
+  };
 }
 
 export default function AgendaTemplate() {
-
-    const renderEvents = (event: TimelineEventProps) => {
-        return (
-            <View>
-                <TouchableOpacity>
-                    <TextTemplate
-                        variant='bodyMedium'
-                        style={{color : getColorForBackground(event.color ?? theme.colors.primary)}}>
-                        {event.title}
-                    </TextTemplate>
-                    <Divider
-                        style={{borderWidth: 1, borderColor: getColorForBackground(event.color ?? theme.colors.primary), borderRadius: 100}}/>
-                    <TextTemplate
-                        variant='labelMedium'
-                        style={{color: getColorForBackground(event.color ?? theme.colors.primary)}}>
-                            {event.summary}
-                    </TextTemplate>
-                    <TextTemplate
-                        variant='labelSmall'
-                        style={{color: getColorForBackground(event.color ?? theme.colors.primary)}}>
-                        {LuxonDate.to_hhmm(event.start, "yyyy-MM-dd HH:mm")} - {LuxonDate.to_hhmm(event.end, "yyyy-MM-dd HH:mm")}
-                    </TextTemplate>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
+  const renderEvents = (event: TimelineEventProps) => {
     return (
-        <View>
-            <Timeline
-            start={0}
-            end={24}
-            date={currentDateDisplay.value}
-            events={events.value}
-            renderEvent={renderEvents}
-            onEventPress={(event) => {selectEvent(event); console.log(selectedEvent.value)}}
-            />
-        </View>
+      <View>
+        <TouchableOpacity>
+          <TextTemplate
+            variant="bodyMedium"
+            style={{
+              color: getColorForBackground(event.color ?? theme.colors.primary),
+            }}
+          >
+            {event.title}
+          </TextTemplate>
+          <Divider
+            style={{
+              borderWidth: 1,
+              borderColor: getColorForBackground(
+                event.color ?? theme.colors.primary
+              ),
+              borderRadius: 100,
+            }}
+          />
+          <TextTemplate
+            variant="labelMedium"
+            style={{
+              color: getColorForBackground(event.color ?? theme.colors.primary),
+            }}
+          >
+            {event.summary}
+          </TextTemplate>
+          <TextTemplate
+            variant="labelSmall"
+            style={{
+              color: getColorForBackground(event.color ?? theme.colors.primary),
+            }}
+          >
+            {LuxonDate.to_hhmm(event.start, 'yyyy-MM-dd HH:mm')} -{' '}
+            {LuxonDate.to_hhmm(event.end, 'yyyy-MM-dd HH:mm')}
+          </TextTemplate>
+        </TouchableOpacity>
+      </View>
     );
+  };
+
+  return (
+    <View>
+      <Timeline
+        start={0}
+        end={24}
+        date={currentDateDisplay.value}
+        events={events.value}
+        renderEvent={renderEvents}
+        onEventPress={event => {
+          selectEvent(event);
+          console.log(selectedEvent.value);
+        }}
+      />
+    </View>
+  );
 }

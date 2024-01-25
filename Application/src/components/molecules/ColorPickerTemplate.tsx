@@ -13,7 +13,15 @@ export default function ColorPickerTemplate(
         color={props.color}
         onColorChangeComplete={props.onColorChangeComplete}
       />
-      <View style={{ flex:1, height:200, width:200, alignContent: 'center', backgroundColor: props.color}}/>
+      <View
+        style={{
+          flex: 1,
+          height: 200,
+          width: 200,
+          alignContent: 'center',
+          backgroundColor: props.color,
+        }}
+      />
     </SurfaceTemplate>
   );
 }
