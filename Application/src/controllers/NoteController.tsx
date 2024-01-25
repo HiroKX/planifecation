@@ -42,10 +42,12 @@ export async function AddNote(
 
 export async function UpdateNote(
   client: Readonly<ApolloClient<Object>>,
-  Note: Readonly<Note>
+  id: Readonly<number>,
+  title: Readonly<string>,
+  content: Readonly<string>
 ): Promise<Note> {
   console.debug('NoteController.UpdateNote');
-  let updatedNote = await UpdateNoteById(client, Note);
+  let updatedNote = await UpdateNoteById(client, id, title, content);
   console.debug('Updated note : ', updatedNote);
   return updatedNote;
 }

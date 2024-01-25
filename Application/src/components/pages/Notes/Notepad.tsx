@@ -3,11 +3,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useApolloClient } from '@apollo/client';
-import {
-  AddNote,
-  GetAllNotes,
-  UpdateNote,
-} from '../../../controllers/NoteController';
+import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
@@ -40,10 +36,7 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
     content: Readonly<string>
   ) => {
     if (params != undefined) {
-      let currentNote = params.currentNote;
-      currentNote.title = title;
-      currentNote.content = content;
-      await UpdateNote(client, currentNote);
+      await UpdateNote(client, params.currentNote.id, title, content);
     } else {
       await AddNote(client, title, content);
     }

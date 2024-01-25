@@ -110,22 +110,26 @@ const UPDATE_NOTE_BY_ID = gql`
   mutation Mutation($id: Int!, $title: String!, $content: String!) {
     updateNoteById(id: $id, title: $title, content: $content) {
       id
+      title
+      content
     }
   }
 `;
 
 export async function UpdateNoteById(
   client: Readonly<ApolloClient<Object>>,
-  Note: Readonly<Note>
+  id: Readonly<number>,
+  title: Readonly<string>,
+  content: Readonly<string>
 ): Promise<Note> {
   console.debug('NoteService.UpdateNoteById');
   return client
     .mutate({
       mutation: UPDATE_NOTE_BY_ID,
       variables: {
-        id: Note.id,
-        title: Note.title,
-        content: Note.content,
+        id: id,
+        title: title,
+        content: content,
         updatedAt: new Date(),
       },
     })
