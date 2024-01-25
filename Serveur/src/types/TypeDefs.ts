@@ -56,7 +56,7 @@ type Mutation {
   createTodoItem(content: String!, isDone: Boolean): ToDoItem
   updateTodoItemById(id: Int!, content: String!, isDone: Boolean): ToDoItem
   deleteTodoItemById(id: Int!): ToDoItem
-  createAgendaEvent(title: String!, content: String, startDate: String!, 
+  createAgendaEvent(title: String!, content: String!, startDate: String!, 
     endDate: String!, color: String!): AgendaEvent
   updateAgendaEventById(id: Int!, title: String!, content: String, startDate: String!, 
     endDate: String!, color: String!): AgendaEvent
