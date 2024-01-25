@@ -58,11 +58,11 @@ export async function CreateTodo(
       },
     })
     .then((response: any) => {
+      var item = response.data.createTodoItem;
       console.debug(
-        'TodoService: Todo successfully created with id ' +
-          response.data.createTodoItem
+        'TodoService: Todo successfully created with id ' + item.id
       );
-      return response.data.createTodoItem.id;
+      return item.id;
     })
     .catch((error: any) => {
       console.error('CreateTodo error:', error);
