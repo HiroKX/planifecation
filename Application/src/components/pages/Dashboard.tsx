@@ -6,14 +6,15 @@ import {
   GetLoggedUser,
   LogoutUser,
 } from '../../controllers/AuthenticationController';
-import {ReactNode, useEffect} from 'react';
-import {ApolloConsumer, useApolloClient} from '@apollo/client';
+import { ReactNode, useEffect } from 'react';
+import { ApolloConsumer, useApolloClient } from '@apollo/client';
 import {
-  CreateAgendaEvent, DeleteAgendaEvent,
+  CreateAgendaEvent,
+  DeleteAgendaEvent,
   GetAgendaEvent,
   GetAllAgendaEvents,
-  UpdateAgendaEvent
-} from "../../controllers/AgendaController";
+  UpdateAgendaEvent,
+} from '../../controllers/AgendaController';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -34,12 +35,12 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
     async function doThings() {
       console.log('create event');
       await CreateAgendaEvent(
-          client,
-          'test',
-          'test',
-          new Date(),
-          new Date(),
-          'Noir'
+        client,
+        'test',
+        'test',
+        new Date(),
+        new Date(),
+        'Noir'
       ).then(eventId => {
         console.log('created event = ', eventId);
         id = eventId;
@@ -50,13 +51,13 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
       });
       console.log('update event');
       UpdateAgendaEvent(
-          client,
-          id,
-          'test2',
-          'test2',
-          new Date(),
-          new Date(),
-          'Noir'
+        client,
+        id,
+        'test2',
+        'test2',
+        new Date(),
+        new Date(),
+        'Noir'
       ).then(event => {
         console.log('updated event = ', event);
       });
