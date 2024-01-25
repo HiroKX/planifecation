@@ -1,27 +1,45 @@
 import { StyleSheet, View } from 'react-native';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useApolloClient } from '@apollo/client';
-import { AddNote } from '../../../controllers/NoteController';
+import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
-import { GetAllNotesFromUser } from '../../../services/NoteService';
-import { RawButton } from 'react-native-gesture-handler';
-import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
-import AppTemplate from '../../atoms/AppTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 
 type Props = NativeStackScreenProps<StackParamList>;
+export type NotepadParams = {
+  currentNote: Note;
+};
 
 export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
 
+  let params = props.route.params as NotepadParams;
+
+  useEffect(() => {
+    async function setFields() {
+      if (params != undefined) {
+        setTitle(params.currentNote.title);
+        setText(params.currentNote.content);
+      }
+    }
+    setFields().then();
+  }, []);
+
   const client = useApolloClient();
 
-  const saveNote = (title: Readonly<string>, content: Readonly<string>) => {
-    AddNote(client, title, content);
+  const saveNote = async (
+    title: Readonly<string>,
+    content: Readonly<string>
+  ) => {
+    if (params != undefined) {
+      await UpdateNote(client, params.currentNote.id, title, content);
+    } else {
+      await AddNote(client, title, content);
+    }
   };
 
   return (
@@ -35,8 +53,8 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
         right={
           <TextInput.Icon
             icon="content-save"
-            onPress={() => {
-              saveNote(title, text);
+            onPress={async () => {
+              await saveNote(title, text);
               props.navigation.navigate('Liste des notes');
             }}
           />
