@@ -4,6 +4,7 @@ import AgendaTemplate from './AgendaTemplate';
 import CalendarTemplate from './CalendarTemplate';
 import {
   LuxonDate,
+  emptyEvent,
   getColorForBackground,
   loadLocale,
 } from '../../../services/utils/utils';
@@ -15,7 +16,8 @@ import { currentDateDisplay } from './handlingEvents';
 const Tab = createMaterialTopTabNavigator();
 loadLocale('fr');
 
-export default function Appointments() {
+
+export default function Appointments( { navigation } ) {
   const monthDisplay = useComputed(() => {
     return LuxonDate.to_MMMMyyyy(currentDateDisplay.value).toUpperCase();
   });
@@ -40,16 +42,22 @@ export default function Appointments() {
   const thirdTabLabel = () => {
     return tabLabel('Créer un évènement');
   };
+
+  // Forced to have it here as it has to re-render everytime you get on that tab
   const RenderAgenda = () => {
-    return <AgendaTemplate />;
+    return <AgendaTemplate navigation={navigation}/>;
   };
+
+  const RenderEventDetails = () => {
+    return <AgendaEventDetails event={emptyEvent}/>
+  }
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: theme.colors.primary,
+          backgroundColor: theme.colors.secondary,
         },
-        tabBarActiveTintColor: theme.colors.primary,
+        tabBarActiveTintColor: getColorForBackground(theme.colors.secondary),
       }}
       initialRouteName="Calendrier"
     >
@@ -67,8 +75,9 @@ export default function Appointments() {
       />
       <Tab.Screen
         name="Agentrois"
-        component={AgendaEventDetails}
+        component={RenderEventDetails}
         options={{
+          lazy:true,
           tabBarLabel: thirdTabLabel,
         }}
       />

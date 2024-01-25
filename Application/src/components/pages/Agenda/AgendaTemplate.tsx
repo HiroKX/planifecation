@@ -10,7 +10,7 @@ import { Divider } from 'react-native-paper';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { currentDateDisplay, events } from './handlingEvents';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
-import { effect, signal } from '@preact/signals-react';
+import { signal } from '@preact/signals-react';
 
 export const selectedEvent = signal<Event>({
   title: '',
@@ -20,17 +20,19 @@ export const selectedEvent = signal<Event>({
   color: theme.colors.primary,
 });
 
-function selectEvent(event: Event) {
-  selectedEvent.value = {
-    title: event.title,
-    summary: event.summary,
-    end: event.end,
-    color: event.color,
-    start: event.start,
-  };
-}
+export default function AgendaTemplate({ navigation }) {
 
-export default function AgendaTemplate() {
+  function selectEvent(event: Event) {
+    selectedEvent.value = {
+      title: event.title,
+      summary: event.summary,
+      end: event.end,
+      color: event.color,
+      start: event.start,
+    };
+    navigation.navigate("Agentrois", event);
+  }
+
   const renderEvents = (event: TimelineEventProps) => {
     return (
       <View>
@@ -84,7 +86,6 @@ export default function AgendaTemplate() {
         renderEvent={renderEvents}
         onEventPress={event => {
           selectEvent(event);
-          console.log(selectedEvent.value);
         }}
       />
     </View>

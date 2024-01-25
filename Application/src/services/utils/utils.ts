@@ -1,6 +1,9 @@
 import { from } from '@apollo/client';
-import { DateTime } from 'luxon';
+import { DateTime, Duration } from 'luxon';
 import { DateData, LocaleConfig } from 'react-native-calendars';
+import { Event } from 'react-native-calendars/src/timeline/EventBlock';
+import { currentDateDisplay } from '../../components/pages/Agenda/handlingEvents';
+import { theme } from '../../components/organisms/OwnPaperProvider';
 
 const locale = 'fr';
 
@@ -28,10 +31,19 @@ export function rgbColorToHex(rgbcolor: string): string {
 }
 
 export const today = DateTime.now();
+
+
 export const INITIAL_TIME = {
   hour: today.hour,
   minutes: today.minute,
 };
+
+export const emptyEvent : Event = {
+  title: "",
+  summary: "",
+  start: today.toFormat('yyyy-MM-dd HH:mm'),
+  end:  today.plus(1800000).toFormat('yyyy-MM-dd HH:mm'),
+}
 export const todayData: DateData = {
   year: today.year,
   month: today.month,
