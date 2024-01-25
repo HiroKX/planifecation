@@ -24,10 +24,10 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 
   const client = useApolloClient();
 
-  const confirmDelete = (id: number) => {
-    DeleteNote(client, id);
+  const confirmDelete = async (id: number) => {
+    await DeleteNote(client, id);
     setNotes(notes.filter(note => note.id !== id));
-    client.resetStore();
+    await client.resetStore();
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
         setNotes(Notes);
       });
     }
-    getNotes();
+    getNotes().then();
   }, []);
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
@@ -80,7 +80,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
                     {
                       text: 'Oui',
                       onPress: () => {
-                        confirmDelete(renderNoteProps.item.id);
+                        confirmDelete(renderNoteProps.item.id).then();
                       },
                     },
                   ]
