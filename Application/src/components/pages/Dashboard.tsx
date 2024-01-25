@@ -28,7 +28,6 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
       });
     }
   });
-
   return (
     <ApolloConsumer>
       {client => (
