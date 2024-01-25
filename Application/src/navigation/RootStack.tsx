@@ -13,7 +13,7 @@ import { navigationTheme } from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/User/Profile';
 import TodoList from '../components/pages/Todo/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
-import NotePad from '../components/pages/Notes/Notepad';
+import NotePad, { NotepadParams } from '../components/pages/Notes/Notepad';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TestSKIA from '../components/pages/TestSKIA';
 
@@ -23,7 +23,7 @@ export type StackParamList = {
   Inscription: undefined;
   Paramètres: undefined;
   Dashboard: undefined;
-  'Bloc-Notes': undefined;
+  'Bloc-Notes': NotepadParams | undefined;
   Sandbox: undefined;
   Profil: undefined;
   Agenda: undefined;

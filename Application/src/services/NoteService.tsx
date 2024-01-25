@@ -1,5 +1,37 @@
 import { ApolloClient, gql } from '@apollo/client';
 
+const CREATE_NOTE = gql`
+  mutation Mutation($title: String!, $content: String!) {
+    createNote(title: $title, content: $content) {
+      content
+    }
+  }
+`;
+
+export async function CreateNote(
+  client: Readonly<ApolloClient<Object>>,
+  title: Readonly<string>,
+  content: Readonly<string>
+): Promise<number> {
+  console.debug('NoteService.CreateNote');
+  return client
+    .mutate({
+      mutation: CREATE_NOTE,
+      variables: {
+        title: title,
+        content: content,
+      },
+    })
+    .then((response: any) => {
+      console.debug('create note : ok');
+      return 1;
+    })
+    .catch((error: any) => {
+      console.error('CreateNote error:', error);
+      return 0;
+    });
+}
+
 const GET_ALL_NOTES = gql`
   query Query($username: String!) {
     getAllNotesByUsername(username: $username) {
@@ -17,7 +49,6 @@ export async function GetAllNotesFromUser(
   username: Readonly<string>
 ): Promise<Note[]> {
   console.debug('NoteService.GetAllNotesFromUser');
-  console.log(username);
   return client
     .query({
       query: GET_ALL_NOTES,
@@ -53,63 +84,59 @@ const GET_NOTE_BY_ID = gql`
 `;
 
 export async function GetNoteById(
-    client: Readonly<ApolloClient<Object>>,
-    id: Readonly<number>
-): Promise<Note[]> {
+  client: Readonly<ApolloClient<Object>>,
+  id: Readonly<number>
+): Promise<Note> {
   console.debug('NoteService.GetNoteById');
-  console.log(id);
   return client
-      .query({
-        query: GET_NOTE_BY_ID,
-        variables: {
-          id: id,
-        },
-      })
-      .then((response: any) => {
-        return response.data.getNoteById((note: Note) => ({
-          id: note.id,
-          title: note.title,
-          content: note.content,
-          createdAt: new Date(note.createdAt),
-          updatedAt: new Date(note.updatedAt),
-        }));
-      })
-      .catch((error: any) => {
-        console.error('GetNoteById error:', error);
-        return null;
-      });
+    .query({
+      query: GET_NOTE_BY_ID,
+      variables: {
+        id: id,
+      },
+    })
+    .then((response: any) => {
+      let note = response.data.getNoteById;
+      console.debug('Retrieved note : ', note);
+      return note;
+    })
+    .catch((error: any) => {
+      console.error('GetNoteById error:', error);
+      return null;
+    });
 }
 
-const CREATE_NOTE = gql`
-  mutation Mutation($title: String!, $content: String!) {
-    createNote(title: $title, content: $content) {
-      content
+const UPDATE_NOTE_BY_ID = gql`
+  mutation Mutation($id: Int!, $title: String!, $content: String!) {
+    updateNoteById(id: $id, title: $title, content: $content) {
+      id
     }
   }
 `;
 
-export async function CreateNote(
+export async function UpdateNoteById(
   client: Readonly<ApolloClient<Object>>,
-  title: Readonly<string>,
-  content: Readonly<string>
-): Promise<number> {
-  console.debug('NoteService.CreateNote');
-
+  Note: Readonly<Note>
+): Promise<Note> {
+  console.debug('NoteService.UpdateNoteById');
   return client
     .mutate({
-      mutation: CREATE_NOTE,
+      mutation: UPDATE_NOTE_BY_ID,
       variables: {
-        title: title,
-        content: content,
+        id: Note.id,
+        title: Note.title,
+        content: Note.content,
+        updatedAt: new Date(),
       },
     })
     .then((response: any) => {
-      console.debug('create note : ok');
-      return 1;
+      let note = response.data.updateNoteById;
+      console.debug('Updated note : ', note);
+      return note;
     })
     .catch((error: any) => {
-      console.error('CreateNote error:', error);
-      return 0;
+      console.error('UpdateNoteById error:', error);
+      return null;
     });
 }
 

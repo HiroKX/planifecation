@@ -5,6 +5,8 @@ import {
   GetAllNotesFromUser,
   DeleteNoteById,
   CreateNote,
+  GetNoteById,
+  UpdateNoteById,
 } from '../services/NoteService';
 import { GetLoggedUserUsername } from './AuthenticationController';
 
@@ -18,12 +20,14 @@ export async function GetAllNotes(
   return await GetAllNotesFromUser(client, username);
 }
 
-export async function GetNoteById(
-    client: Readonly<ApolloClient<Object>>,
-    id: Readonly<Number>
+export async function GetNote(
+  client: Readonly<ApolloClient<Object>>,
+  id: Readonly<number>
 ): Promise<Note> {
   console.debug('NoteController.GetAllNotes');
-  return await GetNoteById(client, id);
+  let note = await GetNoteById(client, id);
+  console.debug('Retrieved note : ', note);
+  return note;
 }
 
 export async function AddNote(
@@ -38,9 +42,12 @@ export async function AddNote(
 
 export async function UpdateNote(
   client: Readonly<ApolloClient<Object>>,
-  props: Readonly<Props>
-): Promise<void> {
+  Note: Readonly<Note>
+): Promise<Note> {
   console.debug('NoteController.UpdateNote');
+  let updatedNote = await UpdateNoteById(client, Note);
+  console.debug('Updated note : ', updatedNote);
+  return updatedNote;
 }
 
 export async function DeleteNote(
