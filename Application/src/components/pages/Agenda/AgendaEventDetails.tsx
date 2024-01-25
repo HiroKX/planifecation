@@ -4,7 +4,7 @@ import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import {
   getColorForBackground,
 } from '../../../services/utils/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import ColorPicker, {
@@ -16,10 +16,17 @@ import ColorPicker, {
 import Animated from 'react-native-reanimated';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { theme } from '../../organisms/OwnPaperProvider';
+import { useApolloClient } from '@apollo/client';
+import { GetAllAgendaEvents } from '../../../controllers/AgendaController';
 
 declare type Props = { event : Event};
 
 export default function AgendaEventDetails( {event} : Readonly<Props>) {
+
+
+  function addAgendaEvent() {
+
+  }
 
   const [visible, setVisible] = useState(false);
   const [color, setColor] = useState(event.color ?? theme.colors.primary);
@@ -85,7 +92,8 @@ export default function AgendaEventDetails( {event} : Readonly<Props>) {
         >
           Couleur
         </ButtonTemplate>
-        <ButtonTemplate>Enregistrer l'évènement</ButtonTemplate>
+        <ButtonTemplate
+          onPress={() => addAgendaEvent}>Enregistrer l'évènement</ButtonTemplate>
       </SurfaceTemplate>
       <ModalTemplate visible={visible} onDismiss={() => setVisible(false)}>
         {renderColorPicker()}

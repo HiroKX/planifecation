@@ -1,18 +1,31 @@
 import { computed, signal } from '@preact/signals-react';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { todayData } from '../../../services/utils/utils';
+import { useApolloClient } from '@apollo/client';
+import { useEffect } from 'react';
+import { GetAllAgendaEvents } from '../../../controllers/AgendaController';
+import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 
 declare type Dot = {
   [key: string]: { color: string }[];
 };
+
+const client = useApolloClient();
+export const events = signal<Event[]>([]);
+
+useEffect(() => {
+  async function getAgendaEvents() {
+    await GetAllAgendaEvents(client).then(agendaEvents => {
+      events.value = agendaEvents;
+    })
+  }
+})
 
 export const currentDate = signal(todayData);
 export const currentDateDisplay = computed(() => {
   return currentDate.value.dateString;
 });
 export const currentDateToEdit = signal(currentDate.value);
-
-export const events = signal(getEvents());
 
 function getEvents() {
   return [

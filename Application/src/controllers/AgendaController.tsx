@@ -12,18 +12,18 @@ import { GetLoggedUserUsername } from './AuthenticationController';
 export async function CreateAgendaEvent(
   client: Readonly<ApolloClient<Object>>,
   title: Readonly<string>,
-  content: Readonly<string>,
-  startDate: Readonly<Date>,
-  endDate: Readonly<Date>,
+  summary: Readonly<string>,
+  start: Readonly<string>,
+  end: Readonly<string>,
   color: Readonly<string>
 ): Promise<string> {
   console.debug('AgendaController.CreateAgendaEvent');
   const id = await CreateEvent(
     client,
     title,
-    content,
-    startDate,
-    endDate,
+    summary,
+    start,
+    end,
     color
   );
   console.debug('AgendaController: Returning id ' + id);
@@ -54,9 +54,9 @@ export async function UpdateAgendaEvent(
   client: Readonly<ApolloClient<Object>>,
   id: Readonly<string>,
   title: Readonly<string>,
-  content: Readonly<string>,
-  startDate: Readonly<Date>,
-  endDate: Readonly<Date>,
+  summary: Readonly<string>,
+  start: Readonly<string>,
+  end: Readonly<string>,
   color: Readonly<string>
 ): Promise<AgendaEvent> {
   console.debug('AgendaController.UpdateAgendaEvent');
@@ -64,9 +64,9 @@ export async function UpdateAgendaEvent(
     client,
     id,
     title,
-    content,
-    startDate,
-    endDate,
+    summary,
+    start,
+    end,
     color
   );
   console.debug('AgendaController: Returning event ' + event);
