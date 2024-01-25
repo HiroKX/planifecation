@@ -4,7 +4,7 @@ import { AgendaEvent } from '../models/AgendaEvent';
 const CREATE_EVENT = gql`
   mutation CreateAgendaEvent(
     $title: String!
-    $content: String
+    $content: String!
     $startDate: String!
     $endDate: String!
     $color: String!
@@ -140,6 +140,7 @@ export async function GetEventById(
 const UPDATE_EVENT_BY_ID = gql`
   mutation UpdateAgendaEventById(
     $updateAgendaEventByIdId: Int!
+    $content: String!
     $title: String!
     $startDate: String!
     $endDate: String!
@@ -147,6 +148,7 @@ const UPDATE_EVENT_BY_ID = gql`
   ) {
     updateAgendaEventById(
       id: $updateAgendaEventByIdId
+      content: $content
       title: $title
       startDate: $startDate
       endDate: $endDate
