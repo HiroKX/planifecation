@@ -164,3 +164,4 @@ Application/yarn.lock
 .env.local
 yarn.lock
 /Serveur/prisma/migrations/*
+/Serveur/.dist

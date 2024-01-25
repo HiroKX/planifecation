@@ -17,7 +17,7 @@ export const agendaQueries = {
     return { ...agendaEvent, user: userWithoutPassword };
   },
 
-  getAllTodoItemsByUsername: async (parent, args, context) => {
+  getAllAgendaEventsByUsername: async (parent, args, context) => {
     // Get all the Agenda Events by the username of the User who owns the events
     protectFromUsername(context, args.username);
     const agendaEvents = await prisma.agendaEvent.findMany({
