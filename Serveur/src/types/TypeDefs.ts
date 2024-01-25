@@ -58,7 +58,7 @@ type Mutation {
   deleteTodoItemById(id: Int!): ToDoItem
   createAgendaEvent(title: String!, content: String!, startDate: String!, 
     endDate: String!, color: String!): AgendaEvent
-  updateAgendaEventById(id: Int!, title: String!, content: String, startDate: String!, 
+  updateAgendaEventById(id: Int!, title: String!, content: String!, startDate: String!, 
     endDate: String!, color: String!): AgendaEvent
   deleteAgendaEventById(id: Int!): AgendaEvent
 }
