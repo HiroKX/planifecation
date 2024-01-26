@@ -46,7 +46,6 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
         setUpdatedTodos(false);
       });
     }
-
     getTodos().then();
   }, [updatedTodos]);
 
