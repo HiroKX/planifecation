@@ -29,9 +29,9 @@ const CREATE_EVENT = gql`
 export async function CreateEvent(
   client: Readonly<ApolloClient<Object>>,
   title: Readonly<string>,
-  summary: Readonly<string>,
-  start: Readonly<string>,
-  end: Readonly<string>,
+  content: Readonly<string>,
+  startDate: Readonly<string>,
+  endDate: Readonly<string>,
   color: Readonly<string>
 ): Promise<string> {
   console.debug('AgendaService.CreateAgendaEvent');
@@ -41,9 +41,9 @@ export async function CreateEvent(
       mutation: CREATE_EVENT,
       variables: {
         title: title,
-        content: summary,
-        startDate: start,
-        endDate: end,
+        content: content,
+        startDate: startDate,
+        endDate: endDate,
         color: color,
       },
     })
@@ -166,9 +166,9 @@ export async function UpdateEventById(
   client: Readonly<ApolloClient<Object>>,
   id: Readonly<string>,
   title: Readonly<string>,
-  summary: Readonly<string>,
-  start: Readonly<string>,
-  end: Readonly<string>,
+  content: Readonly<string>,
+  startDate: Readonly<string>,
+  endDate: Readonly<string>,
   color: Readonly<string>
 ): Promise<AgendaEvent> {
   console.debug('AgendaService.UpdateEventById');
@@ -178,9 +178,9 @@ export async function UpdateEventById(
       variables: {
         updateAgendaEventByIdId: id,
         title: title,
-        content: summary,
-        startDate: start,
-        endDate: end,
+        content: content,
+        startDate: startDate,
+        endDate: endDate,
         color: color,
       },
     })

@@ -32,18 +32,17 @@ export function rgbColorToHex(rgbcolor: string): string {
 
 export const today = DateTime.now();
 
-
 export const INITIAL_TIME = {
   hour: today.hour,
   minutes: today.minute,
 };
 
-export const emptyEvent : Event = {
-  title: "",
-  summary: "",
+export const emptyEvent: Event = {
+  title: '',
+  summary: '',
   start: today.toFormat('yyyy-MM-dd HH:mm'),
-  end:  today.plus(1800000).toFormat('yyyy-MM-dd HH:mm'),
-}
+  end: today.plus(1800000).toFormat('yyyy-MM-dd HH:mm'),
+};
 export const todayData: DateData = {
   year: today.year,
   month: today.month,
@@ -69,6 +68,11 @@ export class LuxonDate {
     return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
       .setLocale(locale)
       .toFormat('yyyy-MM-dd');
+  }
+  static to_yyyyMMddHHmm(date: string, fromFormat?: string): string {
+    return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
+      .setLocale(locale)
+      .toFormat('yyyy-MM-dd HH:mm');
   }
   static to_MMMMyyyy(date: string, fromFormat?: string): string {
     return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
