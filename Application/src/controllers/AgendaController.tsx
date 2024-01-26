@@ -10,7 +10,6 @@ import { AgendaEvent } from '../models/AgendaEvent';
 import { GetLoggedUserUsername } from './AuthenticationController';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { theme } from '../components/organisms/OwnPaperProvider';
-import { LuxonDate } from '../services/utils/utils';
 
 export async function CreateAgendaEvent(
   client: Readonly<ApolloClient<Object>>,
