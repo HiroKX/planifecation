@@ -3,3 +3,7 @@ build
 coverage
 .expo
 .babelrc
+tsconfig.json
+${projectName}.iml
+.idea
+node_modules
