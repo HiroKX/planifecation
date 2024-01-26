@@ -1,4 +1,3 @@
-
 import { DateTime } from 'luxon';
 import { DateData, LocaleConfig } from 'react-native-calendars';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
