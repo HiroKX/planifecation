@@ -6,12 +6,13 @@ import {
   GetAllNotes,
   GetNote,
 } from '../../../controllers/NoteController';
-import { useApolloClient } from '@apollo/client';
+import {ApolloClient, useApolloClient} from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { Alert, FlatList, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
+import { useIsFocused } from "@react-navigation/native";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -21,23 +22,29 @@ type RenderNoteProps = {
 
 export default function NoteList(props: Readonly<Props>): ReactNode {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [updatedNotes, setUpdatedNotes] = useState(false);
+  const client: ApolloClient<Object> = useApolloClient();
+  const isFocused: boolean = useIsFocused();
 
-  const client = useApolloClient();
+    useEffect((): void => {
+        async function fetchNotes(): Promise<void> {
+            await client.resetStore();
+            await GetAllNotes(client).then(notes => {
+                let sortedNotes: Note[] = [...notes];
+                sortedNotes = sortedNotes.sort((a: Note, b:Note): number => {
+                    return a.updatedAt > b.updatedAt ? -1 : 1;
+                });
+                setNotes(sortedNotes);
+            });
+            setUpdatedNotes(false);
+        }
+        fetchNotes().then();
+    }, [updatedNotes, isFocused]);
 
-  const confirmDelete = async (id: number) => {
-    await DeleteNote(client, id);
-    setNotes(notes.filter(note => note.id !== id));
-    await client.resetStore();
-  };
-
-  useEffect(() => {
-    async function getNotes() {
-      await GetAllNotes(client).then(Notes => {
-        setNotes(Notes);
-      });
-    }
-    getNotes().then();
-  }, []);
+    const confirmDelete = async (id: number): Promise<void> => {
+        await DeleteNote(client, id);
+        setUpdatedNotes(true);
+    };
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
     return (
@@ -56,7 +63,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
           >
             <ButtonTemplate
               style={{ flex: 1, alignSelf: 'flex-start', position: 'relative' }}
-              onPress={() => {
+              onPress={(): void => {
                 GetNote(client, renderNoteProps.item.id).then(currentNote => {
                   return props.navigation.navigate('Bloc-Notes', {
                     currentNote,
@@ -71,7 +78,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
               icon={'trash-can'}
               color={theme.colors.primary}
               style={{ alignSelf: 'flex-start', position: 'relative' }}
-              onPress={() => {
+              onPress={(): void => {
                 Alert.alert(
                   `Suppression de ${renderNoteProps.item.title}`,
                   'Confirmez-vous la suppression de cette note ?',
@@ -79,7 +86,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
                     { text: 'Non' },
                     {
                       text: 'Oui',
-                      onPress: () => {
+                      onPress: (): void => {
                         confirmDelete(renderNoteProps.item.id).then();
                       },
                     },
@@ -96,7 +103,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <ButtonTemplate
-          onPress={() => {
+          onPress={(): void => {
             props.navigation.navigate('Bloc-Notes');
           }}
         >
