@@ -13,9 +13,5 @@ RUN npm install --ignore-scripts
 # Copier les fichiers du projet dans le conteneur
 COPY . .
 
-# Exposer le port sur lequel le serveur Apollo écoute
-EXPOSE 4000
-
-
 # Définir la commande pour démarrer le serveur Apollo
 CMD ["npm", "run", "start:docker"]
