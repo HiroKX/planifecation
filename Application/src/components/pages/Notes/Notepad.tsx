@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { ReactNode, useEffect, useState } from 'react';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
-import {ApolloClient, useApolloClient} from '@apollo/client';
+import { ApolloClient, useApolloClient } from '@apollo/client';
 import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';

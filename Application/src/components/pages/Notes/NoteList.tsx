@@ -6,13 +6,13 @@ import {
   GetAllNotes,
   GetNote,
 } from '../../../controllers/NoteController';
-import {ApolloClient, useApolloClient} from '@apollo/client';
+import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { Alert, FlatList, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused } from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -26,25 +26,25 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   const client: ApolloClient<Object> = useApolloClient();
   const isFocused: boolean = useIsFocused();
 
-    useEffect((): void => {
-        async function fetchNotes(): Promise<void> {
-            await client.resetStore();
-            await GetAllNotes(client).then(notes => {
-                let sortedNotes: Note[] = [...notes];
-                sortedNotes = sortedNotes.sort((a: Note, b:Note): number => {
-                    return a.updatedAt > b.updatedAt ? -1 : 1;
-                });
-                setNotes(sortedNotes);
-            });
-            setUpdatedNotes(false);
-        }
-        fetchNotes().then();
-    }, [updatedNotes, isFocused]);
+  useEffect((): void => {
+    async function fetchNotes(): Promise<void> {
+      await client.resetStore();
+      await GetAllNotes(client).then(notes => {
+        let sortedNotes: Note[] = [...notes];
+        sortedNotes = sortedNotes.sort((a: Note, b: Note): number => {
+          return a.updatedAt > b.updatedAt ? -1 : 1;
+        });
+        setNotes(sortedNotes);
+      });
+      setUpdatedNotes(false);
+    }
+    fetchNotes().then();
+  }, [updatedNotes, isFocused]);
 
-    const confirmDelete = async (id: number): Promise<void> => {
-        await DeleteNote(client, id);
-        setUpdatedNotes(true);
-    };
+  const confirmDelete = async (id: number): Promise<void> => {
+    await DeleteNote(client, id);
+    setUpdatedNotes(true);
+  };
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
     return (

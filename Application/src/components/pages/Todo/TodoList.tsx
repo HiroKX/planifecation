@@ -11,7 +11,7 @@ import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
 import CheckTodo from './CheckTodo';
 import ModalTemplate from '../../organisms/ModalTemplate';
-import {ApolloClient, useApolloClient} from '@apollo/client';
+import { ApolloClient, useApolloClient } from '@apollo/client';
 import {
   AddTodo,
   DeleteTodo,
@@ -54,7 +54,16 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     if (todo.trim() !== '') {
       const id: string = await AddTodo(client, todo, false);
       console.debug('TodoList: id = ' + id);
-      setTodoList([...todoList, { id: id, content: todo, isDone: false, createdAt: new Date(), updatedAt: new Date() }]);
+      setTodoList([
+        ...todoList,
+        {
+          id: id,
+          content: todo,
+          isDone: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ]);
       setTodo('');
       setUpdatedTodos(true);
     }
@@ -62,7 +71,9 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
 
   const handleDeleteTodo = async (item: Todo) => {
     await DeleteTodo(client, item.id);
-    const updatedTodoList: Todo[] = todoList.filter(todo => todo.id !== item.id);
+    const updatedTodoList: Todo[] = todoList.filter(
+      todo => todo.id !== item.id
+    );
     setTodoList(updatedTodoList);
     setUpdatedTodos(true);
   };
@@ -70,7 +81,9 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   const renderTodos = ({ item }: RenderTodoProps): React.JSX.Element => {
     const funcDrawing = async () => {
       setVisibleModal(false);
-      const todoItem: Todo | undefined = todoList.find(todo => todo.id === currentTodo);
+      const todoItem: Todo | undefined = todoList.find(
+        todo => todo.id === currentTodo
+      );
       if (todoItem !== undefined) {
         await UpdateTodo(
           client,
