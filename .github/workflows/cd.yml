@@ -25,6 +25,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/html/planifecation/Serveur
-            
             git pull origin dev
             docker-compose up -d --build
