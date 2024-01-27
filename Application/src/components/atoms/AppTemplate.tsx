@@ -10,6 +10,7 @@ export default function AppTemplate(props: Readonly<PaperFabProps>): ReactNode {
       icon={props.icon ?? 'plus'}
       style={styles.fab}
       onPress={props.onPress}
+      theme={props.theme ?? undefined}
       {...props}
     />
   );

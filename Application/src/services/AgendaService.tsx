@@ -30,8 +30,8 @@ export async function CreateEvent(
   client: Readonly<ApolloClient<Object>>,
   title: Readonly<string>,
   content: Readonly<string>,
-  startDate: Readonly<Date>,
-  endDate: Readonly<Date>,
+  startDate: Readonly<string>,
+  endDate: Readonly<string>,
   color: Readonly<string>
 ): Promise<string> {
   console.debug('AgendaService.CreateAgendaEvent');
@@ -63,7 +63,6 @@ export async function CreateEvent(
 const GET_ALL_EVENTS_BY_USERNAME = gql`
   query GetAllAgendaEventsByUsername($username: String!) {
     getAllAgendaEventsByUsername(username: $username) {
-      id
       title
       content
       startDate
@@ -99,7 +98,6 @@ export async function GetAllEventsFromUser(
 const GET_EVENT_BY_ID = gql`
   query GetAgendaEventById($getAgendaEventByIdId: Int!) {
     getAgendaEventById(id: $getAgendaEventByIdId) {
-      id
       title
       content
       startDate
@@ -169,8 +167,8 @@ export async function UpdateEventById(
   id: Readonly<string>,
   title: Readonly<string>,
   content: Readonly<string>,
-  startDate: Readonly<Date>,
-  endDate: Readonly<Date>,
+  startDate: Readonly<string>,
+  endDate: Readonly<string>,
   color: Readonly<string>
 ): Promise<AgendaEvent> {
   console.debug('AgendaService.UpdateEventById');
