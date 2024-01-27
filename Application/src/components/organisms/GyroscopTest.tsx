@@ -19,12 +19,11 @@ export default function App() {
         const subscription = DeviceMotion.addListener(({ accelerationIncludingGravity }) => {
             // Utilisez les axes X et Z pour définir la position X et Y de la bille
             let axis=accelerationIncludingGravity.z;
-            if(accelerationIncludingGravity.z < 0 && accelerationIncludingGravity.y < 0) {
-                axis = 5;
-            }else if (accelerationIncludingGravity.z < 0 && accelerationIncludingGravity.y > 0){
+            if(accelerationIncludingGravity.z < 0 && accelerationIncludingGravity.y <= 0) {
+                axis = (10+accelerationIncludingGravity.z);
+            }else if (accelerationIncludingGravity.z < 0 && accelerationIncludingGravity.y >= 0){
                 axis=  - accelerationIncludingGravity.y;
             }
-            console.log(accelerationIncludingGravity.z, accelerationIncludingGravity.y);
             const newX = previousPosition.x + accelerationIncludingGravity.x * 0.5; // Ajustez le facteur de multiplication selon votre besoin
             const newY = previousPosition.y + axis * 0.5; // Utilisez la compensation pour l'axe Z
 
@@ -39,7 +38,7 @@ export default function App() {
             previousPosition = { x: boundedX, y: boundedY };
         });
 
-        DeviceMotion.setUpdateInterval(16); // Mettez à jour la position de la bille environ toutes les 16 ms
+        DeviceMotion.setUpdateInterval(10); // Mettez à jour la position de la bille environ toutes les 16 ms
 
         return () => {
             subscription.remove();
