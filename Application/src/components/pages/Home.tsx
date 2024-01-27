@@ -58,6 +58,9 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
             <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
               Test SKIA
             </ButtonTemplate>
+            <ButtonTemplate onPress={() => navigation.navigate('Test Gyro')}>
+              Test Gyro
+            </ButtonTemplate>
           </View>
         ) : null}
         <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
