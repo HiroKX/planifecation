@@ -16,7 +16,7 @@ import NoteList from '../components/pages/Notes/NoteList';
 import NotePad, { NotepadParams } from '../components/pages/Notes/Notepad';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TestSKIA from '../components/pages/TestSKIA';
-import GyroscopTest from "../components/organisms/GyroscopTest";
+import GyroscopTest from '../components/organisms/GyroscopTest';
 
 export type StackParamList = {
   Accueil: undefined;
