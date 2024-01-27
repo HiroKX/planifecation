@@ -28,6 +28,7 @@ import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { AgendaEvent } from '../../../models/AgendaEvent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {useIsFocused} from "@react-navigation/native";
 
 const Tab = createMaterialTopTabNavigator();
 loadLocale('fr');
@@ -92,6 +93,7 @@ export default function Appointments({
   navigation,
 }: Readonly<NativeStackScreenProps<StackParamListAgenda>>) {
   const client = useApolloClient();
+  const isFocused: boolean = useIsFocused();
 
   useEffect(() => {
     async function getAgendaEvents() {
@@ -103,8 +105,8 @@ export default function Appointments({
         events.value = response;
       });
     }
-    getAgendaEvents();
-  }, []);
+    getAgendaEvents().then();
+  }, [isFocused]);
 
   const monthDisplay = useComputed(() => {
     return LuxonDate.to_MMMMyyyy(currentDateDisplay.value).toUpperCase();
