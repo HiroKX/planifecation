@@ -57,7 +57,7 @@ export default function CheckTodo(props: Readonly<TodoProps>) {
   const handleLayoutCanvas = useCallback((e: LayoutChangeEvent) => {
     const { width, height } = e.nativeEvent.layout;
     setCanvasLayoutMeta({ width, height });
-    console.log(`Canvas [width : ${width}, height ${height}]`);
+    console.debug(`CheckTodo : Canvas [width : ${width}, height ${height}]`);
   }, []);
 
   const checkTodoPan = Gesture.Pan()
@@ -84,7 +84,7 @@ export default function CheckTodo(props: Readonly<TodoProps>) {
       const { width, height } = canvasLayoutMeta;
       const areaCheckedPercentage =
         (totalArea.current / (width * height)) * 100;
-      console.log('areaCheckedPercentage : ' + areaCheckedPercentage);
+      console.debug('areaCheckedPercentage : ' + areaCheckedPercentage);
       if (areaCheckedPercentage > 80) {
         props.returnFunc();
       }

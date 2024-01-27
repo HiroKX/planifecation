@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { ReactNode, useEffect, useState } from 'react';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
-import { useApolloClient } from '@apollo/client';
+import { ApolloClient, useApolloClient } from '@apollo/client';
 import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -17,10 +17,10 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
 
-  let params = props.route.params as NotepadParams;
+  let params: NotepadParams = props.route.params as NotepadParams;
 
-  useEffect(() => {
-    async function setFields() {
+  useEffect((): void => {
+    async function setFields(): Promise<void> {
       if (params != undefined) {
         setTitle(params.currentNote.title);
         setText(params.currentNote.content);
@@ -29,12 +29,12 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
     setFields().then();
   }, []);
 
-  const client = useApolloClient();
+  const client: ApolloClient<Object> = useApolloClient();
 
   const saveNote = async (
     title: Readonly<string>,
     content: Readonly<string>
-  ) => {
+  ): Promise<void> => {
     if (params != undefined) {
       await UpdateNote(client, params.currentNote.id, title, content);
     } else {
@@ -53,9 +53,10 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
         right={
           <TextInput.Icon
             icon="content-save"
-            onPress={async () => {
-              await saveNote(title, text);
-              props.navigation.navigate('Liste des notes');
+            onPress={async (): Promise<void> => {
+              await saveNote(title, text).then((): void => {
+                props.navigation.goBack();
+              });
             }}
           />
         }
