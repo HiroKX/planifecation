@@ -1,8 +1,8 @@
 export type AgendaEvent = {
-  id: number;
+  id: string;
   title: string;
   content: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   color: string;
 };

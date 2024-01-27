@@ -6,15 +6,8 @@ import {
   GetLoggedUser,
   LogoutUser,
 } from '../../controllers/AuthenticationController';
-import { ReactNode, useEffect } from 'react';
-import { ApolloConsumer, useApolloClient } from '@apollo/client';
-import {
-  CreateAgendaEvent,
-  DeleteAgendaEvent,
-  GetAgendaEvent,
-  GetAllAgendaEvents,
-  UpdateAgendaEvent,
-} from '../../controllers/AgendaController';
+import { ReactNode } from 'react';
+import { ApolloConsumer } from '@apollo/client';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
