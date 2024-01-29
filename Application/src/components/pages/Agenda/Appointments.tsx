@@ -16,7 +16,7 @@ import {
 import { theme } from '../../organisms/OwnPaperProvider';
 import AgendaEventDetails from './AgendaEventDetails';
 import { useApolloClient } from '@apollo/client';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import {
   GetAllAgendaEvents,
   agendaEventToEvent,
@@ -31,6 +31,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {useIsFocused} from "@react-navigation/native";
 
 const Tab = createMaterialTopTabNavigator();
+
 loadLocale('fr');
 
 export type StackParamListAgenda = {
@@ -94,6 +95,7 @@ export default function Appointments({
 }: Readonly<NativeStackScreenProps<StackParamListAgenda>>) {
   const client = useApolloClient();
   const isFocused: boolean = useIsFocused();
+  const [displayCalendar, setDisplayCalendar] = useState(false);
 
   useEffect(() => {
     async function getAgendaEvents() {
@@ -105,7 +107,9 @@ export default function Appointments({
         events.value = response;
       });
     }
-    getAgendaEvents().then();
+    getAgendaEvents().then(() => {
+      setDisplayCalendar(true)
+    });
   }, [isFocused]);
 
   const monthDisplay = useComputed(() => {
@@ -138,6 +142,7 @@ export default function Appointments({
   // Forced to have it here as it has to re-render everytime you get on that tab
 
   const RenderCalendar = () => {
+    if(!displayCalendar) return (<View></View>)
     return <CalendarTemplate navigation={navigation} />;
   };
 
@@ -190,6 +195,11 @@ export default function Appointments({
   );
 }
 
+/**
+ * Affichage du détail d'un event
+ * @param navigation
+ * @constructor
+ */
 function AgendaTemplate({ navigation }) {
   function selectEvent(event: Event) {
     selectedEvent.value = {
@@ -204,6 +214,11 @@ function AgendaTemplate({ navigation }) {
     navigation.navigate('Agentrois');
   }
 
+
+  /**
+   * Event dans une Timeline
+   * @param event
+   */
   const renderEvents = (event: TimelineEventProps) => {
     return (
       <View>
@@ -246,7 +261,9 @@ function AgendaTemplate({ navigation }) {
       </View>
     );
   };
-
+  /**
+   * Affichage de la timeline avec les events
+   */
   return (
     <View>
       <Timeline
@@ -263,6 +280,11 @@ function AgendaTemplate({ navigation }) {
   );
 }
 
+/**
+ * Affichage du calendrier
+ * @param navigation
+ * @constructor
+ */
 function CalendarTemplate({ navigation }) {
   return (
     <View style={{ flex: 1 }}>

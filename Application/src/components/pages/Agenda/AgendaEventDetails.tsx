@@ -22,7 +22,6 @@ declare type Props = { localEvent: Event; navigation: any };
 
 export default function AgendaEventDetails(props: Readonly<Props>) {
   const client = useApolloClient();
-
   const addAgendaEvent = () => {
     if (id != undefined) {
       UpdateAgendaEvent(
@@ -35,10 +34,10 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         color
       )
         .then(() => {
-          console.log('Évènement ' + id + ' mis à jour');
+          console.debug('Évènement ' + id + ' mis à jour');
           props.navigation.goBack();
         })
-        .catch(() => console.log('Une erreur est survenue à la mise à jour'));
+        .catch(() => console.debug('Une erreur est survenue à la mise à jour'));
     }
     CreateEvent(
       client,
@@ -48,10 +47,13 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
       dateEnd + ' ' + end,
       color
     )
-      .then(() => console.log('Nouvel évènement créé'))
-      .catch(() => {
-        console.log('Une erreur est survenue à la création');
+      .then(async () => {
+        await client.resetStore();
+        console.debug('Nouvel évènement créé')
         props.navigation.goBack();
+      })
+      .catch(() => {
+        console.debug('Une erreur est survenue à la création');
       });
   };
 
