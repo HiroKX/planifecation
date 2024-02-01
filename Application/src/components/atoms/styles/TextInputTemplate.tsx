@@ -6,6 +6,24 @@ import { Props as PaperTextInputProps } from 'react-native-paper/src/components/
 export default function TextInputTemplate(
   props: Readonly<PaperTextInputProps>
 ): ReactNode {
-  return <PaperTextInput {...props} 
-      render={props.multiline ? (innerProps) => <TextInput {...innerProps} style={{paddingTop: 9, paddingBottom:9, height:70, width:'80%'}}></TextInput> : undefined }/>
+  return (
+    <PaperTextInput
+      {...props}
+      render={
+        props.multiline
+          ? innerProps => (
+              <TextInput
+                {...innerProps}
+                style={{
+                  paddingTop: 9,
+                  paddingBottom: 9,
+                  height: 70,
+                  width: '80%',
+                }}
+              ></TextInput>
+            )
+          : undefined
+      }
+    />
+  );
 }

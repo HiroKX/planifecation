@@ -115,7 +115,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
               />
             }
             mode="outlined"
-            style={{ flex: 1, pointerEvents:'none'}}
+            style={{ flex: 1, pointerEvents: 'none' }}
             multiline={true}
             onChangeText={edit => (item.content = edit)}
             value={item.content}
