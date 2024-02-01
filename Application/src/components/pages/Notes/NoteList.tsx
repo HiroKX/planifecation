@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import {
@@ -9,10 +10,12 @@ import {
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { Alert, FlatList, View } from 'react-native';
-import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useIsFocused } from '@react-navigation/native';
+import TextTemplate from '../../atoms/styles/TextTemplate';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Icon } from 'react-native-paper';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -48,21 +51,11 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
     return (
-      <View>
-        <SurfaceTemplate
-          style={{ flexDirection: 'row', flex: 1, borderWidth: 1 }}
-        >
           <View
-            style={{
-              alignContent: 'center',
-              flexDirection: 'row',
-              alignSelf: 'stretch',
-              flex: 1,
-              display: 'flex',
-            }}
+            style={styles.flexContainer}
           >
-            <ButtonTemplate
-              style={{ flex: 1, alignSelf: 'flex-start', position: 'relative' }}
+            <TouchableOpacity
+              style={[styles.flexItem, {flex:1, flexDirection:"row"}]}
               onPress={(): void => {
                 GetNote(client, renderNoteProps.item.id).then(currentNote => {
                   return props.navigation.navigate('Bloc-Notes', {
@@ -70,14 +63,19 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
                   });
                 });
               }}
-              mode="text"
-            >
-              {renderNoteProps.item.title}
-            </ButtonTemplate>
-            <TextInput.Icon
-              icon={'trash-can'}
-              color={theme.colors.primary}
-              style={{ alignSelf: 'flex-start', position: 'relative' }}
+              >
+              <TextTemplate
+                style={{verticalAlign:'middle', marginRight:10}}
+                variant='titleMedium'>
+                {renderNoteProps.item.title}
+              </TextTemplate>
+              <Icon
+                size={35}
+                source={'note-edit'}
+                color={theme.colors.primary}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style={[styles.flexItem, {flexShrink:8}]}
               onPress={(): void => {
                 Alert.alert(
                   `Suppression de ${renderNoteProps.item.title}`,
@@ -92,15 +90,17 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
                     },
                   ]
                 );
-              }}
+              }}>
+            <Icon
+              size={35}
+              source={'trash-can'}
+              color={theme.colors.secondary}
             />
+            </TouchableOpacity>
           </View>
-        </SurfaceTemplate>
-      </View>
     );
   };
   return (
-    <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
         <ButtonTemplate
           onPress={(): void => {
@@ -109,10 +109,22 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
         >
           Ajouter
         </ButtonTemplate>
+        <FlatList 
+          data={notes} 
+          renderItem={renderNotes}/>
       </SurfaceTemplate>
-      <SurfaceTemplate style={{ flex: 5 }}>
-        <FlatList data={notes} renderItem={renderNotes} />
-      </SurfaceTemplate>
-    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    borderWidth:1,
+    borderRadius:50,
+    margin:5,
+    justifyContent:'flex-end',
+    flexDirection:'row',
+  },
+  flexItem: {
+    alignSelf:'center'
+  }
+});
