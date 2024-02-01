@@ -51,80 +51,71 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
     return (
-          <View
-            style={styles.flexContainer}
+      <View style={styles.flexContainer}>
+        <TouchableOpacity
+          style={[styles.flexItem, { flex: 1, flexDirection: 'row' }]}
+          onPress={(): void => {
+            GetNote(client, renderNoteProps.item.id).then(currentNote => {
+              return props.navigation.navigate('Bloc-Notes', {
+                currentNote,
+              });
+            });
+          }}
+        >
+          <TextTemplate
+            style={{ verticalAlign: 'middle', marginRight: 10 }}
+            variant="titleMedium"
           >
-            <TouchableOpacity
-              style={[styles.flexItem, {flex:1, flexDirection:"row"}]}
-              onPress={(): void => {
-                GetNote(client, renderNoteProps.item.id).then(currentNote => {
-                  return props.navigation.navigate('Bloc-Notes', {
-                    currentNote,
-                  });
-                });
-              }}
-              >
-              <TextTemplate
-                style={{verticalAlign:'middle', marginRight:10}}
-                variant='titleMedium'>
-                {renderNoteProps.item.title}
-              </TextTemplate>
-              <Icon
-                size={35}
-                source={'note-edit'}
-                color={theme.colors.primary}/>
-            </TouchableOpacity>
-            <TouchableOpacity
-            style={[styles.flexItem, {flexShrink:8}]}
-              onPress={(): void => {
-                Alert.alert(
-                  `Suppression de ${renderNoteProps.item.title}`,
-                  'Confirmez-vous la suppression de cette note ?',
-                  [
-                    { text: 'Non' },
-                    {
-                      text: 'Oui',
-                      onPress: (): void => {
-                        confirmDelete(renderNoteProps.item.id).then();
-                      },
-                    },
-                  ]
-                );
-              }}>
-            <Icon
-              size={35}
-              source={'trash-can'}
-              color={theme.colors.secondary}
-            />
-            </TouchableOpacity>
-          </View>
+            {renderNoteProps.item.title}
+          </TextTemplate>
+          <Icon size={35} source={'note-edit'} color={theme.colors.primary} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.flexItem, { flexShrink: 8 }]}
+          onPress={(): void => {
+            Alert.alert(
+              `Suppression de ${renderNoteProps.item.title}`,
+              'Confirmez-vous la suppression de cette note ?',
+              [
+                { text: 'Non' },
+                {
+                  text: 'Oui',
+                  onPress: (): void => {
+                    confirmDelete(renderNoteProps.item.id).then();
+                  },
+                },
+              ]
+            );
+          }}
+        >
+          <Icon size={35} source={'trash-can'} color={theme.colors.secondary} />
+        </TouchableOpacity>
+      </View>
     );
   };
   return (
-      <SurfaceTemplate>
-        <ButtonTemplate
-          onPress={(): void => {
-            props.navigation.navigate('Bloc-Notes');
-          }}
-        >
-          Ajouter
-        </ButtonTemplate>
-        <FlatList 
-          data={notes} 
-          renderItem={renderNotes}/>
-      </SurfaceTemplate>
+    <SurfaceTemplate>
+      <ButtonTemplate
+        onPress={(): void => {
+          props.navigation.navigate('Bloc-Notes');
+        }}
+      >
+        Ajouter
+      </ButtonTemplate>
+      <FlatList data={notes} renderItem={renderNotes} />
+    </SurfaceTemplate>
   );
 }
 
 const styles = StyleSheet.create({
   flexContainer: {
-    borderWidth:1,
-    borderRadius:50,
-    margin:5,
-    justifyContent:'flex-end',
-    flexDirection:'row',
+    borderWidth: 1,
+    borderRadius: 50,
+    margin: 5,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
   },
   flexItem: {
-    alignSelf:'center'
-  }
+    alignSelf: 'center',
+  },
 });
