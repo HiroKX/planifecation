@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert, FlatList, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import {
@@ -9,7 +9,6 @@ import {
 } from '../../../controllers/NoteController';
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import { Alert, FlatList, View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useIsFocused } from '@react-navigation/native';
