@@ -7,11 +7,14 @@ import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
+import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 export type NotepadParams = {
   currentNote: Note;
 };
+
+const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", ","];
 
 export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
@@ -68,6 +71,17 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
         multiline
         placeholder="Tapez votre texte ici"
       />
+      <View
+        style={styles.keyboard}>
+          {alphabet.map((button) => {
+            return <ButtonTemplate
+              style={styles.keyboardButton}
+              mode='contained-tonal'
+              key={button}>
+                {button}
+            </ButtonTemplate>
+          })}
+      </View>
     </View>
   );
 }
@@ -87,5 +101,16 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 10,
     borderColor: theme.colors.primary,
+    pointerEvents: "none",
   },
+  keyboard: {
+    flex:6,
+    flexWrap:"wrap",
+    flexDirection:'row',
+    alignItems:"flex-start",
+    alignContent:'space-around',
+  },
+  keyboardButton: {
+    borderRadius:0,
+  }
 });
