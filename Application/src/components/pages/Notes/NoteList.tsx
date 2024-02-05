@@ -53,7 +53,11 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     return (
       <View style={styles.flexContainer}>
         <TouchableOpacity
-          style={[styles.flexItem, { flex: 1, flexDirection: 'row' }]}
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            alignContent: 'space-between',
+          }}
           onPress={(): void => {
             GetNote(client, renderNoteProps.item.id).then(currentNote => {
               return props.navigation.navigate('Bloc-Notes', {
@@ -62,16 +66,19 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
             });
           }}
         >
-          <TextTemplate
-            style={{ verticalAlign: 'middle', marginRight: 10 }}
-            variant="titleMedium"
+          <View style={{ flexGrow: 1, width: '86%' }}>
+            <TextTemplate variant="titleMedium" style={{}}>
+              {renderNoteProps.item.title}
+            </TextTemplate>
+          </View>
+          <View
+            style={{ alignSelf: 'center', flexShrink: 1, flexBasis: 'auto' }}
           >
-            {renderNoteProps.item.title}
-          </TextTemplate>
-          <Icon size={35} source={'note-edit'} color={theme.colors.primary} />
+            <Icon size={25} source={'note-edit'} color={theme.colors.primary} />
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.flexItem, { flexShrink: 8 }]}
+          style={{}}
           onPress={(): void => {
             Alert.alert(
               `Suppression de ${renderNoteProps.item.title}`,
@@ -88,7 +95,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
             );
           }}
         >
-          <Icon size={35} source={'trash-can'} color={theme.colors.secondary} />
+          <Icon size={25} source={'trash-can'} color={theme.colors.secondary} />
         </TouchableOpacity>
       </View>
     );
@@ -111,11 +118,12 @@ const styles = StyleSheet.create({
   flexContainer: {
     borderWidth: 1,
     borderRadius: 50,
-    margin: 5,
-    justifyContent: 'flex-end',
+    marginVertical: 3,
+    alignItems: 'center',
+    alignContent: 'stretch',
+    justifyContent: 'space-between',
     flexDirection: 'row',
-  },
-  flexItem: {
-    alignSelf: 'center',
+    flexWrap: 'nowrap',
+    paddingHorizontal: 5,
   },
 });
