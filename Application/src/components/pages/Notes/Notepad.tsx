@@ -7,14 +7,16 @@ import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import TextTemplate from '../../atoms/styles/TextTemplate';
+import { getColorForBackground } from '../../../services/utils/utils';
 
 type Props = NativeStackScreenProps<StackParamList>;
 export type NotepadParams = {
   currentNote: Note;
 };
 
-const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", ","];
+const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", ",", "⏎", "⇧", "←"];
 
 export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
@@ -74,13 +76,20 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
       <View
         style={styles.keyboard}>
           {alphabet.map((button) => {
-            return <ButtonTemplate
+            return <TouchableOpacity
               style={styles.keyboardButton}
-              mode='contained-tonal'
               key={button}>
-                {button}
-            </ButtonTemplate>
+                <TextTemplate
+                  variant='headlineSmall'
+                  style={styles.keyboardText}>
+                  {button}
+                </TextTemplate>
+            </TouchableOpacity>
           })}
+          <TouchableOpacity
+            style={styles.spacebar}>
+            
+          </TouchableOpacity>
       </View>
     </View>
   );
@@ -107,10 +116,26 @@ const styles = StyleSheet.create({
     flex:6,
     flexWrap:"wrap",
     flexDirection:'row',
-    alignItems:"flex-start",
-    alignContent:'space-around',
+    alignItems:"stretch",
+    justifyContent:'space-around',
+    alignContent:'stretch',
+    margin:5,
   },
   keyboardButton: {
-    borderRadius:0,
+    marginVertical:1,
+    width: 45,
+    height:65,
+    backgroundColor: theme.colors.secondary,
+  },
+  keyboardText: {
+
+    alignSelf:'center',
+    color: getColorForBackground(theme.colors.secondary),
+  },
+  spacebar: {
+    position: 'absolute',
+    backgroundColor:theme.colors.secondary,
+    width:200,
+    height:65,
   }
 });
