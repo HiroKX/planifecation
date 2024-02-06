@@ -16,7 +16,41 @@ export type NotepadParams = {
   currentNote: Note;
 };
 
-const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", ".", ",", "⏎", "⇧", "←"];
+function Keyboard(props : {text : string ,setText : React.Dispatch<React.SetStateAction<string>>}) {
+  const [isCapital, setCapital] = useState(false);
+  const [isShift, setShift] = useState(false);
+
+  const handleKeyEvent = (keyPressed : string) => {
+    switch(keyPressed) {
+      case "⏎" : {
+        props.setText(props.text+"\\n")
+        break;
+      }
+      case "⇧" : {
+        // handleShiftEvent();
+        break;
+      }
+      case " " : {
+        props.setText(props.text+" ");
+        break;
+      }
+      case "←" : {
+        props.setText(props.text.slice(0,-1))
+        break;
+      }
+      default :
+        props.setText(props.text + keyPressed);
+    }
+  }
+  
+  return (
+    <View>
+      <TextTemplate>Keyboard ici</TextTemplate>
+    </View>
+  );
+}
+
+
 
 export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
@@ -75,21 +109,7 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
       />
       <View
         style={styles.keyboard}>
-          {alphabet.map((button) => {
-            return <TouchableOpacity
-              style={styles.keyboardButton}
-              key={button}>
-                <TextTemplate
-                  variant='headlineSmall'
-                  style={styles.keyboardText}>
-                  {button}
-                </TextTemplate>
-            </TouchableOpacity>
-          })}
-          <TouchableOpacity
-            style={styles.spacebar}>
-            
-          </TouchableOpacity>
+        <Keyboard text={text} setText={setText}/>
       </View>
     </View>
   );
