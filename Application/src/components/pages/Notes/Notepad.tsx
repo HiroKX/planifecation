@@ -7,50 +7,13 @@ import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import TextTemplate from '../../atoms/styles/TextTemplate';
 import { getColorForBackground } from '../../../services/utils/utils';
+import VirtualRandomKeyboard from './keyboard/VirtualRandomKeyboard';
 
 type Props = NativeStackScreenProps<StackParamList>;
 export type NotepadParams = {
   currentNote: Note;
 };
-
-function Keyboard(props : {text : string ,setText : React.Dispatch<React.SetStateAction<string>>}) {
-  const [isCapital, setCapital] = useState(false);
-  const [isShift, setShift] = useState(false);
-
-  const handleKeyEvent = (keyPressed : string) => {
-    switch(keyPressed) {
-      case "⏎" : {
-        props.setText(props.text+"\\n")
-        break;
-      }
-      case "⇧" : {
-        // handleShiftEvent();
-        break;
-      }
-      case " " : {
-        props.setText(props.text+" ");
-        break;
-      }
-      case "←" : {
-        props.setText(props.text.slice(0,-1))
-        break;
-      }
-      default :
-        props.setText(props.text + keyPressed);
-    }
-  }
-  
-  return (
-    <View>
-      <TextTemplate>Keyboard ici</TextTemplate>
-    </View>
-  );
-}
-
-
 
 export default function Notepad(props: Readonly<Props>): ReactNode {
   const [title, setTitle] = useState('');
@@ -107,9 +70,8 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
         multiline
         placeholder="Tapez votre texte ici"
       />
-      <View
-        style={styles.keyboard}>
-        <Keyboard text={text} setText={setText}/>
+      <View style={styles.keyboard}>
+        <VirtualRandomKeyboard text={text} setText={setText} />
       </View>
     </View>
   );
@@ -130,32 +92,10 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 10,
     borderColor: theme.colors.primary,
-    pointerEvents: "none",
+    pointerEvents: 'none',
   },
   keyboard: {
-    flex:6,
-    flexWrap:"wrap",
-    flexDirection:'row',
-    alignItems:"stretch",
-    justifyContent:'space-around',
-    alignContent:'stretch',
-    margin:5,
+    flex: 6,
+    margin: 5,
   },
-  keyboardButton: {
-    marginVertical:1,
-    width: 45,
-    height:65,
-    backgroundColor: theme.colors.secondary,
-  },
-  keyboardText: {
-
-    alignSelf:'center',
-    color: getColorForBackground(theme.colors.secondary),
-  },
-  spacebar: {
-    position: 'absolute',
-    backgroundColor:theme.colors.secondary,
-    width:200,
-    height:65,
-  }
 });
