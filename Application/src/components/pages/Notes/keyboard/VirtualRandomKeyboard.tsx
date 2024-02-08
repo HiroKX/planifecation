@@ -1,27 +1,55 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native/';
 import TextTemplate from '../../../atoms/styles/TextTemplate';
 import {
-  firstKeysLayout,
   getFourthRowLayout,
   getKeysFromLayout,
-  getShuffledLayout,
   getThirdRowLayout,
-  secondKeysLayout,
 } from './keyboardKeys';
 import { theme } from '../../../organisms/OwnPaperProvider';
 import { getColorForBackground } from '../../../../services/utils/utils';
 
-export default function VirtualRandomKeyboard(props: {
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
-}) {
-  const [isCapital, setCapital] = useState(false);
-  const [isShift, setShift] = useState(false);
-  const [row1, setRow1] = useState<string[]>(getKeysFromLayout(10, 0));
-  const [row2, setRow2] = useState<string[]>(getKeysFromLayout(10, 10));
-  const [row3, setRow3] = useState<string[]>(getThirdRowLayout());
-  const [row4, setRow4] = useState<string[]>(getFourthRowLayout());
+export default function VirtualRandomKeyboard(
+  props: Readonly<{
+    text: string;
+    setText: React.Dispatch<React.SetStateAction<string>>;
+  }>
+) {
+  const [symbolLayer, setSymbolLayer] = useState(false);
+  const [isShift, setIsShift] = useState(false);
+  const row1 = useMemo(() => getKeysFromLayout(10, 0), []);
+  const row2 = useMemo(() => getKeysFromLayout(10, 10), []);
+  const row3 = useMemo(() => getThirdRowLayout(), []);
+  const row4 = useMemo(() => getFourthRowLayout(), []);
+
+  const renderKey = (key: string) => {
+    if (!key.includes(' ')) {
+      return key;
+    } else if (isShift) {
+      return key.split(' ').at(0)?.toUpperCase();
+    } else {
+      return key.split(' ').at(Number(symbolLayer));
+    }
+  };
+
+  const renderStyle = (key: string) => {
+    if (key === '⇧') {
+      return styles.majKey;
+    }
+    if (key === '␣') {
+      return styles.spacebarKey;
+    }
+    if (key === '⏎') {
+      return styles.enterKey;
+    }
+    if (key === '←') {
+      return styles.backspaceKey;
+    }
+    if (key === '123') {
+      return styles.swapKey;
+    }
+    return null;
+  };
 
   const handleKeyEvent = (keyPressed: string) => {
     switch (keyPressed) {
@@ -30,7 +58,7 @@ export default function VirtualRandomKeyboard(props: {
         break;
       }
       case '⇧': {
-        // handleShiftEvent();
+        setIsShift(!isShift);
         break;
       }
       case '␣': {
@@ -42,7 +70,7 @@ export default function VirtualRandomKeyboard(props: {
         break;
       }
       case '123': {
-        //handle123Event();
+        setSymbolLayer(!symbolLayer);
         break;
       }
       default:
@@ -56,7 +84,7 @@ export default function VirtualRandomKeyboard(props: {
         {row1.map(key => {
           return (
             <TextTemplate variant="headlineSmall" style={styles.key} key={key}>
-              {key}
+              {renderKey(key)}
             </TextTemplate>
           );
         })}
@@ -65,7 +93,7 @@ export default function VirtualRandomKeyboard(props: {
         {row2.map(key => {
           return (
             <TextTemplate variant="headlineSmall" style={styles.key} key={key}>
-              {key}
+              {renderKey(key)}
             </TextTemplate>
           );
         })}
@@ -74,17 +102,11 @@ export default function VirtualRandomKeyboard(props: {
         {row3.map(key => {
           return (
             <TextTemplate
-              variant="headlineSmall"
-              style={
-                key === '⇧'
-                  ? [styles.key, styles.majKey]
-                  : key === '←'
-                    ? [styles.key, styles.backspaceKey]
-                    : styles.key
-              }
               key={key}
+              variant="headlineSmall"
+              style={[styles.key, renderStyle(key)]}
             >
-              {key}
+              {renderKey(key)}
             </TextTemplate>
           );
         })}
@@ -93,18 +115,11 @@ export default function VirtualRandomKeyboard(props: {
         {row4.map(key => {
           return (
             <TextTemplate
+              key={key}
               variant="headlineSmall"
-              style={
-                key === '␣'
-                  ? [styles.key, styles.spacebarKey]
-                  : key === '123'
-                    ? [styles.key, styles.swapKey]
-                    : key === '⏎'
-                      ? [styles.key, styles.enterKey]
-                      : styles.key
-              }
+              style={[styles.key, renderStyle(key)]}
             >
-              {key}
+              {renderKey(key)}
             </TextTemplate>
           );
         })}
