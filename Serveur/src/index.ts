@@ -1,5 +1,4 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
 import jwt from "jsonwebtoken";
 import { noteMutations } from "./mutation/NoteMutations.js";
 import { toDoMutations } from "./mutation/ToDoMutations.js";
@@ -11,7 +10,15 @@ import { DateScalar } from "./types/DateScalar.js";
 import { typeDefs } from "./types/TypeDefs.js";
 import { agendaQueries } from "./queries/AgendaQueries.js";
 import { agendaMutations } from "./mutation/AgendaMutations.js";
+import express from 'express';
+import { expressMiddleware } from '@apollo/server/express4';
+import cors from 'cors';
+import prisma from "./prismaClient.js";
+import bodyParser from "body-parser";
+import cookies from "cookie-parser";
 
+const app = express();
+app.use(cookies())
 //Création du prisma client
 const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
 
@@ -45,11 +52,13 @@ const server = new ApolloServer({
 
 let port: number = +process.env.PORT;
 
-const { url } = await startStandaloneServer(server, {
+await server.start();
+
+// Specify the path where we'd like to mount our server
+app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(server,{
   // Your async context function should async and
   // return an object
-  listen: { port: port },
-  context: async ({ req }) => {
+  context: async ({ req,res }) => {
     const token = req.headers.authorization || "";
     // Verify the token and then return the user associated.
     let userInfo;
@@ -60,8 +69,82 @@ const { url } = await startStandaloneServer(server, {
         return { msg: "Verification failed." };
       }
     }
-    return { userInfo };
+    return { userInfo, res };
   },
-});
+} ));
 
-console.log(`🚀  Server ready at: ${url}`);
+app.post('/login',bodyParser.json(), async(req, res) => {
+  console.log(req.body)
+  // Destructuring username & password from body
+  const { username, password } = req.body;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+      password: password,
+    },
+  });
+  // Checking if credentials match
+  if (user) {
+
+    //creating a access token
+    const accessToken = jwt.sign({
+      username: user.username,
+    }, SECRET_KEY, {
+      expiresIn: '10m'
+    });
+    // Creating refresh token not that expiry of refresh
+    //token is greater than the access token
+
+    const refreshToken = jwt.sign({
+      username: user.username,
+    }, SECRET_KEY, { expiresIn: '10m' });
+
+    // Assigning refresh token in http-only cookie
+    res.cookie('jwt', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000
+    });
+    return res.json({ accessToken });
+  }
+  else {
+    // Return unauthorized error if credentials don't match
+    return res.status(406).json({
+      message: 'Invalid credentials'
+    });
+  }
+})
+
+app.post('/refresh', (req, res) => {
+  if (req.cookies?.jwt) {
+
+    // Destructuring refreshToken from cookie
+    const refreshToken = req.cookies.jwt;
+
+    // Verifying refresh token
+    jwt.verify(refreshToken, SECRET_KEY,
+        (err, decoded) => {
+          if (err) {
+            // Wrong Refesh Token
+            return res.status(406).json({ message: 'Unauthorized' });
+          }
+          else {
+
+            const accessToken = jwt.sign({
+              username: decoded.username,
+            }, process.env.ACCESS_TOKEN_SECRET, {
+              expiresIn: '10m'
+            });
+            return res.json({ accessToken });
+          }
+        })
+  } else {
+    return res.status(406).json({ message: 'Unauthorized' });
+  }
+})
+
+app.listen(port, function(){
+  console.log(`🚀  Server ready`);
+})
+
