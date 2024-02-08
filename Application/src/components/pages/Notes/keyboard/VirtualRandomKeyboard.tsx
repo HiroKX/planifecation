@@ -1,13 +1,11 @@
 import { useState, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native/';
-import TextTemplate from '../../../atoms/styles/TextTemplate';
+import KeyboardButton from '../../../atoms/styles/KeyboardButton';
 import {
   getFourthRowLayout,
   getKeysFromLayout,
   getThirdRowLayout,
 } from './keyboardKeys';
-import { theme } from '../../../organisms/OwnPaperProvider';
-import { getColorForBackground } from '../../../../services/utils/utils';
 
 export default function VirtualRandomKeyboard(
   props: Readonly<{
@@ -22,13 +20,13 @@ export default function VirtualRandomKeyboard(
   const row3 = useMemo(() => getThirdRowLayout(), []);
   const row4 = useMemo(() => getFourthRowLayout(), []);
 
-  const renderKey = (key: string) => {
+  const renderKey : (key :string) => string = (key: string) => {
     if (!key.includes(' ')) {
       return key;
     } else if (isShift) {
-      return key.split(' ').at(0)?.toUpperCase();
+      return key.split(' ').at(0)?.toUpperCase() ?? "";
     } else {
-      return key.split(' ').at(Number(symbolLayer));
+      return key.split(' ').at(Number(symbolLayer)) ?? "";
     }
   };
 
@@ -83,44 +81,44 @@ export default function VirtualRandomKeyboard(
       <View style={styles.row}>
         {row1.map(key => {
           return (
-            <TextTemplate variant="headlineSmall" style={styles.key} key={key}>
+            <KeyboardButton style={styles.key} key={key} onPress={() => handleKeyEvent(renderKey(key))}>
               {renderKey(key)}
-            </TextTemplate>
+            </KeyboardButton>
           );
         })}
       </View>
       <View style={styles.row}>
         {row2.map(key => {
           return (
-            <TextTemplate variant="headlineSmall" style={styles.key} key={key}>
+            <KeyboardButton style={styles.key} key={key} onPress={() => handleKeyEvent(renderKey(key))}>
               {renderKey(key)}
-            </TextTemplate>
+            </KeyboardButton>
           );
         })}
       </View>
       <View style={[styles.row]}>
         {row3.map(key => {
           return (
-            <TextTemplate
+            <KeyboardButton
               key={key}
-              variant="headlineSmall"
               style={[styles.key, renderStyle(key)]}
+              onPress={() => handleKeyEvent(renderKey(key))}
             >
               {renderKey(key)}
-            </TextTemplate>
+            </KeyboardButton>
           );
         })}
       </View>
       <View style={styles.row}>
         {row4.map(key => {
           return (
-            <TextTemplate
-              key={key}
-              variant="headlineSmall"
-              style={[styles.key, renderStyle(key)]}
-            >
-              {renderKey(key)}
-            </TextTemplate>
+              <KeyboardButton
+                key={key}
+                style={[styles.key, renderStyle(key)]}
+                onPress={() => handleKeyEvent(renderKey(key))}
+              >
+                {renderKey(key)}
+              </KeyboardButton>
           );
         })}
       </View>
@@ -138,34 +136,23 @@ export const styles = StyleSheet.create({
   },
   majKey: {
     flex: 3,
-    fontWeight: 'bold',
-    color: theme.colors.primary,
   },
   swapKey: {
-    color: theme.colors.primary,
+    flex:1
   },
   enterKey: {
     flex: 2,
-    fontWeight: 'bold',
-    color: theme.colors.primary,
   },
   spacebarKey: {
-    flex: 5,
-    fontWeight: 'bold',
-    color: theme.colors.primary,
+    flex: 6,
   },
   backspaceKey: {
     flex: 2,
-    fontWeight: 'bold',
-    color: theme.colors.primary,
   },
   key: {
     margin: 1,
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: theme.colors.secondary,
-    color: getColorForBackground(theme.colors.secondary),
-    textAlign: 'center',
-    verticalAlign: 'middle',
+    borderRadius:0,
   },
 });
