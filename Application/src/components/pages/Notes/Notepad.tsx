@@ -7,7 +7,6 @@ import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
-import { getColorForBackground } from '../../../services/utils/utils';
 import VirtualRandomKeyboard from './keyboard/VirtualRandomKeyboard';
 
 type Props = NativeStackScreenProps<StackParamList>;
