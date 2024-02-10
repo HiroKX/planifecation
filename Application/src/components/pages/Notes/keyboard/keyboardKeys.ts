@@ -61,10 +61,10 @@ export const secondKeysLayout: string[] = [
   '+',
 ];
 
+// Shuffles a KeyboardLayout
 export function getShuffledLayout(layout: string[]): string[] {
   const alteredLayout: string[] = layout;
   const returnLayout: string[] = [];
-  console.log('alteredLayout Length = ' + alteredLayout.length);
   for (let i = alteredLayout.length; i > 0; i--) {
     const index = Math.floor(Math.random() * i);
     returnLayout.push(
@@ -72,14 +72,14 @@ export function getShuffledLayout(layout: string[]): string[] {
     );
     alteredLayout.splice(index, 1);
   }
-  console.log('returnLayout : ' + returnLayout);
-  console.log('returnLayout.length : ' + returnLayout.length);
   return returnLayout;
 }
 
+// Shuffle the 2 keyboards
 export const firstRandomLayout = getShuffledLayout(firstKeysLayout);
 export const secondRandomLayout = getShuffledLayout(secondKeysLayout);
 
+// Creates an Array of tuples of the two random keyboards
 export function getKeysFromLayout(nb: number, startIndex: number): string[] {
   const response: string[] = [];
   for (let i = startIndex; i < startIndex + nb; i++) {
