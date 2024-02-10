@@ -6,6 +6,8 @@ import {
   getKeysFromLayout,
   getThirdRowLayout,
 } from './keyboardKeys';
+import { getColorForBackground } from '../../../../services/utils/utils';
+import { theme } from '../../../organisms/OwnPaperProvider';
 
 export default function VirtualRandomKeyboard(
   props: Readonly<{
@@ -49,10 +51,17 @@ export default function VirtualRandomKeyboard(
     return null;
   };
 
+  const renderLabelStyle = (key: string) => {
+    if (key === '⇧' || key === '␣' || key === '⏎' || key === '←' || key ==='123') {
+      return styles.specialKeyLabel;
+    }
+    return null;
+  }
+
   const handleKeyEvent = (keyPressed: string) => {
     switch (keyPressed) {
       case '⏎': {
-        props.setText(props.text + '\\n');
+        props.setText(props.text + `\n`);
         break;
       }
       case '⇧': {
@@ -81,7 +90,7 @@ export default function VirtualRandomKeyboard(
       <View style={styles.row}>
         {row1.map(key => {
           return (
-            <KeyboardButton style={styles.key} key={key} onPress={() => handleKeyEvent(renderKey(key))}>
+            <KeyboardButton style={styles.key} labelStyle={styles.keyLabel} key={key} onPress={() => handleKeyEvent(renderKey(key))} >
               {renderKey(key)}
             </KeyboardButton>
           );
@@ -90,7 +99,7 @@ export default function VirtualRandomKeyboard(
       <View style={styles.row}>
         {row2.map(key => {
           return (
-            <KeyboardButton style={styles.key} key={key} onPress={() => handleKeyEvent(renderKey(key))}>
+            <KeyboardButton style={styles.key} labelStyle={styles.keyLabel} key={key} onPress={() => handleKeyEvent(renderKey(key))}>
               {renderKey(key)}
             </KeyboardButton>
           );
@@ -103,6 +112,7 @@ export default function VirtualRandomKeyboard(
               key={key}
               style={[styles.key, renderStyle(key)]}
               onPress={() => handleKeyEvent(renderKey(key))}
+              labelStyle={[styles.keyLabel ,renderLabelStyle(key)]}
             >
               {renderKey(key)}
             </KeyboardButton>
@@ -116,6 +126,7 @@ export default function VirtualRandomKeyboard(
                 key={key}
                 style={[styles.key, renderStyle(key)]}
                 onPress={() => handleKeyEvent(renderKey(key))}
+                labelStyle={[styles.keyLabel ,renderLabelStyle(key)]}
               >
                 {renderKey(key)}
               </KeyboardButton>
@@ -138,21 +149,36 @@ export const styles = StyleSheet.create({
     flex: 3,
   },
   swapKey: {
-    flex:1
+    flex:2
   },
   enterKey: {
     flex: 2,
   },
   spacebarKey: {
-    flex: 6,
+    flex: 5,
   },
   backspaceKey: {
     flex: 2,
   },
   key: {
-    margin: 1,
+    margin: 0,
     flex: 1,
     alignSelf: 'stretch',
     borderRadius:0,
+    borderWidth:1,
+    borderColor:theme.colors.primary,
+    height:60,
+    justifyContent:'center'
+  },
+  keyLabel: {
+    marginHorizontal:0,
+    fontSize:20,
+    color:getColorForBackground(theme.colors.secondary),
+    alignSelf:'stretch',
+    marginVertical:20,
+  },
+  specialKeyLabel: {
+    fontWeight:'bold',
+    color: theme.colors.primary
   },
 });

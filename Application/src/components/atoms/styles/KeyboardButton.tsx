@@ -13,7 +13,7 @@ export default function KeyboardButton(
       style={[styles.button ,props.style]}
       mode={props.mode ?? 'text'}
       compact={props.compact ?? true}
-      labelStyle={{marginHorizontal:0}}
+      labelStyle={props.labelStyle ?? {marginHorizontal:0}}
       textColor={props.textColor ?? undefined}
       buttonColor={props.buttonColor ?? theme.colors.secondary}
       {...props}

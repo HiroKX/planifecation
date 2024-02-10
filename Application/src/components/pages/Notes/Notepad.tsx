@@ -90,12 +90,13 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
   },
   textInput: {
-    flex: 10,
+    flex: 9,
     borderColor: theme.colors.primary,
     pointerEvents: 'none',
   },
   keyboard: {
-    flex: 6,
-    margin: 5,
+    flex: 4,
+    padding: 0,
+    backgroundColor: theme.colors.secondary,
   },
 });
