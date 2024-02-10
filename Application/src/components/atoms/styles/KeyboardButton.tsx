@@ -10,10 +10,10 @@ export default function KeyboardButton(
   return (
     <PaperButton
       theme={props.theme ?? undefined}
-      style={[styles.button ,props.style]}
+      style={[styles.button, props.style]}
       mode={props.mode ?? 'text'}
       compact={props.compact ?? true}
-      labelStyle={props.labelStyle ?? {marginHorizontal:0}}
+      labelStyle={props.labelStyle ?? { marginHorizontal: 0 }}
       textColor={props.textColor ?? undefined}
       buttonColor={props.buttonColor ?? theme.colors.secondary}
       {...props}
@@ -22,6 +22,5 @@ export default function KeyboardButton(
 }
 
 const styles = StyleSheet.create({
-  button: {
-  },
+  button: {},
 });

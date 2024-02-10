@@ -22,13 +22,13 @@ export default function VirtualRandomKeyboard(
   const row3 = useMemo(() => getThirdRowLayout(), []);
   const row4 = useMemo(() => getFourthRowLayout(), []);
 
-  const renderKey : (key :string) => string = (key: string) => {
+  const renderKey: (key: string) => string = (key: string) => {
     if (!key.includes(' ')) {
       return key;
     } else if (isShift) {
-      return key.split(' ').at(0)?.toUpperCase() ?? "";
+      return key.split(' ').at(0)?.toUpperCase() ?? '';
     } else {
-      return key.split(' ').at(Number(symbolLayer)) ?? "";
+      return key.split(' ').at(Number(symbolLayer)) ?? '';
     }
   };
 
@@ -52,11 +52,17 @@ export default function VirtualRandomKeyboard(
   };
 
   const renderLabelStyle = (key: string) => {
-    if (key === '⇧' || key === '␣' || key === '⏎' || key === '←' || key ==='123') {
+    if (
+      key === '⇧' ||
+      key === '␣' ||
+      key === '⏎' ||
+      key === '←' ||
+      key === '123'
+    ) {
       return styles.specialKeyLabel;
     }
     return null;
-  }
+  };
 
   const handleKeyEvent = (keyPressed: string) => {
     switch (keyPressed) {
@@ -90,7 +96,12 @@ export default function VirtualRandomKeyboard(
       <View style={styles.row}>
         {row1.map(key => {
           return (
-            <KeyboardButton style={styles.key} labelStyle={styles.keyLabel} key={key} onPress={() => handleKeyEvent(renderKey(key))} >
+            <KeyboardButton
+              style={styles.key}
+              labelStyle={styles.keyLabel}
+              key={key}
+              onPress={() => handleKeyEvent(renderKey(key))}
+            >
               {renderKey(key)}
             </KeyboardButton>
           );
@@ -99,7 +110,12 @@ export default function VirtualRandomKeyboard(
       <View style={styles.row}>
         {row2.map(key => {
           return (
-            <KeyboardButton style={styles.key} labelStyle={styles.keyLabel} key={key} onPress={() => handleKeyEvent(renderKey(key))}>
+            <KeyboardButton
+              style={styles.key}
+              labelStyle={styles.keyLabel}
+              key={key}
+              onPress={() => handleKeyEvent(renderKey(key))}
+            >
               {renderKey(key)}
             </KeyboardButton>
           );
@@ -112,7 +128,7 @@ export default function VirtualRandomKeyboard(
               key={key}
               style={[styles.key, renderStyle(key)]}
               onPress={() => handleKeyEvent(renderKey(key))}
-              labelStyle={[styles.keyLabel ,renderLabelStyle(key)]}
+              labelStyle={[styles.keyLabel, renderLabelStyle(key)]}
             >
               {renderKey(key)}
             </KeyboardButton>
@@ -122,14 +138,14 @@ export default function VirtualRandomKeyboard(
       <View style={styles.row}>
         {row4.map(key => {
           return (
-              <KeyboardButton
-                key={key}
-                style={[styles.key, renderStyle(key)]}
-                onPress={() => handleKeyEvent(renderKey(key))}
-                labelStyle={[styles.keyLabel ,renderLabelStyle(key)]}
-              >
-                {renderKey(key)}
-              </KeyboardButton>
+            <KeyboardButton
+              key={key}
+              style={[styles.key, renderStyle(key)]}
+              onPress={() => handleKeyEvent(renderKey(key))}
+              labelStyle={[styles.keyLabel, renderLabelStyle(key)]}
+            >
+              {renderKey(key)}
+            </KeyboardButton>
           );
         })}
       </View>
@@ -149,7 +165,7 @@ export const styles = StyleSheet.create({
     flex: 3,
   },
   swapKey: {
-    flex:2
+    flex: 2,
   },
   enterKey: {
     flex: 2,
@@ -164,21 +180,21 @@ export const styles = StyleSheet.create({
     margin: 0,
     flex: 1,
     alignSelf: 'stretch',
-    borderRadius:0,
-    borderWidth:1,
-    borderColor:theme.colors.primary,
-    height:60,
-    justifyContent:'center'
+    borderRadius: 0,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    height: 60,
+    justifyContent: 'center',
   },
   keyLabel: {
-    marginHorizontal:0,
-    fontSize:20,
-    color:getColorForBackground(theme.colors.secondary),
-    alignSelf:'stretch',
-    marginVertical:20,
+    marginHorizontal: 0,
+    fontSize: 20,
+    color: getColorForBackground(theme.colors.secondary),
+    alignSelf: 'stretch',
+    marginVertical: 20,
   },
   specialKeyLabel: {
-    fontWeight:'bold',
-    color: theme.colors.primary
+    fontWeight: 'bold',
+    color: theme.colors.primary,
   },
 });
