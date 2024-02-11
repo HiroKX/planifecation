@@ -105,9 +105,13 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     };
 
     if (isLoading) {
-      return <View><ActivityIndicator size="large" color="#0000ff" /></View>
+      return (
+        <View>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      );
     } else {
-    return (
+      return (
         <View>
           <SurfaceTemplate
             style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
@@ -148,7 +152,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           </Portal>
         </View>
       );
-    };
+    }
   };
 
   return (

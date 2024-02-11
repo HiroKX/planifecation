@@ -56,9 +56,9 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         console.log('Une erreur est survenue à la création');
         props.navigation.goBack();
       });
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   };
 
   const id = useMemo(() => props.localEvent.id ?? undefined, []);
@@ -144,7 +144,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
           Enregistrer l'évènement
         </ButtonTemplate>
       </SurfaceTemplate>
-      { isLoading? ( <ActivityIndicator size="large" color="#0000ff" />): null}
+      {isLoading ? <ActivityIndicator size="large" color="#0000ff" /> : null}
       <ModalTemplate visible={visible} onDismiss={() => setVisible(false)}>
         {renderColorPicker()}
       </ModalTemplate>

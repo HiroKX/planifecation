@@ -94,7 +94,6 @@ export default function Appointments({
   const client = useApolloClient();
   const [isLoading, setIsLoading] = useState(true);
 
-
   useEffect(() => {
     async function getAgendaEvents() {
       await GetAllAgendaEvents(client).then((agendaEvents: AgendaEvent[]) => {
@@ -123,11 +122,10 @@ export default function Appointments({
         {label}
       </Text>
     );
-    
   };
 
   const firstTabLabel = () => {
-    return tabLabel(monthDisplay)
+    return tabLabel(monthDisplay);
   };
   const secondTabLabel = () => {
     return tabLabel(dayDisplay);
@@ -142,15 +140,23 @@ export default function Appointments({
 
   const RenderCalendar = () => {
     if (isLoading) {
-      return <Text><ActivityIndicator size="large" color="#0000ff" /></Text>
+      return (
+        <Text>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </Text>
+      );
     } else {
-      return <CalendarTemplate navigation={navigation} /> 
+      return <CalendarTemplate navigation={navigation} />;
     }
   };
 
   const RenderAgenda = () => {
     if (isLoading) {
-      return <Text><ActivityIndicator size="large" color="#0000ff" /></Text>
+      return (
+        <Text>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </Text>
+      );
     } else {
       return <AgendaTemplate navigation={navigation} />;
     }
@@ -158,7 +164,11 @@ export default function Appointments({
 
   const RenderEventDetails = () => {
     if (isLoading) {
-      return <Text><ActivityIndicator size="large" color="#0000ff" /></Text>
+      return (
+        <Text>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </Text>
+      );
     } else {
       return (
         <AgendaEventDetails
@@ -168,7 +178,7 @@ export default function Appointments({
       );
     }
   };
-  
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -189,7 +199,6 @@ export default function Appointments({
       />
       <Tab.Screen
         name="Agendeux"
-        
         component={RenderAgenda}
         options={{
           lazy: true,
@@ -219,7 +228,6 @@ function AgendaTemplate({ navigation }) {
     };
     edit.value = true;
     navigation.navigate('Agentrois');
-
   }
 
   const renderEvents = (event: TimelineEventProps) => {
@@ -284,10 +292,8 @@ function AgendaTemplate({ navigation }) {
 function CalendarTemplate({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  
   return (
     <View style={{ flex: 1 }}>
-      
       <Calendar
         markingType="multi-dot"
         current={currentDateDisplay.value}

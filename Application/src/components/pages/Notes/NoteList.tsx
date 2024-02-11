@@ -106,7 +106,11 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     );
   };
   if (isLoading) {
-    return <View><ActivityIndicator size="large" color="#0000ff" /></View>
+    return (
+      <View>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   } else {
     return (
       <View style={{ flex: 1, padding: 10 }}>
@@ -125,5 +129,5 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
         </SurfaceTemplate>
       </View>
     );
-  };
+  }
 }
