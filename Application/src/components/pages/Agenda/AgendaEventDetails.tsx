@@ -3,7 +3,7 @@ import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { getColorForBackground } from '../../../services/utils/utils';
 import { useState, useMemo } from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import ColorPicker, {
   HueCircular,
@@ -23,7 +23,10 @@ declare type Props = { localEvent: Event; navigation: any };
 export default function AgendaEventDetails(props: Readonly<Props>) {
   const client = useApolloClient();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const addAgendaEvent = () => {
+    setIsLoading(true);
     if (id != undefined) {
       UpdateAgendaEvent(
         client,
@@ -53,6 +56,9 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         console.log('Une erreur est survenue à la création');
         props.navigation.goBack();
       });
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
   };
 
   const id = useMemo(() => props.localEvent.id ?? undefined, []);
@@ -138,6 +144,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
           Enregistrer l'évènement
         </ButtonTemplate>
       </SurfaceTemplate>
+      { isLoading? ( <ActivityIndicator size="large" color="#0000ff" />): null}
       <ModalTemplate visible={visible} onDismiss={() => setVisible(false)}>
         {renderColorPicker()}
       </ModalTemplate>

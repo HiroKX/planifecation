@@ -8,7 +8,7 @@ import {
 } from '../../../controllers/NoteController';
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import { Alert, FlatList, View } from 'react-native';
+import { ActivityIndicator, Alert, FlatList, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
@@ -25,6 +25,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   const [updatedNotes, setUpdatedNotes] = useState(false);
   const client: ApolloClient<Object> = useApolloClient();
   const isFocused: boolean = useIsFocused();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect((): void => {
     async function fetchNotes(): Promise<void> {
@@ -38,12 +39,17 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
       });
       setUpdatedNotes(false);
     }
+    setIsLoading(true);
     fetchNotes().then();
+    // timeout pour montrer que ça marche
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, [updatedNotes, isFocused]);
 
   const confirmDelete = async (id: number): Promise<void> => {
     await DeleteNote(client, id);
-    setUpdatedNotes(true);
+    //setUpdatedNotes(true);
   };
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
@@ -99,20 +105,25 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
       </View>
     );
   };
-  return (
-    <View style={{ flex: 1, padding: 10 }}>
-      <SurfaceTemplate>
-        <ButtonTemplate
-          onPress={(): void => {
-            props.navigation.navigate('Bloc-Notes');
-          }}
-        >
-          Ajouter
-        </ButtonTemplate>
-      </SurfaceTemplate>
-      <SurfaceTemplate style={{ flex: 5 }}>
-        <FlatList data={notes} renderItem={renderNotes} />
-      </SurfaceTemplate>
-    </View>
-  );
+  if (isLoading) {
+    return <View><ActivityIndicator size="large" color="#0000ff" /></View>
+  } else {
+    return (
+      <View style={{ flex: 1, padding: 10 }}>
+        {/* <ActivityIndicator size="large" color="#0000ff" /> */}
+        <SurfaceTemplate>
+          <ButtonTemplate
+            onPress={(): void => {
+              props.navigation.navigate('Bloc-Notes');
+            }}
+          >
+            Ajouter
+          </ButtonTemplate>
+        </SurfaceTemplate>
+        <SurfaceTemplate style={{ flex: 5 }}>
+          <FlatList data={notes} renderItem={renderNotes} />
+        </SurfaceTemplate>
+      </View>
+    );
+  };
 }

@@ -18,6 +18,7 @@ import {
   GetAllTodos,
   UpdateTodo,
 } from '../../../controllers/TodoController';
+import ActivityIndicator from 'react-native-paper/src/components/ActivityIndicator';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -31,6 +32,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   const [visibleModal, setVisibleModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState('');
   const [updatedTodos, setUpdatedTodos] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const client: ApolloClient<Object> = useApolloClient();
 
@@ -46,7 +48,11 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
         setUpdatedTodos(false);
       });
     }
+    setIsLoading(true);
     getTodos().then();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, [updatedTodos]);
 
   const handleAddTodo = async () => {
@@ -91,50 +97,58 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           !todoItem.isDone
         );
       }
+      setIsLoading(true);
       setUpdatedTodos(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     };
 
+    if (isLoading) {
+      return <View><ActivityIndicator size="large" color="#0000ff" /></View>
+    } else {
     return (
-      <View>
-        <SurfaceTemplate
-          style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
-        >
-          <CheckboxTemplate
-            status={item.isDone ? 'checked' : 'unchecked'}
-            onPress={(): void => {
-              setCurrentTodo(item.id);
-              setVisibleModal(true);
-            }}
-          />
-          <TextInputTemplate
-            right={
-              <TextInput.Icon
-                icon={'trash-can'}
-                color={theme.colors.primary}
-                onPress={() => handleDeleteTodo(item)}
-              />
-            }
-            mode="outlined"
-            style={{ flex: 1, paddingBottom: 0, paddingTop: 0 }}
-            multiline={true}
-            editable={false}
-            onChangeText={edit => (item.content = edit)}
-            value={item.content}
-            outlineStyle={{
-              display: 'none',
-            }}
-          ></TextInputTemplate>
-        </SurfaceTemplate>
-        <Portal>
-          <ModalTemplate
-            visible={visibleModal}
-            onDismiss={() => setVisibleModal(false)}
+        <View>
+          <SurfaceTemplate
+            style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
           >
-            <CheckTodo returnFunc={funcDrawing} />
-          </ModalTemplate>
-        </Portal>
-      </View>
-    );
+            <CheckboxTemplate
+              status={item.isDone ? 'checked' : 'unchecked'}
+              onPress={(): void => {
+                setCurrentTodo(item.id);
+                setVisibleModal(true);
+              }}
+            />
+            <TextInputTemplate
+              right={
+                <TextInput.Icon
+                  icon={'trash-can'}
+                  color={theme.colors.primary}
+                  onPress={() => handleDeleteTodo(item)}
+                />
+              }
+              mode="outlined"
+              style={{ flex: 1, paddingBottom: 0, paddingTop: 0 }}
+              multiline={true}
+              editable={false}
+              onChangeText={edit => (item.content = edit)}
+              value={item.content}
+              outlineStyle={{
+                display: 'none',
+              }}
+            ></TextInputTemplate>
+          </SurfaceTemplate>
+          <Portal>
+            <ModalTemplate
+              visible={visibleModal}
+              onDismiss={() => setVisibleModal(false)}
+            >
+              <CheckTodo returnFunc={funcDrawing} />
+            </ModalTemplate>
+          </Portal>
+        </View>
+      );
+    };
   };
 
   return (

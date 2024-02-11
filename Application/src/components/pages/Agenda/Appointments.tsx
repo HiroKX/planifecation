@@ -16,12 +16,12 @@ import {
 import { theme } from '../../organisms/OwnPaperProvider';
 import AgendaEventDetails from './AgendaEventDetails';
 import { useApolloClient } from '@apollo/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   GetAllAgendaEvents,
   agendaEventToEvent,
 } from '../../../controllers/AgendaController';
-import { TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { Calendar, Timeline, TimelineEventProps } from 'react-native-calendars';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
@@ -92,6 +92,8 @@ export default function Appointments({
   navigation,
 }: Readonly<NativeStackScreenProps<StackParamListAgenda>>) {
   const client = useApolloClient();
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     async function getAgendaEvents() {
@@ -103,7 +105,9 @@ export default function Appointments({
         events.value = response;
       });
     }
+    setIsLoading(true);
     getAgendaEvents();
+    setIsLoading(false);
   }, []);
 
   const monthDisplay = useComputed(() => {
@@ -119,10 +123,11 @@ export default function Appointments({
         {label}
       </Text>
     );
+    
   };
 
   const firstTabLabel = () => {
-    return tabLabel(monthDisplay);
+    return tabLabel(monthDisplay)
   };
   const secondTabLabel = () => {
     return tabLabel(dayDisplay);
@@ -136,21 +141,34 @@ export default function Appointments({
   // Forced to have it here as it has to re-render everytime you get on that tab
 
   const RenderCalendar = () => {
-    return <CalendarTemplate navigation={navigation} />;
+    if (isLoading) {
+      return <Text><ActivityIndicator size="large" color="#0000ff" /></Text>
+    } else {
+      return <CalendarTemplate navigation={navigation} /> 
+    }
   };
 
   const RenderAgenda = () => {
-    return <AgendaTemplate navigation={navigation} />;
+    if (isLoading) {
+      return <Text><ActivityIndicator size="large" color="#0000ff" /></Text>
+    } else {
+      return <AgendaTemplate navigation={navigation} />;
+    }
   };
 
   const RenderEventDetails = () => {
-    return (
-      <AgendaEventDetails
-        localEvent={selectedEvent.value}
-        navigation={navigation}
-      />
-    );
+    if (isLoading) {
+      return <Text><ActivityIndicator size="large" color="#0000ff" /></Text>
+    } else {
+      return (
+        <AgendaEventDetails
+          localEvent={selectedEvent.value}
+          navigation={navigation}
+        />
+      );
+    }
   };
+  
   return (
     <Tab.Navigator
       screenOptions={{
@@ -171,6 +189,7 @@ export default function Appointments({
       />
       <Tab.Screen
         name="Agendeux"
+        
         component={RenderAgenda}
         options={{
           lazy: true,
@@ -200,6 +219,7 @@ function AgendaTemplate({ navigation }) {
     };
     edit.value = true;
     navigation.navigate('Agentrois');
+
   }
 
   const renderEvents = (event: TimelineEventProps) => {
@@ -262,8 +282,12 @@ function AgendaTemplate({ navigation }) {
 }
 
 function CalendarTemplate({ navigation }) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  
   return (
     <View style={{ flex: 1 }}>
+      
       <Calendar
         markingType="multi-dot"
         current={currentDateDisplay.value}
