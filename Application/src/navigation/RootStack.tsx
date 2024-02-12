@@ -15,6 +15,7 @@ import NoteList from '../components/pages/Notes/NoteList';
 import NotePad, { NotepadParams } from '../components/pages/Notes/Notepad';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import TestSKIA from '../components/pages/TestSKIA';
+import GyroscopTest from '../components/organisms/GyroscopTest';
 
 export type StackParamList = {
   Accueil: undefined;
@@ -29,6 +30,7 @@ export type StackParamList = {
   'Liste toute douce': undefined;
   'Test SKIA': undefined;
   'Liste des notes': undefined;
+  'Test Gyro': undefined;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -58,6 +60,7 @@ function RootStack(): ReactNode {
         <Stack.Screen name="Agenda" component={Appointments} />
         <Stack.Screen name="Liste toute douce" component={TodoList} />
         <Stack.Screen name="Test SKIA" component={TestSKIA} />
+        <Stack.Screen name="Test Gyro" component={GyroscopTest} />
       </Stack.Navigator>
     </GestureHandlerRootView>
   );

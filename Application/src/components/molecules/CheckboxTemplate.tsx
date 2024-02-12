@@ -1,7 +1,7 @@
 import { IconButton, IconButtonProps } from 'react-native-paper';
 
 interface IconOverrideProps {
-  iconButton: IconButtonProps;
+  iconButton?: IconButtonProps;
   status: 'checked' | 'unchecked';
   onPress: () => void;
 }
