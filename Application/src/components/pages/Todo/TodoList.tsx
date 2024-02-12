@@ -50,9 +50,10 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     }
     setIsLoading(true);
     getTodos().then();
+    // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 0);
   }, [updatedTodos]);
 
   const handleAddTodo = async () => {

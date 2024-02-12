@@ -106,7 +106,10 @@ export default function Appointments({
     }
     setIsLoading(true);
     getAgendaEvents();
-    setIsLoading(false);
+    //timeout à garder pour plus tard pour le booster de connexion
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 0);
   }, []);
 
   const monthDisplay = useComputed(() => {

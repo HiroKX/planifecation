@@ -56,9 +56,10 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         console.log('Une erreur est survenue à la création');
         props.navigation.goBack();
       });
+      // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 0);
   };
 
   const id = useMemo(() => props.localEvent.id ?? undefined, []);

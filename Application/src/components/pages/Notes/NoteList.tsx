@@ -41,10 +41,10 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     }
     setIsLoading(true);
     fetchNotes().then();
-    // timeout pour montrer que ça marche
+    // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 0);
   }, [updatedNotes, isFocused]);
 
   const confirmDelete = async (id: number): Promise<void> => {
