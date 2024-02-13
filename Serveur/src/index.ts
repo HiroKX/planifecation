@@ -91,7 +91,7 @@ app.post('/login',bodyParser.json(), async(req, res) => {
       id: user.id,
       username: user.username,
     }, SECRET_KEY, {
-      expiresIn: '10s'
+      expiresIn: '50s'
     });
 
 
@@ -112,12 +112,15 @@ app.post('/login',bodyParser.json(), async(req, res) => {
 
 app.post('/refresh', (req, res) => {
   const refreshToken = req.headers.authorization || "";
+  console.log("j'viens referesh")
   if (refreshToken) {
     // Verifying refresh token
     jwt.verify(refreshToken, SECRET_KEY,
         (err, decoded) => {
           if (err) {
             // Wrong Refesh Token
+            console.log("j'ai pas pu refresh unauthorized")
+
             return res.status(406).json({ message: 'Unauthorized' });
           }
           else {
@@ -126,18 +129,19 @@ app.post('/refresh', (req, res) => {
               id: decoded.id,
               username: decoded.username,
             }, SECRET_KEY, {
-              expiresIn: '10s'
+              expiresIn: '50s'
             });
 
             const refreshToken = jwt.sign({
               id: decoded.id,
               username: decoded.username,
             }, SECRET_KEY, { expiresIn: '1y' });
-
+            console.log("j'ai refresh referesh")
             return res.json({ accessToken, refreshToken });
           }
         })
   } else {
+    console.log("j'ai pas pu refresh unauthorized2")
     return res.status(406).json({ message: 'Unauthorized' });
   }
 })

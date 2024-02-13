@@ -76,9 +76,9 @@ const GET_ALL_EVENTS_BY_USERNAME = gql`
 export async function GetAllEventsFromUser(
   client: Readonly<ApolloClient<Object>>,
   username: Readonly<string>
-): Promise<AgendaEvent[]> {
+): Promise<AgendaEvent[]|void> {
   console.debug('AgendaService.GetAllEventsFromUser');
-  return client
+  client
     .query({
       query: GET_ALL_EVENTS_BY_USERNAME,
       variables: {
