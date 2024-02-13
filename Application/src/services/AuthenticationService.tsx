@@ -68,7 +68,7 @@ export async function RelogUserService(
     refreshToken: Readonly<string>,
 ): Promise<string[]> {
     console.debug('AuthenticationService.RelogUser');
-    return fetch(URI_AUTHENTICATION + "/refresh", {
+    return await fetch(URI_AUTHENTICATION + "/refresh", {
         method: "POST",
         headers: {
             "Content-type": "application/json",

@@ -69,10 +69,10 @@ export async function SignInUser(
     });
 }
 
-export async function RelogUser( client: Readonly<ApolloClient<Object>>): Promise<void> {
+export async function RelogUser( client: Readonly<ApolloClient<Object>>): Promise<boolean> {
   console.debug('AuthenticationController.RelogUser');
   const refreshToken = (await SecureStore.getItemAsync('loggedRefreshToken')) ?? '';
-  await RelogUserService(refreshToken)
+  return await RelogUserService(refreshToken)
       .then(async token => {
         console.log(token)
         if (token[0] != 'Not Logged !') {
@@ -80,6 +80,7 @@ export async function RelogUser( client: Readonly<ApolloClient<Object>>): Promis
           await updateClientToken(client, token[0]);
           await client.resetStore();
         }
+        return true;
       })
       .catch(error => {
         console.error('Error while logging user: ', error);
