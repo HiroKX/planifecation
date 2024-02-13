@@ -1,5 +1,6 @@
-import { ApolloClient, gql } from '@apollo/client';
+import {ApolloClient, ApolloError, gql} from '@apollo/client';
 import { AgendaEvent } from '../models/AgendaEvent';
+import { RelogUser } from '../controllers/AuthenticationController';
 
 const CREATE_EVENT = gql`
   mutation CreateAgendaEvent(
@@ -89,9 +90,11 @@ export async function GetAllEventsFromUser(
       console.debug('AgendaService: Events successfully retrieved :' + events);
       return events;
     })
-    .catch((error: any) => {
+    .catch((error: ApolloError) => {
       console.error('GetAllEventsFromUser error:', error);
-      return null;
+      if(error.message.includes("UNAUTHENTICATED")){
+        RelogUser(client);
+      }
     });
 }
 

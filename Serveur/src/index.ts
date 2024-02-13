@@ -15,10 +15,8 @@ import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import prisma from "./prismaClient.js";
 import bodyParser from "body-parser";
-import cookies from "cookie-parser";
 
 const app = express();
-app.use(cookies())
 //Création du prisma client
 const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
 
@@ -65,7 +63,9 @@ app.use('/graphql', cors<cors.CorsRequest>(), express.json(), expressMiddleware(
     if (token) {
       try {
         userInfo = jwt.verify(token, SECRET_KEY);
+        console.log(userInfo);
       } catch (err) {
+        console.log(err);
         return { msg: "Verification failed." };
       }
     }
@@ -84,29 +84,23 @@ app.post('/login',bodyParser.json(), async(req, res) => {
       password: password,
     },
   });
-  // Checking if credentials match
   if (user) {
 
     //creating a access token
     const accessToken = jwt.sign({
+      id: user.id,
       username: user.username,
     }, SECRET_KEY, {
-      expiresIn: '10m'
+      expiresIn: '10s'
     });
-    // Creating refresh token not that expiry of refresh
-    //token is greater than the access token
+
 
     const refreshToken = jwt.sign({
+      id: user.id,
       username: user.username,
-    }, SECRET_KEY, { expiresIn: '10m' });
+    }, SECRET_KEY, { expiresIn: '1y' });
 
-    // Assigning refresh token in http-only cookie
-    res.cookie('jwt', refreshToken, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000
-    });
-    return res.json({ accessToken });
+    return res.json({accessToken, refreshToken});
   }
   else {
     // Return unauthorized error if credentials don't match
@@ -117,11 +111,8 @@ app.post('/login',bodyParser.json(), async(req, res) => {
 })
 
 app.post('/refresh', (req, res) => {
-  if (req.cookies?.jwt) {
-
-    // Destructuring refreshToken from cookie
-    const refreshToken = req.cookies.jwt;
-
+  const refreshToken = req.headers.authorization || "";
+  if (refreshToken) {
     // Verifying refresh token
     jwt.verify(refreshToken, SECRET_KEY,
         (err, decoded) => {
@@ -132,11 +123,18 @@ app.post('/refresh', (req, res) => {
           else {
 
             const accessToken = jwt.sign({
+              id: decoded.id,
               username: decoded.username,
-            }, process.env.ACCESS_TOKEN_SECRET, {
-              expiresIn: '10m'
+            }, SECRET_KEY, {
+              expiresIn: '10s'
             });
-            return res.json({ accessToken });
+
+            const refreshToken = jwt.sign({
+              id: decoded.id,
+              username: decoded.username,
+            }, SECRET_KEY, { expiresIn: '1y' });
+
+            return res.json({ accessToken, refreshToken });
           }
         })
   } else {
