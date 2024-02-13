@@ -1,4 +1,5 @@
-import { ApolloClient, gql } from '@apollo/client';
+import {ApolloClient, ApolloError, gql} from '@apollo/client';
+import {RelogUser} from "../controllers/AuthenticationController";
 
 const CREATE_NOTE = gql`
   mutation Mutation($title: String!, $content: String!) {
@@ -48,8 +49,9 @@ const GET_ALL_NOTES = gql`
 export async function GetAllNotesFromUser(
   client: Readonly<ApolloClient<Object>>,
   username: Readonly<string>
-): Promise<Note[]> {
+): Promise<Note[]|null> {
   console.debug('NoteService.GetAllNotesFromUser');
+  console.log("rappel")
   return client
     .query({
       query: GET_ALL_NOTES,
@@ -58,6 +60,7 @@ export async function GetAllNotesFromUser(
       },
     })
     .then((response: any) => {
+      console.log("response")
       return response.data.getAllNotesByUsername.map((note: Note) => ({
         id: note.id,
         title: note.title,
@@ -66,10 +69,13 @@ export async function GetAllNotesFromUser(
         updatedAt: new Date(note.updatedAt),
       }));
     })
-    .catch((error: any) => {
-      console.error('GetAllNotesFromUser error:', error);
-      return null;
-    });
+      .catch(async (error: ApolloError) => {
+        if(error.message.includes("UNAUTHENTICATED")){
+          if( await RelogUser(client))
+            return GetAllNotesFromUser(client,username)
+        }
+        return null;
+      });
 }
 
 const GET_NOTE_BY_ID = gql`

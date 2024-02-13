@@ -94,8 +94,11 @@ export async function GetAllEventsFromUser(
       console.error('GetAllEventsFromUser error:', error);
       if(error.message.includes("UNAUTHENTICATED")){
         RelogUser(client);
+        return GetAllEventsFromUser(client,username)
       }
+      return null;
     });
+  return null;
 }
 
 const GET_EVENT_BY_ID = gql`

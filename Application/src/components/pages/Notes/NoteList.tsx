@@ -31,7 +31,8 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   useEffect((): void => {
     async function fetchNotes(): Promise<void> {
       await client.resetStore();
-      await GetAllNotes(client).then(notes => {
+      await GetAllNotes(client).then((notes: null|Note[]) => {
+          if(notes == null){ console.log("Lognbotes", notes); return;}
         let sortedNotes: Note[] = [...notes];
         sortedNotes = sortedNotes.sort((a: Note, b: Note): number => {
           return a.updatedAt > b.updatedAt ? -1 : 1;
