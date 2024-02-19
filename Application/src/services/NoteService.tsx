@@ -190,7 +190,7 @@ export async function DeleteNoteById(
       return true;
     })
     .catch((error: ApolloError) => {
-      console.error('UpdateNoteById error:', error);
+      console.error('DeleteNoteById error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
         RelogUser(client);
         return DeleteNoteById(client, id);

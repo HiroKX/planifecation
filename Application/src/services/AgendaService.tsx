@@ -250,7 +250,7 @@ export async function DeleteEventById(
       );
     })
     .catch((error: ApolloError) => {
-      console.error('UpdateEventById error:', error);
+      console.error('DeleteEventById error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
         RelogUser(client);
         DeleteEventById(client, id);
