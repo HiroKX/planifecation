@@ -10,7 +10,7 @@ import { GetLoggedUserUsername } from './AuthenticationController';
 
 export async function GetAllNotes(
   client: Readonly<ApolloClient<Object>>
-): Promise<Note[]|null> {
+): Promise<Note[] | null> {
   console.debug('NoteController.GetAllNotes');
   const username = await GetLoggedUserUsername();
   return await GetAllNotesFromUser(client, username);

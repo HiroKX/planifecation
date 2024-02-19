@@ -31,7 +31,7 @@ export async function GetAllAgendaEvents(
   console.debug('AgendaController.GetAllAgendaEvents');
   const username = await GetLoggedUserUsername();
   const events = await GetAllEventsFromUser(client, username);
-  if(events)
+  if (events)
     events.forEach(event => {
       console.debug(
         'Evenement : ' +
