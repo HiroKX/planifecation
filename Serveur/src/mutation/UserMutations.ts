@@ -43,5 +43,4 @@ export const userMutations = {
     });
     return exclude(user, ["password"]);
   },
-
 };

@@ -1,4 +1,4 @@
-import {ApolloClient, ApolloError, gql} from '@apollo/client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
 import { AgendaEvent } from '../models/AgendaEvent';
 import { RelogUser } from '../controllers/AuthenticationController';
 
@@ -55,14 +55,14 @@ export async function CreateEvent(
       );
       return event.id;
     })
-      .catch((error: ApolloError) => {
-        console.error('CreateEvent error:', error);
-        if(error.message.includes("UNAUTHENTICATED")){
-          RelogUser(client);
-          return CreateEvent(client,title, content, startDate, endDate, color)
-        }
-        return null;
-      });
+    .catch((error: ApolloError) => {
+      console.error('CreateEvent error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        RelogUser(client);
+        return CreateEvent(client, title, content, startDate, endDate, color);
+      }
+      return null;
+    });
 }
 
 const GET_ALL_EVENTS_BY_USERNAME = gql`
@@ -80,7 +80,7 @@ const GET_ALL_EVENTS_BY_USERNAME = gql`
 export async function GetAllEventsFromUser(
   client: Readonly<ApolloClient<Object>>,
   username: Readonly<string>
-): Promise<AgendaEvent[]|void> {
+): Promise<AgendaEvent[] | void> {
   console.debug('AgendaService.GetAllEventsFromUser');
   return client
     .query({
@@ -96,9 +96,9 @@ export async function GetAllEventsFromUser(
     })
     .catch((error: ApolloError) => {
       console.error('GetAllEventsFromUser error:', error);
-      if(error.message.includes("UNAUTHENTICATED")){
+      if (error.message.includes('UNAUTHENTICATED')) {
         RelogUser(client);
-        return GetAllEventsFromUser(client,username)
+        return GetAllEventsFromUser(client, username);
       }
       return null;
     });
@@ -138,14 +138,14 @@ export async function GetEventById(
       );
       return event;
     })
-      .catch((error: ApolloError) => {
-        console.error('GetEventById error:', error);
-        if(error.message.includes("UNAUTHENTICATED")){
-          RelogUser(client);
-          return GetEventById(client,id)
-        }
-        return null;
-      });
+    .catch((error: ApolloError) => {
+      console.error('GetEventById error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        RelogUser(client);
+        return GetEventById(client, id);
+      }
+      return null;
+    });
 }
 
 const UPDATE_EVENT_BY_ID = gql`
@@ -204,14 +204,22 @@ export async function UpdateEventById(
       );
       return event;
     })
-      .catch((error: ApolloError) => {
-        console.error('UpdateEventById error:', error);
-        if(error.message.includes("UNAUTHENTICATED")){
-          RelogUser(client);
-          return UpdateEventById(client,id,title, content, startDate, endDate, color)
-        }
-        return null;
-      });
+    .catch((error: ApolloError) => {
+      console.error('UpdateEventById error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        RelogUser(client);
+        return UpdateEventById(
+          client,
+          id,
+          title,
+          content,
+          startDate,
+          endDate,
+          color
+        );
+      }
+      return null;
+    });
 }
 
 const DELETE_EVENT_BY_ID = gql`
@@ -241,11 +249,11 @@ export async function DeleteEventById(
         'AgendaService: Event ' + event.id + ' successfully deleted'
       );
     })
-      .catch((error: ApolloError) => {
-        console.error('UpdateEventById error:', error);
-        if(error.message.includes("UNAUTHENTICATED")){
-          RelogUser(client);
-          DeleteEventById(client,id)
-        }
-      });
+    .catch((error: ApolloError) => {
+      console.error('UpdateEventById error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        RelogUser(client);
+        DeleteEventById(client, id);
+      }
+    });
 }
