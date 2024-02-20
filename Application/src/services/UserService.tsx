@@ -26,11 +26,11 @@ export async function DeleteUser(
       console.debug('Deleted user', username);
       return true;
     })
-    .catch((error: ApolloError) => {
+    .catch(async (error: ApolloError) => {
       console.error('DeletUser error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return DeleteUser(client, username);
+        let res = await RelogUser(client);
+        if (res) return DeleteUser(client, username);
       }
       return false;
     });
@@ -63,11 +63,11 @@ export async function UpdateUser(
       console.debug('User updated', username);
       return true;
     })
-    .catch((error: ApolloError) => {
+    .catch(async (error: ApolloError) => {
       console.error('UpdateUser error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return UpdateUser(client, username, password);
+        let res = await RelogUser(client);
+        if (res) return UpdateUser(client, username, password);
       }
       return false;
     });

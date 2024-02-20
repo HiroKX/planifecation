@@ -28,11 +28,11 @@ export async function CreateNote(
       console.debug('Created note : ', createdNote);
       return createdNote.id;
     })
-    .catch((error: ApolloError) => {
+    .catch(async (error: ApolloError) => {
       console.error('CreateNote error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return CreateNote(client, title, content);
+        let res = await RelogUser(client);
+        if (res) return CreateNote(client, title, content);
       }
       return 0;
     });
@@ -55,7 +55,6 @@ export async function GetAllNotesFromUser(
   username: Readonly<string>
 ): Promise<Note[] | null> {
   console.debug('NoteService.GetAllNotesFromUser');
-  console.log('rappel');
   return client
     .query({
       query: GET_ALL_NOTES,
@@ -64,7 +63,6 @@ export async function GetAllNotesFromUser(
       },
     })
     .then((response: any) => {
-      console.log('response');
       return response.data.getAllNotesByUsername.map((note: Note) => ({
         id: note.id,
         title: note.title,
@@ -73,11 +71,11 @@ export async function GetAllNotesFromUser(
         updatedAt: new Date(note.updatedAt),
       }));
     })
-    .catch((error: ApolloError) => {
-      console.error('GetAllNotesFromUser error:', error);
+    .catch(async (error: ApolloError) => {
+      console.error('GetAllNotesFromUser error:', error.message);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return GetAllNotesFromUser(client, username);
+        let res = await RelogUser(client);
+        if (res) return GetAllNotesFromUser(client, username);
       }
       return null;
     });
@@ -112,11 +110,11 @@ export async function GetNoteById(
       console.debug('Retrieved note : ', note);
       return note;
     })
-    .catch((error: ApolloError) => {
+    .catch(async (error: ApolloError) => {
       console.error('GetNoteById error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return GetNoteById(client, id);
+        let res = await RelogUser(client);
+        if (res) return GetNoteById(client, id);
       }
       return null;
     });
@@ -154,11 +152,11 @@ export async function UpdateNoteById(
       console.debug('Updated note : ', note);
       return note;
     })
-    .catch((error: ApolloError) => {
+    .catch(async (error: ApolloError) => {
       console.error('UpdateNoteById error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return UpdateNoteById(client, id, title, content);
+        let res = await RelogUser(client);
+        if (res) return UpdateNoteById(client, id, title, content);
       }
       return null;
     });
@@ -189,11 +187,11 @@ export async function DeleteNoteById(
       console.debug('Deleted note', id);
       return true;
     })
-    .catch((error: ApolloError) => {
+    .catch(async (error: ApolloError) => {
       console.error('DeleteNoteById error:', error);
       if (error.message.includes('UNAUTHENTICATED')) {
-        RelogUser(client);
-        return DeleteNoteById(client, id);
+        let res = await RelogUser(client);
+        if (res) return DeleteNoteById(client, id);
       }
       return false;
     });
