@@ -67,9 +67,7 @@ app.use(
       if (token) {
         try {
           userInfo = jwt.verify(token, SECRET_KEY);
-          console.log(userInfo);
         } catch (err) {
-          console.log(err);
           return { msg: "Verification failed." };
         }
       }
@@ -79,7 +77,6 @@ app.use(
 );
 
 app.post("/login", bodyParser.json(), async (req, res) => {
-  console.log(req.body);
   // Destructuring username & password from body
   const { username, password } = req.body;
 
@@ -148,12 +145,11 @@ app.post("/refresh", (req, res) => {
           SECRET_KEY,
           { expiresIn: "1y" },
         );
-        console.log("Sending refreshed token");
         return res.json({ accessToken, refreshToken });
       }
     });
   } else {
-    console.log("Can't refresh, refresh token is unavailable");
+    console.error("Can't refresh, refresh token is unavailable");
     return res.status(406).json({ message: "Unauthorized" });
   }
 });
