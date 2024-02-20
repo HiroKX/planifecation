@@ -57,7 +57,6 @@ export async function LogUser(
       return response.json(); // Parse response body as JSON
     })
     .then((data: any) => {
-      console.log('response.data.logUser:', data); // Log the parsed JSON data
       return [data.accessToken, data.refreshToken]; // Return the required data
     })
     .catch((error: Error) => {
@@ -84,7 +83,6 @@ export async function RelogUserService(
       return response.json(); // Parse response body as JSON
     })
     .then((data: any) => {
-      console.log('response.data.RelogUser:', data); // Log the parsed JSON data
       return [data.accessToken, data.refreshToken]; // Return the required data
     })
     .catch((error: Error) => {
