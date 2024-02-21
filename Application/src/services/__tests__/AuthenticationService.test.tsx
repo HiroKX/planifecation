@@ -15,9 +15,9 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: 'https://test.graphql.ronde-lingons.fr/',
+      uri: 'https://planifecation.hirokx.dev/',
       link: new HttpLink({
-        uri: 'https://test.graphql.ronde-lingons.fr/',
+        uri: 'https://planifecation.hirokx.dev/',
         fetch,
       }),
       connectToDevTools: false, // Disable DevTools in test environment
@@ -51,7 +51,7 @@ describe('User Test', () => {
     // ...code pour configurer le mock d'erreur...
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
-      uri: 'https://test.graphql.ronde-lingons.fr/',
+      uri: 'https://planifecation.hirokx.dev/',
       fetch,
     });
     if (token != null && token != 'Not Logged') {
@@ -77,7 +77,7 @@ describe('User Test', () => {
   it('should successfully delete a user', async () => {
     const token = await LogUser(client, username, password);
     const httpLink = createHttpLink({
-      uri: 'https://test.graphql.ronde-lingons.fr/',
+      uri: 'https://planifecation.hirokx.dev/',
       fetch,
     });
     if (token != null && token != 'Not Logged') {
