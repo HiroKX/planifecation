@@ -235,6 +235,11 @@ function AgendaTemplate({ navigation }) {
 
   const renderEvents = (event: TimelineEventProps) => {
     return (
+
+
+
+
+      
       <View>
         <TouchableOpacity>
           <TextTemplate
