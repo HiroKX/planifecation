@@ -35,10 +35,10 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         color
       )
         .then(() => {
-          console.log('Évènement ' + id + ' mis à jour');
+          props.navigation.goBack();
           props.navigation.goBack();
         })
-        .catch(() => console.log('Une erreur est survenue à la mise à jour'));
+        .catch(() => console.error('Une erreur est survenue à la mise à jour'));
     }
     CreateEvent(
       client,
@@ -48,9 +48,9 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
       dateEnd + ' ' + end,
       color
     )
-      .then(() => console.log('Nouvel évènement créé'))
+      .then(() => console.debug('Nouvel évènement créé'))
       .catch(() => {
-        console.log('Une erreur est survenue à la création');
+        console.error('Une erreur est survenue à la création');
         props.navigation.goBack();
       });
   };
