@@ -13,7 +13,7 @@ import {
   signal,
   useComputed,
 } from '@preact/signals-react';
-import { theme } from '../../organisms/OwnPaperProvider';
+import { baseFont, theme } from '../../organisms/OwnPaperProvider';
 import AgendaEventDetails from './AgendaEventDetails';
 import { useApolloClient } from '@apollo/client';
 import { useEffect } from 'react';
@@ -248,6 +248,12 @@ function AgendaTemplate({ navigation }) {
   return (
     <View>
       <Timeline
+        theme={{
+                textDayFontFamily: baseFont,
+                textMonthFontFamily: baseFont,
+                todayButtonFontFamily: baseFont,
+                textDayHeaderFontFamily: baseFont,
+                }}  
         start={0}
         end={24}
         date={currentDateDisplay.value}
@@ -265,6 +271,10 @@ function CalendarTemplate({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Calendar
+        theme={{textDayFontFamily: baseFont,
+                textMonthFontFamily: baseFont,
+                todayButtonFontFamily: baseFont,
+                textDayHeaderFontFamily: baseFont}}
         markingType="multi-dot"
         current={currentDateDisplay.value}
         markedDates={markedDates.value}
