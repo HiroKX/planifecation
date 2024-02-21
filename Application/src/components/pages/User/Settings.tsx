@@ -11,12 +11,23 @@ import { StackParamList } from '../../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { DeleteAndLogoutUser } from '../../../controllers/UserController';
 import { ApolloConsumer } from '@apollo/client';
+import SliderTemplate from '../../atoms/styles/SliderTemplate';
+import { useSharedValue } from 'react-native-reanimated';
+import TextTemplate from '../../atoms/styles/TextTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 function Settings(props: Readonly<Props>): ReactNode {
   const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
   const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
+
+  const progressSlider = useSharedValue(0);
+  const minValueSlider = useSharedValue(0);
+  const maxValueSlider = useSharedValue(2000);
+
+  const [boosterLevel, setBoosterLevel] = useState("Sans boost")
+
+
   return (
     <ApolloConsumer>
       {client => (
@@ -59,6 +70,32 @@ function Settings(props: Readonly<Props>): ReactNode {
           <ButtonTemplate onPress={() => {}}>
             Accéder aux conditions générales
           </ButtonTemplate>
+          <TextTemplate children={undefined}></TextTemplate>
+          <SliderTemplate 
+          progress={progressSlider} 
+          minimumValue={minValueSlider} 
+          maximumValue={maxValueSlider}
+          step={4}
+          onValueChange={ (progress) => {
+            switch(progress) {
+              case 500 :
+                setBoosterLevel("Fast !");
+                break;
+              case 1000 :  
+                setBoosterLevel("Super fast !!");
+                break;
+              case 1500 :  
+                setBoosterLevel("Hyper fast !!!");
+                break;
+              case 2000 : 
+                setBoosterLevel("ULTRA FAST !!!!!");
+                break;
+              default:
+                setBoosterLevel("Sans boost");
+            }
+          }}
+          ></SliderTemplate>
+          <TextTemplate >{boosterLevel}</TextTemplate>
         </SurfaceTemplate>
       )}
     </ApolloConsumer>
