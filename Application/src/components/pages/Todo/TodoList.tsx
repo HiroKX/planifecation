@@ -116,28 +116,28 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     } else {
       return (
         <View>
-          <SurfaceTemplate
-            style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
-    return (
-      <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-          <CheckboxTemplate
-            status={item.isDone ? 'checked' : 'unchecked'}
-            onPress={(): void => {
-              setCurrentTodo(item.id);
-              setVisibleModal(true);
-            }}
-          />
-          <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
-          <TouchableOpacity onPress={() => handleDeleteTodo(item)}>
-            <Icon size={30} source={'trash-can'} color={theme.colors.primary} />
-          </TouchableOpacity>
-        </View>
-        <Portal>
-          <ModalTemplate
-            visible={visibleModal}
-            onDismiss={() => setVisibleModal(false)}
-          >
+          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+            <CheckboxTemplate
+              status={item.isDone ? 'checked' : 'unchecked'}
+              onPress={(): void => {
+                setCurrentTodo(item.id);
+                setVisibleModal(true);
+              }}
+            />
+            <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
+            <TouchableOpacity onPress={() => handleDeleteTodo(item)}>
+              <Icon
+                size={30}
+                source={'trash-can'}
+                color={theme.colors.primary}
+              />
+            </TouchableOpacity>
+          </View>
+          <Portal>
+            <ModalTemplate
+              visible={visibleModal}
+              onDismiss={() => setVisibleModal(false)}
+            >
               <CheckTodo returnFunc={funcDrawing} />
             </ModalTemplate>
           </Portal>

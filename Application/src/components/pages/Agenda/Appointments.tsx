@@ -299,7 +299,6 @@ function AgendaTemplate({ navigation }) {
 }
 
 function CalendarTemplate({ navigation }) {
-  
   return (
     <View style={{ flex: 1 }}>
       <Calendar
