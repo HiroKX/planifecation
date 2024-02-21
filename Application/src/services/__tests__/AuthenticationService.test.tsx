@@ -1,11 +1,13 @@
 import {
   ApolloClient,
   InMemoryCache,
+  createHttpLink,
   HttpLink,
 } from '@apollo/client';
 import { CreateUser, LogUser } from '../AuthenticationService';
+import { setContext } from '@apollo/client/link/context';
+import { DeleteUser, UpdateUser } from '../UserService';
 import fetch from 'cross-fetch';
-import { URI_API } from '@env';
 
 describe('User Test', () => {
   let client: ApolloClient<any>;
@@ -13,9 +15,9 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: URI_API,
+      uri: 'https://planifecation.hirokx.dev/',
       link: new HttpLink({
-        uri: URI_API,
+        uri: 'https://planifecation.hirokx.dev/',
         fetch,
       }),
       connectToDevTools: false, // Disable DevTools in test environment
@@ -24,25 +26,78 @@ describe('User Test', () => {
 
   const username = 'aABaaaA';
   let password = 'aABaaaA';
-  let result : number;
-  let token : string;
 
   it('should successfully create a user', async () => {
-    result = await CreateUser(client, username, password);
+    const result = await CreateUser(client, username, password);
     expect(result).toBeGreaterThanOrEqual(1);
   });
 
   it('should fail to create a user', async () => {
-      const response = await CreateUser(client, username, password);
-      expect(response).toThrow();
-    });
-
-  it('Should successfully log the user', async () => {
-    const response = await LogUser(client, username, password);
-    expect(response).toContain("logUser");
-    const fromJSON = JSON.parse(response)
-    token = fromJSON.logUser;
-    expect(token).not.toBe(null);
-  } )
-
+    try {
+      const result = await CreateUser(client, username, password);
+      expect(result).toThrowError();
+Error();
+uld successfully log a user', async () => {
+    // Configurez votre mock pour simuler une erreur
+    // ...code pour configurer le mock d'erreur...
+    const result = await LogUser(client, username, password);
+    expect(result).not.toBe('Not Logged');
   });
+
+  it('should fail to update a user on error', async () => {
+    // Configurez votre mock pour simuler une erreur
+    // ...code pour configurer le mock d'erreur...
+    const token = await LogUser(client, username, password);
+    const httpLink = createHttpLink({
+      uri: 'https://test.graphql.ronde-lingons.fr/',
+      fetch,
+    });
+    if (token != null && token != 'Not Logged') {
+      const authLink = setContext((_, { headers }) => {
+        return {
+          headers: {
+            ...headers,
+            authorization: token,
+          },
+        };
+      });
+      client.setLink(authLink.concat(httpLink));
+    }
+    const passwordMod = password + 'Test';
+    const result = await UpdateUser(client, username, passwordMod);
+    expect(result).toBeTruthy();
+    const result2 = await LogUser(client, username, passwordMod);
+    expect(result2).not.toBe('Not Logged');
+    const result3 = await UpdateUser(client, username, password);
+    expect(result3).toBeTruthy();
+  });
+
+  it('should successfully delete a user', async () => {
+    const token = await LogUser(client, username, password);
+    const httpLink = createHttpLink({
+      uri: 'https://test.graphql.ronde-lingons.fr/',
+      fetch,
+    });
+    if (token != null && token != 'Not Logged') {
+      console.error(token);
+      const authLink = setContext((_, { headers }) => {
+        return {
+          headers: {
+            ...headers,
+            authorization: token,
+          },
+        };
+      });
+      client.setLink(authLink.concat(httpLink));
+    }
+    const result = await DeleteUser(client, username);
+    expect(result).toBeTruthy();
+  });
+
+  it('should fail to delete a user on error', async () => {
+    // Configurez votre mock pour simuler une erreur
+    // ...code pour configurer le mock d'erreur...
+    const result = await DeleteUser(client, username);
+    expect(result).toBeFalsy();
+  });
+});
