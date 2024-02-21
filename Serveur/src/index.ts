@@ -15,10 +15,18 @@ import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import prisma from "./prismaClient.js";
 import bodyParser from "body-parser";
+import setRateLimit from "express-rate-limit";
 
 const app = express();
+app.disable("x-powered-by");
 //Création du prisma client
 const SECRET_KEY = process.env.SECRET_KEY; // Replace with your secret key
+
+const rateLimitMiddleware = setRateLimit({
+  windowMs: 30,
+  limit: 5,
+  message: "You have exceeded your 5 requests per 30 seconds.",
+});
 
 const queryResolvers = {
   ...userQueries,
@@ -117,7 +125,7 @@ app.post("/login", bodyParser.json(), async (req, res) => {
   }
 });
 
-app.post("/refresh", (req, res) => {
+app.post("/refresh", rateLimitMiddleware, (req, res) => {
   const refreshToken = req.headers.authorization || "";
   if (refreshToken) {
     // Verifying refresh token
