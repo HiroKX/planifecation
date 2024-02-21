@@ -3,7 +3,6 @@ import {
   MD3Theme,
   PaperProvider,
   configureFonts,
-  useTheme,
 } from 'react-native-paper';
 import { Props as PaperProviderProps } from 'react-native-paper/src/core/PaperProvider';
 import { Theme } from '@react-navigation/native';
@@ -61,7 +60,7 @@ export const lightTheme: MD3Theme = {
 // POUR LE MOMENT, CHANGER LE THEME ICI
 export const theme = lightTheme;
 
-export const baseFont = 'Raleway';
+export const baseFont = 'Fredoka';
 
 export let navigationTheme: Theme = {
   dark: theme.dark,
@@ -82,22 +81,20 @@ export default function OwnPaperProvider(
     Pattaya: require('../../assets/fonts/Pattaya.ttf'),
     Lexend: require('../../assets/fonts/Lexend.ttf'),
     Raleway: require('../../assets/fonts/Raleway-Regular.ttf'),
-    'Raleway-bold': require('../../assets/fonts/Raleway-Bold.ttf'),
-    'Raleway-italic': require('../../assets/fonts/Raleway-Italic.ttf'),
+    'Raleway-Bold': require('../../assets/fonts/Raleway-Bold.ttf'),
+    'Raleway-Italic': require('../../assets/fonts/Raleway-Italic.ttf'),
+    Fredoka: require('../../assets/fonts/Fredoka-Regular.ttf'),
   });
 
-  const baseFont: Partial<MD3Type> = {
-    fontFamily: 'Raleway',
+  const baseConf: Partial<MD3Type> = {
+    fontFamily: baseFont,
   } as const;
 
-  const baseVariants = configureFonts({ config: baseFont });
-
-  const customVariants = {} as const;
+  const baseVariants: MD3Typescale = configureFonts({ config: baseConf });
 
   const fonts: MD3Typescale = configureFonts({
     config: {
       ...baseVariants,
-      ...customVariants,
     },
   });
 
