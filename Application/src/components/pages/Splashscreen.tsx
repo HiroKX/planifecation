@@ -75,8 +75,13 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
         </GestureDetector>
         <TextTemplate
           onLongPress={props.func}
-          variant="headlineLarge"
-          style={{ flex: 1, color: theme.colors.secondary, fontSize: 42 }}
+          style={{
+            flex: 1,
+            color: theme.colors.secondary,
+            fontSize: 54,
+            fontFamily: 'Pattaya',
+            letterSpacing: 2,
+          }}
         >
           Planifécation
         </TextTemplate>
