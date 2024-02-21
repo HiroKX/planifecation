@@ -49,7 +49,6 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 
   const confirmDelete = async (id: number): Promise<void> => {
     await DeleteNote(client, id);
-    //setUpdatedNotes(true);
   };
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {

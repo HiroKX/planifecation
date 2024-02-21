@@ -293,8 +293,7 @@ function AgendaTemplate({ navigation }) {
 }
 
 function CalendarTemplate({ navigation }) {
-  const [isLoading, setIsLoading] = useState(true);
-
+  
   return (
     <View style={{ flex: 1 }}>
       <Calendar
