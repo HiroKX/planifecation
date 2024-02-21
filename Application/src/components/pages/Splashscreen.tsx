@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { theme } from '../organisms/OwnPaperProvider';
 import TextTemplate from '../atoms/styles/TextTemplate';
 import LogoTemplate from '../atoms/styles/LogoTemplate';
-import { ActivityIndicator, customText } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import {
   Gesture,
   GestureDetector,
