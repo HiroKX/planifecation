@@ -31,15 +31,15 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   useEffect((): void => {
     async function fetchNotes(): Promise<void> {
       await client.resetStore();
-      const notes: null|Note[] = await GetAllNotes(client);
-        if (notes == null) {
-            return;
-        }
-        let sortedNotes: Note[] = [...notes];
-        sortedNotes = sortedNotes.sort((a: Note, b: Note): number => {
-            return a.updatedAt > b.updatedAt ? -1 : 1;
-        });
-        setNotes(sortedNotes);
+      const notes: null | Note[] = await GetAllNotes(client);
+      if (notes == null) {
+        return;
+      }
+      let sortedNotes: Note[] = [...notes];
+      sortedNotes = sortedNotes.sort((a: Note, b: Note): number => {
+        return a.updatedAt > b.updatedAt ? -1 : 1;
+      });
+      setNotes(sortedNotes);
       setUpdatedNotes(false);
     }
     fetchNotes().then();
