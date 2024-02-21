@@ -249,11 +249,11 @@ function AgendaTemplate({ navigation }) {
     <View>
       <Timeline
         theme={{
-                textDayFontFamily: baseFont,
-                textMonthFontFamily: baseFont,
-                todayButtonFontFamily: baseFont,
-                textDayHeaderFontFamily: baseFont,
-                }}  
+          textDayFontFamily: baseFont,
+          textMonthFontFamily: baseFont,
+          todayButtonFontFamily: baseFont,
+          textDayHeaderFontFamily: baseFont,
+        }}
         start={0}
         end={24}
         date={currentDateDisplay.value}
@@ -271,10 +271,12 @@ function CalendarTemplate({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Calendar
-        theme={{textDayFontFamily: baseFont,
-                textMonthFontFamily: baseFont,
-                todayButtonFontFamily: baseFont,
-                textDayHeaderFontFamily: baseFont}}
+        theme={{
+          textDayFontFamily: baseFont,
+          textMonthFontFamily: baseFont,
+          todayButtonFontFamily: baseFont,
+          textDayHeaderFontFamily: baseFont,
+        }}
         markingType="multi-dot"
         current={currentDateDisplay.value}
         markedDates={markedDates.value}
