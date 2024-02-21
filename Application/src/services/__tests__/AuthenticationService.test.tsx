@@ -8,7 +8,6 @@ import { CreateUser, LogUser } from '../AuthenticationService';
 import { setContext } from '@apollo/client/link/context';
 import { DeleteUser, UpdateUser } from '../UserService';
 import fetch from 'cross-fetch';
-import { URI_API } from '@env';
 
 describe('User Test', () => {
   let client: ApolloClient<any>;
@@ -16,9 +15,9 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: URI_API,
+      uri: 'https://test.graphql.ronde-lingons.fr/',
       link: new HttpLink({
-        uri: URI_API,
+        uri: 'https://test.graphql.ronde-lingons.fr/',
         fetch,
       }),
       connectToDevTools: false, // Disable DevTools in test environment
