@@ -5,7 +5,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
-import { Portal, TextInput } from 'react-native-paper';
+import { Icon, Portal } from 'react-native-paper';
 import CheckboxTemplate from '../../molecules/CheckboxTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
@@ -19,6 +19,8 @@ import {
   UpdateTodo,
 } from '../../../controllers/TodoController';
 import ActivityIndicator from 'react-native-paper/src/components/ActivityIndicator';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import TextTemplate from '../../atoms/styles/TextTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -116,38 +118,26 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
         <View>
           <SurfaceTemplate
             style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}
+    return (
+      <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+          <CheckboxTemplate
+            status={item.isDone ? 'checked' : 'unchecked'}
+            onPress={(): void => {
+              setCurrentTodo(item.id);
+              setVisibleModal(true);
+            }}
+          />
+          <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
+          <TouchableOpacity onPress={() => handleDeleteTodo(item)}>
+            <Icon size={30} source={'trash-can'} color={theme.colors.primary} />
+          </TouchableOpacity>
+        </View>
+        <Portal>
+          <ModalTemplate
+            visible={visibleModal}
+            onDismiss={() => setVisibleModal(false)}
           >
-            <CheckboxTemplate
-              status={item.isDone ? 'checked' : 'unchecked'}
-              onPress={(): void => {
-                setCurrentTodo(item.id);
-                setVisibleModal(true);
-              }}
-            />
-            <TextInputTemplate
-              right={
-                <TextInput.Icon
-                  icon={'trash-can'}
-                  color={theme.colors.primary}
-                  onPress={() => handleDeleteTodo(item)}
-                />
-              }
-              mode="outlined"
-              style={{ flex: 1, paddingBottom: 0, paddingTop: 0 }}
-              multiline={true}
-              editable={false}
-              onChangeText={edit => (item.content = edit)}
-              value={item.content}
-              outlineStyle={{
-                display: 'none',
-              }}
-            ></TextInputTemplate>
-          </SurfaceTemplate>
-          <Portal>
-            <ModalTemplate
-              visible={visibleModal}
-              onDismiss={() => setVisibleModal(false)}
-            >
               <CheckTodo returnFunc={funcDrawing} />
             </ModalTemplate>
           </Portal>

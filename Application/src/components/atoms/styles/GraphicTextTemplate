@@ -1,0 +1,3 @@
+import { customText } from 'react-native-paper';
+
+const Text = customText<>();

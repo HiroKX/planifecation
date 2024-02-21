@@ -7,6 +7,7 @@ import { AddNote, UpdateNote } from '../../../controllers/NoteController';
 import { TextInput } from 'react-native-paper';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
+import VirtualRandomKeyboard from './keyboard/VirtualRandomKeyboard';
 
 type Props = NativeStackScreenProps<StackParamList>;
 export type NotepadParams = {
@@ -68,6 +69,9 @@ export default function Notepad(props: Readonly<Props>): ReactNode {
         multiline
         placeholder="Tapez votre texte ici"
       />
+      <View style={styles.keyboard}>
+        <VirtualRandomKeyboard text={text} setText={setText} />
+      </View>
     </View>
   );
 }
@@ -85,7 +89,13 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
   },
   textInput: {
-    flex: 10,
+    flex: 9,
     borderColor: theme.colors.primary,
+    pointerEvents: 'none',
+  },
+  keyboard: {
+    flex: 4,
+    padding: 0,
+    backgroundColor: theme.colors.secondary,
   },
 });
