@@ -8,6 +8,7 @@ import { CreateUser, LogUser } from '../AuthenticationService';
 import { setContext } from '@apollo/client/link/context';
 import { DeleteUser, UpdateUser } from '../UserService';
 import fetch from 'cross-fetch';
+import { URI_API } from '@env';
 
 describe('User Test', () => {
   let client: ApolloClient<any>;
@@ -15,9 +16,9 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: 'https://planifecation.hirokx.dev/',
+      uri: `${URI_API}`,
       link: new HttpLink({
-        uri: 'https://planifecation.hirokx.dev/',
+        uri: `${URI_API}`,
         fetch,
       }),
       connectToDevTools: false, // Disable DevTools in test environment
@@ -35,9 +36,11 @@ describe('User Test', () => {
   it('should fail to create a user', async () => {
     try {
       const result = await CreateUser(client, username, password);
-      expect(result).toThrowError();
-Error();
-uld successfully log a user', async () => {
+      expect(result).toThrow();
+    } catch (error) {}
+  });
+
+  it('should successfully log a user', async () => {
     // Configurez votre mock pour simuler une erreur
     // ...code pour configurer le mock d'erreur...
     const result = await LogUser(client, username, password);
