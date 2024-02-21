@@ -1,4 +1,10 @@
-import { MD3LightTheme, MD3Theme, PaperProvider, configureFonts, useTheme } from 'react-native-paper';
+import {
+  MD3LightTheme,
+  MD3Theme,
+  PaperProvider,
+  configureFonts,
+  useTheme,
+} from 'react-native-paper';
 import { Props as PaperProviderProps } from 'react-native-paper/src/core/PaperProvider';
 import { Theme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -55,7 +61,7 @@ export const lightTheme: MD3Theme = {
 // POUR LE MOMENT, CHANGER LE THEME ICI
 export const theme = lightTheme;
 
-export const baseFont = "Raleway";
+export const baseFont = 'Raleway';
 
 export let navigationTheme: Theme = {
   dark: theme.dark,
@@ -73,29 +79,31 @@ export default function OwnPaperProvider(
   props: Readonly<PaperProviderProps>
 ): ReactNode {
   const [loaded] = useFonts({
-    "Pattaya" : require('../../assets/fonts/Pattaya.ttf'),
-    "Lexend" : require('../../assets/fonts/Lexend.ttf'),
-    "Raleway" : require('../../assets/fonts/Raleway-Regular.ttf'),
-    "Raleway-bold" : require('../../assets/fonts/Raleway-Bold.ttf'),
-    "Raleway-italic" : require('../../assets/fonts/Raleway-Italic.ttf'),
+    Pattaya: require('../../assets/fonts/Pattaya.ttf'),
+    Lexend: require('../../assets/fonts/Lexend.ttf'),
+    Raleway: require('../../assets/fonts/Raleway-Regular.ttf'),
+    'Raleway-bold': require('../../assets/fonts/Raleway-Bold.ttf'),
+    'Raleway-italic': require('../../assets/fonts/Raleway-Italic.ttf'),
   });
 
-  const baseFont : Partial<MD3Type> = {
+  const baseFont: Partial<MD3Type> = {
     fontFamily: 'Raleway',
   } as const;
-  
-  const baseVariants = configureFonts({config: baseFont});
-  
+
+  const baseVariants = configureFonts({ config: baseFont });
+
   const customVariants = {} as const;
-  
-  const fonts : MD3Typescale = configureFonts({
-    config:{
+
+  const fonts: MD3Typescale = configureFonts({
+    config: {
       ...baseVariants,
       ...customVariants,
-    }
-  })
+    },
+  });
 
-  if (!loaded) { return null;}
+  if (!loaded) {
+    return null;
+  }
 
-  return <PaperProvider theme={{...theme, fonts}} {...props}/>
+  return <PaperProvider theme={{ ...theme, fonts }} {...props} />;
 }

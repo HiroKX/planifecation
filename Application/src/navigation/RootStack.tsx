@@ -8,7 +8,10 @@ import Settings from '../components/pages/User/Settings';
 import Appointments from '../components/pages/Agenda/Appointments';
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
-import { baseFont, navigationTheme } from '../components/organisms/OwnPaperProvider';
+import {
+  baseFont,
+  navigationTheme,
+} from '../components/organisms/OwnPaperProvider';
 import Profile from '../components/pages/User/Profile';
 import TodoList from '../components/pages/Todo/TodoList';
 import NoteList from '../components/pages/Notes/NoteList';
@@ -45,11 +48,11 @@ function RootStack(): ReactNode {
             backgroundColor: navigationTheme.colors.primary,
           },
           headerTintColor: navigationTheme.colors.text,
-          headerRight: SettingsButton, 
+          headerRight: SettingsButton,
           headerTitleStyle: {
             fontFamily: baseFont,
             fontSize: 24,
-          }
+          },
         }}
       >
         <Stack.Screen name="Accueil" component={Home} />

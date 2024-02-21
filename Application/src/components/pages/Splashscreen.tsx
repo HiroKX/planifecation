@@ -18,7 +18,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export default function Splashscreen(props: Readonly<{ func: () => void }>) {
-
   const rotation = useSharedValue(360);
   const pressed = useSharedValue(false);
   const position = {
@@ -76,7 +75,13 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
         </GestureDetector>
         <TextTemplate
           onLongPress={props.func}
-          style={{ flex: 1, color: theme.colors.secondary, fontSize: 54, fontFamily:'Pattaya', letterSpacing:2 }}
+          style={{
+            flex: 1,
+            color: theme.colors.secondary,
+            fontSize: 54,
+            fontFamily: 'Pattaya',
+            letterSpacing: 2,
+          }}
         >
           Planifécation
         </TextTemplate>
