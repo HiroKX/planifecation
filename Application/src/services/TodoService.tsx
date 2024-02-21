@@ -1,7 +1,6 @@
 import { ApolloClient, ApolloError, gql } from '@apollo/client';
 import { Todo } from '../models/Todo';
 import { RelogUser } from '../controllers/AuthenticationController';
-import { UpdateTodo } from '../controllers/TodoController';
 
 const GET_ALL_TODOS = gql`
   query Query($username: String!) {
