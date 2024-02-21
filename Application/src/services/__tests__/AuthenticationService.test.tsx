@@ -36,7 +36,7 @@ describe('User Test', () => {
   it('should fail to create a user', async () => {
     try {
       const result = await CreateUser(client, username, password);
-      expect(result).toThrowError();
+      expect(result).toThrow();
     } catch (error) {}
   });
 
