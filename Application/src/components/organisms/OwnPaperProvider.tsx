@@ -86,20 +86,7 @@ export default function OwnPaperProvider(
   
   const baseVariants = configureFonts({config: baseFont});
   
-  const customVariants = {
-    graphic : {
-      ...baseVariants.bodyMedium,
-      fontFamily: 'Pattaya'
-    },
-    bold: {
-      ...baseVariants.bodyMedium,
-      fontFamily: 'Raleway-bold',
-    },
-    italic: {
-      ...baseVariants.bodyMedium,
-      fontFamily: 'Raleway-italic',
-    },
-  } as const;
+  const customVariants = {} as const;
   
   const fonts : MD3Typescale = configureFonts({
     config:{
