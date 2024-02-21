@@ -13,7 +13,7 @@ import ColorPicker, {
 } from 'reanimated-color-picker';
 import Animated from 'react-native-reanimated';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
-import { theme } from '../../organisms/OwnPaperProvider';
+import { baseFont, theme } from '../../organisms/OwnPaperProvider';
 import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
@@ -75,7 +75,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
     return (
       <Animated.View style={{ justifyContent: 'center' }}>
         <ColorPicker value={color} onChange={changeColor}>
-          <Preview hideInitialColor />
+          <Preview hideInitialColor style={{height: 75}} textStyle={{fontFamily: baseFont, fontWeight:'400', fontSize: 22}}/>
           <HueCircular>
             <Panel1 />
           </HueCircular>
