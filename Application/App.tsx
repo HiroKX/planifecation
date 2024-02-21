@@ -24,14 +24,13 @@ export default function App(): ReactNode {
 
   const [splash, setSplash] = useState(true);
 
-  return splash ? (
-    <Splashscreen func={() => setSplash(false)}></Splashscreen>
-  ) : (
+  return(
     <ApolloProvider client={client}>
       <OwnPaperProvider>
+        {splash ? <Splashscreen func={() => setSplash(false)}></Splashscreen> :
         <NavigationContainer theme={navigationTheme}>
           <RootStack />
-        </NavigationContainer>
+        </NavigationContainer>}
       </OwnPaperProvider>
       <StatusBar style="light" />
     </ApolloProvider>

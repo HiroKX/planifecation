@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { theme } from '../organisms/OwnPaperProvider';
 import TextTemplate from '../atoms/styles/TextTemplate';
 import LogoTemplate from '../atoms/styles/LogoTemplate';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, customText } from 'react-native-paper';
 import {
   Gesture,
   GestureDetector,
@@ -18,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export default function Splashscreen(props: Readonly<{ func: () => void }>) {
+
   const rotation = useSharedValue(360);
   const pressed = useSharedValue(false);
   const position = {
@@ -75,8 +76,7 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
         </GestureDetector>
         <TextTemplate
           onLongPress={props.func}
-          variant="headlineLarge"
-          style={{ flex: 1, color: theme.colors.secondary, fontSize: 42 }}
+          style={{ flex: 1, color: theme.colors.secondary, fontSize: 54, fontFamily:'Pattaya', letterSpacing:2 }}
         >
           Planifécation
         </TextTemplate>
