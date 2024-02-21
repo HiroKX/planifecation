@@ -13,9 +13,9 @@ describe('User Test', () => {
   beforeEach(() => {
     client = new ApolloClient({
       cache: new InMemoryCache(),
-      uri: `${URI_API}`,
+      uri: URI_API,
       link: new HttpLink({
-        uri: `${URI_API}`,
+        uri: URI_API,
         fetch,
       }),
       connectToDevTools: false, // Disable DevTools in test environment
