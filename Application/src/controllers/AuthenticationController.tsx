@@ -51,7 +51,7 @@ export async function SignInUser(
     .then(async token => {
       if (token[0] != 'Not Logged !') {
         await SetLoggedUser(username, token[0], token[1]);
-        await updateClientToken(client, token[0]);
+        updateClientToken(client, token[0]);
         await client.resetStore();
         navigation.reset({
           index: 0,
@@ -80,7 +80,7 @@ export async function RelogUser(
     .then(async token => {
       if (token[0] != 'Not Logged !') {
         await UpdateLoggedUser(token[0], token[1]);
-        await updateClientToken(client, token[0]);
+        updateClientToken(client, token[0]);
         await client.resetStore();
       }
       return true;
