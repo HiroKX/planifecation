@@ -144,9 +144,9 @@ export default function Appointments({
   const RenderCalendar = () => {
     if (isLoading) {
       return (
-        <Text>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </Text>
+        <View style={{flex: 0.5, justifyContent: 'center'}}>
+          <ActivityIndicator size="small" color="#cccccc" />
+        </View>
       );
     } else {
       return <CalendarTemplate navigation={navigation} />;
@@ -154,32 +154,19 @@ export default function Appointments({
   };
 
   const RenderAgenda = () => {
-    if (isLoading) {
-      return (
-        <Text>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </Text>
-      );
-    } else {
+    
       return <AgendaTemplate navigation={navigation} />;
-    }
+    
   };
 
   const RenderEventDetails = () => {
-    if (isLoading) {
-      return (
-        <Text>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </Text>
-      );
-    } else {
+    
       return (
         <AgendaEventDetails
           localEvent={selectedEvent.value}
           navigation={navigation}
         />
       );
-    }
   };
 
   return (

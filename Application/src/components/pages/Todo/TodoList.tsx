@@ -55,7 +55,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 0);
+    }, 2000);
   }, [updatedTodos]);
 
   const handleAddTodo = async () => {
@@ -109,8 +109,8 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
 
     if (isLoading) {
       return (
-        <View>
-          <ActivityIndicator size="large" color="#0000ff" />
+        <View style={{flex: 10, justifyContent: 'center'}}>
+          <ActivityIndicator size="small" color="#cccccc" />
         </View>
       );
     } else {

@@ -33,6 +33,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   const [updatedNotes, setUpdatedNotes] = useState(false);
   const client: ApolloClient<Object> = useApolloClient();
   const isFocused: boolean = useIsFocused();
+  const [color, setColor] = useState(theme.colors.primary);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect((): void => {
@@ -52,7 +53,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 0);
+    }, 2000);
   }, [updatedNotes, isFocused]);
 
   const confirmDelete = async (id: number): Promise<void> => {
@@ -112,8 +113,8 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   };
   if (isLoading) {
     return (
-      <View>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <ActivityIndicator size="small" color="#cccccc" />
       </View>
     );
   } else {
