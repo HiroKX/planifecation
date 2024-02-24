@@ -16,7 +16,7 @@ import {
 import { baseFont, theme } from '../../organisms/OwnPaperProvider';
 import AgendaEventDetails from './AgendaEventDetails';
 import { useApolloClient } from '@apollo/client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   GetAllAgendaEvents,
   agendaEventToEvent,
@@ -28,6 +28,7 @@ import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { AgendaEvent } from '../../../models/AgendaEvent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 const Tab = createMaterialTopTabNavigator();
 loadLocale('fr');
@@ -92,6 +93,7 @@ export default function Appointments({
   navigation,
 }: Readonly<NativeStackScreenProps<StackParamListAgenda>>) {
   const client = useApolloClient();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getAgendaEvents() {
@@ -103,7 +105,12 @@ export default function Appointments({
         events.value = response;
       });
     }
+    setIsLoading(true);
     getAgendaEvents();
+    //timeout à garder pour plus tard pour le booster de connexion
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 0);
   }, []);
 
   const monthDisplay = useComputed(() => {
@@ -136,7 +143,11 @@ export default function Appointments({
   // Forced to have it here as it has to re-render everytime you get on that tab
 
   const RenderCalendar = () => {
-    return <CalendarTemplate navigation={navigation} />;
+    if (isLoading) {
+      return <ActivityIndicatorTemplate />;
+    } else {
+      return <CalendarTemplate navigation={navigation} />;
+    }
   };
 
   const RenderAgenda = () => {
@@ -151,6 +162,7 @@ export default function Appointments({
       />
     );
   };
+
   return (
     <Tab.Navigator
       screenOptions={{
