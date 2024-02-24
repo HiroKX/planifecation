@@ -9,7 +9,6 @@ import {
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import {
-  ActivityIndicator,
   StyleSheet,
   Alert,
   FlatList,
@@ -21,6 +20,7 @@ import { useIsFocused } from '@react-navigation/native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-paper';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -33,7 +33,6 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   const [updatedNotes, setUpdatedNotes] = useState(false);
   const client: ApolloClient<Object> = useApolloClient();
   const isFocused: boolean = useIsFocused();
-  const [color, setColor] = useState(theme.colors.primary);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect((): void => {
@@ -113,9 +112,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   };
   if (isLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center'}}>
-        <ActivityIndicator size="small" color="#cccccc" />
-      </View>
+        <ActivityIndicatorTemplate />
     );
   } else {
     return (

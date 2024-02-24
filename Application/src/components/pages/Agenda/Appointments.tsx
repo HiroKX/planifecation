@@ -21,13 +21,14 @@ import {
   GetAllAgendaEvents,
   agendaEventToEvent,
 } from '../../../controllers/AgendaController';
-import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { Calendar, Timeline, TimelineEventProps } from 'react-native-calendars';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { AgendaEvent } from '../../../models/AgendaEvent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 const Tab = createMaterialTopTabNavigator();
 loadLocale('fr');
@@ -144,9 +145,7 @@ export default function Appointments({
   const RenderCalendar = () => {
     if (isLoading) {
       return (
-        <View style={{flex: 0.5, justifyContent: 'center'}}>
-          <ActivityIndicator size="small" color="#cccccc" />
-        </View>
+          <ActivityIndicatorTemplate />
       );
     } else {
       return <CalendarTemplate navigation={navigation} />;

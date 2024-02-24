@@ -18,9 +18,9 @@ import {
   GetAllTodos,
   UpdateTodo,
 } from '../../../controllers/TodoController';
-import ActivityIndicator from 'react-native-paper/src/components/ActivityIndicator';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextTemplate from '../../atoms/styles/TextTemplate';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -107,13 +107,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
       }, 2000);
     };
 
-    if (isLoading) {
-      return (
-        <View style={{flex: 10, justifyContent: 'center'}}>
-          <ActivityIndicator size="small" color="#cccccc" />
-        </View>
-      );
-    } else {
+    
       return (
         <View>
           <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
@@ -143,9 +137,13 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           </Portal>
         </View>
       );
-    }
+    
   };
-
+  if (isLoading) {
+    return (
+        <ActivityIndicatorTemplate />
+    );
+  } else {
   return (
     <View style={{ flex: 1, padding: 10 }}>
       <SurfaceTemplate>
@@ -165,4 +163,5 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
       </SurfaceTemplate>
     </View>
   );
+  }
 }
