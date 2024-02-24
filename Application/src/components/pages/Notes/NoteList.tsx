@@ -8,12 +8,7 @@ import {
 } from '../../../controllers/NoteController';
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import {
-  StyleSheet,
-  Alert,
-  FlatList,
-  View,
-} from 'react-native';
+import { StyleSheet, Alert, FlatList, View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useIsFocused } from '@react-navigation/native';
@@ -111,9 +106,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     );
   };
   if (isLoading) {
-    return (
-        <ActivityIndicatorTemplate />
-    );
+    return <ActivityIndicatorTemplate />;
   } else {
     return (
       <View style={{ flex: 1, padding: 10 }}>

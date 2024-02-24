@@ -107,61 +107,53 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
       }, 0);
     };
 
-    
-      return (
-        <View>
-          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-            <CheckboxTemplate
-              status={item.isDone ? 'checked' : 'unchecked'}
-              onPress={(): void => {
-                setCurrentTodo(item.id);
-                setVisibleModal(true);
-              }}
-            />
-            <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
-            <TouchableOpacity onPress={() => handleDeleteTodo(item)}>
-              <Icon
-                size={30}
-                source={'trash-can'}
-                color={theme.colors.primary}
-              />
-            </TouchableOpacity>
-          </View>
-          <Portal>
-            <ModalTemplate
-              visible={visibleModal}
-              onDismiss={() => setVisibleModal(false)}
-            >
-              <CheckTodo returnFunc={funcDrawing} />
-            </ModalTemplate>
-          </Portal>
+    return (
+      <View>
+        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+          <CheckboxTemplate
+            status={item.isDone ? 'checked' : 'unchecked'}
+            onPress={(): void => {
+              setCurrentTodo(item.id);
+              setVisibleModal(true);
+            }}
+          />
+          <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
+          <TouchableOpacity onPress={() => handleDeleteTodo(item)}>
+            <Icon size={30} source={'trash-can'} color={theme.colors.primary} />
+          </TouchableOpacity>
         </View>
-      );
-    
+        <Portal>
+          <ModalTemplate
+            visible={visibleModal}
+            onDismiss={() => setVisibleModal(false)}
+          >
+            <CheckTodo returnFunc={funcDrawing} />
+          </ModalTemplate>
+        </Portal>
+      </View>
+    );
   };
   if (isLoading) {
-    return (
-        <ActivityIndicatorTemplate />
-    );
+    return <ActivityIndicatorTemplate />;
   } else {
-  return (
-    <View style={{ flex: 1, padding: 10 }}>
-      <SurfaceTemplate>
-        <TextInputTemplate
-          label={'Nouvelle tâche'}
-          mode="outlined"
-          value={todo}
-          onChangeText={text => setTodo(text)}
-          maxLength={100}
-        />
-        <ButtonTemplate onPress={handleAddTodo}>
-          Ajouter une tâche
-        </ButtonTemplate>
-      </SurfaceTemplate>
-      <SurfaceTemplate style={{ flex: 5 }}>
-        <FlatList data={todoList} renderItem={renderTodos} />
-      </SurfaceTemplate>
-    </View>
-  );
+    return (
+      <View style={{ flex: 1, padding: 10 }}>
+        <SurfaceTemplate>
+          <TextInputTemplate
+            label={'Nouvelle tâche'}
+            mode="outlined"
+            value={todo}
+            onChangeText={text => setTodo(text)}
+            maxLength={100}
+          />
+          <ButtonTemplate onPress={handleAddTodo}>
+            Ajouter une tâche
+          </ButtonTemplate>
+        </SurfaceTemplate>
+        <SurfaceTemplate style={{ flex: 5 }}>
+          <FlatList data={todoList} renderItem={renderTodos} />
+        </SurfaceTemplate>
+      </View>
+    );
   }
 }

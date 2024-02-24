@@ -144,28 +144,23 @@ export default function Appointments({
 
   const RenderCalendar = () => {
     if (isLoading) {
-      return (
-          <ActivityIndicatorTemplate />
-      );
+      return <ActivityIndicatorTemplate />;
     } else {
       return <CalendarTemplate navigation={navigation} />;
     }
   };
 
   const RenderAgenda = () => {
-    
-      return <AgendaTemplate navigation={navigation} />;
-    
+    return <AgendaTemplate navigation={navigation} />;
   };
 
   const RenderEventDetails = () => {
-    
-      return (
-        <AgendaEventDetails
-          localEvent={selectedEvent.value}
-          navigation={navigation}
-        />
-      );
+    return (
+      <AgendaEventDetails
+        localEvent={selectedEvent.value}
+        navigation={navigation}
+      />
+    );
   };
 
   return (

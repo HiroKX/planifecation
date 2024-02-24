@@ -52,7 +52,6 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         console.log('Une erreur est survenue à la création');
         props.navigation.goBack();
       });
-    
   };
 
   const id = useMemo(() => props.localEvent.id ?? undefined, []);
@@ -150,7 +149,5 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         {renderColorPicker()}
       </ModalTemplate>
     </View>
-    
   );
-  
 }
