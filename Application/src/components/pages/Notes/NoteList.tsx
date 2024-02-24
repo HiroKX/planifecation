@@ -52,7 +52,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 0);
   }, [updatedNotes, isFocused]);
 
   const confirmDelete = async (id: number): Promise<void> => {

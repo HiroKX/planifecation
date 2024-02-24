@@ -104,7 +104,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
       setUpdatedTodos(true);
       setTimeout(() => {
         setIsLoading(false);
-      }, 2000);
+      }, 0);
     };
 
     

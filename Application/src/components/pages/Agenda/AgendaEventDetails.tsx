@@ -3,7 +3,6 @@ import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { getColorForBackground } from '../../../services/utils/utils';
 import { useState, useMemo } from 'react';
-import { ActivityIndicator, View } from 'react-native';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import ColorPicker, {
   HueCircular,
