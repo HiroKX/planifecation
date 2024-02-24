@@ -9,8 +9,8 @@ export default function ActivityIndicatorTemplate(
     return (
         <View style={styles.view}>
       <ActivityIndicator
-      size={150}
-      color={theme.colors.primary}
+      size={props.size ?? 150}
+      color={props.color ?? theme.colors.primary}
         style={props.style ?? styles.indicator}
         {...props}
       /></View>
