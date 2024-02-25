@@ -16,6 +16,7 @@ import { baseFont, theme } from '../../organisms/OwnPaperProvider';
 import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
+import { View } from 'react-native';
 
 declare type Props = { localEvent: Event; navigation: any };
 
