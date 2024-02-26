@@ -13,10 +13,10 @@ import {
   signal,
   useComputed,
 } from '@preact/signals-react';
-import { theme } from '../../organisms/OwnPaperProvider';
+import { baseFont, theme } from '../../organisms/OwnPaperProvider';
 import AgendaEventDetails from './AgendaEventDetails';
 import { useApolloClient } from '@apollo/client';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
   GetAllAgendaEvents,
   agendaEventToEvent,
@@ -29,6 +29,7 @@ import { MarkedDates } from 'react-native-calendars/src/types';
 import { AgendaEvent } from '../../../models/AgendaEvent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {useIsFocused} from "@react-navigation/native";
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -96,6 +97,7 @@ export default function Appointments({
   const client = useApolloClient();
   const isFocused: boolean = useIsFocused();
   const [displayCalendar, setDisplayCalendar] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getAgendaEvents() {
@@ -107,10 +109,19 @@ export default function Appointments({
         events.value = response;
       });
     }
+	/*
     getAgendaEvents().then(() => {
       setDisplayCalendar(true)
     });
   }, [isFocused]);
+  */
+    setIsLoading(true);
+    getAgendaEvents();
+    //timeout à garder pour plus tard pour le booster de connexion
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 0);
+  }, []);
 
   const monthDisplay = useComputed(() => {
     return LuxonDate.to_MMMMyyyy(currentDateDisplay.value).toUpperCase();
@@ -142,8 +153,15 @@ export default function Appointments({
   // Forced to have it here as it has to re-render everytime you get on that tab
 
   const RenderCalendar = () => {
+	/*
     if(!displayCalendar) return (<View></View>)
     return <CalendarTemplate navigation={navigation} />;
+    */
+    if (isLoading) {
+      return <ActivityIndicatorTemplate />;
+    } else {
+      return <CalendarTemplate navigation={navigation} />;
+    }
   };
 
   const RenderAgenda = () => {
@@ -158,6 +176,7 @@ export default function Appointments({
       />
     );
   };
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -267,6 +286,12 @@ function AgendaTemplate({ navigation }) {
   return (
     <View>
       <Timeline
+        theme={{
+          textDayFontFamily: baseFont,
+          textMonthFontFamily: baseFont,
+          todayButtonFontFamily: baseFont,
+          textDayHeaderFontFamily: baseFont,
+        }}
         start={0}
         end={24}
         date={currentDateDisplay.value}
@@ -289,6 +314,12 @@ function CalendarTemplate({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
       <Calendar
+        theme={{
+          textDayFontFamily: baseFont,
+          textMonthFontFamily: baseFont,
+          todayButtonFontFamily: baseFont,
+          textDayHeaderFontFamily: baseFont,
+        }}
         markingType="multi-dot"
         current={currentDateDisplay.value}
         markedDates={markedDates.value}

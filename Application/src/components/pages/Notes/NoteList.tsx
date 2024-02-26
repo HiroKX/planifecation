@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { StyleSheet, Alert, FlatList, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import {
@@ -9,12 +8,14 @@ import {
 } from '../../../controllers/NoteController';
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
+import { StyleSheet, Alert, FlatList, View } from 'react-native';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useIsFocused } from '@react-navigation/native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-paper';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -27,6 +28,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   const [updatedNotes, setUpdatedNotes] = useState(false);
   const client: ApolloClient<Object> = useApolloClient();
   const isFocused: boolean = useIsFocused();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect((): void => {
     async function fetchNotes(): Promise<void> {
@@ -40,12 +42,16 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
       });
       setUpdatedNotes(false);
     }
+    setIsLoading(true);
     fetchNotes().then();
+    // timeout à garder pour plus tard pour le booster de connexion
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 0);
   }, [updatedNotes, isFocused]);
 
   const confirmDelete = async (id: number): Promise<void> => {
     await DeleteNote(client, id);
-    setUpdatedNotes(true);
   };
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
@@ -99,18 +105,27 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
       </View>
     );
   };
-  return (
-    <SurfaceTemplate>
-      <ButtonTemplate
-        onPress={(): void => {
-          props.navigation.navigate('Bloc-Notes');
-        }}
-      >
-        Ajouter
-      </ButtonTemplate>
-      <FlatList data={notes} renderItem={renderNotes} />
-    </SurfaceTemplate>
-  );
+  if (isLoading) {
+    return <ActivityIndicatorTemplate />;
+  } else {
+    return (
+      <View style={{ flex: 1, padding: 10 }}>
+        {/* <ActivityIndicator size="large" color="#0000ff" /> */}
+        <SurfaceTemplate>
+          <ButtonTemplate
+            onPress={(): void => {
+              props.navigation.navigate('Bloc-Notes');
+            }}
+          >
+            Ajouter
+          </ButtonTemplate>
+        </SurfaceTemplate>
+        <SurfaceTemplate style={{ flex: 5 }}>
+          <FlatList data={notes} renderItem={renderNotes} />
+        </SurfaceTemplate>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

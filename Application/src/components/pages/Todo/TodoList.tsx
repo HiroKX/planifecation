@@ -20,6 +20,7 @@ import {
 } from '../../../controllers/TodoController';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextTemplate from '../../atoms/styles/TextTemplate';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -33,6 +34,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   const [visibleModal, setVisibleModal] = useState(false);
   const [currentTodo, setCurrentTodo] = useState('');
   const [updatedTodos, setUpdatedTodos] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const client: ApolloClient<Object> = useApolloClient();
 
@@ -48,7 +50,12 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
         setUpdatedTodos(false);
       });
     }
+    setIsLoading(true);
     getTodos().then();
+    // timeout à garder pour plus tard pour le booster de connexion
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
   }, [updatedTodos]);
 
   const handleAddTodo = async () => {
@@ -93,7 +100,11 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           !todoItem.isDone
         );
       }
+      setIsLoading(true);
       setUpdatedTodos(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 0);
     };
 
     return (
@@ -122,24 +133,27 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
       </View>
     );
   };
-
-  return (
-    <View style={{ flex: 1, padding: 10 }}>
-      <SurfaceTemplate>
-        <TextInputTemplate
-          label={'Nouvelle tâche'}
-          mode="outlined"
-          value={todo}
-          onChangeText={text => setTodo(text)}
-          maxLength={100}
-        />
-        <ButtonTemplate onPress={handleAddTodo}>
-          Ajouter une tâche
-        </ButtonTemplate>
-      </SurfaceTemplate>
-      <SurfaceTemplate style={{ flex: 5 }}>
-        <FlatList data={todoList} renderItem={renderTodos} />
-      </SurfaceTemplate>
-    </View>
-  );
+  if (isLoading) {
+    return <ActivityIndicatorTemplate />;
+  } else {
+    return (
+      <View style={{ flex: 1, padding: 10 }}>
+        <SurfaceTemplate>
+          <TextInputTemplate
+            label={'Nouvelle tâche'}
+            mode="outlined"
+            value={todo}
+            onChangeText={text => setTodo(text)}
+            maxLength={100}
+          />
+          <ButtonTemplate onPress={handleAddTodo}>
+            Ajouter une tâche
+          </ButtonTemplate>
+        </SurfaceTemplate>
+        <SurfaceTemplate style={{ flex: 5 }}>
+          <FlatList data={todoList} renderItem={renderTodos} />
+        </SurfaceTemplate>
+      </View>
+    );
+  }
 }
