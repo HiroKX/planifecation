@@ -2,7 +2,7 @@ import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { getColorForBackground } from '../../../services/utils/utils';
-import { useState, useMemo } from 'react';
+import {useState, useMemo, useReducer} from 'react';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import ColorPicker, {
   HueCircular,
@@ -22,6 +22,8 @@ declare type Props = { localEvent: Event; navigation: any };
 
 export default function EventTemplate(props: Readonly<Props>) {
   const client = useApolloClient();
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
   const addAgendaEvent = () => {
     if (id != undefined) {
       UpdateAgendaEvent(
@@ -35,7 +37,8 @@ export default function EventTemplate(props: Readonly<Props>) {
       )
         .then(() => {
           console.debug('Évènement ' + id + ' mis à jour');
-          props.navigation.goBack();
+          forceUpdate()
+          props.navigation.navigate("CalendrierTemplate");
         })
         .catch(() => console.debug('Une erreur est survenue à la mise à jour'));
     }
@@ -50,7 +53,8 @@ export default function EventTemplate(props: Readonly<Props>) {
       .then(async () => {
         await client.resetStore();
         console.debug('Nouvel évènement créé')
-        props.navigation.goBack();
+        forceUpdate()
+        props.navigation.navigate("CalendrierTemplate");
       })
       .catch(() => {
         console.debug('Une erreur est survenue à la création');

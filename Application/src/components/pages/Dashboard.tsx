@@ -8,8 +8,8 @@ import {
 } from '../../controllers/AuthenticationController';
 import { ReactNode } from 'react';
 import { ApolloConsumer } from '@apollo/client';
-import {getAgendaEvents} from "./Agenda/Appointments";
 import {signal} from "@preact/signals-react";
+import {getAgendaEvents} from "./Agenda/CalendarTemplate";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
