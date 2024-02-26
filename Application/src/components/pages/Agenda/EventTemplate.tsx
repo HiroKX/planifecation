@@ -20,7 +20,7 @@ import { View } from 'react-native';
 
 declare type Props = { localEvent: Event; navigation: any };
 
-export default function AgendaEventDetails(props: Readonly<Props>) {
+export default function EventTemplate(props: Readonly<Props>) {
   const client = useApolloClient();
   const addAgendaEvent = () => {
     if (id != undefined) {

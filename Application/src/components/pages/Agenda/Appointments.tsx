@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Divider, Icon, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import {
   LuxonDate,
   getColorForBackground,
@@ -9,74 +9,38 @@ import {
 import {
   Signal,
   computed,
-  effect,
   signal,
   useComputed,
 } from '@preact/signals-react';
-import { baseFont, theme } from '../../organisms/OwnPaperProvider';
-import AgendaEventDetails from './AgendaEventDetails';
-import { useApolloClient } from '@apollo/client';
-import { useEffect, useState } from 'react';
-import {
-  GetAllAgendaEvents,
-  agendaEventToEvent,
-} from '../../../controllers/AgendaController';
-import { TouchableOpacity, View } from 'react-native';
-import TextTemplate from '../../atoms/styles/TextTemplate';
-import { Calendar, Timeline, TimelineEventProps } from 'react-native-calendars';
+import { theme } from '../../organisms/OwnPaperProvider';
+import EventTemplate from './EventTemplate';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { MarkedDates } from 'react-native-calendars/src/types';
-import { AgendaEvent } from '../../../models/AgendaEvent';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import {useIsFocused} from "@react-navigation/native";
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
+import CalendarTemplate from "./CalendarTemplate";
+import AgendaTemplate from "./AgendaTemplate";
 
 const Tab = createMaterialTopTabNavigator();
 
 loadLocale('fr');
 
 export type StackParamListAgenda = {
-  Calendrier: undefined;
-  Agendeux: undefined;
-  Agentrois: undefined;
+  CalendrierTemplate: undefined;
+  AgendaTemplate: undefined;
+  EvenementTemplate: undefined;
 };
 
-export const currentDate = signal(todayData);
-export const currentDateDisplay = computed(() => {
+const currentDate = signal(todayData);
+const currentDateDisplay = computed(() => {
   return currentDate.value.dateString;
 });
 
 const markedDates = signal<MarkedDates>({});
-const edit = signal(false);
 const events = signal<Event[]>([]);
+const edit = signal(false);
+const isLoading = signal(false);
 
-effect(() => {
-  getMarkedDates();
-});
-
-function getMarkedDates() {
-  // Typically the situation where you would put a "DON'T TOUCH, NO ONE KNOWS HOW IT WORKS BUT IT WORKS"
-  // Dots must be a map where that template ["yyyy-mm-dd"]: {color, color, color} is respected in order to load the dots for the proper days
-  // The dots are setted for a date every forEach iteration but I had no clue how to do it otherwise
-  // the date comes from the start of an event, so it has to be substringed to lose the hh:mm
-  const response: MarkedDates = {};
-  let dots: Dot = {};
-  if (events.value != null) {
-    events.value.forEach((element: Event) => {
-      if (!dots[element.start.substring(0, 10)])
-        dots[element.start.substring(0, 10)] = [];
-      dots[element.start.substring(0, 10)].push({
-        color: element.color ?? theme.colors.primary,
-      });
-      response[element.start.substring(0, 10)] = {
-        dots: dots[element.start.substring(0, 10)],
-        marked: true,
-        selected: true,
-      };
-    });
-  }
-  markedDates.value = response;
-}
 
 const selectedEvent = signal<Event>({
   id: undefined,
@@ -87,42 +51,9 @@ const selectedEvent = signal<Event>({
   color: theme.colors.primary,
 });
 
-declare type Dot = {
-  [key: string]: { color: string }[];
-};
-
 export default function Appointments({
   navigation,
 }: Readonly<NativeStackScreenProps<StackParamListAgenda>>) {
-  const client = useApolloClient();
-  const isFocused: boolean = useIsFocused();
-  const [displayCalendar, setDisplayCalendar] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function getAgendaEvents() {
-      await GetAllAgendaEvents(client).then((agendaEvents: AgendaEvent[]) => {
-        let response: Event[] = [];
-        agendaEvents.forEach((event: AgendaEvent) => {
-          response = [...response, agendaEventToEvent(event)];
-        });
-        events.value = response;
-      });
-    }
-	/*
-    getAgendaEvents().then(() => {
-      setDisplayCalendar(true)
-    });
-  }, [isFocused]);
-  */
-    setIsLoading(true);
-    getAgendaEvents();
-    //timeout à garder pour plus tard pour le booster de connexion
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 0);
-  }, []);
-
   const monthDisplay = useComputed(() => {
     return LuxonDate.to_MMMMyyyy(currentDateDisplay.value).toUpperCase();
   });
@@ -153,24 +84,33 @@ export default function Appointments({
   // Forced to have it here as it has to re-render everytime you get on that tab
 
   const RenderCalendar = () => {
-	/*
-    if(!displayCalendar) return (<View></View>)
-    return <CalendarTemplate navigation={navigation} />;
-    */
-    if (isLoading) {
+    if (isLoading.value) {
       return <ActivityIndicatorTemplate />;
     } else {
-      return <CalendarTemplate navigation={navigation} />;
+      return (<CalendarTemplate
+          events={events}
+          markedDates={markedDates}
+          isLoading={isLoading}
+          currentDate={currentDate}
+          currentDateDisplay={currentDateDisplay}
+          navigation={navigation}
+      />);
     }
   };
 
   const RenderAgenda = () => {
-    return <AgendaTemplate navigation={navigation} />;
+    return (<AgendaTemplate
+        events={events}
+        selectedEvent={selectedEvent}
+        edit={edit}
+        currentDateDisplay={currentDateDisplay}
+        navigation={navigation}
+    />);
   };
 
   const RenderEventDetails = () => {
     return (
-      <AgendaEventDetails
+      <EventTemplate
         localEvent={selectedEvent.value}
         navigation={navigation}
       />
@@ -185,10 +125,10 @@ export default function Appointments({
         },
         tabBarActiveTintColor: getColorForBackground(theme.colors.secondary),
       }}
-      initialRouteName="Calendrier"
+      initialRouteName="CalendrierTemplate"
     >
       <Tab.Screen
-        name="Calendrier"
+        name="CalendrierTemplate"
         component={RenderCalendar}
         options={{
           lazy: true,
@@ -196,7 +136,7 @@ export default function Appointments({
         }}
       />
       <Tab.Screen
-        name="Agendeux"
+        name="AgendaTemplate"
         component={RenderAgenda}
         options={{
           lazy: true,
@@ -204,7 +144,7 @@ export default function Appointments({
         }}
       />
       <Tab.Screen
-        name="Agentrois"
+        name="EvenementTemplate"
         component={RenderEventDetails}
         options={{
           tabBarLabel: thirdTabLabel,
@@ -214,132 +154,3 @@ export default function Appointments({
   );
 }
 
-/**
- * Affichage du détail d'un event
- * @param navigation
- * @constructor
- */
-function AgendaTemplate({ navigation }) {
-  function selectEvent(event: Event) {
-    selectedEvent.value = {
-      id: event.id,
-      title: event.title,
-      summary: event.summary,
-      end: event.end,
-      color: event.color,
-      start: event.start,
-    };
-    edit.value = true;
-    navigation.navigate('Agentrois');
-  }
-
-
-  /**
-   * Event dans une Timeline
-   * @param event
-   */
-  const renderEvents = (event: TimelineEventProps) => {
-    return (
-      <View>
-        <TouchableOpacity>
-          <TextTemplate
-            variant="bodyMedium"
-            style={{
-              color: getColorForBackground(event.color ?? theme.colors.primary),
-            }}
-          >
-            {event.title}
-          </TextTemplate>
-          <Divider
-            style={{
-              borderWidth: 1,
-              borderColor: getColorForBackground(
-                event.color ?? theme.colors.primary
-              ),
-              borderRadius: 100,
-            }}
-          />
-          <TextTemplate
-            variant="labelMedium"
-            style={{
-              color: getColorForBackground(event.color ?? theme.colors.primary),
-            }}
-          >
-            {event.summary}
-          </TextTemplate>
-          <TextTemplate
-            variant="labelSmall"
-            style={{
-              color: getColorForBackground(event.color ?? theme.colors.primary),
-            }}
-          >
-            {LuxonDate.to_hhmm(event.start, 'yyyy-MM-dd HH:mm')} -{' '}
-            {LuxonDate.to_hhmm(event.end, 'yyyy-MM-dd HH:mm')}
-          </TextTemplate>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-  /**
-   * Affichage de la timeline avec les events
-   */
-  return (
-    <View>
-      <Timeline
-        theme={{
-          textDayFontFamily: baseFont,
-          textMonthFontFamily: baseFont,
-          todayButtonFontFamily: baseFont,
-          textDayHeaderFontFamily: baseFont,
-        }}
-        start={0}
-        end={24}
-        date={currentDateDisplay.value}
-        events={events.value}
-        renderEvent={renderEvents}
-        onEventPress={event => {
-          selectEvent(event);
-        }}
-      />
-    </View>
-  );
-}
-
-/**
- * Affichage du calendrier
- * @param navigation
- * @constructor
- */
-function CalendarTemplate({ navigation }) {
-  return (
-    <View style={{ flex: 1 }}>
-      <Calendar
-        theme={{
-          textDayFontFamily: baseFont,
-          textMonthFontFamily: baseFont,
-          todayButtonFontFamily: baseFont,
-          textDayHeaderFontFamily: baseFont,
-        }}
-        markingType="multi-dot"
-        current={currentDateDisplay.value}
-        markedDates={markedDates.value}
-        firstDay={1}
-        onDayPress={date => {
-          currentDate.value = date;
-          navigation.navigate('Agendeux');
-        }}
-        onMonthChange={month => {
-          currentDate.value = month;
-        }}
-        renderArrow={direction => (
-          <Icon
-            size={40}
-            source={
-              direction === 'left' ? 'arrow-left-circle' : 'arrow-right-circle'
-            }
-          />
-        )}
-      />
-    </View>
-  );
-}
