@@ -15,7 +15,6 @@ import SliderTemplate from '../../atoms/styles/SliderTemplate';
 import { useSharedValue } from 'react-native-reanimated';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { View, StyleSheet } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import { boosterLabel, lag, setLag } from '../../../services/utils/utils';
 
 type Props = NativeStackScreenProps<StackParamList>;
