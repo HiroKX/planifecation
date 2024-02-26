@@ -28,8 +28,9 @@ export default function Settings(props: Readonly<Props>): ReactNode {
   const minValueSlider = useSharedValue(0);
   const maxValueSlider = useSharedValue(2000);
 
-  const [boosterLevel, setBoosterLevel] = useState<string>(boosterLabel[lag.value]);
-
+  const [boosterLevel, setBoosterLevel] = useState<string>(
+    boosterLabel[lag.value]
+  );
 
   return (
     <ApolloConsumer>
@@ -37,33 +38,33 @@ export default function Settings(props: Readonly<Props>): ReactNode {
         <View>
           <SurfaceTemplate mode="flat">
             <View style={styles.flexBox}>
-            <PaperText style={styles.flexItem}
-              onPress={() => {
-              }}>
-              Activer le thème {themeSlideEnabled ? 'clair' : 'sombre'}
-            </PaperText>
-            <PaperSwitch
-              style={styles.flexItem}
-              value={themeSlideEnabled}
-              onValueChange={toggleThemeSwitch}
-            />
+              <PaperText style={styles.flexItem} onPress={() => {}}>
+                Activer le thème {themeSlideEnabled ? 'clair' : 'sombre'}
+              </PaperText>
+              <PaperSwitch
+                style={styles.flexItem}
+                value={themeSlideEnabled}
+                onValueChange={toggleThemeSwitch}
+              />
             </View>
             <View style={styles.flexBox}>
-              <PaperText style={styles.flexItem}>Booster sa connexion</PaperText>
+              <PaperText style={styles.flexItem}>
+                Booster sa connexion
+              </PaperText>
               <View style={styles.flexItem}>
-              <SliderTemplate 
-                progress={progressSlider} 
-                minimumValue={minValueSlider} 
-                maximumValue={maxValueSlider}
-                step={4}
-                onValueChange={ (progress) => {
-                  setBoosterLevel(boosterLabel[progress])
-                  setLag(progress);
-                }}
-              />
-          <TextTemplate >{boosterLevel}</TextTemplate>
-          </View>
-          </View>
+                <SliderTemplate
+                  progress={progressSlider}
+                  minimumValue={minValueSlider}
+                  maximumValue={maxValueSlider}
+                  step={4}
+                  onValueChange={progress => {
+                    setBoosterLevel(boosterLabel[progress]);
+                    setLag(progress);
+                  }}
+                />
+                <TextTemplate>{boosterLevel}</TextTemplate>
+              </View>
+            </View>
           </SurfaceTemplate>
           <Divider style={{ height: 1 }} />
           <SurfaceTemplate>
@@ -104,9 +105,9 @@ export default function Settings(props: Readonly<Props>): ReactNode {
 
 const styles = StyleSheet.create({
   flexBox: {
-   flexDirection: "row",
+    flexDirection: 'row',
   },
   flexItem: {
-    flex:1,
-  }
+    flex: 1,
+  },
 });

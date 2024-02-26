@@ -49,19 +49,18 @@ export const todayData: DateData = {
   dateString: today.toFormat('yyyy-MM-dd'),
 };
 
-
 // Used to troll the user in the settings. Allowing him to "boost" his connection rate. Actually it set the loader of the component to half a second by tick.
-export const lag = new Signal(0)
-export function setLag(nb : number) {
+export const lag = new Signal(0);
+export function setLag(nb: number) {
   lag.value = nb;
 }
 export const boosterLabel = {
-  [<number>0]:'Sans boost',
-  [<number>500]:'Rapide',
-  [<number>1000]:'Super rapide !',
+  [<number>0]: 'Sans boost',
+  [<number>500]: 'Rapide',
+  [<number>1000]: 'Super rapide !',
   [<number>1500]: 'Hyper rapide !!!',
-  [<number>2000]: 'ULTRA RAPIDE !!!!!'
-}
+  [<number>2000]: 'ULTRA RAPIDE !!!!!',
+};
 
 // Allows to handle dates easily in JS
 export class LuxonDate {
