@@ -2,7 +2,7 @@ import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { getColorForBackground } from '../../../services/utils/utils';
-import {useState, useMemo, useReducer} from 'react';
+import {useState, useMemo} from 'react';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import ColorPicker, {
   HueCircular,
@@ -17,12 +17,17 @@ import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
 import { View } from 'react-native';
+import {Signal} from "@preact/signals-react";
+import {isDataUpdated} from "./CalendarTemplate";
 
-declare type Props = { localEvent: Event; navigation: any };
+declare type Props = {
+    localEvent: Event
+    events: Signal<Event[]>
+    navigation: any
+};
 
 export default function EventTemplate(props: Readonly<Props>) {
   const client = useApolloClient();
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   const addAgendaEvent = () => {
     if (id != undefined) {
@@ -35,12 +40,14 @@ export default function EventTemplate(props: Readonly<Props>) {
         dateEnd + ' ' + end,
         color
       )
-        .then(() => {
-          console.debug('Évènement ' + id + ' mis à jour');
-          forceUpdate()
+        .then(async () => {
+          await client.resetStore();
+            isDataUpdated.value = true
           props.navigation.navigate("CalendrierTemplate");
         })
-        .catch(() => console.debug('Une erreur est survenue à la mise à jour'));
+        .catch(() => {
+            console.debug('Une erreur est survenue à la mise à jour')
+        });
     }
     CreateEvent(
       client,
@@ -52,8 +59,7 @@ export default function EventTemplate(props: Readonly<Props>) {
     )
       .then(async () => {
         await client.resetStore();
-        console.debug('Nouvel évènement créé')
-        forceUpdate()
+          isDataUpdated.value = true
         props.navigation.navigate("CalendrierTemplate");
       })
       .catch(() => {

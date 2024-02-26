@@ -30,11 +30,6 @@ export default function AgendaTemplate(props: Readonly<AgendaProps>): ReactNode 
         props.navigation.navigate('EvenementTemplate');
     }
 
-
-    /**
-     * Event dans une Timeline
-     * @param event
-     */
     const renderEvents = (event: TimelineEventProps) => {
         return (
             <View>
@@ -77,9 +72,8 @@ export default function AgendaTemplate(props: Readonly<AgendaProps>): ReactNode 
             </View>
         );
     };
-    /**
-     * Affichage de la timeline avec les events
-     */
+
+
     return (
         <View>
             <Timeline

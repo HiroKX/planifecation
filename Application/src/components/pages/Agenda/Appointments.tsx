@@ -15,9 +15,8 @@ import {
 import {theme} from '../../organisms/OwnPaperProvider';
 import EventTemplate from './EventTemplate';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
-import { MarkedDates } from 'react-native-calendars/src/types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import CalendarTemplate, {getMarkedDates} from "./CalendarTemplate";
+import CalendarTemplate from "./CalendarTemplate";
 import AgendaTemplate from "./AgendaTemplate";
 import React from "react";
 
@@ -41,10 +40,8 @@ const currentDateDisplay = computed(() => {
   return currentDate.value.dateString;
 });
 
-const markedDates = signal<MarkedDates>({});
 const edit = signal(false);
 const isLoading = signal(false);
-
 
 const selectedEvent = signal<Event>({
   id: undefined,
@@ -90,7 +87,6 @@ export default function Appointments(props: Readonly<Props>) {
   const RenderCalendar = () => {
     return <CalendarTemplate
         events={events}
-        markedDates={markedDates}
         isLoading={isLoading}
         currentDate={currentDate}
         currentDateDisplay={currentDateDisplay}
@@ -111,6 +107,7 @@ export default function Appointments(props: Readonly<Props>) {
     return (
       <EventTemplate
         localEvent={selectedEvent.value}
+        events={events}
         navigation={props.navigation}
       />
     );
