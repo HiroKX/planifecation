@@ -16,6 +16,7 @@ import TextTemplate from '../../atoms/styles/TextTemplate';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-paper';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
+import { lag } from '../../../services/utils/utils';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -44,10 +45,9 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     }
     setIsLoading(true);
     fetchNotes().then();
-    // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 0);
+    }, lag.value);
   }, [updatedNotes, isFocused]);
 
   const confirmDelete = async (id: number): Promise<void> => {

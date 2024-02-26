@@ -1,15 +1,28 @@
 import { ReactNode } from 'react';
-import { AwesomeSliderProps, Slider } from 'react-native-awesome-slider';
-import { useSharedValue } from 'react-native-reanimated';
+import { AwesomeSliderProps, Slider, HapticModeEnum } from 'react-native-awesome-slider';
+import { theme } from '../../organisms/OwnPaperProvider';
+import * as Haptics from 'expo-haptics';
 
 export default function SliderTemplate(
     props: Readonly<AwesomeSliderProps>
   ): ReactNode {
-    const progress = useSharedValue(30);
-    const min = useSharedValue(0);
-    const max = useSharedValue(100);
     return (
-      <Slider {...props}/>
+      <Slider
+      onHapticFeedback={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+      }} 
+      hapticMode={HapticModeEnum.STEP}
+      style={{margin: 10}}
+      theme={{
+        disableMinTrackTintColor: theme.colors.backdrop,
+        maximumTrackTintColor: theme.colors.primary,
+        minimumTrackTintColor: theme.colors.secondary,
+        cacheTrackTintColor: theme.colors.secondary,
+        bubbleBackgroundColor: theme.colors.primary,
+        heartbeatColor: theme.colors.error
+      }}
+      {...props}
+      />
     );
   }
   

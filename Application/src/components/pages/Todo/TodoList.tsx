@@ -21,6 +21,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
+import { lag } from '../../../services/utils/utils';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -52,10 +53,9 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     }
     setIsLoading(true);
     getTodos().then();
-    // timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, lag.value);
   }, [updatedTodos]);
 
   const handleAddTodo = async () => {
