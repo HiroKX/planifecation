@@ -6,7 +6,7 @@ if (!global.prisma) {
   global.prisma = new PrismaClient({
     datasources: {
       db: {
-        url: "postgresql://postgres:@localhost:5432/postgres?schema=public",
+        url: process.env.DATABASE_URL,
       },
     },
   });
