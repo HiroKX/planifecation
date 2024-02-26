@@ -2,7 +2,7 @@ import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { getColorForBackground } from '../../../services/utils/utils';
-import {useState, useMemo} from 'react';
+import { useState, useMemo } from 'react';
 import ModalTemplate from '../../organisms/ModalTemplate';
 import ColorPicker, {
   HueCircular,
@@ -17,13 +17,13 @@ import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
 import { View } from 'react-native';
-import {Signal} from "@preact/signals-react";
-import {isDataUpdated} from "./CalendarTemplate";
+import { Signal } from '@preact/signals-react';
+import { isDataUpdated } from './CalendarTemplate';
 
 declare type Props = {
-    localEvent: Event
-    events: Signal<Event[]>
-    navigation: any
+  localEvent: Event;
+  events: Signal<Event[]>;
+  navigation: any;
 };
 
 export default function EventTemplate(props: Readonly<Props>) {
@@ -42,11 +42,11 @@ export default function EventTemplate(props: Readonly<Props>) {
       )
         .then(async () => {
           await client.resetStore();
-            isDataUpdated.value = true
-          props.navigation.navigate("CalendrierTemplate");
+          isDataUpdated.value = true;
+          props.navigation.navigate('CalendrierTemplate');
         })
         .catch(() => {
-            console.debug('Une erreur est survenue à la mise à jour')
+          console.debug('Une erreur est survenue à la mise à jour');
         });
     }
     CreateEvent(
@@ -59,8 +59,8 @@ export default function EventTemplate(props: Readonly<Props>) {
     )
       .then(async () => {
         await client.resetStore();
-          isDataUpdated.value = true
-        props.navigation.navigate("CalendrierTemplate");
+        isDataUpdated.value = true;
+        props.navigation.navigate('CalendrierTemplate');
       })
       .catch(() => {
         console.debug('Une erreur est survenue à la création');

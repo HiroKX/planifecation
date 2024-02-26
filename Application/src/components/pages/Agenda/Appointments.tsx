@@ -1,24 +1,19 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import {Text} from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import {
   LuxonDate,
   getColorForBackground,
   loadLocale,
   todayData,
 } from '../../../services/utils/utils';
-import {
-  Signal,
-  computed,
-  signal,
-  useComputed,
-} from '@preact/signals-react';
-import {theme} from '../../organisms/OwnPaperProvider';
+import { Signal, computed, signal, useComputed } from '@preact/signals-react';
+import { theme } from '../../organisms/OwnPaperProvider';
 import EventTemplate from './EventTemplate';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import CalendarTemplate from "./CalendarTemplate";
-import AgendaTemplate from "./AgendaTemplate";
-import React from "react";
+import CalendarTemplate from './CalendarTemplate';
+import AgendaTemplate from './AgendaTemplate';
+import React from 'react';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -32,7 +27,7 @@ export type StackParamListAgenda = {
 };
 
 export type AgendaParams = {
-  events: Event[]
+  events: Event[];
 };
 
 const currentDate = signal(todayData);
@@ -85,22 +80,27 @@ export default function Appointments(props: Readonly<Props>) {
   };
 
   const RenderCalendar = () => {
-    return <CalendarTemplate
+    return (
+      <CalendarTemplate
         events={events}
         isLoading={isLoading}
         currentDate={currentDate}
         currentDateDisplay={currentDateDisplay}
-        navigation={props.navigation}/>
+        navigation={props.navigation}
+      />
+    );
   };
 
   const RenderAgenda = () => {
-    return (<AgendaTemplate
+    return (
+      <AgendaTemplate
         events={events}
         selectedEvent={selectedEvent}
         edit={edit}
         currentDateDisplay={currentDateDisplay}
         navigation={props.navigation}
-    />);
+      />
+    );
   };
 
   const RenderEventDetails = () => {
@@ -149,4 +149,3 @@ export default function Appointments(props: Readonly<Props>) {
     </Tab.Navigator>
   );
 }
-

@@ -5,7 +5,9 @@ import Login from '../components/pages/Security/Login';
 import SignUp from '../components/pages/Security/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/User/Settings';
-import Appointments, {AgendaParams} from '../components/pages/Agenda/Appointments';
+import Appointments, {
+  AgendaParams,
+} from '../components/pages/Agenda/Appointments';
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import {
