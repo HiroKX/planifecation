@@ -5,7 +5,7 @@ import Login from '../components/pages/Security/Login';
 import SignUp from '../components/pages/Security/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/User/Settings';
-import Appointments from '../components/pages/Agenda/Appointments';
+import Appointments, {AgendaParams} from '../components/pages/Agenda/Appointments';
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import {
@@ -29,7 +29,7 @@ export type StackParamList = {
   'Bloc-Notes': NotepadParams | undefined;
   Sandbox: undefined;
   Profil: undefined;
-  Agenda: undefined;
+  Agenda: AgendaParams;
   'Liste toute douce': undefined;
   'Test SKIA': undefined;
   'Liste des notes': undefined;

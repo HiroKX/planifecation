@@ -8,7 +8,7 @@ import {Divider} from "react-native-paper";
 import {ReactNode} from "react";
 import {Signal} from "@preact/signals-react";
 
-declare type Props = {
+declare type AgendaProps = {
     events: Signal<Event[]>
     selectedEvent: Signal<Event>
     edit: Signal<Boolean>
@@ -16,7 +16,7 @@ declare type Props = {
     navigation: any;
 }
 
-export default function AgendaTemplate(props: Readonly<Props>): ReactNode {
+export default function AgendaTemplate(props: Readonly<AgendaProps>): ReactNode {
     function selectEvent(event: Event) {
         props.selectedEvent.value = {
             id: event.id,

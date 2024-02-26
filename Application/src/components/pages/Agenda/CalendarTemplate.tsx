@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {Calendar, DateData} from "react-native-calendars";
 import {baseFont, theme} from "../../organisms/OwnPaperProvider";
 import {Icon} from "react-native-paper";
-import {ReactNode, useEffect} from "react";
+import React, {ReactNode, useEffect, useReducer, useState} from "react";
 import {effect, Signal} from "@preact/signals-react";
 import {MarkedDates} from "react-native-calendars/src/types";
 import {Event} from "react-native-calendars/src/timeline/EventBlock";
@@ -10,7 +10,7 @@ import {useApolloClient} from "@apollo/client";
 import {agendaEventToEvent, GetAllAgendaEvents} from "../../../controllers/AgendaController";
 import {AgendaEvent} from "../../../models/AgendaEvent";
 
-declare type Props = {
+declare type CalendarProps = {
     events: Signal<Event[]>
     markedDates: Signal<MarkedDates>
     isLoading: Signal<Boolean>
@@ -22,12 +22,27 @@ declare type Dot = {
     [key: string]: { color: string }[];
 };
 
-export default function CalendarTemplate(props: Readonly<Props>): ReactNode {
+export default function CalendarTemplate(props: Readonly<CalendarProps>): ReactNode {
     const client = useApolloClient();
 
-    effect(() => {
-        getMarkedDates();
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+    effect(async () => {
+        console.debug("IN EFFECT")
+        props.events.value =  await getAgendaEvents();
+        props.markedDates.value = getMarkedDates();
+        console.debug("END OF EFFECT")
     });
+
+    async function getAgendaEvents() {
+        return await GetAllAgendaEvents(client).then((agendaEvents: AgendaEvent[]) => {
+            let response: Event[] = [];
+            agendaEvents.forEach((event: AgendaEvent) => {
+                response = [...response, agendaEventToEvent(event)];
+            });
+            return response;
+        });
+    }
 
     function getMarkedDates() {
         // Typically the situation where you would put a "DON'T TOUCH, NO ONE KNOWS HOW IT WORKS BUT IT WORKS"
@@ -50,26 +65,23 @@ export default function CalendarTemplate(props: Readonly<Props>): ReactNode {
                 };
             });
         }
-        props.markedDates.value = response;
+        return response;
     }
 
-    useEffect(() => {
-        async function getAgendaEvents() {
-            await GetAllAgendaEvents(client).then((agendaEvents: AgendaEvent[]) => {
-                let response: Event[] = [];
-                agendaEvents.forEach((event: AgendaEvent) => {
-                    response = [...response, agendaEventToEvent(event)];
-                });
-                props.events.value = response;
-            });
-        }
-        props.isLoading.value = true;
-        getAgendaEvents();
-        //timeout à garder pour plus tard pour le booster de connexion
-        setTimeout(() => {
-            props.isLoading.value = false;
-        }, 0);
-    }, []);
+    /*
+    let dot:Dot = {}
+    dot["2024-02-29"] = []
+    dot["2024-02-29"].push({color: theme.colors.primary})
+    props.markedDates.value["2024-02-29"] = {
+        dots: dot["2024-02-29"],
+        marked: true,
+        selected: true,
+    }
+    */
+
+    console.debug("IN CALENDAR TEMPLATE")
+    console.debug("Events = ", props.events.value)
+    console.debug("MarkedDates = ", props.markedDates.value)
 
     return (
         <View style={{ flex: 1 }}>
