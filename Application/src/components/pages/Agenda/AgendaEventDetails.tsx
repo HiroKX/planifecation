@@ -71,13 +71,14 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
-  const showMode = (currentMode : 'date' | 'time') => {
+  const showMode = (currentMode : 'date' | 'time', date : string, setter : (date:string) => void) => {
     setMode(currentMode)
+
     setShow(true);
   }
 
-  const showDatePicker = () => {
-    showMode('date');
+  const showDatePicker = (date : string, setter : (date : string) => void) => {
+    showMode('date', date, setter);
   }
   const showTimePicker = () => {
     showMode('time');
@@ -86,7 +87,6 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
   const changeColor = ({ hex }: returnedResults) => {
     setColor(hex);
   };
-
   function renderColorPicker() {
     return (
       <Animated.View style={{ justifyContent: 'center' }}>
@@ -188,13 +188,9 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
       <ModalTemplate visible={visible} onDismiss={() => setVisible(false)}>
         {renderColorPicker()}
       </ModalTemplate>
-      {show && (
-        <DateTimePicker
-          value={new Date(date)}
-          is24Hour
-          ></DateTimePicker>
-
-      )}
+      {show &&
+      renderDateOrTimePicker(date);
+      }
     </View>
   );
 }
