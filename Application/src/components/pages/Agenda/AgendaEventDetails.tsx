@@ -17,6 +17,8 @@ import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
 import { View } from 'react-native';
+import IconButtonTemplate from '../../molecules/IconButtonTemplate';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 declare type Props = { localEvent: Event; navigation: any };
 
@@ -66,6 +68,20 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
   const [start, setStart] = useState(props.localEvent.start.substring(11));
   const [end, setEnd] = useState(props.localEvent.end.substring(11));
   const [dateEnd, setDateEnd] = useState(props.localEvent.end.substring(0, 10));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const showMode = (currentMode : 'date' | 'time') => {
+    setMode(currentMode)
+    setShow(true);
+  }
+
+  const showDatePicker = () => {
+    showMode('date');
+  }
+  const showTimePicker = () => {
+    showMode('time');
+  }
 
   const changeColor = ({ hex }: returnedResults) => {
     setColor(hex);
@@ -107,26 +123,49 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
           value={title}
           onChangeText={input => setTitle(input)}
         ></TextInputTemplate>
-        <TextInputTemplate
-          label={'Date'}
-          value={date}
-          onChangeText={input => setDate(input)}
-        ></TextInputTemplate>
-        <TextInputTemplate
-          label={'Heure de début'}
-          value={start}
-          onChangeText={input => setStart(input)}
-        ></TextInputTemplate>
-        <TextInputTemplate
-          label={'Date de fin'}
-          value={dateEnd}
-          onChangeText={input => setDateEnd(input)}
-        ></TextInputTemplate>
-        <TextInputTemplate
-          label={'Heure de fin'}
-          value={end}
-          onChangeText={input => setEnd(input)}
-        ></TextInputTemplate>
+        <View style={{flexDirection: 'row'}}>
+          <TextInputTemplate
+            style={{flex:2}}
+            label={'Date de début'}
+            disabled
+            value={date}
+            onChangeText={input => setDate(input)}
+          ></TextInputTemplate>
+          <IconButtonTemplate
+            style={{flexShrink:1}}
+            icon={"calendar-outline"}/>
+          <TextInputTemplate
+            style={{flex:1}}
+            label={'Heure de début'}
+            disabled
+            value={start}
+            onChangeText={input => setStart(input)}
+          ></TextInputTemplate>
+          <IconButtonTemplate
+            style={{flexShrink:1}}
+            icon={"clock-outline"}/>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <TextInputTemplate
+            style={{flex:2}}
+            label={'Date de fin'}
+            value={date}
+            disabled
+            onChangeText={input => setDate(input)}
+          ></TextInputTemplate>
+          <IconButtonTemplate
+            style={{flexShrink:1}}
+            icon={"calendar-outline"}/>
+          <TextInputTemplate
+            style={{flex:1}}
+            label={'Heure de fin'}
+            disabled
+            value={start}
+            onChangeText={input => setStart(input)}
+          ></TextInputTemplate>
+            <IconButtonTemplate
+              icon={"clock-outline"}/>
+        </View>
         <TextInputTemplate
           multiline
           label={'Message'}
@@ -149,6 +188,13 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
       <ModalTemplate visible={visible} onDismiss={() => setVisible(false)}>
         {renderColorPicker()}
       </ModalTemplate>
+      {show && (
+        <DateTimePicker
+          value={new Date(date)}
+          is24Hour
+          ></DateTimePicker>
+
+      )}
     </View>
   );
 }

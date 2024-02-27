@@ -20,6 +20,7 @@
     "@babel/preset-typescript": "^7.23.3",
     "@babel/runtime": "^7.23.7",
     "@preact/signals-react": "^2.0.0",
+    "@react-native-community/datetimepicker": "7.2.0",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/material-top-tabs": "^6.6.5",
     "@react-navigation/native": "^6.1.9",
