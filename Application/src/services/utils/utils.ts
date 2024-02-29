@@ -67,7 +67,7 @@ export class LuxonDate {
       .toFormat('yyyy-MM-dd');
   }
 
-  static fromMillis(date : number, toFormat?: string) : string {
+  static fromMillis(date: number, toFormat?: string): string {
     return DateTime.fromMillis(date)
       .setLocale(locale)
       .toFormat(toFormat ?? 'yyyy-MM-dd');
