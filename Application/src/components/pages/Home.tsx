@@ -39,32 +39,41 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
-        <LogoTemplate style={styles.logo}/>
+        <LogoTemplate style={styles.logo} />
       </View>
       <View style={styles.container}>
-        <TextTemplate
-          style={styles.textStyle}
-          >
-            Waouh quel slogan inspirant !
+        <TextTemplate style={styles.textStyle}>
+          Waouh quel slogan inspirant !
         </TextTemplate>
       </View>
       <View style={[styles.container]}>
-        <ButtonTemplate style={styles.button} onPress={() => navigation.navigate('Connexion')}>Se connecter</ButtonTemplate>
-        <ButtonTemplate style={styles.button} onPress={() => navigation.navigate('Inscription')} mode='outlined'>S'inscrire</ButtonTemplate>
+        <ButtonTemplate
+          style={styles.button}
+          onPress={() => navigation.navigate('Connexion')}
+        >
+          Se connecter
+        </ButtonTemplate>
+        <ButtonTemplate
+          style={styles.button}
+          onPress={() => navigation.navigate('Inscription')}
+          mode="outlined"
+        >
+          S'inscrire
+        </ButtonTemplate>
       </View>
-        {ENVIRONMENT === 'test' ? (
-          <View style={[styles.container]}>
-            <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
-              Theme Sandbox
-            </ButtonTemplate>
-            <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
-              Test SKIA
-            </ButtonTemplate>
-            <ButtonTemplate onPress={() => navigation.navigate('Test Gyro')}>
-              Test Gyro
-            </ButtonTemplate>
-          </View>
-        ) : null}
+      {ENVIRONMENT === 'test' ? (
+        <View style={[styles.container]}>
+          <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
+            Theme Sandbox
+          </ButtonTemplate>
+          <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
+            Test SKIA
+          </ButtonTemplate>
+          <ButtonTemplate onPress={() => navigation.navigate('Test Gyro')}>
+            Test Gyro
+          </ButtonTemplate>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -72,14 +81,14 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
 const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: theme.colors.background,
-    flex:1,
-    flexDirection:'column',
-    alignItems:'center',
-    justifyContent:'space-between',
-    paddingVertical:75
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 75,
   },
   container: {
-    flexDirection:'row',
+    flexDirection: 'row',
   },
   logo: {
     height: 400,
@@ -88,18 +97,17 @@ const styles = StyleSheet.create({
   textStyle: {
     color: theme.colors.primary,
     fontSize: 44,
-    fontFamily: "Pattaya",
+    fontFamily: 'Pattaya',
     letterSpacing: 2,
     textAlign: 'center',
     textAlignVertical: 'top',
   },
 
   button: {
-    flex:1,
-    borderRadius:50,
-    margin:10,
-    height:60,
-    justifyContent:'center'
-
-  }
+    flex: 1,
+    borderRadius: 50,
+    margin: 10,
+    height: 60,
+    justifyContent: 'center',
+  },
 });

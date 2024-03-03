@@ -57,32 +57,24 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
   }));
 
   return (
-    <GestureHandlerRootView
-      style={styles.mainContainer}
-    >
+    <GestureHandlerRootView style={styles.mainContainer}>
       <View style={styles.logoContainer}>
         <GestureDetector gesture={pan}>
           <Animated.View
             entering={ZoomIn}
             exiting={ZoomOut}
-            style={[
-              { flex:1 },
-              animatedLogo,
-            ]}
+            style={[{ flex: 1 }, animatedLogo]}
           >
-            <LogoTemplate style={styles.logo}/>
+            <LogoTemplate style={styles.logo} />
           </Animated.View>
         </GestureDetector>
         <GestureDetector gesture={tap}>
-          <TouchableOpacity
-            onPressOut={props.func}>
+          <TouchableOpacity onPressOut={props.func}>
             <Animated.View
               entering={ZoomIn}
               style={[styles.loaderContainer, animatedLoader]}
             >
-              <ActivityIndicatorTemplate
-                color={theme.colors.tertiary}
-              />
+              <ActivityIndicatorTemplate color={theme.colors.tertiary} />
             </Animated.View>
           </TouchableOpacity>
         </GestureDetector>
@@ -93,21 +85,21 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    backgroundColor: theme.colors.primary, 
-    flex: 1, 
-    padding: 75,  
+    backgroundColor: theme.colors.primary,
+    flex: 1,
+    padding: 75,
   },
   logoContainer: {
     flex: 1,
     alignContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   logo: {
-    height:400,
-    width:400
+    height: 400,
+    width: 400,
   },
   loaderContainer: {
     height: 200,
     width: 200,
-  }
+  },
 });

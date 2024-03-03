@@ -20,7 +20,7 @@ type FormValues = {
   confirmPassword: string;
 };
 
-export default function SignUp(props: Readonly<Props>): ReactNode {
+export default function SignUp({ navigation }: Readonly<Props>): ReactNode {
   const {
     control,
     handleSubmit,
@@ -50,21 +50,54 @@ export default function SignUp(props: Readonly<Props>): ReactNode {
   return (
     <View style={styles.mainContainer}>
       <SurfaceTemplate>
-        <View style={{flexShrink:1}}>
-          <TextTemplate style={[styles.center, {marginBottom: 50}]} variant='headlineMedium'>Inscription</TextTemplate>
+        <View style={{ flexShrink: 1 }}>
+          <TextTemplate
+            style={[styles.center, { marginBottom: 50 }]}
+            variant="headlineMedium"
+          >
+            Inscription
+          </TextTemplate>
         </View>
-        <View style={{flexShrink:1}}>
-          <UsernameInput style={styles.margin} control={control} errors={errors} />
-          <PasswordInput style={styles.margin} control={control} errors={errors} />
-          <PasswordConfirmInput style={styles.margin} control={control} errors={errors} watch={watch} />
+        <View style={{ flexShrink: 1 }}>
+          <UsernameInput
+            style={styles.margin}
+            control={control}
+            errors={errors}
+          />
+          <PasswordInput
+            style={styles.margin}
+            control={control}
+            errors={errors}
+          />
+          <PasswordConfirmInput
+            style={styles.margin}
+            control={control}
+            errors={errors}
+            watch={watch}
+          />
         </View>
-        <View style={{flexShrink:2}}>
-          <ButtonTemplate style={{marginTop: 50}} theme={buttonTheme} onPress={onSubmit}>Inscription</ButtonTemplate>
+        <View style={{ flexShrink: 2 }}>
+          <ButtonTemplate
+            style={{ marginTop: 50 }}
+            theme={buttonTheme}
+            onPress={onSubmit}
+          >
+            Inscription
+          </ButtonTemplate>
         </View>
       </SurfaceTemplate>
-      <View style={{marginTop: 25,}}>
-        <TextTemplate variant="bodyLarge" style={styles.center}>Vous avez déjà un compte ?</TextTemplate>
-          <ButtonTemplate mode='outlined' style={{alignSelf:'center'}} theme={buttonTheme}>Se connecter</ButtonTemplate>
+      <View style={{ marginTop: 25 }}>
+        <TextTemplate variant="bodyLarge" style={styles.center}>
+          Vous avez déjà un compte ?
+        </TextTemplate>
+        <ButtonTemplate
+          onPress={() => navigation.navigate('Connexion')}
+          mode="outlined"
+          style={{ alignSelf: 'center' }}
+          theme={buttonTheme}
+        >
+          Se connecter
+        </ButtonTemplate>
       </View>
     </View>
   );
@@ -72,16 +105,18 @@ export default function SignUp(props: Readonly<Props>): ReactNode {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
-    paddingTop:75
+    paddingTop: 75,
   },
   center: {
-    textAlign:'center'
+    textAlign: 'center',
   },
   margin: {
-    marginVertical: 5
+    marginVertical: 5,
   },
-})
+});
 
-const buttonTheme = {colors: {primary: theme.colors.tertiary, outline: theme.colors.tertiary}};
+const buttonTheme = {
+  colors: { primary: theme.colors.tertiary, outline: theme.colors.tertiary },
+};

@@ -18,6 +18,6 @@ export default function ButtonTemplate(
 
 const styles = StyleSheet.create({
   button: {
-    alignSelf:'center'
+    alignSelf: 'center',
   },
 });

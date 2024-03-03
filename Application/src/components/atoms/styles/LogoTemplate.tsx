@@ -8,9 +8,6 @@ type Props = {
 
 export default function LogoTemplate(props?: Readonly<Props>) {
   return (
-      <Image
-        style={props?.style}
-        source={require('../../../assets/logo.png')}
-      />
+    <Image style={props?.style} source={require('../../../assets/logo.png')} />
   );
 }
