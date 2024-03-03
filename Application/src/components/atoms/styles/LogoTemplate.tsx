@@ -8,12 +8,9 @@ type Props = {
 
 export default function LogoTemplate(props?: Readonly<Props>) {
   return (
-    <Image
-      width={props?.style?.width ?? 250}
-      height={props?.style?.height ?? 250}
-      resizeMode="stretch"
-      style={props?.style}
-      source={require('../../../assets/logo.png')}
-    />
+      <Image
+        style={props?.style}
+        source={require('../../../assets/logo.png')}
+      />
   );
 }

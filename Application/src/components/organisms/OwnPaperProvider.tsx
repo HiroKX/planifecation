@@ -30,7 +30,7 @@ export const lightTheme: MD3Theme = {
     onError: 'rgb(6, 35, 51)',
     errorContainer: 'rgb(138, 174, 30)',
     onErrorContainer: 'rgb(6, 35, 51)',
-    background: 'rgb(237, 246, 253)',
+    background: 'rgb(248, 230, 173)',
     onBackground: 'rgb(25, 28, 30)',
     surface: 'rgb(237, 246, 253)',
     onSurface: 'rgb(25, 28, 30)',
