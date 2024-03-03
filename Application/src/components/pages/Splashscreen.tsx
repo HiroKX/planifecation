@@ -6,6 +6,7 @@ import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
+  TouchableOpacity,
 } from 'react-native-gesture-handler';
 import Animated, {
   ZoomIn,
@@ -58,43 +59,33 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
 
   return (
     <GestureHandlerRootView
-      style={{ backgroundColor: theme.colors.primary, flex: 1 }}
+      style={{ backgroundColor: theme.colors.primary, flex: 1, padding:75 }}
     >
-      <View style={{ flex: 6, alignContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, alignContent: 'center', alignItems: 'center' }}>
         <GestureDetector gesture={pan}>
           <Animated.View
             entering={ZoomIn}
             exiting={ZoomOut}
             style={[
-              { height: 400, width: 400, borderRadius: 500 },
+              { height: 400, width: 400, borderRadius: 500, flex:1 },
               animatedLogo,
             ]}
           >
             <LogoTemplate style={{ width: 400, height: 400 }} />
           </Animated.View>
         </GestureDetector>
-        <TextTemplate
-          onLongPress={props.func}
-          style={{
-            flex: 1,
-            color: theme.colors.secondary,
-            fontSize: 54,
-            fontFamily: 'Pattaya',
-            letterSpacing: 2,
-          }}
-        >
-          Planifécation
-        </TextTemplate>
         <GestureDetector gesture={tap}>
-          <Animated.View
-            entering={ZoomIn}
-            style={[{ height: 200, width: 200 }, animatedLoader]}
-          >
-            <ActivityIndicatorTemplate
-              style={{ flex: 2 }}
-              color={theme.colors.error}
-            />
-          </Animated.View>
+          <TouchableOpacity
+            onPressOut={props.func}>
+            <Animated.View
+              entering={ZoomIn}
+              style={[{ height: 200, width: 200 }, animatedLoader]}
+            >
+              <ActivityIndicatorTemplate
+                color={theme.colors.error}
+              />
+            </Animated.View>
+          </TouchableOpacity>
         </GestureDetector>
       </View>
     </GestureHandlerRootView>
