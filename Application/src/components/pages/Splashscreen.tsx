@@ -1,6 +1,5 @@
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { theme } from '../organisms/OwnPaperProvider';
-import TextTemplate from '../atoms/styles/TextTemplate';
 import LogoTemplate from '../atoms/styles/LogoTemplate';
 import {
   Gesture,
@@ -59,19 +58,19 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
 
   return (
     <GestureHandlerRootView
-      style={{ backgroundColor: theme.colors.primary, flex: 1, padding:75 }}
+      style={styles.mainContainer}
     >
-      <View style={{ flex: 1, alignContent: 'center', alignItems: 'center' }}>
+      <View style={styles.logoContainer}>
         <GestureDetector gesture={pan}>
           <Animated.View
             entering={ZoomIn}
             exiting={ZoomOut}
             style={[
-              { height: 400, width: 400, borderRadius: 500, flex:1 },
+              { flex:1 },
               animatedLogo,
             ]}
           >
-            <LogoTemplate style={{ width: 400, height: 400 }} />
+            <LogoTemplate style={styles.logo}/>
           </Animated.View>
         </GestureDetector>
         <GestureDetector gesture={tap}>
@@ -79,10 +78,10 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
             onPressOut={props.func}>
             <Animated.View
               entering={ZoomIn}
-              style={[{ height: 200, width: 200 }, animatedLoader]}
+              style={[styles.loaderContainer, animatedLoader]}
             >
               <ActivityIndicatorTemplate
-                color={theme.colors.error}
+                color={theme.colors.tertiary}
               />
             </Animated.View>
           </TouchableOpacity>
@@ -91,3 +90,24 @@ export default function Splashscreen(props: Readonly<{ func: () => void }>) {
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    backgroundColor: theme.colors.primary, 
+    flex: 1, 
+    padding: 75,  
+  },
+  logoContainer: {
+    flex: 1,
+    alignContent: 'center',
+    alignItems: 'center', 
+  },
+  logo: {
+    height:400,
+    width:400
+  },
+  loaderContainer: {
+    height: 200,
+    width: 200,
+  }
+});
