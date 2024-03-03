@@ -4,7 +4,6 @@ import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import {
   LuxonDate,
   getColorForBackground,
-  today,
   todayData,
 } from '../../../services/utils/utils';
 import { useState, useMemo } from 'react';
@@ -25,7 +24,6 @@ import { View } from 'react-native';
 import IconButtonTemplate from '../../molecules/IconButtonTemplate';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TextTemplate from '../../atoms/styles/TextTemplate';
-import { DateTime } from 'luxon';
 
 declare type DateTimePickerOptions = {
   date: string;
