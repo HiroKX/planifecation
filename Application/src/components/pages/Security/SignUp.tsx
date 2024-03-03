@@ -9,6 +9,9 @@ import { useForm } from 'react-hook-form';
 import PasswordInput from '../../atoms/styles/PasswordInput';
 import UsernameInput from '../../atoms/styles/UsernameInput';
 import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
+import { StyleSheet, View } from 'react-native';
+import TextTemplate from '../../atoms/styles/TextTemplate';
+import { theme } from '../../organisms/OwnPaperProvider';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -45,11 +48,40 @@ export default function SignUp(props: Readonly<Props>): ReactNode {
   });
 
   return (
-    <SurfaceTemplate>
-      <UsernameInput control={control} errors={errors} />
-      <PasswordInput control={control} errors={errors} />
-      <PasswordConfirmInput control={control} errors={errors} watch={watch} />
-      <ButtonTemplate onPress={onSubmit}>M'inscrire</ButtonTemplate>
-    </SurfaceTemplate>
+    <View style={styles.mainContainer}>
+      <SurfaceTemplate>
+        <View style={{flexShrink:1}}>
+          <TextTemplate style={[styles.center, {marginBottom: 50}]} variant='headlineMedium'>Inscription</TextTemplate>
+        </View>
+        <View style={{flexShrink:1}}>
+          <UsernameInput style={styles.margin} control={control} errors={errors} />
+          <PasswordInput style={styles.margin} control={control} errors={errors} />
+          <PasswordConfirmInput style={styles.margin} control={control} errors={errors} watch={watch} />
+        </View>
+        <View style={{flexShrink:2}}>
+          <ButtonTemplate style={{marginTop: 50}} theme={buttonTheme} onPress={onSubmit}>Inscription</ButtonTemplate>
+        </View>
+      </SurfaceTemplate>
+      <View style={{marginTop: 25,}}>
+        <TextTemplate variant="bodyLarge" style={styles.center}>Vous avez déjà un compte ?</TextTemplate>
+          <ButtonTemplate mode='outlined' style={{alignSelf:'center'}} theme={buttonTheme}>Se connecter</ButtonTemplate>
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex:1,
+    justifyContent: 'center',
+    paddingTop:75
+  },
+  center: {
+    textAlign:'center'
+  },
+  margin: {
+    marginVertical: 5
+  },
+})
+
+const buttonTheme = {colors: {primary: theme.colors.tertiary, outline: theme.colors.tertiary}};
