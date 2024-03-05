@@ -3,6 +3,7 @@ import { Divider, Icon, Text } from 'react-native-paper';
 import {
   LuxonDate,
   getColorForBackground,
+  lag,
   loadLocale,
   todayData,
 } from '../../../services/utils/utils';
@@ -110,7 +111,7 @@ export default function Appointments({
     //timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
       setIsLoading(false);
-    }, 0);
+    }, lag.value);
   }, []);
 
   const monthDisplay = useComputed(() => {
