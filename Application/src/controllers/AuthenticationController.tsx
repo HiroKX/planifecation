@@ -24,7 +24,6 @@ export async function SignUpUser(
   await CreateUser(client, username, password)
     .then(async userId => {
       if (userId != -1) {
-        console.log('User', userId, 'created with username ', username);
         await SignInUser(client, username, password, props);
       }
     })
@@ -50,12 +49,10 @@ export async function SignInUser(
   console.debug('AuthenticationController.SignInUser');
   await LogUser(username, password)
     .then(async token => {
-      console.log(token);
       if (token[0] != 'Not Logged !') {
         await SetLoggedUser(username, token[0], token[1]);
         await updateClientToken(client, token[0]);
         await client.resetStore();
-        console.log('User', username, 'successfully logged in');
         navigation.reset({
           index: 0,
           routes: [
@@ -81,7 +78,6 @@ export async function RelogUser(
     (await SecureStore.getItemAsync('loggedRefreshToken')) ?? '';
   return await RelogUserService(refreshToken)
     .then(async token => {
-      console.log(token);
       if (token[0] != 'Not Logged !') {
         await UpdateLoggedUser(token[0], token[1]);
         await updateClientToken(client, token[0]);
@@ -111,7 +107,6 @@ export async function LogoutUser(
     index: 0,
     routes: [{ name: 'Accueil' }],
   });
-  console.log('User successfully logged out');
 }
 
 export function updateClientToken(

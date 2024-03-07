@@ -36,7 +36,6 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
       await client.resetStore();
       await GetAllNotes(client).then((notes: null | Note[]) => {
         if (notes == null) {
-          console.log('Lognbotes', notes);
           return;
         }
         let sortedNotes: Note[] = [...notes];
