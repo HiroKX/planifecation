@@ -14,7 +14,8 @@ import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import CalendarTemplate from './CalendarTemplate';
 import AgendaTemplate from './AgendaTemplate';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -53,24 +54,11 @@ declare type Dot = {
 };
 
 export default function Appointments(props: Readonly<Props>) {
-  const client = useApolloClient();
-  const [isLoading, setIsLoading] = useState(true);
+  const [loadComponent, setLoadComponent] = useState(true);
 
   useEffect(() => {
-    async function getAgendaEvents() {
-      await GetAllAgendaEvents(client).then((agendaEvents: AgendaEvent[]) => {
-        let response: Event[] = [];
-        agendaEvents.forEach((event: AgendaEvent) => {
-          response = [...response, agendaEventToEvent(event)];
-        });
-        events.value = response;
-      });
-    }
-    setIsLoading(true);
-    getAgendaEvents();
-    //timeout à garder pour plus tard pour le booster de connexion
     setTimeout(() => {
-      setIsLoading(false);
+      setLoadComponent(false);
     }, lag.value);
   }, []);
 
@@ -139,39 +127,43 @@ export default function Appointments(props: Readonly<Props>) {
     );
   };
 
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarStyle: {
-          backgroundColor: theme.colors.secondary,
-        },
-        tabBarActiveTintColor: getColorForBackground(theme.colors.secondary),
-      }}
-      initialRouteName="CalendrierTemplate"
-    >
-      <Tab.Screen
-        name="CalendrierTemplate"
-        component={RenderCalendar}
-        options={{
-          lazy: true,
-          tabBarLabel: firstTabLabel,
+  if (loadComponent) {
+    return <ActivityIndicatorTemplate />;
+  } else {
+    return (
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: theme.colors.secondary,
+          },
+          tabBarActiveTintColor: getColorForBackground(theme.colors.secondary),
         }}
-      />
-      <Tab.Screen
-        name="AgendaTemplate"
-        component={RenderAgenda}
-        options={{
-          lazy: true,
-          tabBarLabel: secondTabLabel,
-        }}
-      />
-      <Tab.Screen
-        name="EvenementTemplate"
-        component={RenderEventDetails}
-        options={{
-          tabBarLabel: thirdTabLabel,
-        }}
-      />
-    </Tab.Navigator>
-  );
+        initialRouteName="CalendrierTemplate"
+      >
+        <Tab.Screen
+          name="CalendrierTemplate"
+          component={RenderCalendar}
+          options={{
+            lazy: true,
+            tabBarLabel: firstTabLabel,
+          }}
+        />
+        <Tab.Screen
+          name="AgendaTemplate"
+          component={RenderAgenda}
+          options={{
+            lazy: true,
+            tabBarLabel: secondTabLabel,
+          }}
+        />
+        <Tab.Screen
+          name="EvenementTemplate"
+          component={RenderEventDetails}
+          options={{
+            tabBarLabel: thirdTabLabel,
+          }}
+        />
+      </Tab.Navigator>
+    );
+  }
 }
