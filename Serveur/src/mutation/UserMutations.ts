@@ -43,17 +43,4 @@ export const userMutations = {
     });
     return exclude(user, ["password"]);
   },
-
-  logUser: async (_, { username, password }) => {
-    // Login the user and return a JWT which will be used to authenticate later.
-    const user = await prisma.user.findUnique({
-      where: {
-        username: username,
-        password: password,
-      },
-    });
-
-    // Generate and return JWT
-    return jwt.sign(user, SECRET_KEY, { expiresIn: "1h" });
-  },
 };

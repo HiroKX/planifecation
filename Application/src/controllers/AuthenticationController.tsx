@@ -1,4 +1,8 @@
-import { CreateUser, LogUser } from '../services/AuthenticationService';
+import {
+  CreateUser,
+  LogUser,
+  RelogUserService,
+} from '../services/AuthenticationService';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import * as SecureStore from 'expo-secure-store';
@@ -20,7 +24,6 @@ export async function SignUpUser(
   await CreateUser(client, username, password)
     .then(async userId => {
       if (userId != -1) {
-        console.log('User', userId, 'created with username ', username);
         await SignInUser(client, username, password, props);
       }
     })
@@ -44,13 +47,12 @@ export async function SignInUser(
   { navigation }: Readonly<Props>
 ): Promise<void> {
   console.debug('AuthenticationController.SignInUser');
-  await LogUser(client, username, password)
+  await LogUser(username, password)
     .then(async token => {
-      if (token != 'Not Logged !') {
-        await SetLoggedUser(username, token);
-        await updateClientToken(client, token);
+      if (token[0] != 'Not Logged !') {
+        await SetLoggedUser(username, token[0], token[1]);
+        updateClientToken(client, token[0]);
         await client.resetStore();
-        console.log('User', username, 'successfully logged in');
         navigation.reset({
           index: 0,
           routes: [
@@ -58,6 +60,30 @@ export async function SignInUser(
           ],
         });
       }
+    })
+    .catch(error => {
+      console.error('Error while logging user: ', error);
+      if (error.message.includes('Expected "payload" to be a plain object')) {
+        throw new Error("Nom d'utilisateur ou mot de passe incorrect");
+      }
+      throw new Error("Erreur lors de la connexion de l'utilisateur");
+    });
+}
+
+export async function RelogUser(
+  client: Readonly<ApolloClient<Object>>
+): Promise<boolean> {
+  console.debug('AuthenticationController.RelogUser');
+  const refreshToken =
+    (await SecureStore.getItemAsync('loggedRefreshToken')) ?? '';
+  return await RelogUserService(refreshToken)
+    .then(async token => {
+      if (token[0] != 'Not Logged !') {
+        await UpdateLoggedUser(token[0], token[1]);
+        updateClientToken(client, token[0]);
+        await client.resetStore();
+      }
+      return true;
     })
     .catch(error => {
       console.error('Error while logging user: ', error);
@@ -81,7 +107,6 @@ export async function LogoutUser(
     index: 0,
     routes: [{ name: 'Accueil' }],
   });
-  console.log('User successfully logged out');
 }
 
 export function updateClientToken(
@@ -113,12 +138,23 @@ export function updateClientToken(
 export async function GetLoggedUser(): Promise<{
   username: string;
   token: string;
+  refreshToken: string;
 }> {
   console.debug('AuthenticationController.GetLoggedUser');
   const username = (await SecureStore.getItemAsync('loggedUser')) ?? '';
   const token = (await SecureStore.getItemAsync('loggedUserToken')) ?? '';
+  const refreshToken =
+    (await SecureStore.getItemAsync('loggedRefreshToken')) ?? '';
+  return { username, token, refreshToken };
+}
 
-  return { username, token };
+export async function UpdateLoggedUser(
+  token: Readonly<string>,
+  refreshToken: Readonly<string>
+): Promise<void> {
+  console.debug('AuthenticationController.UpdateLoggedUser');
+  await SecureStore.setItemAsync('loggedUserToken', token);
+  await SecureStore.setItemAsync('loggedRefreshToken', refreshToken);
 }
 
 export async function IsLoggedUser(): Promise<boolean> {
@@ -141,9 +177,11 @@ export async function GetLoggedUserToken(): Promise<string> {
 
 async function SetLoggedUser(
   username: Readonly<string>,
-  token: Readonly<string>
+  token: Readonly<string>,
+  refreshToken: Readonly<string>
 ): Promise<void> {
   console.debug('AuthenticationController.SetLoggedUser');
   await SecureStore.setItemAsync('loggedUser', username);
   await SecureStore.setItemAsync('loggedUserToken', token);
+  await SecureStore.setItemAsync('loggedRefreshToken', refreshToken);
 }

@@ -17,10 +17,16 @@ import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
 import { View } from 'react-native';
+import { Signal } from '@preact/signals-react';
+import { isDataUpdated } from './CalendarTemplate';
 
-declare type Props = { localEvent: Event; navigation: any };
+declare type Props = {
+  localEvent: Event;
+  events: Signal<Event[]>;
+  navigation: any;
+};
 
-export default function AgendaEventDetails(props: Readonly<Props>) {
+export default function EventTemplate(props: Readonly<Props>) {
   const client = useApolloClient();
 
   const addAgendaEvent = () => {
@@ -34,11 +40,14 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
         dateEnd + ' ' + end,
         color
       )
-        .then(() => {
-          console.log('Évènement ' + id + ' mis à jour');
-          props.navigation.goBack();
+        .then(async () => {
+          await client.resetStore();
+          isDataUpdated.value = true;
+          props.navigation.navigate('CalendrierTemplate');
         })
-        .catch(() => console.log('Une erreur est survenue à la mise à jour'));
+        .catch(() => {
+          console.debug('Une erreur est survenue à la mise à jour');
+        });
     }
     CreateEvent(
       client,
@@ -48,10 +57,13 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
       dateEnd + ' ' + end,
       color
     )
-      .then(() => console.log('Nouvel évènement créé'))
+      .then(async () => {
+        await client.resetStore();
+        isDataUpdated.value = true;
+        props.navigation.navigate('CalendrierTemplate');
+      })
       .catch(() => {
-        console.log('Une erreur est survenue à la création');
-        props.navigation.goBack();
+        console.debug('Une erreur est survenue à la création');
       });
   };
 
@@ -75,15 +87,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
     return (
       <Animated.View style={{ justifyContent: 'center' }}>
         <ColorPicker value={color} onChange={changeColor}>
-          <Preview
-            hideInitialColor
-            style={{ height: 75 }}
-            textStyle={{
-              fontFamily: baseFont,
-              fontWeight: '400',
-              fontSize: 22,
-            }}
-          />
+          <Preview hideInitialColor />
           <HueCircular>
             <Panel1 />
           </HueCircular>

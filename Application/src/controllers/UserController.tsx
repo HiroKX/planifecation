@@ -16,7 +16,6 @@ export async function DeleteAndLogoutUser(
     await DeleteUser(client, username)
       .then(async res => {
         if (res) {
-          console.log('User', username, 'successfully deleted');
           await LogoutUser(client, props);
         } else throw new Error();
       })

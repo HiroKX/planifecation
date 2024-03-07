@@ -31,20 +31,21 @@ export async function GetAllAgendaEvents(
   console.debug('AgendaController.GetAllAgendaEvents');
   const username = await GetLoggedUserUsername();
   const events = await GetAllEventsFromUser(client, username);
-  events.forEach(event => {
-    console.debug(
-      'Evenement : ' +
-        event.title +
-        ' ' +
-        event.content +
-        ' ' +
-        event.startDate +
-        ' ' +
-        event.endDate +
-        ' ' +
-        event.color
-    );
-  });
+  if (events)
+    events.forEach(event => {
+      console.debug(
+        'Evenement : ' +
+          event.title +
+          ' ' +
+          event.content +
+          ' ' +
+          event.startDate +
+          ' ' +
+          event.endDate +
+          ' ' +
+          event.color
+      );
+    });
   return events;
 }
 
