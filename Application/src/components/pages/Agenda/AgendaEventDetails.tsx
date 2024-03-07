@@ -85,7 +85,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
 
     if (Platform.OS === 'ios')
       return (
-        <View>
+        <ModalTemplate visible>
           <DateTimePicker
             mode="datetime"
             value={new Date(dateTimeProps.date)}
@@ -101,7 +101,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
               setShow(false);
             }}
           />
-        </View>
+        </ModalTemplate>
       );
     else
       return (
