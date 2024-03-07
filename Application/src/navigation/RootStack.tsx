@@ -57,10 +57,22 @@ function RootStack(): ReactNode {
           },
         }}
       >
-        <Stack.Screen name="Accueil" component={Home} />
-        <Stack.Screen name="Connexion" component={Login} />
+        <Stack.Screen
+          name="Accueil"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Connexion"
+          component={Login}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Profil" component={Profile} />
-        <Stack.Screen name="Inscription" component={SignUp} />
+        <Stack.Screen
+          name="Inscription"
+          component={SignUp}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Paramètres" component={Settings} />
         <Stack.Screen name="Liste des notes" component={NoteList} />

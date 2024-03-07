@@ -9,6 +9,7 @@ type FormValues = {
 type PasswordInputProps = {
   control: Control<any, any>;
   errors: FieldErrors<FormValues>;
+  style?: StyleProp<TextStyle>;
   watch: any;
 };
 
@@ -32,6 +33,7 @@ export default function PasswordConfirmInput(
       }) => (
         <>
           <TextInputTemplate
+            style={props.style ?? undefined}
             label="Confirmer le mot de passe"
             value={value}
             onChangeText={onChange}

@@ -9,6 +9,7 @@ type FormValues = {
 type UsernameInputProps = {
   control: Control<any>;
   errors: FieldErrors<FormValues>;
+  style?: StyleProp<TextStyle>;
 };
 
 export default function UsernameInput(
@@ -26,6 +27,7 @@ export default function UsernameInput(
       }) => (
         <>
           <TextInputTemplate
+            style={props.style ?? undefined}
             label="Nom d'utilisateur"
             value={value}
             onChangeText={onChange}

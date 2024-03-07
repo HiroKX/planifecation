@@ -37,6 +37,7 @@ export default function App(): ReactNode {
           </NavigationContainer>
         )}
       </OwnPaperProvider>
+      {/* Status Bar à modifier encore selon le thème  */}
       <StatusBar style="light" />
     </ApolloProvider>
   );
