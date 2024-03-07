@@ -87,15 +87,7 @@ export default function EventTemplate(props: Readonly<Props>) {
     return (
       <Animated.View style={{ justifyContent: 'center' }}>
         <ColorPicker value={color} onChange={changeColor}>
-          <Preview
-            hideInitialColor
-            style={{ height: 75 }}
-            textStyle={{
-              fontFamily: baseFont,
-              fontWeight: '400',
-              fontSize: 22,
-            }}
-          />
+          <Preview hideInitialColor />
           <HueCircular>
             <Panel1 />
           </HueCircular>

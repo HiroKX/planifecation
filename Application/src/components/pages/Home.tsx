@@ -25,7 +25,6 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
   }, []);
   if (isLogged) {
     GetLoggedUser().then(user => {
-      console.log('Welcome back ', user.username);
       updateClientToken(client, user.token);
       navigation.reset({
         index: 0,

@@ -1,4 +1,5 @@
-import { ApolloClient, gql } from '@apollo/client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { RelogUser } from '../controllers/AuthenticationController';
 
 const DELETE_USER = gql`
   mutation DeleteUser($username: String!) {
@@ -25,8 +26,12 @@ export async function DeleteUser(
       console.debug('Deleted user', username);
       return true;
     })
-    .catch((error: any) => {
-      console.error('DeleteUser error:', error);
+    .catch(async (error: ApolloError) => {
+      console.error('DeletUser error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        let res = await RelogUser(client);
+        if (res) return DeleteUser(client, username);
+      }
       return false;
     });
 }
@@ -58,8 +63,12 @@ export async function UpdateUser(
       console.debug('User updated', username);
       return true;
     })
-    .catch((error: any) => {
+    .catch(async (error: ApolloError) => {
       console.error('UpdateUser error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        let res = await RelogUser(client);
+        if (res) return UpdateUser(client, username, password);
+      }
       return false;
     });
 }
