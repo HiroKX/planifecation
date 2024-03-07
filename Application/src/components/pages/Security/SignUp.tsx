@@ -20,7 +20,7 @@ type FormValues = {
   confirmPassword: string;
 };
 
-export default function SignUp({ navigation }: Readonly<Props>): ReactNode {
+export default function SignUp(props : Readonly<Props>): ReactNode {
   const {
     control,
     handleSubmit,
@@ -91,7 +91,7 @@ export default function SignUp({ navigation }: Readonly<Props>): ReactNode {
           Vous avez déjà un compte ?
         </TextTemplate>
         <ButtonTemplate
-          onPress={() => navigation.navigate('Connexion')}
+          onPress={() => props.navigation.navigate('Connexion')}
           mode="outlined"
           style={{ alignSelf: 'center' }}
           theme={buttonTheme}

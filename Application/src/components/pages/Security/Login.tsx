@@ -18,7 +18,7 @@ type FormValues = {
   password: string;
 };
 
-export default function Login({ navigation }: Readonly<Props>): ReactNode {
+export default function Login(props: Readonly<Props>): ReactNode {
   const {
     control,
     handleSubmit,
@@ -85,7 +85,7 @@ export default function Login({ navigation }: Readonly<Props>): ReactNode {
           mode="outlined"
           style={{ alignSelf: 'center' }}
           theme={buttonTheme}
-          onPress={() => navigation.navigate('Inscription')}
+          onPress={() => props.navigation.navigate('Inscription')}
         >
           S'inscrire
         </ButtonTemplate>
