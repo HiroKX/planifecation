@@ -3,6 +3,7 @@ import { Text } from 'react-native-paper';
 import {
   LuxonDate,
   getColorForBackground,
+  lag,
   loadLocale,
   todayData,
 } from '../../../services/utils/utils';
@@ -47,7 +48,32 @@ const selectedEvent = signal<Event>({
   color: theme.colors.primary,
 });
 
+declare type Dot = {
+  [key: string]: { color: string }[];
+};
+
 export default function Appointments(props: Readonly<Props>) {
+  const client = useApolloClient();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function getAgendaEvents() {
+      await GetAllAgendaEvents(client).then((agendaEvents: AgendaEvent[]) => {
+        let response: Event[] = [];
+        agendaEvents.forEach((event: AgendaEvent) => {
+          response = [...response, agendaEventToEvent(event)];
+        });
+        events.value = response;
+      });
+    }
+    setIsLoading(true);
+    getAgendaEvents();
+    //timeout à garder pour plus tard pour le booster de connexion
+    setTimeout(() => {
+      setIsLoading(false);
+    }, lag.value);
+  }, []);
+
   const monthDisplay = useComputed(() => {
     return LuxonDate.to_MMMMyyyy(currentDateDisplay.value).toUpperCase();
   });
