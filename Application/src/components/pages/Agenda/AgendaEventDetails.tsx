@@ -20,7 +20,7 @@ import { baseFont, theme } from '../../organisms/OwnPaperProvider';
 import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import IconButtonTemplate from '../../molecules/IconButtonTemplate';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TextTemplate from '../../atoms/styles/TextTemplate';
@@ -83,45 +83,66 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
     let localDate: Date;
     let localTime: Date;
 
-    return (
-      <View>
-        <DateTimePicker
-          mode="time"
-          minimumDate={
-            dateTimeProps.date === dateEnd ? new Date(date) : undefined
-          }
-          value={new Date(dateTimeProps.date)}
-          onChange={time => {
-            localTime = new Date(
-              time.nativeEvent.timestamp ?? new Date().getTime()
-            );
-            localDate.setHours(
-              localTime.getHours(),
-              localTime.getMinutes(),
-              localTime.getSeconds(),
-              localTime.getMilliseconds()
-            );
-            dateTimeProps.setter(setDateToString(localDate.getTime()));
-            if (date > dateEnd) {
-              setDateEnd(date);
+    if (Platform.OS === 'ios')
+      return (
+        <View>
+          <DateTimePicker
+            mode="datetime"
+            value={new Date(dateTimeProps.date)}
+            minimumDate={
+              dateTimeProps.date === dateEnd ? new Date(date) : undefined
             }
-            setShow(false);
-          }}
-        />
-        <DateTimePicker
-          value={new Date(dateTimeProps.date)}
-          minimumDate={
-            dateTimeProps.date === dateEnd ? new Date(date) : undefined
-          }
-          onChange={date => {
-            localDate = new Date(
-              date.nativeEvent.timestamp ?? new Date().getTime()
-            );
-            localDate.setHours(0, 0, 0, 0);
-          }}
-        />
-      </View>
-    );
+            onChange={dateTime => {
+              localDate = new Date(
+                dateTime.nativeEvent.timestamp ?? new Date().getTime()
+              );
+              dateTimeProps.setter(setDateToString(localDate.getTime()));
+              if (date > dateEnd) setDateEnd(date);
+              setShow(false);
+            }}
+          />
+        </View>
+      );
+    else
+      return (
+        <View>
+          <DateTimePicker
+            mode="time"
+            minimumDate={
+              dateTimeProps.date === dateEnd ? new Date(date) : undefined
+            }
+            value={new Date(dateTimeProps.date)}
+            onChange={time => {
+              localTime = new Date(
+                time.nativeEvent.timestamp ?? new Date().getTime()
+              );
+              localDate.setHours(
+                localTime.getHours(),
+                localTime.getMinutes(),
+                localTime.getSeconds(),
+                localTime.getMilliseconds()
+              );
+              dateTimeProps.setter(setDateToString(localDate.getTime()));
+              if (date > dateEnd) {
+                setDateEnd(date);
+              }
+              setShow(false);
+            }}
+          />
+          <DateTimePicker
+            value={new Date(dateTimeProps.date)}
+            minimumDate={
+              dateTimeProps.date === dateEnd ? new Date(date) : undefined
+            }
+            onChange={date => {
+              localDate = new Date(
+                date.nativeEvent.timestamp ?? new Date().getTime()
+              );
+              localDate.setHours(0, 0, 0, 0);
+            }}
+          />
+        </View>
+      );
   }
 
   function renderColorPicker() {
