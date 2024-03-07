@@ -20,7 +20,7 @@ type FormValues = {
   confirmPassword: string;
 };
 
-export default function SignUp(props : Readonly<Props>): ReactNode {
+export default function SignUp(props: Readonly<Props>): ReactNode {
   const {
     control,
     handleSubmit,
