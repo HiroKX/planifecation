@@ -2,6 +2,7 @@ import { Signal } from '@preact/signals-react';
 import { DateTime } from 'luxon';
 import { DateData, LocaleConfig } from 'react-native-calendars';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
+import { theme } from '../../components/organisms/OwnPaperProvider';
 
 const locale = 'fr';
 
@@ -15,7 +16,7 @@ export function getColorForBackground(hexcolor: string): string {
   const g = parseInt(hexcolor.substring(5, 3), 16);
   const b = parseInt(hexcolor.substring(5), 16);
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-  return yiq >= 128 ? 'black' : 'white';
+  return yiq >= 128 ? theme.colors.primary : theme.colors.surfaceVariant;
 }
 
 export function rgbColorToHex(rgbcolor: string): string {

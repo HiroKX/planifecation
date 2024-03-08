@@ -163,38 +163,37 @@ export const styles = StyleSheet.create({
   },
   majKey: {
     flex: 3,
+    backgroundColor: theme.colors.tertiary,
   },
   swapKey: {
     flex: 2,
+    backgroundColor: theme.colors.tertiary,
   },
   enterKey: {
     flex: 2,
+    backgroundColor: theme.colors.tertiary,
   },
   spacebarKey: {
     flex: 5,
+    backgroundColor: theme.colors.tertiary,
   },
   backspaceKey: {
     flex: 2,
+    backgroundColor: theme.colors.tertiary,
   },
   key: {
-    margin: 0,
+    margin: 3,
     flex: 1,
-    alignSelf: 'stretch',
-    borderRadius: 0,
-    borderWidth: 1,
-    borderColor: theme.colors.primary,
-    height: 60,
-    justifyContent: 'center',
+    borderRadius: 6,
+    height: 40,
   },
   keyLabel: {
     marginHorizontal: 0,
     fontSize: 20,
     color: getColorForBackground(theme.colors.secondary),
     alignSelf: 'stretch',
-    marginVertical: 20,
   },
   specialKeyLabel: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
   },
 });

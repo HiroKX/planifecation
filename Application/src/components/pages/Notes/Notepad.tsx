@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     paddingLeft:10,
   },
   keyboard: {
-    flex: 4,
+    flex: 3,
     padding: 0,
     backgroundColor: theme.colors.surfaceVariant,
   },
