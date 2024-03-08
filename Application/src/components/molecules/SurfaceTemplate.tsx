@@ -8,7 +8,7 @@ export default function SurfaceTemplate(
 ): ReactNode {
   return (
     <PaperCard
-      style={styles.surface}
+      style={props.style ?? styles.surface}
       mode={props.mode ?? 'elevated'}
       elevation={props.elevation ?? 3}
       {...props}
