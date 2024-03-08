@@ -71,18 +71,11 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
               style={styles.text}>
               {renderNoteProps.item.title}
             </TextTemplate>
+            <AppTemplate icon='lead-pencil'
+              variant='tertiary'
+              color={theme.colors.surfaceVariant}
+              style={styles.edit}/>
         </TouchableOpacity>
-        <AppTemplate icon='lead-pencil'
-        variant='tertiary'
-        color={theme.colors.surfaceVariant}
-        onPress={(): void => {
-          GetNote(client, renderNoteProps.item.id).then(currentNote => {
-            return props.navigation.navigate('Bloc-Notes', {
-              currentNote,
-            });
-          });
-        }}
-              style={styles.edit}></AppTemplate>
           <AppTemplate icon='trash-can'
           color={theme.colors.surfaceVariant}
             style={styles.delete}
@@ -148,11 +141,13 @@ const styles = StyleSheet.create({
   item: {
     flexGrow:1,
     marginLeft:5,
-    justifyContent:'center'
+    justifyContent:'center',
+    flexDirection:'row',
   },
   text: {
     textAlignVertical: 'center',
     color:theme.colors.tertiary,
+    flex:1
   },
   edit: {
     margin:5
