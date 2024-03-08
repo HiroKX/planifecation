@@ -142,7 +142,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
             value={todo}
             onChangeText={text => setTodo(text)}
             maxLength={100}
-            right={ <TextInput.Icon icon={'plus'} color={theme.colors.tertiary} style={{ borderRadius:18, backgroundColor:theme.colors.primary}} onPress={handleAddTodo} />}
+            right={ <TextInput.Icon icon={'plus'} color={theme.colors.tertiary} style={{ borderRadius:12, backgroundColor:theme.colors.primary}} onPress={handleAddTodo} />}
           />
           <Divider style={styles.divider} />
         <SurfaceTemplate style={styles.todoContent}>
