@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { TextInput } from 'react-native';
+import {TextInput, View} from 'react-native';
 import { TextInput as PaperTextInput } from 'react-native-paper';
 import { Props as PaperTextInputProps } from 'react-native-paper/src/components/TextInput/TextInput';
 
@@ -9,7 +9,7 @@ export default function TextInputTemplate(
   return (
     <PaperTextInput
       {...props}
-      mode="outlined"
+      mode={props.mode ?? "outlined"}
       render={
         props.multiline
           ? innerProps => (

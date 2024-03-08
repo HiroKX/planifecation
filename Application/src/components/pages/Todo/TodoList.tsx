@@ -2,10 +2,10 @@ import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import React, { ReactNode, useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import {FlatList, StyleSheet, View} from 'react-native';
+import { TextInput } from 'react-native-paper';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
-import { Icon, Portal } from 'react-native-paper';
+import {Divider, Icon, Portal} from 'react-native-paper';
 import CheckboxTemplate from '../../molecules/CheckboxTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
@@ -22,6 +22,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
+import {colorKit} from "reanimated-color-picker";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -100,16 +101,12 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           !todoItem.isDone
         );
       }
-      setIsLoading(true);
       setUpdatedTodos(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 0);
     };
 
     return (
       <View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+        <View style={{ flexDirection: 'row',alignItems: 'center', flex: 1 }}>
           <CheckboxTemplate
             status={item.isDone ? 'checked' : 'unchecked'}
             onPress={(): void => {
@@ -118,8 +115,8 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
             }}
           />
           <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
-          <TouchableOpacity onPress={() => handleDeleteTodo(item)}>
-            <Icon size={30} source={'trash-can'} color={theme.colors.primary} />
+          <TouchableOpacity style={{backgroundColor: theme.colors.tertiary, marginRight: 10, padding:4, borderRadius: 10}} onPress={() => handleDeleteTodo(item)}>
+            <Icon size={30} source={'trash-can'} color={theme.colors.background} />
           </TouchableOpacity>
         </View>
         <Portal>
@@ -138,22 +135,51 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   } else {
     return (
       <View style={{ flex: 1, padding: 10 }}>
-        <SurfaceTemplate>
-          <TextInputTemplate
+        <SurfaceTemplate style={styles.todo}>
+          <TextInputTemplate style={styles.todoInput} underlineStyle={{display: 'none'}}
             label={'Nouvelle tâche'}
-            mode="outlined"
+            mode={'flat'}
             value={todo}
             onChangeText={text => setTodo(text)}
             maxLength={100}
+            right={ <TextInput.Icon icon={'plus'} color={theme.colors.tertiary} style={{backgroundColor:theme.colors.background}} onPress={handleAddTodo} />}
           />
-          <ButtonTemplate onPress={handleAddTodo}>
-            Ajouter une tâche
-          </ButtonTemplate>
+          <Divider style={styles.divider} />
         </SurfaceTemplate>
-        <SurfaceTemplate style={{ flex: 5 }}>
-          <FlatList data={todoList} renderItem={renderTodos} />
+        <SurfaceTemplate style={styles.todoContent}>
+          <FlatList style={styles.todoList} data={todoList} renderItem={renderTodos} />
         </SurfaceTemplate>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  divider: {
+    height: 5,
+    backgroundColor: theme.colors.tertiary,
+  },
+  todo: {
+    marginTop: -10,
+    marginRight: -10,
+    marginLeft: -10,
+  },
+  todoInput: {
+    backgroundColor: theme.colors.surfaceVariant,
+  },
+  todoList: {
+    backgroundColor: theme.colors.background,
+    margin:10,
+    borderRadius: 10,
+  },
+  todoContent: {
+    backgroundColor: theme.colors.surfaceVariant,
+    flex:1,
+    margin: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 18,
+    shadowRadius: 0,
+    shadowOpacity: 0
+  }
+});
