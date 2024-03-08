@@ -26,5 +26,5 @@ jobs:
           script: |
             cd /var/www/html/planifecation/Serveur
             git pull origin dev
-            docker-compose down
-            docker-compose up -d --build
+            docker compose down
+            docker compose up -d --build
