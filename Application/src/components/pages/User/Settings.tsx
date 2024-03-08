@@ -44,6 +44,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
               </PaperText>
               <PaperSwitch
                 style={styles.flexItem}
+                color={theme.colors.tertiary}
                 value={themeSlideEnabled}
                 onValueChange={toggleThemeSwitch}
               />
@@ -57,6 +58,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
                   progress={progressSlider}
                   minimumValue={minValueSlider}
                   maximumValue={maxValueSlider}
+                  heartbeat
                   step={4}
                   onValueChange={progress => {
                     setBoosterLevel(boosterLabel[progress]);
