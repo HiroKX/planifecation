@@ -16,7 +16,7 @@ import ColorPicker, {
 } from 'reanimated-color-picker';
 import Animated from 'react-native-reanimated';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
-import { baseFont, theme } from '../../organisms/OwnPaperProvider';
+import { theme } from '../../organisms/OwnPaperProvider';
 import { CreateEvent } from '../../../services/AgendaService';
 import { useApolloClient } from '@apollo/client';
 import { UpdateAgendaEvent } from '../../../controllers/AgendaController';
@@ -24,14 +24,21 @@ import { Platform, View } from 'react-native';
 import IconButtonTemplate from '../../molecules/IconButtonTemplate';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import TextTemplate from '../../atoms/styles/TextTemplate';
+import { Signal } from '@preact/signals-react';
+import { isDataUpdated } from './CalendarTemplate';
 
 declare type DateTimePickerOptions = {
   date: string;
   setter: (date: string) => void;
 };
-declare type Props = { localEvent: Event; navigation: any };
 
-export default function AgendaEventDetails(props: Readonly<Props>) {
+declare type Props = {
+  localEvent: Event;
+  events: Signal<Event[]>;
+  navigation: any;
+};
+
+export default function EventTemplate(props: Readonly<Props>) {
   const client = useApolloClient();
 
   const addAgendaEvent = () => {
@@ -41,13 +48,24 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
           console.log('Évènement ' + id + ' mis à jour');
           props.navigation.goBack();
         })
-        .catch(() => console.log('Une erreur est survenue à la mise à jour'));
+        .then(async () => {
+          await client.resetStore();
+          isDataUpdated.value = true;
+          props.navigation.navigate('CalendrierTemplate');
+        })
+        .catch(() => {
+          console.debug('Une erreur est survenue à la mise à jour');
+        });
     }
     CreateEvent(client, title, summary, date, dateEnd, color)
       .then(() => console.log('Nouvel évènement créé'))
+      .then(async () => {
+        await client.resetStore();
+        isDataUpdated.value = true;
+        props.navigation.navigate('CalendrierTemplate');
+      })
       .catch(() => {
-        console.log('Une erreur est survenue à la création');
-        props.navigation.goBack();
+        console.debug('Une erreur est survenue à la création');
       });
   };
 
@@ -149,15 +167,7 @@ export default function AgendaEventDetails(props: Readonly<Props>) {
     return (
       <Animated.View style={{ justifyContent: 'center' }}>
         <ColorPicker value={color} onChange={changeColor}>
-          <Preview
-            hideInitialColor
-            style={{ height: 75 }}
-            textStyle={{
-              fontFamily: baseFont,
-              fontWeight: '400',
-              fontSize: 22,
-            }}
-          />
+          <Preview hideInitialColor />
           <HueCircular>
             <Panel1 />
           </HueCircular>

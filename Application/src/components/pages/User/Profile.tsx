@@ -18,13 +18,12 @@ type FormValues = {
 export default function Profile(props: Readonly<Props>): ReactNode {
   const [username, setUsername] = useState('');
   useEffect(() => {
-    async function getLoggedUser() {
+    async function getLoggedUserProfile() {
       await GetLoggedUser().then(user => {
         setUsername(user.username);
       });
     }
-
-    getLoggedUser();
+    getLoggedUserProfile();
   }, []);
   const {
     control,

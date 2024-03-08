@@ -8,6 +8,7 @@ import {
 } from '../../controllers/AuthenticationController';
 import { ReactNode } from 'react';
 import { ApolloConsumer } from '@apollo/client';
+import { getAgendaEvents } from './Agenda/CalendarTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -34,7 +35,12 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
           <AppTemplate
             icon="calendar-cursor"
             label="Agenda"
-            onPress={() => props.navigation.navigate('Agenda')}
+            onPress={async () => {
+              console.debug('Retrieving events');
+              const events = await getAgendaEvents(client);
+              console.debug('Events retrieved');
+              props.navigation.navigate('Agenda', { events });
+            }}
           />
           <AppTemplate
             icon="format-list-checkbox"

@@ -17,6 +17,8 @@ import Splashscreen from './src/components/pages/Splashscreen';
 export default function App(): ReactNode {
   if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
   console.log(URI_API);
+  console.log(ENVIRONMENT);
+
   const client = new ApolloClient({
     link: new HttpLink({ uri: URI_API }),
     cache: new InMemoryCache(),
@@ -35,6 +37,7 @@ export default function App(): ReactNode {
           </NavigationContainer>
         )}
       </OwnPaperProvider>
+      {/* Status Bar à modifier encore selon le thème  */}
       <StatusBar style="light" />
     </ApolloProvider>
   );

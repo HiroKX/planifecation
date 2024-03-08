@@ -5,7 +5,9 @@ import Login from '../components/pages/Security/Login';
 import SignUp from '../components/pages/Security/SignUp';
 import Dashboard from '../components/pages/Dashboard';
 import Settings from '../components/pages/User/Settings';
-import Appointments from '../components/pages/Agenda/Appointments';
+import Appointments, {
+  AgendaParams,
+} from '../components/pages/Agenda/Appointments';
 import SettingsButton from '../components/atoms/SettingsButton';
 import ThemeSandbox from '../components/pages/ThemeSandbox';
 import {
@@ -29,7 +31,7 @@ export type StackParamList = {
   'Bloc-Notes': NotepadParams | undefined;
   Sandbox: undefined;
   Profil: undefined;
-  Agenda: undefined;
+  Agenda: AgendaParams;
   'Liste toute douce': undefined;
   'Test SKIA': undefined;
   'Liste des notes': undefined;
@@ -55,10 +57,22 @@ function RootStack(): ReactNode {
           },
         }}
       >
-        <Stack.Screen name="Accueil" component={Home} />
-        <Stack.Screen name="Connexion" component={Login} />
+        <Stack.Screen
+          name="Accueil"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Connexion"
+          component={Login}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Profil" component={Profile} />
-        <Stack.Screen name="Inscription" component={SignUp} />
+        <Stack.Screen
+          name="Inscription"
+          component={SignUp}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Paramètres" component={Settings} />
         <Stack.Screen name="Liste des notes" component={NoteList} />

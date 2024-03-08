@@ -1,5 +1,6 @@
-import { ApolloClient, gql } from '@apollo/client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
 import { Todo } from '../models/Todo';
+import { RelogUser } from '../controllers/AuthenticationController';
 
 const GET_ALL_TODOS = gql`
   query Query($username: String!) {
@@ -28,8 +29,12 @@ export async function GetAllTodosFromUser(
     .then((response: any) => {
       return response.data.getAllTodoItemsByUsername;
     })
-    .catch((error: any) => {
+    .catch(async (error: ApolloError) => {
       console.error('GetAllTodosFromUser error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        let res = await RelogUser(client);
+        if (res) return GetAllTodosFromUser(client, username);
+      }
       return null;
     });
 }
@@ -64,8 +69,12 @@ export async function CreateTodo(
       );
       return item.id;
     })
-    .catch((error: any) => {
+    .catch(async (error: ApolloError) => {
       console.error('CreateTodo error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        let res = await RelogUser(client);
+        if (res) return CreateTodo(client, content, isDone);
+      }
       return null;
     });
 }
@@ -106,8 +115,12 @@ export async function UpdateTodoById(
     .then((response: any) => {
       return response.data.id;
     })
-    .catch((error: any) => {
-      console.error('UpdateTodo error:', error);
+    .catch(async (error: ApolloError) => {
+      console.error('UpdateTodoById error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        let res = await RelogUser(client);
+        if (res) return UpdateTodoById(client, id, content, isDone);
+      }
       return null;
     });
 }
@@ -136,8 +149,12 @@ export async function DeleteTodoById(
     .then((response: any) => {
       return response.data.deleteTodoItemById.id;
     })
-    .catch((error: any) => {
+    .catch(async (error: ApolloError) => {
       console.error('DeleteTodoById error:', error);
+      if (error.message.includes('UNAUTHENTICATED')) {
+        let res = await RelogUser(client);
+        if (res) return DeleteTodoById(client, id);
+      }
       return null;
     });
 }

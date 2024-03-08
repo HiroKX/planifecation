@@ -8,9 +8,9 @@ export default function SurfaceTemplate(
 ): ReactNode {
   return (
     <PaperCard
-      style={props.style ?? styles.surface}
+      style={styles.surface}
       mode={props.mode ?? 'elevated'}
-      elevation={props.elevation ?? 0}
+      elevation={props.elevation ?? 3}
       {...props}
     />
   );
@@ -18,9 +18,9 @@ export default function SurfaceTemplate(
 
 const styles = StyleSheet.create({
   surface: {
-    padding: 10,
+    padding: 20,
     marginLeft: 20,
     marginRight: 20,
-    justifyContent: 'center',
+    borderRadius: 18,
   },
 });

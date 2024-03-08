@@ -1,5 +1,4 @@
 import { StyleSheet, View } from 'react-native';
-import SurfaceTemplate from '../molecules/SurfaceTemplate';
 import ButtonTemplate from '../atoms/styles/ButtonTemplate';
 import { StackParamList } from '../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -11,6 +10,9 @@ import {
 import { ReactNode, useState, useEffect } from 'react';
 import { ENVIRONMENT } from '@env';
 import { useApolloClient } from '@apollo/client';
+import { theme } from '../organisms/OwnPaperProvider';
+import LogoTemplate from '../atoms/styles/LogoTemplate';
+import TextTemplate from '../atoms/styles/TextTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -25,7 +27,6 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
   }, []);
   if (isLogged) {
     GetLoggedUser().then(user => {
-      console.log('Welcome back ', user.username);
       updateClientToken(client, user.token);
       navigation.reset({
         index: 0,
@@ -35,44 +36,77 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
   }
 
   return (
-    <View>
-      <SurfaceTemplate style={styles.container}>
+    <View style={styles.mainContainer}>
+      <View style={styles.container}>
+        <LogoTemplate style={styles.logo} />
+      </View>
+      <View style={styles.container}>
+        <TextTemplate style={styles.textStyle}>
+          Waouh quel slogan inspirant !
+        </TextTemplate>
+      </View>
+      <View style={[styles.container]}>
         <ButtonTemplate
-          onPress={() => {
-            navigation.navigate('Connexion');
-          }}
+          style={styles.button}
+          onPress={() => navigation.navigate('Connexion')}
         >
-          Connexion
+          Se connecter
         </ButtonTemplate>
         <ButtonTemplate
+          style={styles.button}
           onPress={() => navigation.navigate('Inscription')}
           mode="outlined"
         >
-          Inscription
+          S'inscrire
         </ButtonTemplate>
-        {ENVIRONMENT === 'dev' ? (
-          <View>
-            <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
-              Theme Sandbox
-            </ButtonTemplate>
-            <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
-              Test SKIA
-            </ButtonTemplate>
-            <ButtonTemplate onPress={() => navigation.navigate('Test Gyro')}>
-              Test Gyro
-            </ButtonTemplate>
-          </View>
-        ) : null}
-      </SurfaceTemplate>
+      </View>
+      {ENVIRONMENT === 'test' ? (
+        <View style={[styles.container]}>
+          <ButtonTemplate onPress={() => navigation.navigate('Sandbox')}>
+            Theme Sandbox
+          </ButtonTemplate>
+          <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
+            Test SKIA
+          </ButtonTemplate>
+          <ButtonTemplate onPress={() => navigation.navigate('Test Gyro')}>
+            Test Gyro
+          </ButtonTemplate>
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    margin: 5,
+  mainContainer: {
+    backgroundColor: theme.colors.background,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 75,
   },
   container: {
-    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  logo: {
+    height: 400,
+    width: 400,
+  },
+  textStyle: {
+    color: theme.colors.primary,
+    fontSize: 44,
+    fontFamily: 'Pattaya',
+    letterSpacing: 2,
+    textAlign: 'center',
+    textAlignVertical: 'top',
+  },
+
+  button: {
+    flex: 1,
+    borderRadius: 50,
+    margin: 10,
+    height: 60,
+    justifyContent: 'center',
   },
 });
