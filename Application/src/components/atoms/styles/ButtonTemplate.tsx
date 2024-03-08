@@ -10,6 +10,7 @@ export default function ButtonTemplate(
     <PaperButton
       theme={props.theme ?? undefined}
       style={props.style ?? styles.button}
+      textColor={props.textColor ?? undefined}
       mode={props.mode ?? 'contained'}
       {...props}
     />

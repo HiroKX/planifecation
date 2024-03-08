@@ -9,7 +9,7 @@ export default function TextInputTemplate(
   return (
     <PaperTextInput
       {...props}
-      mode="outlined"
+      mode={props.mode ?? 'outlined'}
       render={
         props.multiline
           ? innerProps => (

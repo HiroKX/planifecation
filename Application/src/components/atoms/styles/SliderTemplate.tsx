@@ -16,13 +16,13 @@ export default function SliderTemplate(
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
       }}
       hapticMode={HapticModeEnum.STEP}
+      renderBubble={undefined}
       style={{ margin: 10 }}
       theme={{
-        disableMinTrackTintColor: theme.colors.backdrop,
         maximumTrackTintColor: theme.colors.primary,
-        minimumTrackTintColor: theme.colors.secondary,
-        cacheTrackTintColor: theme.colors.secondary,
-        bubbleBackgroundColor: theme.colors.primary,
+        minimumTrackTintColor: theme.colors.tertiary,
+        cacheTrackTintColor: theme.colors.tertiary,
+        bubbleBackgroundColor: theme.colors.tertiary,
         heartbeatColor: theme.colors.error,
       }}
       {...props}
