@@ -5,7 +5,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
-import { Divider, Icon, Portal } from 'react-native-paper';
+import { Divider, Portal } from 'react-native-paper';
 import CheckboxTemplate from '../../molecules/CheckboxTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
@@ -18,11 +18,9 @@ import {
   GetAllTodos,
   UpdateTodo,
 } from '../../../controllers/TodoController';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
-import { colorKit } from 'reanimated-color-picker';
 import AppTemplate from '../../atoms/AppTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
