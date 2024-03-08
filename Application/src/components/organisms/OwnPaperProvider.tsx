@@ -17,7 +17,7 @@ export const lightTheme: MD3Theme = {
     primary: 'rgb(6, 35, 51)',
     onPrimary: 'rgb(248, 230, 173)',
     primaryContainer: 'rgb(6, 35, 51)',
-    onPrimaryContainer: 'rgb(248, 230, 173 ',
+    onPrimaryContainer: 'rgb(248, 230, 173)',
     secondary: 'rgb(91, 185, 236)',
     onSecondary: 'rgb(4,24,37)',
     secondaryContainer: 'rgb(227, 223, 255)',
