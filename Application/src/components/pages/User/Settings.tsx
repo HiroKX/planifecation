@@ -16,6 +16,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { View, StyleSheet } from 'react-native';
 import { boosterLabel, lag, setLag } from '../../../services/utils/utils';
+import {theme} from "../../organisms/OwnPaperProvider";
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -35,9 +36,10 @@ export default function Settings(props: Readonly<Props>): ReactNode {
     <ApolloConsumer>
       {client => (
         <View>
-          <SurfaceTemplate mode="flat">
+          <SurfaceTemplate style={styles.template}>
+            <PaperText style={styles.surfaceTitle}>Options d'application</PaperText>
             <View style={styles.flexBox}>
-              <PaperText style={styles.flexItem} onPress={() => {}}>
+              <PaperText style={[styles.flexItem, styles.textTheme]} onPress={() => {}}>
                 Activer le thème {themeSlideEnabled ? 'clair' : 'sombre'}
               </PaperText>
               <PaperSwitch
@@ -47,10 +49,10 @@ export default function Settings(props: Readonly<Props>): ReactNode {
               />
             </View>
             <View style={styles.flexBox}>
-              <PaperText style={styles.flexItem}>
+              <PaperText style={styles.flexItemSlider}>
                 Booster sa connexion
               </PaperText>
-              <View style={styles.flexItem}>
+              <View style={styles.slider}>
                 <SliderTemplate
                   progress={progressSlider}
                   minimumValue={minValueSlider}
@@ -65,35 +67,34 @@ export default function Settings(props: Readonly<Props>): ReactNode {
               </View>
             </View>
           </SurfaceTemplate>
-          <Divider style={{ height: 1 }} />
-          <SurfaceTemplate>
-            <ButtonTemplate
+          <SurfaceTemplate style={styles.template}>
+            <PaperText style={styles.surfaceTitle}>Paramètres</PaperText>
+            <ButtonTemplate style={[styles.button, styles.buttonDanger]} textColor='white'
               onPress={() => {
                 props.navigation.navigate('Profil');
               }}
             >
               Modifier mon profil
             </ButtonTemplate>
-            <ButtonTemplate onPress={() => {}}>
+            <ButtonTemplate style={styles.button} onPress={() => {}} textColor='white'>
               Télécharger mes données
             </ButtonTemplate>
-            <ButtonTemplate
-              onPress={async () => {
-                await DeleteAndLogoutUser(client, props);
-              }}
-            >
-              Supprimer mon compte
-            </ButtonTemplate>
-            <ButtonTemplate
+            <ButtonTemplate style={[styles.button, styles.buttonTransparent]} textColor={theme.colors.primary}  mode='outlined'
               onPress={async () => {
                 await LogoutUser(client, props);
               }}
             >
               Se déconnecter
             </ButtonTemplate>
-            <Divider style={{ height: 1 }} />
-            <ButtonTemplate onPress={() => {}}>
+            <ButtonTemplate style={[styles.button, styles.buttonTransparent]} onPress={() => {}} textColor={theme.colors.primary} mode='outlined'>
               Accéder aux conditions générales
+            </ButtonTemplate>
+            <ButtonTemplate style={[styles.button, styles.buttonSuccess]} textColor='white'
+                            onPress={async () => {
+                              await DeleteAndLogoutUser(client, props);
+                            }}
+            >
+              Supprimer mon compte
             </ButtonTemplate>
           </SurfaceTemplate>
         </View>
@@ -105,8 +106,46 @@ export default function Settings(props: Readonly<Props>): ReactNode {
 const styles = StyleSheet.create({
   flexBox: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textTheme: {
+    alignSelf: 'center',
   },
   flexItem: {
+    margin: 10,
+  },
+  flexItemSlider: {
+    marginLeft: 10,
+  },
+  slider: {
     flex: 1,
   },
+  button: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
+  },
+  template: {
+    padding: 20,
+    margin: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 18,
+  },
+  surfaceTitle: {
+    fontSize: 20,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  buttonDanger: {
+    backgroundColor: theme.colors.tertiary,
+  },
+  buttonSuccess: {
+    backgroundColor: theme.colors.error,
+  },
+  buttonTransparent: {
+    borderColor: theme.colors.primary,
+    border: '1px solid',
+    backgroundColor: 'transparent',
+  }
 });
