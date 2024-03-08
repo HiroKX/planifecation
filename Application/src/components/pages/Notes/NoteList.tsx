@@ -8,7 +8,13 @@ import {
 } from '../../../controllers/NoteController';
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import { StyleSheet, Alert, FlatList, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Alert,
+  FlatList,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useIsFocused } from '@react-navigation/native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
@@ -67,34 +73,36 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
             });
           }}
         >
-            <TextTemplate variant="titleLarge"
-              style={styles.text}>
-              {renderNoteProps.item.title}
-            </TextTemplate>
-            <AppTemplate icon='lead-pencil'
-              variant='tertiary'
-              color={theme.colors.surfaceVariant}
-              style={styles.edit}/>
+          <TextTemplate variant="titleLarge" style={styles.text}>
+            {renderNoteProps.item.title}
+          </TextTemplate>
+          <AppTemplate
+            icon="lead-pencil"
+            variant="tertiary"
+            color={theme.colors.surfaceVariant}
+            style={styles.edit}
+          />
         </TouchableOpacity>
-          <AppTemplate icon='trash-can'
+        <AppTemplate
+          icon="trash-can"
           color={theme.colors.surfaceVariant}
-            style={styles.delete}
-                      onPress={(): void => {
-                        Alert.alert(
-                          `Suppression de ${renderNoteProps.item.title}`,
-                          'Confirmez-vous la suppression de cette note ?',
-                          [
-                            { text: 'Non' },
-                            {
-                              text: 'Oui',
-                              onPress: (): void => {
-                                confirmDelete(renderNoteProps.item.id).then();
-                              },
-                            },
-                          ]
-                        );
-                      }}
-                    />
+          style={styles.delete}
+          onPress={(): void => {
+            Alert.alert(
+              `Suppression de ${renderNoteProps.item.title}`,
+              'Confirmez-vous la suppression de cette note ?',
+              [
+                { text: 'Non' },
+                {
+                  text: 'Oui',
+                  onPress: (): void => {
+                    confirmDelete(renderNoteProps.item.id).then();
+                  },
+                },
+              ]
+            );
+          }}
+        />
       </View>
     );
   };
@@ -103,13 +111,14 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
   } else {
     return (
       <View style={styles.mainContainer}>
-          <AppTemplate
-            icon='plus'
-            onPress={(): void => {
-              props.navigation.navigate('Bloc-Notes');
-            }}/>
+        <AppTemplate
+          icon="plus"
+          onPress={(): void => {
+            props.navigation.navigate('Bloc-Notes');
+          }}
+        />
         <SurfaceTemplate style={styles.surfaces}>
-          <FlatList data={notes} renderItem={renderNotes} style={styles.list}/>
+          <FlatList data={notes} renderItem={renderNotes} style={styles.list} />
         </SurfaceTemplate>
       </View>
     );
@@ -119,40 +128,40 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    alignItems:'center', 
+    alignItems: 'center',
   },
   surfaces: {
-    flex:1,
-    borderRadius:18,
-    alignSelf:'stretch',
-    margin:25,
-    marginTop:0,
+    flex: 1,
+    borderRadius: 18,
+    alignSelf: 'stretch',
+    margin: 25,
+    marginTop: 0,
   },
   list: {
-    marginHorizontal:10,
-    marginVertical:5,
+    marginHorizontal: 10,
+    marginVertical: 5,
   },
   itemContainer: {
-    borderRadius:18,
+    borderRadius: 18,
     backgroundColor: theme.colors.background,
-    marginVertical:5,
-    flexDirection:'row',
+    marginVertical: 5,
+    flexDirection: 'row',
   },
   item: {
-    flexGrow:1,
-    marginLeft:5,
-    justifyContent:'center',
-    flexDirection:'row',
+    flexGrow: 1,
+    marginLeft: 5,
+    justifyContent: 'center',
+    flexDirection: 'row',
   },
   text: {
     textAlignVertical: 'center',
-    color:theme.colors.tertiary,
-    flex:1
+    color: theme.colors.tertiary,
+    flex: 1,
   },
   edit: {
-    margin:5
-    },
+    margin: 5,
+  },
   delete: {
-    margin:5
+    margin: 5,
   },
 });

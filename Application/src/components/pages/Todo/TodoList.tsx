@@ -2,10 +2,10 @@ import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import React, { ReactNode, useEffect, useState } from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import TextInputTemplate from '../../atoms/styles/TextInputTemplate';
-import {Divider, Icon, Portal} from 'react-native-paper';
+import { Divider, Icon, Portal } from 'react-native-paper';
 import CheckboxTemplate from '../../molecules/CheckboxTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { Todo } from '../../../models/Todo';
@@ -22,7 +22,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
-import {colorKit} from "reanimated-color-picker";
+import { colorKit } from 'reanimated-color-picker';
 import AppTemplate from '../../atoms/AppTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
@@ -106,8 +106,15 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     };
 
     return (
-      <View style={{margin:5}}>
-        <View style={{ flexDirection: 'row',alignItems: 'center', flex: 1, backgroundColor:theme.colors.surface }}>
+      <View style={{ margin: 5 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            flex: 1,
+            backgroundColor: theme.colors.surface,
+          }}
+        >
           <CheckboxTemplate
             status={item.isDone ? 'checked' : 'unchecked'}
             onPress={(): void => {
@@ -117,8 +124,17 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
             iconColor={theme.colors.tertiary}
             size={60}
           />
-          <TextTemplate variant="titleLarge" style={{ flex: 1, color:theme.colors.tertiary }}>{item.content}</TextTemplate>
-          <AppTemplate icon='trash-can' onPress={() => handleDeleteTodo(item)} color={theme.colors.surfaceVariant}/>
+          <TextTemplate
+            variant="titleLarge"
+            style={{ flex: 1, color: theme.colors.tertiary }}
+          >
+            {item.content}
+          </TextTemplate>
+          <AppTemplate
+            icon="trash-can"
+            onPress={() => handleDeleteTodo(item)}
+            color={theme.colors.surfaceVariant}
+          />
         </View>
         <Portal>
           <ModalTemplate
@@ -136,17 +152,33 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   } else {
     return (
       <View style={{ flex: 1, padding: 10 }}>
-          <TextInputTemplate style={styles.todoInput} underlineStyle={{display: 'none'}}
-            label={'Nouvelle tâche'}
-            mode={'flat'}
-            value={todo}
-            onChangeText={text => setTodo(text)}
-            maxLength={100}
-            right={ <TextInput.Icon icon={'plus'} color={theme.colors.tertiary} style={{ borderRadius:12, backgroundColor:theme.colors.primary}} onPress={handleAddTodo} />}
-          />
-          <Divider style={styles.divider} />
+        <TextInputTemplate
+          style={styles.todoInput}
+          underlineStyle={{ display: 'none' }}
+          label={'Nouvelle tâche'}
+          mode={'flat'}
+          value={todo}
+          onChangeText={text => setTodo(text)}
+          maxLength={100}
+          right={
+            <TextInput.Icon
+              icon={'plus'}
+              color={theme.colors.tertiary}
+              style={{
+                borderRadius: 12,
+                backgroundColor: theme.colors.primary,
+              }}
+              onPress={handleAddTodo}
+            />
+          }
+        />
+        <Divider style={styles.divider} />
         <SurfaceTemplate style={styles.todoContent}>
-          <FlatList style={styles.todoList} data={todoList} renderItem={renderTodos} />
+          <FlatList
+            style={styles.todoList}
+            data={todoList}
+            renderItem={renderTodos}
+          />
         </SurfaceTemplate>
       </View>
     );
@@ -171,14 +203,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 18,
   },
   todoList: {
-    margin:5,
-
+    margin: 5,
   },
   todoContent: {
     backgroundColor: theme.colors.surfaceVariant,
-    flex:1,
+    flex: 1,
     margin: 10,
     marginHorizontal: 10,
     borderRadius: 18,
-  }
+  },
 });

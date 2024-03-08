@@ -16,7 +16,7 @@ import { useSharedValue } from 'react-native-reanimated';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { View, StyleSheet } from 'react-native';
 import { boosterLabel, lag, setLag } from '../../../services/utils/utils';
-import {theme} from "../../organisms/OwnPaperProvider";
+import { theme } from '../../organisms/OwnPaperProvider';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -37,9 +37,14 @@ export default function Settings(props: Readonly<Props>): ReactNode {
       {client => (
         <View>
           <SurfaceTemplate style={styles.template}>
-            <PaperText style={styles.surfaceTitle}>Options d'application</PaperText>
+            <PaperText style={styles.surfaceTitle}>
+              Options d'application
+            </PaperText>
             <View style={styles.flexBox}>
-              <PaperText style={[styles.flexItem, styles.textTheme]} onPress={() => {}}>
+              <PaperText
+                style={[styles.flexItem, styles.textTheme]}
+                onPress={() => {}}
+              >
                 Activer le thème {themeSlideEnabled ? 'clair' : 'sombre'}
               </PaperText>
               <PaperSwitch
@@ -71,30 +76,40 @@ export default function Settings(props: Readonly<Props>): ReactNode {
           </SurfaceTemplate>
           <SurfaceTemplate style={styles.template}>
             <PaperText style={styles.surfaceTitle}>Paramètres</PaperText>
-            <ButtonTemplate style={[styles.button, styles.buttonDanger]} textColor='white'
+            <ButtonTemplate
+              style={[styles.button, styles.buttonDanger]}
               onPress={() => {
                 props.navigation.navigate('Profil');
               }}
             >
               Modifier mon profil
             </ButtonTemplate>
-            <ButtonTemplate style={styles.button} onPress={() => {}} textColor='white'>
+            <ButtonTemplate style={styles.button} onPress={() => {}}>
               Télécharger mes données
             </ButtonTemplate>
-            <ButtonTemplate style={[styles.button, styles.buttonTransparent]} textColor={theme.colors.primary}  mode='outlined'
+            <ButtonTemplate
+              style={[styles.button, styles.buttonTransparent]}
+              textColor={theme.colors.primary}
+              mode="outlined"
               onPress={async () => {
                 await LogoutUser(client, props);
               }}
             >
               Se déconnecter
             </ButtonTemplate>
-            <ButtonTemplate style={[styles.button, styles.buttonTransparent]} onPress={() => {}} textColor={theme.colors.primary} mode='outlined'>
+            <ButtonTemplate
+              style={[styles.button, styles.buttonTransparent]}
+              onPress={() => {}}
+              textColor={theme.colors.primary}
+              mode="outlined"
+            >
               Accéder aux conditions générales
             </ButtonTemplate>
-            <ButtonTemplate style={[styles.button, styles.buttonSuccess]} textColor='white'
-                            onPress={async () => {
-                              await DeleteAndLogoutUser(client, props);
-                            }}
+            <ButtonTemplate
+              style={[styles.button, styles.buttonSuccess]}
+              onPress={async () => {
+                await DeleteAndLogoutUser(client, props);
+              }}
             >
               Supprimer mon compte
             </ButtonTemplate>
@@ -149,5 +164,5 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
     border: '1px solid',
     backgroundColor: 'transparent',
-  }
+  },
 });

@@ -19,7 +19,6 @@ export default function SliderTemplate(
       renderBubble={undefined}
       style={{ margin: 10 }}
       theme={{
-        
         maximumTrackTintColor: theme.colors.primary,
         minimumTrackTintColor: theme.colors.tertiary,
         cacheTrackTintColor: theme.colors.tertiary,

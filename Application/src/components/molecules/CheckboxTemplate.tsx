@@ -4,10 +4,10 @@ interface IconOverrideProps {
   iconButton?: IconButtonProps;
   status: 'checked' | 'unchecked';
   onPress: () => void;
-  style? : StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   containerColor?: string;
   iconColor?: string;
-  size?: number
+  size?: number;
 }
 
 export default function CheckboxTemplate(
@@ -16,7 +16,7 @@ export default function CheckboxTemplate(
   return (
     <IconButton
       {...props}
-      style={ props.style ?? undefined}
+      style={props.style ?? undefined}
       containerColor={props.containerColor}
       iconColor={props.iconColor}
       size={props.size ?? 50}

@@ -10,7 +10,7 @@ export default function KeyboardButton(
 ): ReactNode {
   return (
     <PaperButton
-      contentStyle={{height:40}}
+      contentStyle={{ height: 40 }}
       theme={props.theme ?? undefined}
       style={[styles.button, props.style]}
       mode={props.mode ?? 'text'}
@@ -19,9 +19,9 @@ export default function KeyboardButton(
       textColor={props.textColor ?? getColorForBackground(theme.colors.primary)}
       buttonColor={props.buttonColor ?? theme.colors.primary}
       {...props}
-      />
-  )}
+    />
+  );
+}
 const styles = StyleSheet.create({
-  button: {
-  },
+  button: {},
 });

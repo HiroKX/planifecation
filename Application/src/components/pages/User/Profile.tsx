@@ -9,9 +9,9 @@ import { UpdateUserAndLogout } from '../../../controllers/UserController';
 import { useForm } from 'react-hook-form';
 import PasswordInput from '../../atoms/styles/PasswordInput';
 import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
-import {StyleSheet} from "react-native";
-import {theme} from "../../organisms/OwnPaperProvider";
-import {Text as PaperText} from "react-native-paper";
+import { StyleSheet } from 'react-native';
+import { theme } from '../../organisms/OwnPaperProvider';
+import { Text as PaperText } from 'react-native-paper';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -57,7 +57,11 @@ export default function Profile(props: Readonly<Props>): ReactNode {
       <PaperText style={styles.surfaceTitle}>Modifier mon profil</PaperText>
       <PasswordInput control={control} errors={errors} />
       <PasswordConfirmInput control={control} errors={errors} watch={watch} />
-      <ButtonTemplate style={styles.button} onPress={onSubmit} textColor='white'>
+      <ButtonTemplate
+        style={styles.button}
+        onPress={onSubmit}
+        textColor="white"
+      >
         Changer mon mot de passe
       </ButtonTemplate>
     </SurfaceTemplate>
