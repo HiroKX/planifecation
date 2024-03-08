@@ -44,8 +44,8 @@ const selectedEvent = signal<Event>({
   id: undefined,
   title: '',
   summary: '',
-  end: '',
-  start: '',
+  end: todayData.dateString + ' 01:00',
+  start: todayData.dateString + ' 00:00',
   color: theme.colors.primary,
 });
 

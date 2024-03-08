@@ -80,6 +80,13 @@ export class LuxonDate {
       .setLocale(locale)
       .toFormat('yyyy-MM-dd');
   }
+
+  static fromMillis(date: number, toFormat?: string): string {
+    return DateTime.fromMillis(date)
+      .setLocale(locale)
+      .toFormat(toFormat ?? 'yyyy-MM-dd');
+  }
+
   static to_yyyyMMddHHmm(date: string, fromFormat?: string): string {
     return DateTime.fromFormat(date, fromFormat ?? 'yyyy-MM-dd')
       .setLocale(locale)
