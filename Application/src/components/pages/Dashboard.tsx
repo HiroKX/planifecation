@@ -35,7 +35,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               style={styles.rowflex}
               onPress={() => props.navigation.navigate('Liste des notes')}
             >
-              <AppTemplate customSize={80} icon="note-outline" elevation={5} />
+              <AppTemplate customSize={80} icon="note-outline" />
               <TextTemplate variant="headlineLarge" style={styles.text}>
                 Bloc-notes
               </TextTemplate>
@@ -54,11 +54,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               <TextTemplate variant="headlineLarge" style={styles.text}>
                 Agenda
               </TextTemplate>
-              <AppTemplate
-                customSize={80}
-                icon="calendar-cursor"
-                elevation={5}
-              />
+              <AppTemplate customSize={80} icon="calendar-cursor" />
             </TouchableOpacity>
           </SurfaceTemplate>
           <SurfaceTemplate style={styles.surfaces}>
@@ -66,11 +62,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               style={styles.rowflex}
               onPress={() => props.navigation.navigate('Liste toute douce')}
             >
-              <AppTemplate
-                customSize={80}
-                icon="format-list-checkbox"
-                elevation={5}
-              />
+              <AppTemplate customSize={80} icon="format-list-checkbox" />
               <TextTemplate variant="headlineLarge" style={styles.text}>
                 Liste toute douce
               </TextTemplate>
@@ -86,7 +78,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               <TextTemplate variant="headlineLarge" style={styles.text}>
                 Déconnexion
               </TextTemplate>
-              <AppTemplate customSize={80} icon="door-sliding" elevation={5} />
+              <AppTemplate customSize={80} icon="door-sliding" />
             </TouchableOpacity>
           </SurfaceTemplate>
         </View>
