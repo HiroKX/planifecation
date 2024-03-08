@@ -23,6 +23,7 @@ import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
 import {colorKit} from "reanimated-color-picker";
+import AppTemplate from '../../atoms/AppTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -105,19 +106,19 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
     };
 
     return (
-      <View>
-        <View style={{ flexDirection: 'row',alignItems: 'center', flex: 1 }}>
+      <View style={{margin:5}}>
+        <View style={{ flexDirection: 'row',alignItems: 'center', flex: 1, backgroundColor:theme.colors.surface }}>
           <CheckboxTemplate
             status={item.isDone ? 'checked' : 'unchecked'}
             onPress={(): void => {
               setCurrentTodo(item.id);
               setVisibleModal(true);
             }}
+            iconColor={theme.colors.tertiary}
+            size={60}
           />
-          <TextTemplate style={{ flex: 1 }}>{item.content}</TextTemplate>
-          <TouchableOpacity style={{backgroundColor: theme.colors.tertiary, marginRight: 10, padding:4, borderRadius: 10}} onPress={() => handleDeleteTodo(item)}>
-            <Icon size={30} source={'trash-can'} color={theme.colors.background} />
-          </TouchableOpacity>
+          <TextTemplate variant="titleLarge" style={{ flex: 1, color:theme.colors.tertiary }}>{item.content}</TextTemplate>
+          <AppTemplate icon='trash-can' onPress={() => handleDeleteTodo(item)} color={theme.colors.surfaceVariant}/>
         </View>
         <Portal>
           <ModalTemplate
@@ -135,17 +136,15 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   } else {
     return (
       <View style={{ flex: 1, padding: 10 }}>
-        <SurfaceTemplate style={styles.todo}>
           <TextInputTemplate style={styles.todoInput} underlineStyle={{display: 'none'}}
             label={'Nouvelle tâche'}
             mode={'flat'}
             value={todo}
             onChangeText={text => setTodo(text)}
             maxLength={100}
-            right={ <TextInput.Icon icon={'plus'} color={theme.colors.tertiary} style={{backgroundColor:theme.colors.background}} onPress={handleAddTodo} />}
+            right={ <TextInput.Icon icon={'plus'} color={theme.colors.tertiary} style={{ borderRadius:18, backgroundColor:theme.colors.primary}} onPress={handleAddTodo} />}
           />
           <Divider style={styles.divider} />
-        </SurfaceTemplate>
         <SurfaceTemplate style={styles.todoContent}>
           <FlatList style={styles.todoList} data={todoList} renderItem={renderTodos} />
         </SurfaceTemplate>
@@ -158,6 +157,8 @@ const styles = StyleSheet.create({
   divider: {
     height: 5,
     backgroundColor: theme.colors.tertiary,
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
   },
   todo: {
     marginTop: -10,
@@ -166,20 +167,18 @@ const styles = StyleSheet.create({
   },
   todoInput: {
     backgroundColor: theme.colors.surfaceVariant,
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
   },
   todoList: {
-    backgroundColor: theme.colors.background,
-    margin:10,
-    borderRadius: 10,
+    margin:5,
+
   },
   todoContent: {
     backgroundColor: theme.colors.surfaceVariant,
     flex:1,
     margin: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    marginHorizontal: 10,
     borderRadius: 18,
-    shadowRadius: 0,
-    shadowOpacity: 0
   }
 });
