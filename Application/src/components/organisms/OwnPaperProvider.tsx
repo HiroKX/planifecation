@@ -24,7 +24,7 @@ export const lightTheme: MD3Theme = {
     onSecondaryContainer: 'rgb(19, 4, 99)',
     tertiary: 'rgb(233,78,38)',
     onTertiary: 'rgb(237,247,253)',
-    tertiaryContainer: 'rgb(197, 33, 132)',
+    tertiaryContainer: 'rgb(233,78,38)',
     onTertiaryContainer: 'rgb(237,247,253)',
     error: 'rgb(138, 174, 30)',
     onError: 'rgb(6, 35, 51)',
@@ -32,9 +32,9 @@ export const lightTheme: MD3Theme = {
     onErrorContainer: 'rgb(6, 35, 51)',
     background: 'rgb(248, 230, 173)',
     onBackground: 'rgb(25, 28, 30)',
-    surface: 'rgb(237, 246, 253)',
+    surface: 'rgb(248, 230, 173)',
     onSurface: 'rgb(25, 28, 30)',
-    surfaceVariant: 'rgb(221, 227, 234)',
+    surfaceVariant: 'rgb(255, 236, 208)',
     onSurfaceVariant: 'rgb(65, 72, 77)',
     outline: 'rgb(113, 120, 126)',
     outlineVariant: 'rgb(193, 199, 206)',
@@ -62,7 +62,7 @@ export const theme = lightTheme;
 
 export const baseFont = 'Fredoka';
 
-export let navigationTheme: Theme = {
+export const navigationTheme: Theme = {
   dark: theme.dark,
   colors: {
     primary: theme.colors.primary,

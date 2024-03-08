@@ -8,15 +8,13 @@ import {
 } from '../../../controllers/NoteController';
 import { ApolloClient, useApolloClient } from '@apollo/client';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
-import { StyleSheet, Alert, FlatList, View } from 'react-native';
-import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
+import { StyleSheet, Alert, FlatList, View, TouchableOpacity } from 'react-native';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { useIsFocused } from '@react-navigation/native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-paper';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
+import AppTemplate from '../../atoms/AppTemplate';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -58,13 +56,9 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 
   const renderNotes = (renderNoteProps: RenderNoteProps) => {
     return (
-      <View style={styles.flexContainer}>
+      <View style={styles.itemContainer}>
         <TouchableOpacity
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            alignContent: 'space-between',
-          }}
+          style={styles.item}
           onPress={(): void => {
             GetNote(client, renderNoteProps.item.id).then(currentNote => {
               return props.navigation.navigate('Bloc-Notes', {
@@ -73,37 +67,34 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
             });
           }}
         >
-          <View style={{ flexGrow: 1, width: '86%' }}>
-            <TextTemplate variant="titleMedium" style={{}}>
+            <TextTemplate variant="titleLarge"
+              style={styles.text}>
               {renderNoteProps.item.title}
             </TextTemplate>
-          </View>
-          <View
-            style={{ alignSelf: 'center', flexShrink: 1, flexBasis: 'auto' }}
-          >
-            <Icon size={25} source={'note-edit'} color={theme.colors.primary} />
-          </View>
+            <AppTemplate icon='lead-pencil'
+              variant='tertiary'
+              color={theme.colors.surfaceVariant}
+              style={styles.edit}/>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={{}}
-          onPress={(): void => {
-            Alert.alert(
-              `Suppression de ${renderNoteProps.item.title}`,
-              'Confirmez-vous la suppression de cette note ?',
-              [
-                { text: 'Non' },
-                {
-                  text: 'Oui',
-                  onPress: (): void => {
-                    confirmDelete(renderNoteProps.item.id).then();
-                  },
-                },
-              ]
-            );
-          }}
-        >
-          <Icon size={25} source={'trash-can'} color={theme.colors.secondary} />
-        </TouchableOpacity>
+          <AppTemplate icon='trash-can'
+          color={theme.colors.surfaceVariant}
+            style={styles.delete}
+                      onPress={(): void => {
+                        Alert.alert(
+                          `Suppression de ${renderNoteProps.item.title}`,
+                          'Confirmez-vous la suppression de cette note ?',
+                          [
+                            { text: 'Non' },
+                            {
+                              text: 'Oui',
+                              onPress: (): void => {
+                                confirmDelete(renderNoteProps.item.id).then();
+                              },
+                            },
+                          ]
+                        );
+                      }}
+                    />
       </View>
     );
   };
@@ -111,19 +102,14 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     return <ActivityIndicatorTemplate />;
   } else {
     return (
-      <View style={{ flex: 1, padding: 10 }}>
-        {/* <ActivityIndicator size="large" color="#0000ff" /> */}
-        <SurfaceTemplate>
-          <ButtonTemplate
+      <View style={styles.mainContainer}>
+          <AppTemplate
+            icon='plus'
             onPress={(): void => {
               props.navigation.navigate('Bloc-Notes');
-            }}
-          >
-            Ajouter
-          </ButtonTemplate>
-        </SurfaceTemplate>
-        <SurfaceTemplate style={{ flex: 5 }}>
-          <FlatList data={notes} renderItem={renderNotes} />
+            }}/>
+        <SurfaceTemplate style={styles.surfaces}>
+          <FlatList data={notes} renderItem={renderNotes} style={styles.list}/>
         </SurfaceTemplate>
       </View>
     );
@@ -131,15 +117,42 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
 }
 
 const styles = StyleSheet.create({
-  flexContainer: {
-    borderWidth: 1,
-    borderRadius: 50,
-    marginVertical: 3,
-    alignItems: 'center',
-    alignContent: 'stretch',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    paddingHorizontal: 5,
+  mainContainer: {
+    flex: 1,
+    alignItems:'center', 
+  },
+  surfaces: {
+    flex:1,
+    borderRadius:18,
+    alignSelf:'stretch',
+    margin:25,
+    marginTop:0,
+  },
+  list: {
+    marginHorizontal:10,
+    marginVertical:5,
+  },
+  itemContainer: {
+    borderRadius:18,
+    backgroundColor: theme.colors.background,
+    marginVertical:5,
+    flexDirection:'row',
+  },
+  item: {
+    flexGrow:1,
+    marginLeft:5,
+    justifyContent:'center',
+    flexDirection:'row',
+  },
+  text: {
+    textAlignVertical: 'center',
+    color:theme.colors.tertiary,
+    flex:1
+  },
+  edit: {
+    margin:5
+    },
+  delete: {
+    margin:5
   },
 });
