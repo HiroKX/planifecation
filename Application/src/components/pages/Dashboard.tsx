@@ -36,7 +36,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               onPress={() => props.navigation.navigate('Liste des notes')}
             >
               <AppTemplate customSize={80} icon="note-outline" />
-              <TextTemplate variant="headlineLarge" style={styles.text}>
+              <TextTemplate variant="headlineMedium" style={styles.text}>
                 Bloc-notes
               </TextTemplate>
             </TouchableOpacity>
@@ -51,7 +51,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
                 props.navigation.navigate('Agenda', { events });
               }}
             >
-              <TextTemplate variant="headlineLarge" style={styles.text}>
+              <TextTemplate variant="headlineMedium" style={styles.text}>
                 Agenda
               </TextTemplate>
               <AppTemplate customSize={80} icon="calendar-cursor" />
@@ -63,7 +63,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               onPress={() => props.navigation.navigate('Liste toute douce')}
             >
               <AppTemplate customSize={80} icon="format-list-checkbox" />
-              <TextTemplate variant="headlineLarge" style={styles.text}>
+              <TextTemplate variant="headlineMedium" style={styles.text}>
                 Liste toute douce
               </TextTemplate>
             </TouchableOpacity>
@@ -75,7 +75,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
                 await LogoutUser(client, props);
               }}
             >
-              <TextTemplate variant="headlineLarge" style={styles.text}>
+              <TextTemplate variant="headlineMedium" style={styles.text}>
                 Déconnexion
               </TextTemplate>
               <AppTemplate customSize={80} icon="door-sliding" />
