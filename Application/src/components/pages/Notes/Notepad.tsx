@@ -91,9 +91,11 @@ const styles = StyleSheet.create({
   },
   surface: {
     flex: 1,
+    flexGrow:1,
     margin: 15,
     padding: 15,
     borderRadius: 18,
+    alignContent:'stretch'
   },
   save: {
     margin: 10,
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.surface,
   },
   textInput: {
-    flex: 8,
+    flexGrow:1,
     pointerEvents: 'none',
     backgroundColor: theme.colors.surface,
     borderRadius: 18,
@@ -113,7 +115,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   keyboard: {
-    flex: 3,
     padding: 0,
     backgroundColor: theme.colors.surfaceVariant,
   },
