@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   text: {
-    color: theme.colors.tertiary,
+    color: theme.colors.secondary,
     textAlignVertical: 'center',
   },
 });

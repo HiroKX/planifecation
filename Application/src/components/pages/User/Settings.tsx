@@ -1,5 +1,4 @@
 import {
-  Divider,
   Switch as PaperSwitch,
   Text as PaperText,
 } from 'react-native-paper';

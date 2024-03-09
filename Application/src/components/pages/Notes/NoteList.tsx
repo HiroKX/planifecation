@@ -113,6 +113,8 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     return (
       <View style={styles.mainContainer}>
         <AppTemplate
+          variant='primary'
+          color={theme.colors.secondary}
           icon="plus"
           onPress={(): void => {
             props.navigation.navigate('Bloc-Notes');
