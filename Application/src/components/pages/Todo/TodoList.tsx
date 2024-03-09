@@ -171,13 +171,13 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
         />
         <Divider style={styles.divider} />
         <SurfaceTemplate style={styles.todoContent}>
-          {todoList.length != 0 &&
-          <FlatList
-            style={styles.todoList}
-            data={todoList}
-            renderItem={renderTodos}
-          />
-          }
+          {todoList.length != 0 && (
+            <FlatList
+              style={styles.todoList}
+              data={todoList}
+              renderItem={renderTodos}
+            />
+          )}
         </SurfaceTemplate>
       </View>
     );
