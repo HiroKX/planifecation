@@ -1,8 +1,4 @@
-import {
-  Divider,
-  Switch as PaperSwitch,
-  Text as PaperText,
-} from 'react-native-paper';
+import { Switch as PaperSwitch, Text as PaperText } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { ReactNode, useState } from 'react';

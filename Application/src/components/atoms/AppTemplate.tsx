@@ -9,9 +9,9 @@ export default function AppTemplate(
 ): ReactNode {
   return (
     <PaperFab
-      variant={props?.variant ?? 'primary'}
+      variant={props?.variant ?? 'secondary'}
       icon={props?.icon ?? 'plus'}
-      color={props?.color ?? theme.colors.tertiary}
+      color={props?.color ?? theme.colors.primary}
       style={props?.style ?? styles.fab}
       onPress={props?.onPress}
       theme={props?.theme ?? undefined}
