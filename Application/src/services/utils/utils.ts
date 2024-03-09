@@ -63,6 +63,11 @@ export const boosterLabel = {
   [<number>2000]: 'ULTRA RAPIDE !!!!!',
 };
 
+export const darkTheme = new Signal(false);
+export function setDarkTheme(bool:boolean) {
+  darkTheme.value = bool;
+}
+
 // Allows to handle dates easily in JS
 export class LuxonDate {
   // Formatting explanation : https://github.com/moment/luxon/blob/master/docs/formatting.md

@@ -13,6 +13,8 @@ import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, useState } from 'react';
 import Splashscreen from './src/components/pages/Splashscreen';
+import { View, StyleSheet } from 'react-native';
+import { darkTheme, setDarkTheme } from './src/services/utils/utils';
 
 export default function App(): ReactNode {
   if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
@@ -33,6 +35,7 @@ export default function App(): ReactNode {
           <Splashscreen func={() => setSplash(false)}></Splashscreen>
         ) : (
           <NavigationContainer theme={navigationTheme}>
+            {darkTheme.value ? <View style={styles.darkThemeOn}></View> : null}
             <RootStack />
           </NavigationContainer>
         )}
@@ -42,3 +45,13 @@ export default function App(): ReactNode {
     </ApolloProvider>
   );
 }
+const styles = StyleSheet.create({
+  darkThemeOn:{
+    position:'absolute',
+    height:9999,
+    width:9999,
+    backgroundColor:'black',
+    opacity:0.9,
+    zIndex:100,
+  },
+});
