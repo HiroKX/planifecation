@@ -41,7 +41,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               </TextTemplate>
             </TouchableOpacity>
           </SurfaceTemplate>
-          <SurfaceTemplate style={[styles.surfaces, styles.endflex]}>
+          <SurfaceTemplate style={[styles.surfaces]}>
             <TouchableOpacity
               style={[styles.rowflex, styles.endflex]}
               onPress={async () => {
@@ -68,7 +68,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               </TextTemplate>
             </TouchableOpacity>
           </SurfaceTemplate>
-          <SurfaceTemplate style={[styles.surfaces, styles.endflex]}>
+          <SurfaceTemplate style={[styles.surfaces]}>
             <TouchableOpacity
               style={[styles.rowflex, styles.endflex]}
               onPress={async () => {

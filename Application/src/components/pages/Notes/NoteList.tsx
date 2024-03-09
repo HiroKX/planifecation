@@ -97,6 +97,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
                   text: 'Oui',
                   onPress: (): void => {
                     confirmDelete(renderNoteProps.item.id).then();
+                    setUpdatedNotes(true)
                   },
                 },
               ]
@@ -118,7 +119,9 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
           }}
         />
         <SurfaceTemplate style={styles.surfaces}>
-          <FlatList data={notes} renderItem={renderNotes} style={styles.list} />
+          {notes.length != 0 &&
+            <FlatList data={notes} renderItem={renderNotes} style={styles.list} />
+          }
         </SurfaceTemplate>
       </View>
     );
