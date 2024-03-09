@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   },
   rowflex: {
     flex: 1,
+    alignItems: 'center',
     flexDirection: 'row',
   },
   endflex: {
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   text: {
+    margin: 'auto',
     color: theme.colors.secondary,
-    textAlignVertical: 'center',
   },
 });
