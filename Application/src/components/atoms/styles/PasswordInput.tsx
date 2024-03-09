@@ -16,7 +16,8 @@ type PasswordConfirmInputProps = {
 export default function PasswordInput(
   props: Readonly<PasswordConfirmInputProps>
 ): any {
-    const [word, setWord] = useState('Inscription');
+    const randomize = require('randomatic');
+    const [word] = useState(randomize('*', 16));
 
   return (
     <Controller
