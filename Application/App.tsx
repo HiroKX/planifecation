@@ -25,8 +25,8 @@ export default function App(): ReactNode {
     link: new HttpLink({ uri: URI_API }),
     cache: new InMemoryCache(),
   });
-
   const [splash, setSplash] = useState(true);
+
 
   return (
     <ApolloProvider client={client}>
@@ -35,7 +35,8 @@ export default function App(): ReactNode {
           <Splashscreen func={() => setSplash(false)}></Splashscreen>
         ) : (
           <NavigationContainer theme={navigationTheme}>
-            {darkTheme.value ? <View style={styles.darkThemeOn}></View> : null}
+            
+            {darkTheme.value ? <View style={styles.darkThemeOn}></View> : undefined}
             <RootStack />
           </NavigationContainer>
         )}
@@ -53,5 +54,6 @@ const styles = StyleSheet.create({
     backgroundColor:'black',
     opacity:0.9,
     zIndex:100,
+    pointerEvents : "none"
   },
 });

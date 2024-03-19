@@ -21,8 +21,11 @@ import { theme } from '../../organisms/OwnPaperProvider';
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Settings(props: Readonly<Props>): ReactNode {
-  //const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
-  const toggleThemeSwitch = () => setDarkTheme(!darkTheme.value);
+  /*const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);*/
+  const [switchValue, setSwitchValue] = useState<boolean>()
+  const toggleThemeSwitch = () => {setDarkTheme(!darkTheme.value);
+    setSwitchValue(darkTheme.value);
+  }
 
   const progressSlider = useSharedValue(lag.value);
   const minValueSlider = useSharedValue(0);
@@ -31,6 +34,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
   const [boosterLevel, setBoosterLevel] = useState<string>(
     boosterLabel[lag.value]
   );
+  
 
   return (
     <ApolloConsumer>
@@ -53,7 +57,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
                 color={theme.colors.tertiary}
                 value={darkTheme.value}
                 onValueChange={toggleThemeSwitch}
-              />
+              ></PaperSwitch>
               </View>
               <View style={styles.flexBox}>
                 <PaperText style={styles.flexItemSlider}>
