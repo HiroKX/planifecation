@@ -47,6 +47,7 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
       </View>
       <View style={[styles.container]}>
         <ButtonTemplate
+          textColor={theme.colors.background}
           style={styles.button}
           onPress={() => navigation.navigate('Connexion')}
         >
