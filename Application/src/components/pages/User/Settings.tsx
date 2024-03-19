@@ -104,7 +104,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
               textColor={theme.colors.primary}
               mode="outlined"
             >
-              Accéder aux conditions générales d'utilisation
+              Accéder aux conditions générales
             </ButtonTemplate>
             <ButtonTemplate
               style={[styles.button, styles.buttonSuccess]}
