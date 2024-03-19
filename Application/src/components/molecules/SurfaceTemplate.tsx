@@ -19,8 +19,7 @@ export default function SurfaceTemplate(
 const styles = StyleSheet.create({
   surface: {
     padding: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    marginHorizontal: 20,
     borderRadius: 18,
   },
 });
