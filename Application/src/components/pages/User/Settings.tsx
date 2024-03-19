@@ -181,6 +181,6 @@ const styles = StyleSheet.create({
   },
   darkThemeSwitch:{
     margin:10,
-    zIndex:998,
+    zIndex:999,
   }
 });

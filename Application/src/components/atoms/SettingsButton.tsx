@@ -26,6 +26,7 @@ export default function Settings(): ReactNode {
           navigation.navigate('Paramètres');
         }
       }}
+      style={styles.button}
     >
       <Image
         style={{ width: 45, height: 45 }}
@@ -35,4 +36,7 @@ export default function Settings(): ReactNode {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+  zIndex:999,
+}});
