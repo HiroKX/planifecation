@@ -8,6 +8,7 @@ import {
 } from './keyboardKeys';
 import { getColorForBackground } from '../../../../services/utils/utils';
 import { theme } from '../../../organisms/OwnPaperProvider';
+import * as Haptics from 'expo-haptics';
 
 export default function VirtualRandomKeyboard(
   props: Readonly<{
@@ -65,6 +66,7 @@ export default function VirtualRandomKeyboard(
   };
 
   const handleKeyEvent = (keyPressed: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     switch (keyPressed) {
       case '⏎': {
         props.setText(props.text + `\n`);

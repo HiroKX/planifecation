@@ -12,6 +12,7 @@ import { ApolloConsumer } from '@apollo/client';
 import { getAgendaEvents } from './Agenda/CalendarTemplate';
 import TextTemplate from '../atoms/styles/TextTemplate';
 import { theme } from '../organisms/OwnPaperProvider';
+import * as Haptics from 'expo-haptics';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -33,7 +34,10 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
           <SurfaceTemplate style={styles.surfaces}>
             <TouchableOpacity
               style={styles.rowflex}
-              onPress={() => props.navigation.navigate('Liste des notes')}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                props.navigation.navigate('Liste des notes');
+              }}
             >
               <AppTemplate customSize={80} icon="note-outline" />
               <TextTemplate variant="headlineMedium" style={styles.text}>
@@ -45,6 +49,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
             <TouchableOpacity
               style={[styles.rowflex, styles.endflex]}
               onPress={async () => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
                 console.debug('Retrieving events');
                 const events = await getAgendaEvents(client);
                 console.debug('Events retrieved');
@@ -60,7 +65,10 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
           <SurfaceTemplate style={styles.surfaces}>
             <TouchableOpacity
               style={styles.rowflex}
-              onPress={() => props.navigation.navigate('Liste toute douce')}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                props.navigation.navigate('Liste toute douce');
+              }}
             >
               <AppTemplate customSize={80} icon="format-list-checkbox" />
               <TextTemplate variant="headlineMedium" style={styles.text}>
@@ -72,6 +80,7 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
             <TouchableOpacity
               style={[styles.rowflex, styles.endflex]}
               onPress={async () => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
                 await LogoutUser(client, props);
               }}
             >
