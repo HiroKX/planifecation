@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { StyleProp, TextStyle } from 'react-native';
+
 // Importez d'autres composants nécessaires ici
 type FormValues = {
   confirmPassword: string;
 };
 type PasswordInputProps = {
-  control: Control<any, any>;
+  control: Control<any>;
   errors: FieldErrors<FormValues>;
   style?: StyleProp<TextStyle>;
   watch: any;
@@ -15,7 +17,7 @@ type PasswordInputProps = {
 
 export default function PasswordConfirmInput(
   props: Readonly<PasswordInputProps>
-): any {
+): ReactNode {
   return (
     <Controller
       control={props.control}

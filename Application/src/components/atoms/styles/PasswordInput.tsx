@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {ReactNode, useState} from 'react';
 import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
@@ -8,27 +8,19 @@ type FormValues = {
   password: string;
 };
 type PasswordConfirmInputProps = {
-  control: Control<any, any>;
+  control: Control<any>;
   errors: FieldErrors<FormValues>;
   style?: StyleProp<TextStyle>;
 };
 
 export default function PasswordInput(
   props: Readonly<PasswordConfirmInputProps>
-): any {
-  const randomize = require('randomatic');
-  const [word] = useState(randomize('*', 16));
-
+): ReactNode {
   return (
     <Controller
       control={props.control}
       rules={{
         required: 'Ce champ est requis',
-        validate: (val: string) => {
-          if (val != word) {
-            return 'Le mot de passe doit être ' + word + '.';
-          }
-        },
       }}
       render={({
         field: { onChange, onBlur, value },

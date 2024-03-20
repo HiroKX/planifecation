@@ -6,12 +6,12 @@ import { SignUpUser } from '../../../controllers/AuthenticationController';
 import { StackParamList } from '../../../navigation/RootStack';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useForm } from 'react-hook-form';
-import PasswordInput from '../../atoms/styles/PasswordInput';
 import UsernameInput from '../../atoms/styles/UsernameInput';
 import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
 import { StyleSheet, View } from 'react-native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
+import PasswordInputRandomized from "../../atoms/styles/PasswordInputRandomized";
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -64,7 +64,7 @@ export default function SignUp(props: Readonly<Props>): ReactNode {
             control={control}
             errors={errors}
           />
-          <PasswordInput
+          <PasswordInputRandomized
             style={styles.margin}
             control={control}
             errors={errors}
