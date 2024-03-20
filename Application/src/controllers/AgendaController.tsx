@@ -27,10 +27,13 @@ export async function CreateAgendaEvent(
 
 export async function GetAllAgendaEvents(
   client: Readonly<ApolloClient<Object>>
-): Promise<AgendaEvent[]> {
+): Promise<null | AgendaEvent[]> {
   console.debug('AgendaController.GetAllAgendaEvents');
   const username = await GetLoggedUserUsername();
-  const events = await GetAllEventsFromUser(client, username);
+  const events: AgendaEvent[] | null = await GetAllEventsFromUser(
+    client,
+    username
+  );
   if (events)
     events.forEach(event => {
       console.debug(
@@ -104,16 +107,5 @@ export function agendaEventToEvent(agendaEvent: AgendaEvent): Event {
     start: agendaEvent.startDate,
     end: agendaEvent.endDate,
     color: agendaEvent.color,
-  };
-}
-
-export function eventToAgendaEvent(event: Event): AgendaEvent {
-  return {
-    id: event.id ?? '',
-    title: event.title,
-    content: event.summary ?? '',
-    startDate: event.start,
-    endDate: event.end,
-    color: event.color ?? theme.colors.primary,
   };
 }

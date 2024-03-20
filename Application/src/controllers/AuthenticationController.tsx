@@ -63,7 +63,7 @@ export async function SignInUser(
     })
     .catch(error => {
       console.error('Error while logging user: ', error);
-      throw new Error(error);
+      throw new Error(error.message);
     });
 }
 
