@@ -26,7 +26,7 @@ export default function App(): ReactNode {
     cache: new InMemoryCache(),
   });
   const [splash, setSplash] = useState(true);
-  console.log("app : "+darkTheme.value);
+  console.log('app : ' + darkTheme.value);
 
   return (
     <ApolloProvider client={client}>
@@ -35,7 +35,6 @@ export default function App(): ReactNode {
           <Splashscreen func={() => setSplash(false)}></Splashscreen>
         ) : (
           <NavigationContainer theme={navigationTheme}>
-            
             <RootStack />
           </NavigationContainer>
         )}
@@ -44,5 +43,4 @@ export default function App(): ReactNode {
       <StatusBar style="light" />
     </ApolloProvider>
   );
-  
 }

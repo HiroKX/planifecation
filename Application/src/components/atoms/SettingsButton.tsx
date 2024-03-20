@@ -38,5 +38,6 @@ export default function Settings(): ReactNode {
 
 const styles = StyleSheet.create({
   button: {
-  zIndex:999,
-}});
+    zIndex: 999,
+  },
+});
