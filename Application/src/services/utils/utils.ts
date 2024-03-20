@@ -3,7 +3,6 @@ import { DateTime } from 'luxon';
 import { DateData, LocaleConfig } from 'react-native-calendars';
 import { Event } from 'react-native-calendars/src/timeline/EventBlock';
 import { theme } from '../../components/organisms/OwnPaperProvider';
-import App from '../../components/organisms/GyroscopTest';
 
 const locale = 'fr';
 
@@ -67,7 +66,7 @@ export const boosterLabel = {
 export const darkTheme = new Signal(false);
 export function setDarkTheme() {
   darkTheme.value = !darkTheme.value;
-  /*console.log(darkTheme.value);*/
+  
 }
 
 // Allows to handle dates easily in JS

@@ -27,7 +27,6 @@ import { theme } from '../../organisms/OwnPaperProvider';
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Settings(props: Readonly<Props>): ReactNode {
-  /*const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);*/
   const [switchValue, setSwitchValue] = useState<boolean>();
   const toggleThemeSwitch = () => {
     setDarkTheme();
@@ -61,7 +60,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
               <PaperSwitch
                 style={styles.darkThemeSwitch}
                 color={theme.colors.tertiary}
-                value={darkTheme.value}
+                value={switchValue}
                 onValueChange={toggleThemeSwitch}
               ></PaperSwitch>
             </View>

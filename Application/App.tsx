@@ -13,8 +13,6 @@ import RootStack from './src/navigation/RootStack';
 import { StatusBar } from 'expo-status-bar';
 import { ReactNode, useState } from 'react';
 import Splashscreen from './src/components/pages/Splashscreen';
-import { View, StyleSheet } from 'react-native';
-import { darkTheme, setDarkTheme } from './src/services/utils/utils';
 
 export default function App(): ReactNode {
   if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
@@ -26,7 +24,6 @@ export default function App(): ReactNode {
     cache: new InMemoryCache(),
   });
   const [splash, setSplash] = useState(true);
-  console.log('app : ' + darkTheme.value);
 
   return (
     <ApolloProvider client={client}>
