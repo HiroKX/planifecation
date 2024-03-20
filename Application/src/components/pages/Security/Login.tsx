@@ -37,6 +37,7 @@ export default function Login(props: Readonly<Props>): ReactNode {
     try {
       await SignInUser(client, data.username, data.password, props);
     } catch (error: any) {
+      console.log('Login error:', error.message);
       setError('username', {
         type: 'server',
         message: error.message,
