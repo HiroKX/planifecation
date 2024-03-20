@@ -11,6 +11,7 @@ type PasswordConfirmInputProps = {
   control: Control<any>;
   errors: FieldErrors<FormValues>;
   style?: StyleProp<TextStyle>;
+  validation?: (val: string) => string | undefined;
 };
 
 export default function PasswordInput(
@@ -21,6 +22,7 @@ export default function PasswordInput(
       control={props.control}
       rules={{
         required: 'Ce champ est requis',
+          validate: props.validation
       }}
       render={({
         field: { onChange, onBlur, value },

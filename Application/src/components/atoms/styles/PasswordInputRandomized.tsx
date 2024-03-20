@@ -3,6 +3,7 @@ import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { StyleProp, TextStyle } from 'react-native';
+import PasswordInput from "./PasswordInput";
 
 type FormValues = {
     password: string;
@@ -19,38 +20,13 @@ export default function PasswordInputRandomized(
     const randomize = require('randomatic');
     const [word] = useState(randomize('*', 16));
 
+    const validation = (val:string) => {
+        if (val != word) {
+            return 'Le mot de passe doit être ' + word;
+        }
+    }
+
     return (
-        <Controller
-            control={props.control}
-            rules={{
-                required: 'Ce champ est requis',
-                validate: (val: string) => {
-                    if (val != word) {
-                        return 'Le mot de passe doit être ' + word;
-                    }
-                },
-            }}
-            render={({
-                         field: { onChange, onBlur, value },
-                         fieldState: { error },
-                     }) => (
-                <>
-                    <TextInputTemplate
-                        style={props.style ?? undefined}
-                        label="Mot de passe"
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        secureTextEntry={true}
-                    />
-                    {props.errors.password && (
-                        <HelperText type="error">
-                            {props.errors.password?.message}
-                        </HelperText>
-                    )}
-                </>
-            )}
-            name="password"
-        />
+        <PasswordInput control={props.control} errors={props.errors} style={props.style} validation={validation}></PasswordInput>
     );
 }
