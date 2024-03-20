@@ -63,10 +63,7 @@ export async function SignInUser(
     })
     .catch(error => {
       console.error('Error while logging user: ', error);
-      if (error.message.includes('Expected "payload" to be a plain object')) {
-        throw new Error("Nom d'utilisateur ou mot de passe incorrect");
-      }
-      throw new Error("Erreur lors de la connexion de l'utilisateur");
+      throw new Error(error.message);
     });
 }
 
@@ -87,10 +84,7 @@ export async function RelogUser(
     })
     .catch(error => {
       console.error('Error while logging user: ', error);
-      if (error.message.includes('Expected "payload" to be a plain object')) {
-        throw new Error("Nom d'utilisateur ou mot de passe incorrect");
-      }
-      throw new Error("Erreur lors de la connexion de l'utilisateur");
+      throw new Error(error);
     });
 }
 

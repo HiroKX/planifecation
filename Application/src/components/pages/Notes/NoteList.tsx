@@ -21,6 +21,7 @@ import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
 import AppTemplate from '../../atoms/AppTemplate';
+import * as Haptics from 'expo-haptics';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -97,6 +98,7 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
                   text: 'Oui',
                   onPress: (): void => {
                     confirmDelete(renderNoteProps.item.id).then();
+                    setUpdatedNotes(true);
                   },
                 },
               ]
@@ -112,13 +114,22 @@ export default function NoteList(props: Readonly<Props>): ReactNode {
     return (
       <View style={styles.mainContainer}>
         <AppTemplate
+          variant="primary"
+          color={theme.colors.secondary}
           icon="plus"
           onPress={(): void => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
             props.navigation.navigate('Bloc-Notes');
           }}
         />
         <SurfaceTemplate style={styles.surfaces}>
-          <FlatList data={notes} renderItem={renderNotes} style={styles.list} />
+          {notes.length != 0 && (
+            <FlatList
+              data={notes}
+              renderItem={renderNotes}
+              style={styles.list}
+            />
+          )}
         </SurfaceTemplate>
       </View>
     );

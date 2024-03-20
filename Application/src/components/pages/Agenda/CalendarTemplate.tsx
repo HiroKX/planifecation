@@ -28,7 +28,8 @@ export const isDataUpdated = signal(false);
 
 export async function getAgendaEvents(client: ApolloClient<Object>) {
   return await GetAllAgendaEvents(client).then(
-    (agendaEvents: AgendaEvent[]) => {
+    (agendaEvents: AgendaEvent[] | null) => {
+      if (agendaEvents == null) return [];
       let response: Event[] = [];
       agendaEvents.forEach((event: AgendaEvent) => {
         response = [...response, agendaEventToEvent(event)];

@@ -15,7 +15,11 @@ import { ReactNode, useState } from 'react';
 import Splashscreen from './src/components/pages/Splashscreen';
 
 export default function App(): ReactNode {
-  if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') console.debug = () => {};
+  if (ENVIRONMENT != 'dev' && ENVIRONMENT != 'test') {
+    console.debug = () => {};
+    console.error = () => {};
+  }
+
   console.log(URI_API);
   console.log(ENVIRONMENT);
 

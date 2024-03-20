@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ReactNode, useState, useEffect } from 'react';
 import { IsLoggedUser } from '../../controllers/AuthenticationController';
+import * as Haptics from 'expo-haptics';
 
 type Props = StackNavigationProp<StackParamList>;
 
@@ -16,12 +17,11 @@ export default function Settings(): ReactNode {
     }
     checkLogged();
   }, []);
-
-  let disabledItem = false; //TODO : Changer lorsqu'un utiliser est connecté (vérifier avec des méthodes comme useEffect, etc...)
   return (
     <TouchableOpacity
-      disabled={disabledItem}
+      disabled={!isLogged}
       onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
         if (isLogged) {
           navigation.navigate('Paramètres');
         }

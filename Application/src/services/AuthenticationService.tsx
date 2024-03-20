@@ -52,16 +52,12 @@ export async function LogUser(
   })
     .then((response: Response) => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Nom d'utilisateur ou mot de passe incorrect");
       }
       return response.json(); // Parse response body as JSON
     })
     .then((data: any) => {
       return [data.accessToken, data.refreshToken]; // Return the required data
-    })
-    .catch((error: Error) => {
-      console.error('Error:', error.message); // Handle any errors
-      return ['Not Logged !'];
     });
 }
 

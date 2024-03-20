@@ -1,8 +1,4 @@
-import {
-  Divider,
-  Switch as PaperSwitch,
-  Text as PaperText,
-} from 'react-native-paper';
+import { Switch as PaperSwitch, Text as PaperText } from 'react-native-paper';
 import ButtonTemplate from '../../atoms/styles/ButtonTemplate';
 import SurfaceTemplate from '../../molecules/SurfaceTemplate';
 import { ReactNode, useState } from 'react';
@@ -94,7 +90,12 @@ export default function Settings(props: Readonly<Props>): ReactNode {
             >
               Modifier mon profil
             </ButtonTemplate>
-            <ButtonTemplate style={styles.button} onPress={() => {}}>
+            <ButtonTemplate
+              style={styles.button}
+              onPress={() => {
+                alert('Non disponible pour le moment');
+              }}
+            >
               Télécharger mes données
             </ButtonTemplate>
             <ButtonTemplate
@@ -109,7 +110,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
             </ButtonTemplate>
             <ButtonTemplate
               style={[styles.button, styles.buttonTransparent]}
-              onPress={() => {}}
+              onPress={() => props.navigation.navigate('CGU')}
               textColor={theme.colors.primary}
               mode="outlined"
             >

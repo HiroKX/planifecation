@@ -21,6 +21,7 @@ import TextTemplate from '../../atoms/styles/TextTemplate';
 import ActivityIndicatorTemplate from '../../atoms/styles/ActivityIndicatorTemplate';
 import { lag } from '../../../services/utils/utils';
 import AppTemplate from '../../atoms/AppTemplate';
+import * as Haptics from 'expo-haptics';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
@@ -58,6 +59,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
   }, [updatedTodos]);
 
   const handleAddTodo = async () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     if (todo.trim() !== '') {
       const id: string = await AddTodo(client, todo, false);
       console.debug('TodoList: id = ' + id);
@@ -115,6 +117,7 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
           <CheckboxTemplate
             status={item.isDone ? 'checked' : 'unchecked'}
             onPress={(): void => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               setCurrentTodo(item.id);
               setVisibleModal(true);
             }}
@@ -171,11 +174,13 @@ export default function TodoList(props: Readonly<Props>): ReactNode {
         />
         <Divider style={styles.divider} />
         <SurfaceTemplate style={styles.todoContent}>
-          <FlatList
-            style={styles.todoList}
-            data={todoList}
-            renderItem={renderTodos}
-          />
+          {todoList.length != 0 && (
+            <FlatList
+              style={styles.todoList}
+              data={todoList}
+              renderItem={renderTodos}
+            />
+          )}
         </SurfaceTemplate>
       </View>
     );
