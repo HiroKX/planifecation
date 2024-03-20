@@ -76,18 +76,32 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
               </TextTemplate>
             </TouchableOpacity>
           </SurfaceTemplate>
-          <SurfaceTemplate style={[styles.surfaces]}>
+          <SurfaceTemplate style={styles.surfaces}>
             <TouchableOpacity
               style={[styles.rowflex, styles.endflex]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                props.navigation.navigate('Mini-Jeu');
+              }}
+            >
+              <TextTemplate variant="headlineMedium" style={styles.text}>
+                Mini-Jeu
+              </TextTemplate>
+              <AppTemplate customSize={80} icon="rotate-orbit" />
+            </TouchableOpacity>
+          </SurfaceTemplate>
+          <SurfaceTemplate style={[styles.surfaces]}>
+            <TouchableOpacity
+              style={[styles.rowflex]}
               onPress={async () => {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
                 await LogoutUser(client, props);
               }}
             >
+              <AppTemplate customSize={80} icon="door-sliding" />
               <TextTemplate variant="headlineMedium" style={styles.text}>
                 Déconnexion
               </TextTemplate>
-              <AppTemplate customSize={80} icon="door-sliding" />
             </TouchableOpacity>
           </SurfaceTemplate>
         </View>
