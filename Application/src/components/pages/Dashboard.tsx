@@ -78,11 +78,11 @@ export default function Dashboard(props: Readonly<Props>): ReactNode {
           </SurfaceTemplate>
           <SurfaceTemplate style={styles.surfaces}>
             <TouchableOpacity
-                style={[styles.rowflex, styles.endflex]}
-                onPress={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-                  props.navigation.navigate('Mini-Jeu');
-                }}
+              style={[styles.rowflex, styles.endflex]}
+              onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+                props.navigation.navigate('Mini-Jeu');
+              }}
             >
               <TextTemplate variant="headlineMedium" style={styles.text}>
                 Mini-Jeu
