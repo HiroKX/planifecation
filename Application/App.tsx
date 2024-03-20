@@ -26,7 +26,7 @@ export default function App(): ReactNode {
     cache: new InMemoryCache(),
   });
   const [splash, setSplash] = useState(true);
-
+  console.log("app : "+darkTheme.value);
 
   return (
     <ApolloProvider client={client}>
@@ -36,7 +36,6 @@ export default function App(): ReactNode {
         ) : (
           <NavigationContainer theme={navigationTheme}>
             
-            {darkTheme.value ? <View style={styles.darkThemeOn}></View> : undefined}
             <RootStack />
           </NavigationContainer>
         )}
@@ -45,15 +44,5 @@ export default function App(): ReactNode {
       <StatusBar style="light" />
     </ApolloProvider>
   );
+  
 }
-const styles = StyleSheet.create({
-  darkThemeOn:{
-    position:'absolute',
-    height:9999,
-    width:9999,
-    backgroundColor:'black',
-    opacity:0.9,
-    zIndex:100,
-    pointerEvents : "none"
-  },
-});

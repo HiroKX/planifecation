@@ -23,8 +23,8 @@ type Props = NativeStackScreenProps<StackParamList>;
 export default function Settings(props: Readonly<Props>): ReactNode {
   /*const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);*/
   const [switchValue, setSwitchValue] = useState<boolean>()
-  const toggleThemeSwitch = () => {setDarkTheme(!darkTheme.value);
-    setSwitchValue(darkTheme.value);
+  const toggleThemeSwitch = () => {setDarkTheme();
+   setSwitchValue(darkTheme.value);
   }
 
   const progressSlider = useSharedValue(lag.value);
@@ -41,6 +41,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
       {client => (
         
         <View>
+          <View style={darkTheme.value ? styles.darkThemeOn : undefined}></View>
             <SurfaceTemplate style={styles.template}>
               <PaperText style={styles.surfaceTitle}>
                 Options d'application
@@ -182,9 +183,9 @@ const styles = StyleSheet.create({
     backgroundColor:'black',
     opacity:0.9,
     zIndex:100,
+    pointerEvents : "none"
   },
   darkThemeSwitch:{
     margin:10,
-    zIndex:999,
   }
 });
