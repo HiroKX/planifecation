@@ -69,7 +69,7 @@ export default function Home({ navigation }: Readonly<Props>): ReactNode {
           <ButtonTemplate onPress={() => navigation.navigate('Test SKIA')}>
             Test SKIA
           </ButtonTemplate>
-          <ButtonTemplate onPress={() => navigation.navigate('Test Gyro')}>
+          <ButtonTemplate onPress={() => navigation.navigate('Mini-Jeu')}>
             Test Gyro
           </ButtonTemplate>
         </View>
