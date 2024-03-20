@@ -66,7 +66,6 @@ export const boosterLabel = {
 export const darkTheme = new Signal(false);
 export function setDarkTheme() {
   darkTheme.value = !darkTheme.value;
-  
 }
 
 // Allows to handle dates easily in JS
