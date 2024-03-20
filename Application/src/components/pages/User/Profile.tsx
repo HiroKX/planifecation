@@ -7,11 +7,11 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { StackParamList } from '../../../navigation/RootStack';
 import { UpdateUserAndLogout } from '../../../controllers/UserController';
 import { useForm } from 'react-hook-form';
-import PasswordInput from '../../atoms/styles/PasswordInput';
 import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
 import { StyleSheet } from 'react-native';
 import { theme } from '../../organisms/OwnPaperProvider';
 import { Text as PaperText } from 'react-native-paper';
+import PasswordInputRandomized from "../../atoms/styles/PasswordInputRandomized";
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {
@@ -55,7 +55,7 @@ export default function Profile(props: Readonly<Props>): ReactNode {
   return (
     <SurfaceTemplate style={styles.template}>
       <PaperText style={styles.surfaceTitle}>Modifier mon profil</PaperText>
-      <PasswordInput control={control} errors={errors} />
+      <PasswordInputRandomized control={control} errors={errors} />
       <PasswordConfirmInput control={control} errors={errors} watch={watch} />
       <ButtonTemplate
         style={styles.button}
