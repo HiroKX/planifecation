@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, {ReactNode, useMemo} from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
 import { StyleProp, TextStyle } from 'react-native';
 import PasswordInput from './PasswordInput';
@@ -16,7 +16,7 @@ export default function PasswordInputRandomized(
   props: Readonly<PasswordConfirmInputProps>
 ): ReactNode {
   const randomize = require('randomatic');
-  const [word] = useState(randomize('*', 16));
+  const word = useMemo(() => randomize('*', 2), []);
 
   const validation = (val: string) => {
     if (val != word) {
