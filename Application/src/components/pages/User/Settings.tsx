@@ -11,22 +11,15 @@ import SliderTemplate from '../../atoms/styles/SliderTemplate';
 import { useSharedValue } from 'react-native-reanimated';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { View, StyleSheet } from 'react-native';
-import {
-  boosterLabel,
-  darkTheme,
-  lag,
-  setDarkTheme,
-  setLag,
-} from '../../../services/utils/utils';
+import { boosterLabel, lag, setLag } from '../../../services/utils/utils';
 import { theme } from '../../organisms/OwnPaperProvider';
 
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Settings(props: Readonly<Props>): ReactNode {
-  const [switchValue, setSwitchValue] = useState<boolean>(darkTheme.value);
+  const [switchValue, setSwitchValue] = useState<boolean>(false);
   const toggleThemeSwitch = () => {
-    setDarkTheme();
-    setSwitchValue(darkTheme.value);
+    setSwitchValue(!switchValue);
   };
 
   const progressSlider = useSharedValue(lag.value);
@@ -41,7 +34,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
     <ApolloConsumer>
       {client => (
         <View>
-          <View style={darkTheme.value ? styles.darkThemeOn : undefined}></View>
+          <View style={switchValue ? styles.darkThemeOn : undefined}></View>
           <SurfaceTemplate style={styles.template}>
             <PaperText style={styles.surfaceTitle}>
               Options d'application
@@ -51,7 +44,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
                 style={[styles.flexItem, styles.textTheme]}
                 onPress={() => {}}
               >
-                Activer le thème {darkTheme.value ? 'clair' : 'assombri'}
+                Activer le thème {switchValue ? 'clair' : 'assombri'}
               </PaperText>
               <PaperSwitch
                 style={styles.darkThemeSwitch}
