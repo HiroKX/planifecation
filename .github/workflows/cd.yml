@@ -3,30 +3,28 @@ name: CD GraphQL
 on:
   push:
     branches:
-      - main
+      - dev
+    paths:
+      - "Serveur/**"
 
 jobs:
   deploy:
-      runs-on: ubuntu-latest
-      strategy:
-        fail-fast: true
-        matrix:
-          node-version: [18.x]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [18.x]
 
-      steps:
-        - name: deploy GraphQL to server
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.KEY }}
-            port: ${{ secrets.PORT }}
-            script: |
-              pm2 stop index
-              cd /var/www/html/planifecation
-              git pull
-              cd Serveur
-              yarn install
-              npx prisma migrate dev --name "migrationA"
-              pm2 start index
-            
+    steps:
+      - name: Deploy GraphQL to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/html/planifecation/Serveur
+            git pull origin dev
+            docker compose down
+            docker compose up -d --build

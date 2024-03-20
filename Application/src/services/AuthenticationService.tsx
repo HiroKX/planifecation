@@ -1,98 +1,88 @@
-import {gql} from "@apollo/client";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ApolloClient, gql } from '@apollo/client';
+import { URI_AUTHENTICATION } from '@env';
 
 const CREATE_USER = gql`
-    mutation createUser($login: String!, $password: String!) {
-        createUser(login: $login, password: $password) {
-            id
-        }
+  mutation createUser($username: String!, $password: String!) {
+    createUser(username: $username, password: $password) {
+      id
     }
+  }
 `;
 
 const LOG_USER = gql`
-    mutation Login($username: String!, $password: String!) {
-        login(username: $username, password: $password)
-    }
+  mutation logUser($username: String!, $password: String!) {
+    logUser(username: $username, password: $password)
+  }
 `;
 
-export async function CreateUser (props: any): Promise<Number> {
-    let userId = await CreateFromClient(props);
-    return new Promise<Number>((resolve, reject) => {
-        if (userId != 0) {
-            console.debug("User ", userId, " created with login ", props.login);
-            resolve(userId);
-        }
-        else reject("Token is empty");
+export async function CreateUser(
+  client: Readonly<ApolloClient<Object>>,
+  username: Readonly<string>,
+  password: Readonly<string>
+): Promise<number> {
+  console.debug('AuthenticationService.CreateUser');
+  return client
+    .mutate({
+      mutation: CREATE_USER,
+      variables: {
+        username: username,
+        password: password,
+      },
+    })
+    .then((response: any) => {
+      console.debug('id:', response.data.createUser.id);
+      return response.data.createUser.id;
     });
 }
 
-export async function LogUser(props: any): Promise<string> {
-    let token = await GetLoggedUserFromClient(props);
-    if (token != "") {
-        console.debug("User ", props.login, " logged in")
-        try {
-            const jsonValue = JSON.stringify({
-                login: props.login,
-                token: token
-            });
-            await AsyncStorage.setItem('loggedUser', jsonValue);
-        } catch (e) {
-            console.error("LogUser AsyncStorage error : ", e);
-        }
-    }
-    return new Promise<string>((resolve, reject) => {
-        if (token != "") resolve(token);
-        else reject("Token is empty");
+export async function LogUser(
+  username: Readonly<string>,
+  password: Readonly<string>
+): Promise<string[]> {
+  console.debug('AuthenticationService.LogUser');
+  return fetch(URI_AUTHENTICATION + '/login', {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username,
+      password: password,
+    }),
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error("Nom d'utilisateur ou mot de passe incorrect");
+      }
+      return response.json(); // Parse response body as JSON
+    })
+    .then((data: any) => {
+      return [data.accessToken, data.refreshToken]; // Return the required data
     });
 }
 
-export async function GetLoggedUser  () {
-    try {
-        const jsonValue = await AsyncStorage.getItem('loggedUser');
-
-        return new Promise<any>((resolve, reject) => {
-            if (jsonValue != null) resolve(JSON.parse(jsonValue));
-            else reject("No logged user");
-        });
-    } catch (e) {
-        console.error("GetLoggedUser error : ", e);
-    }
-}
-
-// ---------------- Calls to the ApolloClient ----------------
-
-const CreateFromClient = async (props: any): Promise<Number> => {
-    return props.client
-        .mutate({
-            mutation: CREATE_USER,
-            variables: {
-                login: props.login,
-                password: props.password,
-            }
-        })
-        .then((response: any) => {
-            return response.data.createUser.id;
-        })
-        .catch((error: any) => {
-            console.error("SignUp error:", error);
-            return 0;
-        });
-}
-
-const GetLoggedUserFromClient = async (props: any): Promise<string> => {
-    return props.client
-        .mutate({
-            mutation: LOG_USER,
-            variables: {
-                username: props.login,
-                password: props.password,
-            }
-        })
-        .then((response: any): string => {
-            return response.data.login;
-        })
-        .catch((error: any) => {
-            console.error("Login error:", error);
-            return "";
-        });
+export async function RelogUserService(
+  refreshToken: Readonly<string>
+): Promise<string[]> {
+  console.debug('AuthenticationService.RelogUser');
+  return await fetch(URI_AUTHENTICATION + '/refresh', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: refreshToken,
+    },
+  })
+    .then((response: Response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json(); // Parse response body as JSON
+    })
+    .then((data: any) => {
+      return [data.accessToken, data.refreshToken]; // Return the required data
+    })
+    .catch((error: Error) => {
+      console.error('Error:', error.message); // Handle any errors
+      return ['Not ReLogged !'];
+    });
 }

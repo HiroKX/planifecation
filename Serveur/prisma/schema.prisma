@@ -11,9 +11,42 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  login     String     @unique @db.VarChar(255)
+  id        Int        @id @unique @default(autoincrement())
+  username  String     @unique @db.VarChar(255) 
   password  String     @db.VarChar(255)
-  
-  @@map(name: "user")
+  notes     Note[]
+  todos     ToDoItem[]
+  events    AgendaEvent[]
 }
+
+model Note {
+  id        Int        @id @unique @default(autoincrement())
+  title     String     @db.VarChar(255)
+  content   String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+}
+
+model ToDoItem {
+  id        Int        @id @unique @default(autoincrement())
+  content   String
+  isDone    Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+}
+
+model AgendaEvent {
+  id        Int        @id @unique @default(autoincrement())
+  title     String     @db.VarChar(255)
+  content   String
+  startDate String
+  endDate   String
+  color     String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+}
+

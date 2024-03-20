@@ -1,0 +1,39 @@
+name: Prettier Check
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  prettier-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18" # Ou la version de Node.js que vous utilisez
+
+      - name: Install Dependencies Application
+        run: |
+          cd Application
+          yarn install --frozen-lockfile
+
+      - name: Prettier Check Application
+        run: |
+          cd Application
+          yarn prettier-check
+
+      - name: Install Dependencies Serveur
+        run: |
+          cd Serveur
+          npm install
+
+      - name: Prettier Check Serveur
+        run: |
+          cd Serveur
+          npm run prettier-check

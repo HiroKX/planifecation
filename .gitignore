@@ -161,6 +161,7 @@ Application/yarn.lock
 
 .DS_Store
 ._.DS_Store
-docker-compose.yml
 .env.local
 yarn.lock
+/Serveur/prisma/migrations/*
+/Serveur/.dist

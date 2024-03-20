@@ -1,0 +1,8 @@
+# Ignore artifacts:
+build
+coverage
+.expo
+.babelrc
+tsconfig.json
+.idea
+node_modules
