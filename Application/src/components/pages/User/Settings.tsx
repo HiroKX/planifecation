@@ -84,14 +84,6 @@ export default function Settings(props: Readonly<Props>): ReactNode {
               Modifier mon profil
             </ButtonTemplate>
             <ButtonTemplate
-              style={styles.button}
-              onPress={() => {
-                alert('Non disponible pour le moment');
-              }}
-            >
-              Télécharger mes données
-            </ButtonTemplate>
-            <ButtonTemplate
               style={[styles.button, styles.buttonTransparent]}
               textColor={theme.colors.primary}
               mode="outlined"
