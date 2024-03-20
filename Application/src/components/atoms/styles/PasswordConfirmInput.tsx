@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';

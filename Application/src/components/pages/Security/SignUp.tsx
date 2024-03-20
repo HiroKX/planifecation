@@ -11,7 +11,7 @@ import PasswordConfirmInput from '../../atoms/styles/PasswordConfirmInput';
 import { StyleSheet, View } from 'react-native';
 import TextTemplate from '../../atoms/styles/TextTemplate';
 import { theme } from '../../organisms/OwnPaperProvider';
-import PasswordInputRandomized from "../../atoms/styles/PasswordInputRandomized";
+import PasswordInputRandomized from '../../atoms/styles/PasswordInputRandomized';
 
 type Props = NativeStackScreenProps<StackParamList>;
 type FormValues = {

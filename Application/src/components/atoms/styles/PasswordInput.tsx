@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import React, { ReactNode } from 'react';
 import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
@@ -22,7 +22,7 @@ export default function PasswordInput(
       control={props.control}
       rules={{
         required: 'Ce champ est requis',
-          validate: props.validation
+        validate: props.validation,
       }}
       render={({
         field: { onChange, onBlur, value },
