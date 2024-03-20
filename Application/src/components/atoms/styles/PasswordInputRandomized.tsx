@@ -1,4 +1,4 @@
-import React, {ReactNode, useMemo} from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { Control, FieldErrors } from 'react-hook-form';
 import { StyleProp, TextStyle } from 'react-native';
 import PasswordInput from './PasswordInput';
