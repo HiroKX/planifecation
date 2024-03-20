@@ -1,25 +1,28 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import TextInputTemplate from './TextInputTemplate';
 import { HelperText } from 'react-native-paper';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { StyleProp, TextStyle } from 'react-native';
 
 type FormValues = {
   password: string;
 };
 type PasswordConfirmInputProps = {
-  control: Control<any, any>;
+  control: Control<any>;
   errors: FieldErrors<FormValues>;
   style?: StyleProp<TextStyle>;
+  validation?: (val: string) => string | undefined;
 };
 
 export default function PasswordInput(
   props: Readonly<PasswordConfirmInputProps>
-): any {
+): ReactNode {
   return (
     <Controller
       control={props.control}
       rules={{
         required: 'Ce champ est requis',
+        validate: props.validation,
       }}
       render={({
         field: { onChange, onBlur, value },
