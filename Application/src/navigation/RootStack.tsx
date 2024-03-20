@@ -36,7 +36,7 @@ export type StackParamList = {
   'Liste toute douce': undefined;
   'Test SKIA': undefined;
   'Liste des notes': undefined;
-  'Test Gyro': undefined;
+  'Mini-Jeu': undefined;
   CGU: undefined;
 };
 
@@ -83,7 +83,7 @@ function RootStack(): ReactNode {
         <Stack.Screen name="Agenda" component={Appointments} />
         <Stack.Screen name="Liste toute douce" component={TodoList} />
         <Stack.Screen name="Test SKIA" component={TestSKIA} />
-        <Stack.Screen name="Test Gyro" component={GyroscopTest} />
+        <Stack.Screen name="Mini-Jeu" component={GyroscopTest} />
         <Stack.Screen name="CGU" component={Cgu} />
       </Stack.Navigator>
     </GestureHandlerRootView>
