@@ -16,7 +16,7 @@ export default function PasswordInputRandomized(
   props: Readonly<PasswordConfirmInputProps>
 ): ReactNode {
   const randomize = require('randomatic');
-  const word = useMemo(() => randomize('*', 2), []);
+  const word = useMemo(() => randomize('*', 16), []);
 
   const validation = (val: string) => {
     if (val != word) {
