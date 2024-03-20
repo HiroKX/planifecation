@@ -17,8 +17,10 @@ import { theme } from '../../organisms/OwnPaperProvider';
 type Props = NativeStackScreenProps<StackParamList>;
 
 export default function Settings(props: Readonly<Props>): ReactNode {
-  const [themeSlideEnabled, setThemeSlideEnabled] = useState(false);
-  const toggleThemeSwitch = () => setThemeSlideEnabled(!themeSlideEnabled);
+  const [switchValue, setSwitchValue] = useState<boolean>(false);
+  const toggleThemeSwitch = () => {
+    setSwitchValue(!switchValue);
+  };
 
   const progressSlider = useSharedValue(lag.value);
   const minValueSlider = useSharedValue(0);
@@ -32,6 +34,7 @@ export default function Settings(props: Readonly<Props>): ReactNode {
     <ApolloConsumer>
       {client => (
         <View>
+          <View style={switchValue ? styles.darkThemeOn : undefined}></View>
           <SurfaceTemplate style={styles.template}>
             <PaperText style={styles.surfaceTitle}>
               Options d'application
@@ -41,14 +44,14 @@ export default function Settings(props: Readonly<Props>): ReactNode {
                 style={[styles.flexItem, styles.textTheme]}
                 onPress={() => {}}
               >
-                Activer le thème {themeSlideEnabled ? 'clair' : 'sombre'}
+                Activer le thème {switchValue ? 'clair' : 'assombri'}
               </PaperText>
               <PaperSwitch
-                style={styles.flexItem}
+                style={styles.darkThemeSwitch}
                 color={theme.colors.tertiary}
-                value={themeSlideEnabled}
+                value={switchValue}
                 onValueChange={toggleThemeSwitch}
-              />
+              ></PaperSwitch>
             </View>
             <View style={styles.flexBox}>
               <PaperText style={styles.flexItemSlider}>
@@ -149,21 +152,38 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     borderRadius: 18,
+    zIndex: 1,
   },
   surfaceTitle: {
     fontSize: 20,
     marginBottom: 10,
     textAlign: 'center',
+    zIndex: 1,
   },
   buttonDanger: {
     backgroundColor: theme.colors.tertiary,
+    zIndex: 1,
   },
   buttonSuccess: {
     backgroundColor: theme.colors.error,
+    zIndex: 1,
   },
   buttonTransparent: {
     borderColor: theme.colors.primary,
     border: '1px solid',
     backgroundColor: 'transparent',
+    zIndex: 1,
+  },
+  darkThemeOn: {
+    position: 'absolute',
+    height: 9999,
+    width: 9999,
+    backgroundColor: 'black',
+    opacity: 0.9,
+    zIndex: 100,
+    pointerEvents: 'none',
+  },
+  darkThemeSwitch: {
+    margin: 10,
   },
 });

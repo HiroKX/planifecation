@@ -27,7 +27,6 @@ export default function App(): ReactNode {
     link: new HttpLink({ uri: URI_API }),
     cache: new InMemoryCache(),
   });
-
   const [splash, setSplash] = useState(true);
 
   return (
@@ -41,7 +40,6 @@ export default function App(): ReactNode {
           </NavigationContainer>
         )}
       </OwnPaperProvider>
-      {/* Status Bar à modifier encore selon le thème  */}
       <StatusBar style="light" />
     </ApolloProvider>
   );
