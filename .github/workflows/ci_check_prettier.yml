@@ -7,7 +7,7 @@ on:
 
 jobs:
   prettier-check:
-    runs-on: ubuntu-latest
+    runs-on: alpine-latest
 
     steps:
       - name: Checkout repository

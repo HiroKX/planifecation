@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: alpine-latest
     strategy:
       fail-fast: true
       matrix:
