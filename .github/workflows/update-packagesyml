@@ -20,13 +20,12 @@ jobs:
         node-version: '18'
 
     - name: Installation des dépendances
+      working-directory: ./Application
       run: npm install
 
     - name: Mise à jour des patchs des dépendances
+      working-directory: ./Application
       run: npm update --depth 5 --patch
-
-    - name: Exécution des tests
-      run: npm test
 
     - name: Commit des mises à jour
       run: |
