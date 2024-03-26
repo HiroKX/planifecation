@@ -7,7 +7,7 @@ on:
 
 jobs:
   prettier-check:
-    runs-on: alpine:3.19.1
+    runs-on: alpine-latest
 
     steps:
       - name: Checkout repository

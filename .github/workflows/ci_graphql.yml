@@ -7,7 +7,7 @@ on:
 jobs:
   CI_GraphQL:
     name: Testing GraphQL Integration
-    runs-on: alpine:3.19.1
+    runs-on: alpine-latest
     env:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

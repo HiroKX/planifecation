@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: alpine:3.19.1
+    runs-on: alpine-latest
     strategy:
       fail-fast: true
       matrix:
