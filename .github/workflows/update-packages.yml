@@ -2,7 +2,7 @@ name: Mise à jour des dépendances Node.js
 
 on:
   schedule:
-    - cron: '10 * * * *'
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 jobs:
