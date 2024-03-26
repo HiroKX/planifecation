@@ -1,0 +1,37 @@
+name: Mise à jour des dépendances Node.js
+
+on:
+  schedule:
+    - cron: '* * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v2
+      with:
+        ref: 'dev' # Assurez-vous de travailler sur la branche dev
+
+    - name: Configuration de Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Installation des dépendances
+      run: npm install
+
+    - name: Mise à jour des patchs des dépendances
+      run: npm update --depth 5 --patch
+
+    - name: Exécution des tests
+      run: npm test
+
+    - name: Commit des mises à jour
+      run: |
+        git config --global user.name 'Robin'
+        git config --global user.email 'actions@github.com'
+        git add package-lock.json
+        git commit -m "Mise à jour des patchs des dépendances"
+        git push
