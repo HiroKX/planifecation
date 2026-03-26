@@ -15,7 +15,7 @@
   "author": "Robin Lagler/HiroKX",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^4.9.5",
+    "@apollo/server": "^5.5.0",
     "@prisma/client": "^5.8.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
